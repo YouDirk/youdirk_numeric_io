@@ -56,8 +56,8 @@ Issues & Bug reports
 If you found a *bug* or if you like to provide a *feature-request*
 then take a look to the
 
-* [Bug Tracking System https://github.com/YouDirk/youdirk_numeric_io/issues]
-  (https://github.com/YouDirk/youdirk_numeric_io/issues)
+* [**Bug Tracking System** _https://github.com/YouDirk/youdirk_numeric_io/issues_
+  ](https://github.com/YouDirk/youdirk_numeric_io/issues)
 
 Contributing
 ------------
