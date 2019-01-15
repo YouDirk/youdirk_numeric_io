@@ -1,4 +1,4 @@
-> This file is part of the `youdirk_numeric_io` Minecraft mod
+> This file is part of the `youdirk_numeric_io` Minecraft mod  
 > Copyright (C) 2019  Dirk "YouDirk" Lehmann
 >
 > This program is free software: you can redistribute it and/or modify
@@ -15,8 +15,8 @@
 > along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-YouDirk Numeric I/O `youdirk_numeric_io` Minecraft mod
-======================================================
+YouDirk Numeric I/O Minecraft mod
+=================================
 
 This are the source of the `youdirk_numeric_io` [Minecraft
 Forge](https://github.com/MinecraftForge/MinecraftForge) mod.  It adds

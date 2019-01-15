@@ -15,6 +15,29 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-# Backup files
-*~
-*.bak
+# ********************************************************************
+# Linux/MSYS2 commands, feature check
+
+_CMD_TEST = $(shell which $(1) 2> /dev/null)
+
+FIND_CMD = $(call _CMD_TEST, find)
+ifeq (,$(FIND_CMD))
+  $(error FIND command not found!  Try '$$> pacman -S msys/findutils' \
+          for installation.  Or use your Linux package manager.)
+endif
+
+# ********************************************************************
+# Target definitions
+
+.PHONY: all
+all:
+	@echo "Hmmmmmm ...."
+
+.PHONY: _clean_bak
+_clean_bak:
+	-rm -f $(shell $(FIND_CMD) . -name '*~')
+
+.PHONY: clean
+clean: _clean_bak
+
+# ********************************************************************
