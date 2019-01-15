@@ -22,11 +22,13 @@ This are the source of the `youdirk_numeric_io` [Minecraft
 Forge](https://github.com/MinecraftForge/MinecraftForge) mod.  It adds
 to the game
 
-* *Blocks* which are *outputing decimal (and hexadecimal) numbers* to
-  represent connected binary encoded Redstone Wires.
+* **Blocks** which are **outputing decimal (and hexadecimal) numbers**
+  to represent connected binary encoded Redstone Wires.
 
-* *Blocks* where you can *input a number (right click on it)* which
-  will be encoded as binary and outputed to the connected Redstone
-  Wires.
+* **Blocks** where you can **input a number (right click on it)**
+  which will be encoded as binary and outputed to the connected
+  Redstone Wires.
 
-* Negative values (*Two's Complement encoding*) are supported.
+* **Negative values** (*Two's Complement encoding*) are supported.
+
+Have fun :)
