@@ -37,7 +37,15 @@ This is the official website of the **YouDirk Numeric I/O**
 Download
 --------
 
-* *[... TODO]*
+You can download the current *YouDirk Numeric I/O Minecraft mod*
+`youdirk_numeric_io` stable here
+
+*[... TODO]*
+
+* **[Download stable YouDirk Numeric I/O {{
+     site.numeric_io.version_stable }} (ZIP)](site.github.zip_url)**
+* **[Download stable YouDirk Numeric I/O {{
+     site.numeric_io.version_stable }} (TAR.GZ)](site.github.tar_url)**
 
 Install
 -------
@@ -48,8 +56,10 @@ Issues & Bug reports
 --------------------
 
 If you found a *bug* or if you like to provide a *feature-request*
-then take a look to the [Bug Tracking
-System](https://github.com/YouDirk/youdirk_numeric_io/issues).
+then take a look to the
+
+* [Bug Tracking System https://github.com/YouDirk/youdirk_numeric_io/issues]
+  (https://github.com/YouDirk/youdirk_numeric_io/issues)
 
 Contributing
 ------------
@@ -57,8 +67,10 @@ Contributing
 ### Wiki
 
 You can contribute some tutorials or instructions how to use the
-**YouDirk Numeric I/O mod** by writing it down to the
-[Wiki](https://github.com/YouDirk/youdirk_numeric_io/wiki).
+*YouDirk Numeric I/O Minecraft mod* by writing it down to the
+
+* [Wiki https://github.com/YouDirk/youdirk_numeric_io/wiki]
+  (https://github.com/YouDirk/youdirk_numeric_io/wiki)
 
 ### Assets / Hacking
 

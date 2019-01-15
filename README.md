@@ -34,23 +34,23 @@ to the game
 Initial idea
 ------------
 
-I want to build a [calculator in vanilla
-Minecraft](https://www.twitch.tv/collections/jN0fzROVchV32A) using
-Redstones and it's logic properties.  In conclusion it is an 8-bit ALU
-*(Arithmetic Logic Unit)* based on an *Intel 8085* ALU circuit.  It
-should be possible to build it without using any mod.  But it's not
-easy to output the result of your calculation in-game and there is no
-suitable way to input the operands into the calculator.  For that
-reason I decided to implement a mod to do that.
-
-Well, so have fun with it :)
+I want to build a [calculator in vanilla Minecraft
+(twitch.tv/you_dirk)](https://www.twitch.tv/collections/jN0fzROVchV32A)
+using Redstones and it's logic properties.  In conclusion it is an
+8-bit ALU *(Arithmetic Logic Unit)* based on an *Intel 8085* ALU
+circuit.  It should be possible to build it without using any mod.
+But it's not easy to output the result of your calculation in-game and
+there is no suitable way to input the operands into the calculator.
+For that reason I decided to implement a mod to do that.
 
 Download & Install
 ------------------
 
 You can download the current compiled version of the *YouDirk Numeric
 I/O Minecraft mod* from the official Website
-(https://youdirk.github.io/youdirk_numeric_io/).
+
+* [Website https://youdirk.github.io/youdirk_numeric_io/]
+  (https://youdirk.github.io/youdirk_numeric_io/)
 
 Contributing
 ------------
@@ -58,11 +58,15 @@ Contributing
 ### Wiki
 
 You can contribute some tutorials or instructions how to use the
-**YouDirk Numeric I/O mod** by writing it down to the
-[Wiki](https://github.com/YouDirk/youdirk_numeric_io/wiki).
+*YouDirk Numeric I/O Minecraft mod* by writing it down to the
+
+* [Wiki https://github.com/YouDirk/youdirk_numeric_io/wiki]
+  (https://github.com/YouDirk/youdirk_numeric_io/wiki)
 
 ### Assets / Hacking
 
 If you want to contribute some **code**, **assets** such like
 *models*, *textures* or *sounds* then take a look to the GitHub
 repository and read *[... TODO]* for more details.
+
+Well, so have fun with it :)
