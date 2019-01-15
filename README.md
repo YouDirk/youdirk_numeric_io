@@ -47,9 +47,9 @@ Download & Install
 ------------------
 
 You can download the current compiled version of the *YouDirk Numeric
-I/O Minecraft mod* from the official Website
+I/O Minecraft mod* from the
 
-* [**Website** on youdirk.github.io
+* [**official Website** on **youdirk.github.io/youdirk_numeric_io**
   ](https://youdirk.github.io/youdirk_numeric_io/)
 
 Contributing
