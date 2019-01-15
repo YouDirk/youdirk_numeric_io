@@ -1,4 +1,5 @@
 ---
+{% comment %}
 # This file is part of the `youdirk_numeric_io` Minecraft mod
 # Copyright (C) 2019  Dirk "YouDirk" Lehmann
 #
@@ -15,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+{% endcomment %}
 ---
 
 YouDirk Numeric I/O Minecraft mod
