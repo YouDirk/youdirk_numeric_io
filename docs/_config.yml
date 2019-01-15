@@ -28,3 +28,4 @@ github:
   tar_url: /youdirk_numeric_io/releases/dummy.tar.gz
 numeric_io:
   version_stable: 1.13.2-0.0.0.1-pre
+  github_url: https://github.com/YouDirk/youdirk_numeric_io

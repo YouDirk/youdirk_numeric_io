@@ -56,8 +56,8 @@ Issues & Bug reports
 If you found a *bug* or if you like to provide a *feature-request*
 then take a look to the
 
-* [**Bug Tracking System** _https://github.com/YouDirk/youdirk_numeric_io/issues_
-  ](https://github.com/YouDirk/youdirk_numeric_io/issues)
+* [**Bug Tracking System** _({{site.numeric_io.github_url}}/issues)_
+  ]({{site.numeric_io.github_url}}/issues)
 
 Contributing
 ------------
@@ -67,8 +67,8 @@ Contributing
 You can contribute some tutorials or instructions how to use the
 *YouDirk Numeric I/O Minecraft mod* by writing it down to the
 
-* [Wiki https://github.com/YouDirk/youdirk_numeric_io/wiki
-  ](https://github.com/YouDirk/youdirk_numeric_io/wiki)
+* [**Wiki** _({{site.numeric_io.github_url}}/wiki)_
+  ]({{site.numeric_io.github_url}}/wiki)
 
 ### Assets / Hacking
 
@@ -76,8 +76,8 @@ If you want to contribute some **code**, **assets** such like
 *models*, *textures* or *sounds* then read then take a look to the
 GitHub repository and read the
 
-* [Contribution Guidelines CONTRIBUTING.md
-  ](https://github.com/YouDirk/youdirk_numeric_io/blob/master/CONTRIBUTING.md)
+* [**Contribution Guidelines** _(CONTRIBUTING.md)_
+  ]({{site.numeric_io.github_url}}/blob/master/CONTRIBUTING.md)
 
 Initial idea
 ------------
