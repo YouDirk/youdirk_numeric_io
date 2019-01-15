@@ -69,7 +69,6 @@ If you want to contribute some **code**, **assets** such like
 *models*, *textures* or *sounds* then read then take a look to the
 GitHub repository and read the
 
-* [Contribution Guidelines CONTRIBUTING.md
-  ](https://github.com/YouDirk/youdirk_numeric_io/blob/master/CONTRIBUTING.md)
+* [Contribution Guidelines CONTRIBUTING.md](CONTRIBUTING.md)
 
 Well, so have fun with it :)
