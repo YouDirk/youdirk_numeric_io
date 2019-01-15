@@ -49,8 +49,8 @@ Download & Install
 You can download the current compiled version of the *YouDirk Numeric
 I/O Minecraft mod* from the official Website
 
-* [Website https://youdirk.github.io/youdirk_numeric_io/]
-  (https://youdirk.github.io/youdirk_numeric_io/)
+* [Website https://youdirk.github.io/youdirk_numeric_io/
+  ](https://youdirk.github.io/youdirk_numeric_io/)
 
 Contributing
 ------------
@@ -60,13 +60,16 @@ Contributing
 You can contribute some tutorials or instructions how to use the
 *YouDirk Numeric I/O Minecraft mod* by writing it down to the
 
-* [Wiki https://github.com/YouDirk/youdirk_numeric_io/wiki]
-  (https://github.com/YouDirk/youdirk_numeric_io/wiki)
+* [Wiki https://github.com/YouDirk/youdirk_numeric_io/wiki
+  ](https://github.com/YouDirk/youdirk_numeric_io/wiki)
 
 ### Assets / Hacking
 
 If you want to contribute some **code**, **assets** such like
-*models*, *textures* or *sounds* then take a look to the GitHub
-repository and read *[... TODO]* for more details.
+*models*, *textures* or *sounds* then read then take a look to the
+GitHub repository and read the
+
+* [Contribution Guidelines CONTRIBUTING.md
+  ](https://github.com/YouDirk/youdirk_numeric_io/blob/master/CONTRIBUTING.md)
 
 Well, so have fun with it :)
