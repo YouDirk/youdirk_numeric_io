@@ -44,3 +44,25 @@ suitable way to input the operands into the calculator.  For that
 reason I decided to implement a mod to do that.
 
 Well, so have fun with it :)
+
+Download & Install
+------------------
+
+You can download the current compiled version of the *YouDirk Numeric
+I/O Minecraft mod* from the official Website
+(https://youdirk.github.io/youdirk_numeric_io/).
+
+Contributing
+------------
+
+### Wiki
+
+You can contribute some tutorials or instructions how to use the
+**YouDirk Numeric I/O mod** by writing it down to the
+[Wiki](https://github.com/YouDirk/youdirk_numeric_io/wiki).
+
+### Assets / Hacking
+
+If you want to contribute some **code**, **assets** such like
+*models*, *textures* or *sounds* then take a look to the GitHub
+repository and read *[... TODO]* for more details.
