@@ -1,3 +1,4 @@
+---
 # This file is part of the `youdirk_numeric_io` Minecraft mod
 # Copyright (C) 2019  Dirk "YouDirk" Lehmann
 #
@@ -14,15 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-title: YouDirk Numeric I/O
-description: A Minecraft Forge mod for decimal I/O support.
+---
 
-theme: jekyll-theme-architect
-show_downloads: true
+# Titles not width enough +150px
+header h1 {
+  width: 690px;
+}
+header h2 {
+  width: 690px;
+}
 
-# TODO: Needs to be dynamicly adapted
-github:
-  zip_url: /youdirk_numeric_io/releases/dummy.zip
-  tar_url: /youdirk_numeric_io/releases/dummy.tar.gz
-
-google_analytics:
+@import "{{ site.theme }}";
