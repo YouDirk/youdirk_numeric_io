@@ -23,12 +23,24 @@ Forge](https://github.com/MinecraftForge/MinecraftForge) mod.  It adds
 to the game
 
 * **Blocks** which are **outputing decimal (and hexadecimal) numbers**
-  to represent connected binary encoded Redstone Wires.
+  to represent connected binary encoded Redstone Wires
 
 * **Blocks** where you can **input a number (right click on it)**
   which will be encoded as binary and outputed to the connected
-  Redstone Wires.
+  Redstone Wires
 
-* **Negative values** (*Two's Complement encoding*) are supported.
+* **Negative values** (*Two's Complement encoding*) are supported
 
-Have fun :)
+Initial idea
+------------
+
+I want to build a [calculator in vanilla
+Minecraft](https://www.twitch.tv/collections/jN0fzROVchV32A) using
+Redstones and it's logic properties.  In conclusion it is an 8-bit ALU
+*(Arithmetic Logic Unit)* based on an *Intel 8085* ALU circuit.  It
+should be possible to build it without using any mod.  But it's not
+easy to output the result of your calculation in-game and there is no
+suitable way to input the operands into the calculator.  For that
+reason I decided to implement a mod to do that.
+
+Well, so have fun with it :)
