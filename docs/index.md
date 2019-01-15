@@ -56,7 +56,7 @@ Issues & Bug reports
 If you found a *bug* or if you like to provide a *feature-request*
 then take a look to the
 
-* [**Bug Tracking System** _({{site.numeric_io.github_url}}/issues)_
+* [**Bug Tracking System** on github.com
   ]({{site.numeric_io.github_url}}/issues)
 
 Contributing
@@ -67,7 +67,7 @@ Contributing
 You can contribute some tutorials or instructions how to use the
 *YouDirk Numeric I/O Minecraft mod* by writing it down to the
 
-* [**Wiki** _({{site.numeric_io.github_url}}/wiki)_
+* [**Wiki** on github.com
   ]({{site.numeric_io.github_url}}/wiki)
 
 ### Assets / Hacking
@@ -76,19 +76,19 @@ If you want to contribute some **code**, **assets** such like
 *models*, *textures* or *sounds* then read then take a look to the
 GitHub repository and read the
 
-* [**Contribution Guidelines** _(CONTRIBUTING.md)_
+* [**Contribution Guidelines** on github.com
   ]({{site.numeric_io.github_url}}/blob/master/CONTRIBUTING.md)
 
 Initial idea
 ------------
 
-I want to build a [calculator in vanilla
-Minecraft](https://www.twitch.tv/collections/jN0fzROVchV32A) using
-Redstones and it's logic properties.  In conclusion it is an 8-bit ALU
-*(Arithmetic Logic Unit)* based on an *Intel 8085* ALU circuit.  It
-should be possible to build it without using any mod.  But it's not
-easy to output the result of your calculation in-game and there is no
-suitable way to input the operands into the calculator.  For that
-reason I decided to implement a mod to do that.
+I want to build a [calculator in vanilla Minecraft
+(twitch.tv/you_dirk)](https://www.twitch.tv/collections/jN0fzROVchV32A)
+using Redstones and it's logic properties.  In conclusion it is an
+8-bit ALU *(Arithmetic Logic Unit)* based on an *Intel 8085* ALU
+circuit.  It should be possible to build it without using any mod.
+But it's not easy to output the result of your calculation in-game and
+there is no suitable way to input the operands into the calculator.
+For that reason I decided to implement a mod to do that.
 
 Well, so have fun with it :)
