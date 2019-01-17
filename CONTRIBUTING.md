@@ -48,9 +48,9 @@ I. Guidelines
 1. If it possible then prevent that lines of code are longer than **70
    characters per line**.
 
-2. If you **add a new file** to the Youtiba Game Project **then add
-   the following license** text if it is possible, depending on the
-   file format  
+2. If you **add a new file** to the YouDirk Numeric I/O Minecraft mod
+   **then add the following license** text if it is possible,
+   depending on the file format  
 ```java
 /* This file is part of the `youdirk_numeric_io` Minecraft mod
  * Copyright (C) <year>  <name of author>
@@ -69,7 +69,7 @@ I. Guidelines
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 ```
-   Take a look to [LICENSE.md](LICENSE.md) for more details.
+   Take a look into the [LICENSE](LICENSE) file for more details.
 
 **********************************************************************
 

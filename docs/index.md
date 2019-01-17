@@ -19,11 +19,8 @@
 
 ---
 
-YouDirk Numeric I/O Minecraft mod
-=================================
-
-This is the official website of the **YouDirk Numeric I/O**
-`youdirk_numeric_io` Minecraft Forge mod.  It adds to the game
+This is the official website of the **YouDirk Numeric I/O Minecraft
+mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Blocks** which are **outputing decimal (and hexadecimal) numbers**
   to represent the connected binary encoded Redstone Wires
