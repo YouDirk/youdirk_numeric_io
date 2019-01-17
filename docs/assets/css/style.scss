@@ -21,10 +21,29 @@
 
 @import "{{ site.theme }}";
 
+/* Overrides
+ * https://github.com/pages-themes/architect/blob/master/_sass/jekyll-theme-architect.scss
+*/
+
 /* Titles not width enough +150px  */
-header h1 {
+header h1, header h2 {
   width: 690px;
 }
-header h2 {
-  width: 690px;
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+
+  /* Same as overridden version  */
+  header h1, header h2 {
+    width: 340px;
+  }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+
+  /* Same as overridden version  */
+  header h1, header h2 {
+    width: 100%;
+  }
 }
