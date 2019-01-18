@@ -98,8 +98,12 @@ endif
 # ********************************************************************
 # Variable definitions
 
+RESOURCES_DIR = src/main/resources
+MODS_FILE = $(RESOURCES_DIR)/META-INF/mods.toml
+
 MF_DIR = minecraft_forge
 MF_MDK_DIR = $(MF_DIR)/mdk
+MF_MODS_FILE = $(MF_MDK_DIR)/$(MODS_FILE)
 
 # ********************************************************************
 # Target definitions
@@ -115,9 +119,11 @@ bootstrap:
 .PHONY: _bootstrap
 _bootstrap:
 	$(GIT_CMD) submodule update --init $(MF_DIR)
-	cd $(MF_DIR) && $(GIT_CMD) checkout $(MINECRAFT_FORGE_BRANCH)
+	cd $(MF_DIR) && $(GIT_CMD) checkout $(MINECRAFT_FORGE_BRANCH) \
+	  && $(GIT_CMD) pull --rebase
 	cp -rf $(MF_DIR)/{gradle,gradlew{,.bat}} .
 	cp -f $(MF_MDK_DIR)/{build.gradle,gradle.properties} .
+	cp -f $(MF_MODS_FILE) $(MODS_FILE)
 
 .PHONY: mf_deinit
 mf_deinit:
@@ -129,7 +135,7 @@ _mf_deinit:
 .PHONY: clean_bootstrap
 clean_bootstrap:
 	rm -f build.gradle gradle.properties
-	rm -rf gradle gradlew{,.bat}
+	rm -rf gradle gradlew{,.bat} $(MODS_FILE)
 
 # ********************************************************************
 
