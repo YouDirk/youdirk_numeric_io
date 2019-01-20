@@ -37,7 +37,7 @@ endif
 SED_CMD = $(call _CMD_TEST,sed)
 ifeq (,$(SED_CMD))
   $(error SED command not found!  Try '$$> pacman -S msys/sed' \
-          for installation)
+          for installation.  Or use your Linux package manager.)
 endif
 
 ifneq (,$(TEST_GIT))
@@ -64,25 +64,25 @@ _JDK_LATEST = $(shell d=($(1)/jdk*); IFS=$$'\n'; echo "$${d[*]}" \
 
 ifneq (,$(call _JDK_FOUND,$(JDK_PATH)))
   # Configuration variable set
-  MY_JAVA_HOME = "$(JDK_PATH)"
+  MY_JAVA_HOME = $(JDK_PATH)
 
 else ifneq (,$(call _JDK_FOUND,$(JAVA_HOME)))
   # JAVA_HOME environment variable set
-  MY_JAVA_HOME = "$(JAVA_HOME)"
+  MY_JAVA_HOME = $(JAVA_HOME)
 else ifneq (,$(call _CMD_TEST,javac))
   # JAVAC in PATH found, set JAVA_HOME:=(empty)
   MY_JAVA_HOME =
 
 else
   # Try commonly known locations
-  _TRY_HOME = $(call _JDK_LATEST,"c:/Program Files (x86)/Java")
+  _TRY_HOME = $(call _JDK_LATEST,"/c/Program Files (x86)/Java")
   ifneq (,$(call _JDK_FOUND,$(_TRY_HOME)))
-    MY_JAVA_HOME = "$(_TRY_HOME)"
+    MY_JAVA_HOME = $(_TRY_HOME)
   endif
 
-  _TRY_HOME = $(call _JDK_LATEST,"c:/Program Files/Java")
+  _TRY_HOME = $(call _JDK_LATEST,"/c/Program Files/Java")
   ifneq (,$(call _JDK_FOUND,$(_TRY_HOME)))
-    MY_JAVA_HOME = "$(_TRY_HOME)"
+    MY_JAVA_HOME = $(_TRY_HOME)
   endif
 
   ifeq (,$(MY_JAVA_HOME))
@@ -99,31 +99,63 @@ endif
 # Variable definitions
 
 RESOURCES_DIR = src/main/resources
-MODS_FILE = $(RESOURCES_DIR)/META-INF/mods.toml
+METAINF_DIR = $(RESOURCES_DIR)/META-INF
 
 MF_DIR = minecraft_forge
 MF_MDK_DIR = $(MF_DIR)/mdk
-MF_MODS_FILE = $(MF_MDK_DIR)/$(MODS_FILE)
+MF_RESOURCES_DIR = $(MF_MDK_DIR)/$(RESOURCES_DIR)
+MF_METAINF_DIR = $(MF_MDK_DIR)/$(METAINF_DIR)
+
+# ********************************************************************
+# Environment variables
+
+PATH := $(MY_JAVA_HOME)/bin:$(PATH)
+JAVA_HOME := $(MY_JAVA_HOME)
 
 # ********************************************************************
 # Target definitions
 
 # TODO ... Just for tests ...
 .PHONY: all
-all:
-	JAVA_HOME=$(MY_JAVA_HOME) ./gradlew setupDecompWorkspace
+all: gradlew.bat src
+	./gradlew setupDecompWorkspace
 
-.PHONY: bootstrap
-bootstrap:
-	$(MAKE) TEST_GIT=1 _bootstrap
-.PHONY: _bootstrap
-_bootstrap:
+.PHONY: minecraft_forge
+minecraft_forge:
+	$(MAKE) TEST_GIT=1 _minecraft_forge
+.PHONY: _minecraft_forge
+_minecraft_forge:
 	$(GIT_CMD) submodule update --init $(MF_DIR)
 	cd $(MF_DIR) && $(GIT_CMD) checkout $(MINECRAFT_FORGE_BRANCH) \
 	  && $(GIT_CMD) pull --rebase
-	cp -rf $(MF_DIR)/{gradle,gradlew{,.bat}} .
-	cp -f $(MF_MDK_DIR)/{build.gradle,gradle.properties} .
-	cp -f $(MF_MODS_FILE) $(MODS_FILE)
+
+$(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
+	cp -f $< $@
+$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml \
+                          $(RESOURCES_DIR)/pack.mcmeta
+	cp -f $< $@
+.PHONY: src
+src: $(METAINF_DIR)/mods.toml
+
+gradle: $(MF_DIR)/gradle
+	cp -rf $< $@
+gradle.properties: $(MF_MDK_DIR)/gradle.properties
+	cp -f $< $@
+build.gradle: $(MF_MDK_DIR)/build.gradle
+	cp -f $< $@
+gradlew: $(MF_DIR)/gradlew gradle gradle.properties build.gradle
+	cp -f $< $@
+gradlew.bat: $(MF_DIR)/gradlew.bat gradlew
+	cp -f $< $@
+
+.PHONY: bootstrap
+bootstrap: minecraft_forge gradlew.bat src
+
+.PHONY: clean_bootstrap
+clean_bootstrap:
+	-rm -f build.gradle gradle.properties
+	-rm -rf gradle gradlew{,.bat}
+	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
 .PHONY: mf_deinit
 mf_deinit:
@@ -132,10 +164,9 @@ mf_deinit:
 _mf_deinit:
 	$(GIT_CMD) submodule deinit $(MF_DIR)
 
-.PHONY: clean_bootstrap
-clean_bootstrap:
-	rm -f build.gradle gradle.properties
-	rm -rf gradle gradlew{,.bat} $(MODS_FILE)
+.PHONY: jdk_version
+jdk_version:
+	javac -version
 
 # ********************************************************************
 
@@ -145,5 +176,9 @@ _clean_bak:
 
 .PHONY: clean
 clean: _clean_bak
+	-rm -rf .gradle
+
+.PHONY: clean_all
+clean_all: clean clean_bootstrap
 
 # ********************************************************************
