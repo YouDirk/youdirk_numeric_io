@@ -28,12 +28,12 @@ VERSION = 0.0.0.1-pre
 MC_VERSION = 1.13
 
 # Official version from <https://files.minecraftforge.net/> or self
-# deployed version from MAVEN directory
-MF_VERSION = 24.0.96.0-youdirk
+# deployed version from DOCS/MAVEN directory
+MF_VERSION = 24.0.96-1.13-pre
 
 # Official Mappings are here <http://export.mcpbot.bspk.rs/>
-MCP_MAPPING_CHANNEL = stable
-MCP_MAPPING_VERSION = 43
+MCP_MAPPING_CHANNEL = snapshot
+MCP_MAPPING_VERSION = 20180921-1.13
 
 # Mincraft Forge branch/commit from which will be bootstraped
 MF_BRANCH = 1.13-pre
@@ -44,7 +44,7 @@ MF_FALLBACK_BRANCH = origin/1.12.x
 
 # (optional) Inodes (files, directories, etc) relative to
 # MINECRAFT_FORGE directory which will be using fallback versions
-MF_FALLBACK_INODES = mdk/build.gradle mdk/gradle.properties
+MF_FALLBACK_INODES =
 
 # Comma separated list
 CREDITS = Dirk (YouDirk) Lehmann
@@ -153,7 +153,6 @@ MODTHANKS = To the MCP team and the Forge programmers to make it \
 MODID = youdirk_numeric_io
 GROUP = net.dj_l.$(MODID)
 
-MCP_MAPPING = $(MCP_MAPPING_CHANNEL)_$(MCP_MAPPING_VERSION)
 MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
 
 RESOURCES_DIR = src/main/resources
@@ -165,9 +164,11 @@ MF_RESOURCES_DIR = $(MF_MDK_DIR)/$(RESOURCES_DIR)
 MF_METAINF_DIR = $(MF_MDK_DIR)/$(METAINF_DIR)
 
 DOCS_DIR = docs
-
 MAVEN_DIR = $(DOCS_DIR)/maven
+
 MAVEN_FORGE_DIR = $(MAVEN_DIR)/net/minecraftforge/forge
+MF_GROUP = net.minecraftforge
+MF_NAME = forge
 
 # ********************************************************************
 # Environment variables
@@ -182,13 +183,9 @@ JAVA_HOME := $(MY_JAVA_HOME)
 all: gradle_all src
 	./gradlew classes
 
-.PHONY: setup_decomp_workspace
-setup_decomp_workspace: gradle_all src
-	./gradlew --stacktrace setupDecompWorkspace
-
-.PHONY: setup%
-setup%: gradle_all src
-	./gradlew $@
+.PHONY: build
+build: gradle_all src
+	./gradlew build
 
 .PHONY: classes
 classes: gradle_all src
@@ -205,7 +202,7 @@ jdk_version:
 # --- Maintaining only ---
 
 .PHONY: bootstrap
-bootstrap: minecraft_forge maven gradle_all src
+bootstrap: minecraft_forge gradle_all src
 
 .PHONY: maven
 maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
@@ -230,29 +227,11 @@ $(MAVEN_FORGE_DIR)/maven-metadata.xml: \
 	cp -f $< $@
 
 $(MAVEN_FORGE_DIR)/maven-metadata-local.xml: \
-  .git/modules/$(MF_DIR)/FETCH_HEAD
-	$(SED_CMD) -i 's/net.minecraftforge.test/net.minecraftforge/g' \
+  .git/modules/$(MF_DIR)/HEAD .git/modules/$(MF_DIR)/FETCH_HEAD
+	$(SED_CMD) -i 's/$(MF_GROUP).test/$(MF_GROUP)/g' \
 	  $(MF_DIR)/build.gradle
 	cd $(MF_DIR) && ./gradlew -Dmaven.repo.local=../$(MAVEN_DIR) \
 	  setup :forge:licenseFormat :forge:publishToMavenLocal
-	branch=`$(SED_CMD) 's~^.*/\([^/]\+\)$$~\1~' \
-	                   .git/modules/$(MF_DIR)/HEAD`; \
-	  version_old=`basename $$($(FIND_CMD) $(MAVEN_FORGE_DIR) \
-	                             -name "*$$branch")`; \
-	  version_new=`echo $$version_old | sed "s/-$$branch/.0-youdirk/"`; \
-	  if test -d $(MAVEN_FORGE_DIR)/$$version_new; then \
-	    $(SED_CMD) -i "s~^.*<version>$$version_old</version>.*$$~~g; \
-	                   /^$$/d;" $@; \
-	    rm -rf $(MAVEN_FORGE_DIR)/$$version_new; \
-	  fi; \
-	  $(SED_CMD) -i "s~$$version_old~$$version_new~g" $@; \
-	  $(SED_CMD) -i "s~$$version_old~$$version_new~g" \
-	    $(MAVEN_FORGE_DIR)/$$version_old/*$$version_old.pom; \
-	  for i in $(MAVEN_FORGE_DIR)/$$version_old/*; do \
-	    mv -f $$i `echo $$i | $(SED_CMD) \
-	      "s~-$$version_old\([-\.][a-z]\)~-$$version_new\1~"`; \
-	  done; \
-	  mv -f $(MAVEN_FORGE_DIR)/$$version_old $(MAVEN_FORGE_DIR)/$$version_new; \
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
 	cp -f $< $@
@@ -282,12 +261,21 @@ gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
 	cp -f $< $@
 build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
 	$(SED_CMD) \
-'s~@MAPPINGS@~$(MCP_MAPPING)~g; '\
-'s~@VERSION@~$(MF_VERSION_FULL)~g; '\
 's~^version \?=[^/]*~version = "$(VERSION_FULL)"~g; '\
 's~^group \?=[^/]*~group = "$(GROUP)"~g; '\
 's~^archivesBaseName \?=[^/]*~archivesBaseName = "$(MODID)"~g; '\
-'s~mcmod.info~META-INF/mods.toml~g; '\
+'s~@MAPPING_CHANNEL@~$(MCP_MAPPING_CHANNEL)~g; '\
+'s~@MAPPING_VERSION@~$(MCP_MAPPING_VERSION)~g; '\
+'s~@FORGE_GROUP@~$(MF_GROUP)~g; '\
+'s~@FORGE_NAME@~$(MF_NAME)~g; '\
+'s~@FORGE_VERSION@~$(MF_VERSION_FULL)~g; '\
+'s~@MC_VERSION@~$(MF_VERSION_FULL)~g; '\
+'s~META_INF/mods.toml~META-INF/mods.toml~g; '\
+'s~minecraft \?{~repositories {\n'\
+"  maven { url 'file://' + rootProject.file('$(MAVEN_DIR)')"\
+".getAbsolutePath() }\n"\
+'}\n'\
+'\nminecraft {~g; '\
 	  $< > $@
 
 .PHONY: gradle_all
@@ -301,7 +289,6 @@ _mf_deinit:
 	$(GIT_CMD) submodule deinit $(MF_DIR)
 
 # ********************************************************************
-
 
 .PHONY: clean_minecraft_forge
 clean_minecraft_forge:
