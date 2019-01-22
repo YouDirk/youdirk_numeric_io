@@ -37,9 +37,12 @@ MF_BRANCH = 1.13-pre
 # if current development is too heavily
 MF_FALLBACK_BRANCH = origin/1.12.x
 
-# Inodes (files, directories, etc) relative to MINECRAFT_FORGE
-# directory which will be using fallback versions
+# (optional) Inodes (files, directories, etc) relative to
+# MINECRAFT_FORGE directory which will be using fallback versions
 MF_FALLBACK_INODES = mdk/build.gradle mdk/gradle.properties
+
+# Comma separated list
+CREDITS = Dirk (YouDirk) Lehmann
 
 # End of Configuration
 # ********************************************************************
@@ -119,10 +122,31 @@ endif
 
 VERSION_FULL = $(MC_VERSION)-$(VERSION)
 
+# Display name of the mod
+MODNAME = YouDirk Numeric I/O
+
+# Mult-line description of the mod
+MODDESC = \
+This is the official $(MODNAME) Minecraft mod 'youdirk_numeric_io'. \
+It adds to the game\n\
+\n\
+* Blocks which are outputing decimal (and hexadecimal) numbers to \
+  represent the connected binary encoded Redstone Wires\n\
+\n\
+* Blocks which you can input a number (by right clicking on it). \
+  These will be encoded to binary and outputed to the connected \
+  Redstone Wires\n\
+\n\
+* Negative values (Two\\\'s Complement encoding) are supported
+
+# Credits of the mod
+MODTHANKS = To the MCP team and the Forge programmers to make it \
+            possible to ez programming Minecraft mods :)
+
 # Conventions here
 #   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
-MOTID = youdirk_numeric_io
-GROUP = net.dj_l.$(MOTID)
+MODID = youdirk_numeric_io
+GROUP = net.dj_l.$(MODID)
 
 MCP_MAPPING = $(MCP_MAPPING_CHANNEL)_$(MCP_MAPPING_VERSION)
 MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
@@ -144,10 +168,8 @@ JAVA_HOME := $(MY_JAVA_HOME)
 # ********************************************************************
 # Target definitions
 
-# TODO ... Just for tests ...
 .PHONY: all
 all: gradle_all src
-	./gradlew --stacktrace setupDecompWorkspace
 
 .PHONY: setup_decomp_workspace
 setup_decomp_workspace: gradle_all src
@@ -178,8 +200,19 @@ _minecraft_forge:
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
 	cp -f $< $@
-$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml
-	cp -f $< $@
+$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
+	$(SED_CMD) \
+'s~^modId \?=[^#]*~modId="$(MODID)"~g; '\
+'s~^version \?=[^#]*~version="$(VERSION_FULL)"~g; '\
+'s~^displayName \?=[^#]*~displayName="$(MODNAME)"~g; '\
+'s~^authors \?=[^#]*~authors="$(CREDITS)"~g; '\
+'s~^credits \?=[^#]*~credits="$(MODTHANKS)"~g; '\
+'s~^\[\[dependencies.examplemod\]\] \?[^#]*~[[dependencies.$(MODID)]]~g; '\
+	  $< > $@
+	$(SED_CMD) -i ':a;N;$$!ba;s~\n~{nl}~g; ' $@ && $(SED_CMD) -i \
+"s~{nl}description \\?= \\?'''.*{nl}'''~{nl}description='''{nl}$(MODDESC){nl}'''~g; "\
+'s~{nl}~\n~g; ' $@
+
 .PHONY: src
 src: $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
 
@@ -192,14 +225,15 @@ gradlew.bat: $(MF_DIR)/gradlew.bat gradlew
 gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
 	cp -f $< $@
 build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
-	cat $< | $(SED_CMD) \
-'s/@MAPPINGS@/$(MCP_MAPPING)/g; '\
-'s/@VERSION@/$(MF_VERSION_FULL)/g; '\
-'s/^version \?=[^/]*/version = "$(VERSION_FULL)"/g; '\
-'s/^group \?=[^/]*/group = "$(GROUP)"/g; '\
-'s/^archivesBaseName \?=[^/]*/archivesBaseName = "$(MOTID)"/g; '\
-'s:mcmod.info:META-INF/mods.toml:g; '\
-	> $@
+	$(SED_CMD) \
+'s~@MAPPINGS@~$(MCP_MAPPING)~g; '\
+'s~@VERSION@~$(MF_VERSION_FULL)~g; '\
+'s~^version \?=[^/]*~version = "$(VERSION_FULL)"~g; '\
+'s~^group \?=[^/]*~group = "$(GROUP)"~g; '\
+'s~^archivesBaseName \?=[^/]*~archivesBaseName = "$(MODID)"~g; '\
+'s~mcmod.info~META-INF/mods.toml~g; '\
+	  $< > $@
+
 .PHONY: gradle_all
 gradle_all: build.gradle
 
