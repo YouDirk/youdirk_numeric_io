@@ -198,6 +198,7 @@ build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
 's/^version \?=[^/]*/version = "$(VERSION_FULL)"/g; '\
 's/^group \?=[^/]*/group = "$(GROUP)"/g; '\
 's/^archivesBaseName \?=[^/]*/archivesBaseName = "$(MOTID)"/g; '\
+'s:mcmod.info:META-INF/mods.toml:g; '\
 	> $@
 .PHONY: gradle_all
 gradle_all: build.gradle
