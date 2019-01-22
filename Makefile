@@ -240,12 +240,19 @@ $(MAVEN_FORGE_DIR)/maven-metadata-local.xml: \
 	  version_old=`basename $$($(FIND_CMD) $(MAVEN_FORGE_DIR) \
 	                             -name "*$$branch")`; \
 	  version_new=`echo $$version_old | sed "s/-$$branch/.0-youdirk/"`; \
+	  if test -d $(MAVEN_FORGE_DIR)/$$version_new; then \
+	    $(SED_CMD) -i "s~^.*<version>$$version_old</version>.*$$~~g; \
+	                   /^$$/d;" $@; \
+	    rm -rf $(MAVEN_FORGE_DIR)/$$version_new; \
+	  fi; \
+	  $(SED_CMD) -i "s~$$version_old~$$version_new~g" $@; \
+	  $(SED_CMD) -i "s~$$version_old~$$version_new~g" \
+	    $(MAVEN_FORGE_DIR)/$$version_old/*$$version_old.pom; \
 	  for i in $(MAVEN_FORGE_DIR)/$$version_old/*; do \
 	    mv -f $$i `echo $$i | $(SED_CMD) \
 	      "s~-$$version_old\([-\.][a-z]\)~-$$version_new\1~"`; \
 	  done; \
 	  mv -f $(MAVEN_FORGE_DIR)/$$version_old $(MAVEN_FORGE_DIR)/$$version_new; \
-	  $(SED_CMD) -i "s/$$version_old/$$version_new/g" $@; \
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
 	cp -f $< $@
