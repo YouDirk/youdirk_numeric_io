@@ -164,7 +164,9 @@ MF_MDK_DIR = $(MF_DIR)/mdk
 MF_RESOURCES_DIR = $(MF_MDK_DIR)/$(RESOURCES_DIR)
 MF_METAINF_DIR = $(MF_MDK_DIR)/$(METAINF_DIR)
 
-MAVEN_DIR = maven
+DOCS_DIR = docs
+
+MAVEN_DIR = $(DOCS_DIR)/maven
 MAVEN_FORGE_DIR = $(MAVEN_DIR)/net/minecraftforge/forge
 
 # ********************************************************************
@@ -182,7 +184,7 @@ all: gradle_all src
 
 .PHONY: setup_decomp_workspace
 setup_decomp_workspace: gradle_all src
-	./gradlew --stacktrace -Dmaven.repo.local=./minecraft_forge/repos setupDecompWorkspace
+	./gradlew --stacktrace setupDecompWorkspace
 
 .PHONY: setup%
 setup%: gradle_all src
