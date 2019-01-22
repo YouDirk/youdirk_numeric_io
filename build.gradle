@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.12.2-0.0.0.1-pre"
+version = "1.13-0.0.0.1-pre"
 group = "net.dj_l.youdirk_numeric_io"// http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "youdirk_numeric_io"
 
@@ -21,7 +21,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2808"
+    version = "1.13-24.0.96.0-youdirk"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -29,7 +29,7 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "stable_39"
+    mappings = "stable_43"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
