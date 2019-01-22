@@ -21,3 +21,4 @@
 
 # Build stuff
 /.gradle
+/build

@@ -16,11 +16,30 @@
 
 # Configuration
 
-# Mincraft Forge branch/commit from which will be bootstraped
-MINECRAFT_FORGE_BRANCH = 1.13-pre
-
 # (optional) JAVA_HOME path, if not automatically detected
 JDK_PATH =
+
+# YouDirk Numeric I/O Version (without Minecraft Version)
+#   Take a look to the conventions for versioning
+#   <https://mcforge.readthedocs.io/en/latest/conventions/versioning/>
+VERSION = 0.0.0.1-pre
+
+# Dependency Version stuff
+MC_VERSION = 1.12.2
+MF_VERSION = 14.23.5.2808
+MCP_MAPPING_CHANNEL = stable
+MCP_MAPPING_VERSION = 39
+
+# Mincraft Forge branch/commit from which will be bootstraped
+MF_BRANCH = 1.13-pre
+
+# Mincraft Forge branch/commit from which will be bootstraped
+# if current development is too heavily
+MF_FALLBACK_BRANCH = origin/1.12.x
+
+# Inodes (files, directories, etc) relative to MINECRAFT_FORGE
+# directory which will be using fallback versions
+MF_FALLBACK_INODES = mdk/build.gradle mdk/gradle.properties
 
 # End of Configuration
 # ********************************************************************
@@ -98,6 +117,16 @@ endif
 # ********************************************************************
 # Variable definitions
 
+VERSION_FULL = $(MC_VERSION)-$(VERSION)
+
+# Conventions here
+#   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
+MOTID = youdirk_numeric_io
+GROUP = net.dj_l.$(MOTID)
+
+MCP_MAPPING = $(MCP_MAPPING_CHANNEL)_$(MCP_MAPPING_VERSION)
+MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
+
 RESOURCES_DIR = src/main/resources
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
 
@@ -117,8 +146,24 @@ JAVA_HOME := $(MY_JAVA_HOME)
 
 # TODO ... Just for tests ...
 .PHONY: all
-all: gradlew.bat src
+all: gradle_all src
+	./gradlew --stacktrace setupDecompWorkspace
+
+.PHONY: setup_decomp_workspace
+setup_decomp_workspace: gradle_all src
 	./gradlew setupDecompWorkspace
+.PHONY: setup%
+setup%: gradle_all src
+	./gradlew $@
+
+.PHONY: jdk_version
+jdk_version:
+	javac -version
+
+.PHONY: bootstrap
+bootstrap: minecraft_forge gradle_all src
+
+# ********************************************************************
 
 .PHONY: minecraft_forge
 minecraft_forge:
@@ -126,36 +171,36 @@ minecraft_forge:
 .PHONY: _minecraft_forge
 _minecraft_forge:
 	$(GIT_CMD) submodule update --init $(MF_DIR)
-	cd $(MF_DIR) && $(GIT_CMD) checkout $(MINECRAFT_FORGE_BRANCH) \
-	  && $(GIT_CMD) pull --rebase
+	cd $(MF_DIR) && $(GIT_CMD) checkout -f $(MF_BRANCH) \
+	  && $(GIT_CMD) pull -f --rebase \
+	  $(foreach INODE,$(MF_FALLBACK_INODES), \
+	      && $(GIT_CMD) checkout $(MF_FALLBACK_BRANCH) -- $(INODE))
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
 	cp -f $< $@
-$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml \
-                          $(RESOURCES_DIR)/pack.mcmeta
+$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml
 	cp -f $< $@
 .PHONY: src
-src: $(METAINF_DIR)/mods.toml
+src: $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
 
 gradle: $(MF_DIR)/gradle
 	cp -rf $< $@
-gradle.properties: $(MF_MDK_DIR)/gradle.properties
-	cp -f $< $@
-build.gradle: $(MF_MDK_DIR)/build.gradle
-	cp -f $< $@
-gradlew: $(MF_DIR)/gradlew gradle gradle.properties build.gradle
+gradlew: $(MF_DIR)/gradlew gradle
 	cp -f $< $@
 gradlew.bat: $(MF_DIR)/gradlew.bat gradlew
 	cp -f $< $@
-
-.PHONY: bootstrap
-bootstrap: minecraft_forge gradlew.bat src
-
-.PHONY: clean_bootstrap
-clean_bootstrap:
-	-rm -f build.gradle gradle.properties
-	-rm -rf gradle gradlew{,.bat}
-	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
+gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
+	cp -f $< $@
+build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
+	cat $< | $(SED_CMD) \
+'s/@MAPPINGS@/$(MCP_MAPPING)/g; '\
+'s/@VERSION@/$(MF_VERSION_FULL)/g; '\
+'s/^version \?=[^/]*/version = "$(VERSION_FULL)"/g; '\
+'s/^group \?=[^/]*/group = "$(GROUP)"/g; '\
+'s/^archivesBaseName \?=[^/]*/archivesBaseName = "$(MOTID)"/g; '\
+	> $@
+.PHONY: gradle_all
+gradle_all: build.gradle
 
 .PHONY: mf_deinit
 mf_deinit:
@@ -164,21 +209,23 @@ mf_deinit:
 _mf_deinit:
 	$(GIT_CMD) submodule deinit $(MF_DIR)
 
-.PHONY: jdk_version
-jdk_version:
-	javac -version
-
 # ********************************************************************
+
+.PHONY: clean
+clean: _clean_bak
+	-rm -rf .gradle build
+
+.PHONY: clean_all
+clean_all: clean clean_bootstrap
 
 .PHONY: _clean_bak
 _clean_bak:
 	-rm -f $(shell $(FIND_CMD) . -name '*~')
 
-.PHONY: clean
-clean: _clean_bak
-	-rm -rf .gradle
-
-.PHONY: clean_all
-clean_all: clean clean_bootstrap
+.PHONY: clean_bootstrap
+clean_bootstrap:
+	-rm -f build.gradle gradle.properties
+	-rm -rf gradle gradlew{,.bat}
+	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
 # ********************************************************************
