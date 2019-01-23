@@ -1,3 +1,6 @@
+---
+---
+
 /* This file is part of the `youdirk_numeric_io` Minecraft mod
  * Copyright (C) 2019  Dirk "YouDirk" Lehmann
  *
@@ -21,7 +24,7 @@
     // List all versions of your mod for the given Minecraft version, along with their changelogs
     // TODO
   },
-  ...
+
   "promos": {
     "<mcversion>-latest": "<modversion>",
     // Declare the latest "bleeding-edge" version of your mod for the given Minecraft version
