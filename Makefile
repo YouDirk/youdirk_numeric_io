@@ -130,9 +130,11 @@ VERSION_FULL = $(MC_VERSION)-$(VERSION)
 # Display name of the mod
 MODNAME = YouDirk Numeric I/O
 
+MODDESC_ONELINE = This is the official $(MODNAME) Minecraft mod \
+                  'youdirk_numeric_io'.
+
 # Mult-line description of the mod
-MODDESC = \
-This is the official $(MODNAME) Minecraft mod 'youdirk_numeric_io'. \
+MODDESC = $(MODDESC_ONELINE) \
 It adds to the game\n\
 \n\
 * Blocks which are outputing decimal (and hexadecimal) numbers to \
@@ -245,8 +247,12 @@ $(MAVEN_FORGE_DIR)/maven-metadata.xml: \
 	cd $(MF_DIR) && ./gradlew setup :forge:licenseFormat \
 	  :forge:publish
 
-$(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
-	cp -f $< $@
+$(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta Makefile
+	$(SED_CMD) \
+'s~^\([ \t]*\)"description" \?:.*"~\1"description": "$(MODDESC_ONELINE)'\
+'"~g; '\
+	  $< > $@
+
 $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
 	$(SED_CMD) \
 's~^updateJSONURL \?=[^#]*~updateJSONURL="$(UPDATE_JSON_URL)"~g; '\
