@@ -23,7 +23,7 @@
   "<mcversion>": {
     "<modversion>": "<changelog for this version>",
     "_comment": "List all versions of your mod for the given Minecraft version, along with their changelogs",
-    "_comment": "TODO",
+    "_comment": "TODO"
 
   },
 
@@ -34,7 +34,7 @@
     "_comment": "Declare the latest 'bleeding-edge' version of your mod for the given Minecraft version",
 
     "<mcversion>-recommended": "<modversion>",
-    "_comment":"Declare the latest 'stable' version of your mod for the given Minecraft version"
-    "_comment": "TODO",
+    "_comment":"Declare the latest 'stable' version of your mod for the given Minecraft version",
+    "_comment": "TODO"
   }
 }
