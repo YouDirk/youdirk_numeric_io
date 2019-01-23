@@ -29,3 +29,4 @@ github:
 numeric_io:
   version_stable: 1.13.2-0.0.0.1-dummy
   github_url: https://github.com/YouDirk/youdirk_numeric_io
+  website_url: https://youdirk.github.io/youdirk_numeric_io

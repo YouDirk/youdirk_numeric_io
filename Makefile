@@ -170,6 +170,11 @@ MAVEN_FORGE_DIR = $(MAVEN_DIR)/net/minecraftforge/forge
 MF_GROUP = net.minecraftforge
 MF_NAME = forge
 
+LOGO_FILE = youdirk_numeric_io.png
+WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
+BUGTRACKING_URL = https://github.com/YouDirk/youdirk_numeric_io/issues
+UPDATE_JSON_URL = $(WEBSITE_URL)/releases/update.json
+
 # ********************************************************************
 # Environment variables
 
@@ -183,6 +188,14 @@ JAVA_HOME := $(MY_JAVA_HOME)
 all: gradle_all src
 	./gradlew classes
 
+.PHONY: run_client
+run_client: gradle_all src
+	./gradlew runClient
+
+.PHONY: run_server
+run_server: gradle_all src
+	./gradlew runServer
+
 .PHONY: build
 build: gradle_all src
 	./gradlew build
@@ -193,7 +206,7 @@ classes: gradle_all src
 
 .PHONY: clean
 clean: _clean_bak
-	-rm -rf .gradle build
+	-rm -rf .gradle build run
 
 .PHONY: jdk_version
 jdk_version:
@@ -237,6 +250,10 @@ $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
 	cp -f $< $@
 $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
 	$(SED_CMD) \
+'s~^updateJSONURL \?=[^#]*~updateJSONURL="$(UPDATE_JSON_URL)"~g; '\
+'s~^issueTrackerURL \?=[^#]*~issueTrackerURL="$(BUGTRACKING_URL)"~g; '\
+'s~^displayURL \?=[^#]*~displayURL="$(WEBSITE_URL)"~g; '\
+'s~^logoFile \?=[^#]*~logoFile="$(LOGO_FILE)"~g; '\
 's~^modId \?=[^#]*~modId="$(MODID)"~g; '\
 's~^version \?=[^#]*~version="$(VERSION_FULL)"~g; '\
 's~^displayName \?=[^#]*~displayName="$(MODNAME)"~g; '\

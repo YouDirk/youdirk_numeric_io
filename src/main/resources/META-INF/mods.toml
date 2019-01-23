@@ -8,13 +8,13 @@ modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[24,)" #mandatory (24 is current forge version)
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="http://myurl.me/" #optional
+updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json"#optional
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="http://my.issue.tracker/" #optional
+issueTrackerURL="https://github.com/YouDirk/youdirk_numeric_io/issues"#optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="http://example.com/" #optional
+displayURL="https://youdirk.github.io/youdirk_numeric_io"#optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+logoFile="youdirk_numeric_io.png"#optional
 # A text field displayed in the mod UI
 credits="To the MCP team and the Forge programmers to make it possible to ez programming Minecraft mods :)"#optional
 # A text field displayed in the mod UI
