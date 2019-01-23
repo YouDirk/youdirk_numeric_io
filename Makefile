@@ -236,15 +236,14 @@ _minecraft_forge:
 	      && $(GIT_CMD) checkout $(MF_FALLBACK_BRANCH) -- $(INODE))
 
 $(MAVEN_FORGE_DIR)/maven-metadata.xml: \
-  $(MAVEN_FORGE_DIR)/maven-metadata-local.xml
-	cp -f $< $@
-
-$(MAVEN_FORGE_DIR)/maven-metadata-local.xml: \
-  .git/modules/$(MF_DIR)/HEAD .git/modules/$(MF_DIR)/FETCH_HEAD
-	$(SED_CMD) -i 's/$(MF_GROUP).test/$(MF_GROUP)/g' \
+  .git/modules/$(MF_DIR)/HEAD .git/modules/$(MF_DIR)/FETCH_HEAD \
+  $(MF_DIR)/build.gradle
+	$(SED_CMD) -i "s~$(MF_GROUP).test~$(MF_GROUP)~g; "\
+"s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + "\
+"rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; "\
 	  $(MF_DIR)/build.gradle
-	cd $(MF_DIR) && ./gradlew -Dmaven.repo.local=../$(MAVEN_DIR) \
-	  setup :forge:licenseFormat :forge:publishToMavenLocal
+	cd $(MF_DIR) && ./gradlew setup :forge:licenseFormat \
+	  :forge:publish
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta
 	cp -f $< $@
