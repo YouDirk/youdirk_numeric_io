@@ -7,7 +7,7 @@
     "This is the changelog of this build.",
     "This is line 2 ...",
     "And so on ... :)"
-  ]
+  ],
   "Jar (Installer)": {
     "name": "forge-1.13-24.0.97-1.13-pre-installer.jar",
     "maven-url": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar",
