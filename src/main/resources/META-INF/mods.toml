@@ -24,36 +24,34 @@ authors="Dirk (YouDirk) Lehmann"#optional
 # The modid of the mod
 modId="youdirk_numeric_io"#mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.13-0.0.0.1-pre"#mandatory
+version="1.13-0.0.0.1-dummy"#mandatory
  # A display name for the mod
 displayName="YouDirk Numeric I/O"#mandatory
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This is the official YouDirk Numeric I/O Minecraft mod 'youdirk_numeric_io'. It adds to the game
+This mod adds:
  
- * Blocks which are outputing decimal (and hexadecimal) numbers to represent the connected binary encoded Redstone Wires
- 
- * Blocks which you can input a number (by right clicking on it). These will be encoded to binary and outputed to the connected Redstone Wires
- 
- * Negative values (Two\'s Complement encoding) are supported
+ * Blocks which are outputing (hexa-)decimal numbers
+ * Blocks which you can input a number
+ * Negative values (Two\'s Complements) are supported
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.youdirk_numeric_io]]#optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[24,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
-    ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
-    side="BOTH"
-# Here's another dependency
-[[dependencies.youdirk_numeric_io]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.13]"
-    ordering="NONE"
-    side="BOTH"
+#[[dependencies.youdirk_numeric_io]]#optional
+#    # the modid of the dependency
+#    modId="forge" #mandatory
+#    # Does this dependency have to exist - if not, ordering below must be specified
+#    mandatory=true #mandatory
+#    # The version range of the dependency
+#    versionRange="[24,)" #mandatory
+#    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+#    ordering="NONE"
+#    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+#    side="BOTH"
+## Here's another dependency
+#[[dependencies.youdirk_numeric_io]]
+#    modId="minecraft"
+#    mandatory=true
+#    versionRange="[1.13]"
+#    ordering="NONE"
+#    side="BOTH"

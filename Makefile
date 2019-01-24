@@ -22,7 +22,7 @@ JDK_PATH =
 # YouDirk Numeric I/O Version (without Minecraft Version)
 #   Take a look to the conventions for versioning
 #   <https://mcforge.readthedocs.io/en/latest/conventions/versioning/>
-VERSION = 0.0.0.1-pre
+VERSION = 0.0.0.1-dummy
 
 # Dependency Version stuff
 MC_VERSION = 1.13
@@ -134,17 +134,11 @@ MODDESC_ONELINE = This is the official $(MODNAME) Minecraft mod \
                   'youdirk_numeric_io'.
 
 # Mult-line description of the mod
-MODDESC = $(MODDESC_ONELINE) \
-It adds to the game\n\
+MODDESC = This mod adds:\n\
 \n\
-* Blocks which are outputing decimal (and hexadecimal) numbers to \
-  represent the connected binary encoded Redstone Wires\n\
-\n\
-* Blocks which you can input a number (by right clicking on it). \
-  These will be encoded to binary and outputed to the connected \
-  Redstone Wires\n\
-\n\
-* Negative values (Two\\\'s Complement encoding) are supported
+* Blocks which are outputing (hexa-)decimal numbers\n\
+* Blocks which you can input a number\n\
+* Negative values (Two\\\'s Complements) are supported
 
 # Credits of the mod
 MODTHANKS = To the MCP team and the Forge programmers to make it \
