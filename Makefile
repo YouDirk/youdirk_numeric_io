@@ -75,6 +75,18 @@ ifneq (,$(TEST_GIT))
   endif
 endif
 
+BROWSER_CMD = "$(call _CMD_TEST,/usr/bin/firefox)"
+ifeq ("",$(BROWSER_CMD))
+  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Mozilla\ Firefox/firefox.exe)" 
+endif
+ifeq ("",$(BROWSER_CMD))
+  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Internet\ Explorer/iexplore.exe)" 
+endif
+ifeq ("",$(BROWSER_CMD))
+  $(warning BROWSER command not found!  Using Microsoft Edge)
+  BROWSER_CMD = /c/windows/explorer.exe microsoft-edge:
+endif
+
 # --------------------------------------------------------------------
 # Find JDK installation
 
@@ -96,6 +108,7 @@ ifneq (,$(call _JDK_FOUND,$(JDK_PATH)))
 else ifneq (,$(call _JDK_FOUND,$(JAVA_HOME)))
   # JAVA_HOME environment variable set
   MY_JAVA_HOME = $(JAVA_HOME)
+
 else ifneq (,$(call _CMD_TEST,javac))
   # JAVAC in PATH found, set JAVA_HOME:=(empty)
   MY_JAVA_HOME =
@@ -125,6 +138,9 @@ endif
 # ********************************************************************
 # Variable definitions
 
+# win_path_escaped _2WINPATH_ESCAPE(unix_path)
+_2WINPATH = $(shell echo $(1) | $(SED_CMD) 's~^/\(.\)/~\1:/~;s~ ~\\ ~g')
+
 VERSION_FULL = $(MC_VERSION)-$(VERSION)
 
 # Display name of the mod
@@ -149,22 +165,29 @@ MODTHANKS = To the MCP team and the Forge programmers to make it \
 MODID = youdirk_numeric_io
 GROUP = net.dj_l.$(MODID)
 
-MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
-
+BUILD_DIR = build
 RESOURCES_DIR = src/main/resources
+JAVA_DIR = src/main/java
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
+JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
+
+JAVA_FILES = $(shell $(FIND_CMD) $(JAVA_DIR) -name '*.java')
+
+MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
+MF_GROUP = net.minecraftforge
+MF_NAME = forge
 
 MF_DIR = minecraft_forge
 MF_MDK_DIR = $(MF_DIR)/mdk
 MF_RESOURCES_DIR = $(MF_MDK_DIR)/$(RESOURCES_DIR)
 MF_METAINF_DIR = $(MF_MDK_DIR)/$(METAINF_DIR)
 
+MF_SUBFORGE_DIR = $(MF_DIR)/projects/forge
+MF_JAVADOC_DIR = $(MF_SUBFORGE_DIR)/$(JAVADOC_DIR)
+
 DOCS_DIR = docs
 MAVEN_DIR = $(DOCS_DIR)/maven
-
-MAVEN_FORGE_DIR = $(MAVEN_DIR)/net/minecraftforge/forge
-MF_GROUP = net.minecraftforge
-MF_NAME = forge
+MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(subst .,/,$(MF_GROUP))/$(MF_NAME)
 
 LOGO_FILE = youdirk_numeric_io.png
 WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
@@ -184,6 +207,10 @@ JAVA_HOME := $(MY_JAVA_HOME)
 all: gradle_all src
 	./gradlew classes
 
+.PHONY: classes
+classes: gradle_all src
+	./gradlew classes
+
 .PHONY: run_client
 run_client: gradle_all src
 	./gradlew runClient
@@ -196,13 +223,19 @@ run_server: gradle_all src
 build: gradle_all src
 	./gradlew build
 
-.PHONY: classes
-classes: gradle_all src
-	./gradlew classes
+.PHONY: javadoc
+javadoc: gradle_all src $(JAVADOC_DIR)/index.html
+	$(BROWSER_CMD)file:///$(call \
+	  _2WINPATH,$(PWD)/$(JAVADOC_DIR)/index.html) || true
+
+.PHONY: mf_javadoc
+mf_javadoc: gradle_all src $(MF_JAVADOC_DIR)/index.html
+	$(BROWSER_CMD)file:///$(call \
+	  _2WINPATH,$(PWD)/$(MF_JAVADOC_DIR)/index.html) || true
 
 .PHONY: clean
 clean: _clean_bak
-	-rm -rf .gradle build run
+	-rm -rf .gradle $(BUILD_DIR) run
 
 .PHONY: jdk_version
 jdk_version:
@@ -231,15 +264,15 @@ _minecraft_forge:
 	  $(foreach INODE,$(MF_FALLBACK_INODES), \
 	      && $(GIT_CMD) checkout $(MF_FALLBACK_BRANCH) -- $(INODE))
 
-$(MAVEN_FORGE_DIR)/maven-metadata.xml: \
-  .git/modules/$(MF_DIR)/HEAD .git/modules/$(MF_DIR)/FETCH_HEAD \
-  $(MF_DIR)/build.gradle
+$(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
+  .git/modules/$(MF_DIR)/FETCH_HEAD
 	$(SED_CMD) -i "s~$(MF_GROUP).test~$(MF_GROUP)~g; "\
 "s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + "\
-"rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; "\
-	  $(MF_DIR)/build.gradle
-	cd $(MF_DIR) && ./gradlew setup :forge:licenseFormat \
-	  :forge:publish
+"rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; " $@
+
+$(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
+	cd $(MF_DIR) \
+	  && ./gradlew setup :forge:licenseFormat :forge:publish
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta Makefile
 	$(SED_CMD) \
@@ -303,6 +336,13 @@ mf_deinit:
 .PHONY: _mf_deinit
 _mf_deinit:
 	$(GIT_CMD) submodule deinit $(MF_DIR)
+
+$(JAVADOC_DIR)/index.html: $(JAVA_FILES)
+	./gradlew javadoc && touch $(JAVADOC_DIR)/index.html
+
+$(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
+	cd $(MF_DIR) \
+	  && ./gradlew setup :forge:licenseFormat :forge:javadoc || true
 
 # ********************************************************************
 
