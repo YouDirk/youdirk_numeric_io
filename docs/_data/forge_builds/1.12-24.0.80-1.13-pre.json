@@ -1,0 +1,27 @@
+---
+categories: [forge-1.12]
+tags: [dev-build]
+---
+{
+  "Realease date": "2019-01-24",
+  "Realease time": "23:56:21+01:00",
+  "Minecraft version": "1.12",
+  "Minecraft Forge version": "1.12-24.0.80-1.13-pre",
+  "changelog": [
+    "This is the changelog of this build.",
+    "This is line 2 ...",
+    "And so on ... :)"
+  ]
+  "Jar (Installer)": {
+    "name": "forge-1.12-24.0.80-1.13-pre-installer.jar",
+    "maven-url": "net/minecraftforge/forge/1.12-24.0.80-1.13-pre/forge-1.12-24.0.80-1.13-pre-installer.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.12-24.0.80-1.13-pre/forge-1.12-24.0.80-1.13-pre-installer.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.12-24.0.80-1.13-pre/forge-1.12-24.0.80-1.13-pre-installer.jar.sha1"
+  },
+  "Jar (Universal)": {
+    "name": "forge-1.12-24.0.80-1.13-pre-universal.jar",
+    "maven-url": "net/minecraftforge/forge/1.12-24.0.80-1.13-pre/forge-1.12-24.0.80-1.13-pre-universal.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.12-24.0.80-1.13-pre/forge-1.12-24.0.80-1.13-pre-universal.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.12-24.0.80-1.13-pre/forge-1.12-24.0.80-1.13-pre-universal.jar.sha1"
+  }
+}
