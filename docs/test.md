@@ -20,11 +20,11 @@ permalink: /test/
     }})  
     `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_universal.maven-sha1 }} %}`
 
-      Changelog
-      *********
-      
-      {% for line in build.changelog %}{{ line }}
-      {% endfor %}
+        Changelog
+        *********
+        
+        {% for line in build.changelog %}{{ line }}
+        {% endfor %}
 {% endfor %}
 
 ```
