@@ -20,7 +20,7 @@
 #
 {% endcomment %}
 
-(% assign promo = nil %}
+{% comment %}
 {% for promo_vec in site.data.forge_promos %}
 {%   if build.mf_version == promo_vec[0] %}
 (%     assign promo = promo_vec[1] %}
@@ -28,6 +28,7 @@
 {%   endif %}
 {% endfor %}
 {% if include.show_nopromo or promo %}
+{% endcomment %}
 **{% if promo
   %}[{{ promo }}] {%
 endif %}Minecraft Forge build version {{ include.build.mf_version }}**  
