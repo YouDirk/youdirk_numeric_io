@@ -55,7 +55,7 @@ the latest stable from the official Minecraft Forge website
 {% assign fb_sorted_hash = site.data.forge_builds | sort %}
 {% for build_hash in fb_sorted_hash reversed %}
 {%   assign build = build_hash[1] %}
-{%   include mf_item.md build=build %}
+{%   include mf_item.md build=build show_nopromo=false %}
 {% endfor %}
 <span class="more">...  
 [< Show all Minecraft Forge builds >](minecraft-forge-all)</span>
