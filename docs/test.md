@@ -4,7 +4,7 @@ permalink: /test/
 
 ## All forge builds
 
-{% site.data.forge_builds | sort 0, "last" %}
+{% site.data.forge_builds | sort: 0, "last" %}
 {% for build_hash in site.data.forge_builds %}
 {% assign build = build_hash[1] %}
 
