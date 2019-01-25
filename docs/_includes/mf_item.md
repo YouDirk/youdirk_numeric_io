@@ -25,11 +25,13 @@
   for tag in include.build.tags %} <span class="mf_item_tag">{{
     tag }}</span>{%
   endfor %}.</span>  
-[Installer ({{ include.build.jar_installer.name }})]({{
+<span class="mf_item_link">[Installer ({{
+  include.build.jar_installer.name
+}})]({{
 site.numeric_io.github_maven_url }}/{{
   include.build.jar_installer.maven-url
 }}),
 [Universal ({{ include.build.jar_universal.name }})]({{
 site.numeric_io.github_maven_url }}/{{
   include.build.jar_universal.maven-url
-}})
+}})</span>
