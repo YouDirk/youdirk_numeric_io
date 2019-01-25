@@ -42,6 +42,35 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 * **[Download stable YouDirk Numeric I/O {{ site.numeric_io.version_stable }}
      (TAR.GZ)]({{ site.github.tar_url }})**
 
+### Download Minecraft Forge
+
+We are poviding some **unstable development** builds of Minecraft
+Forge which you can download.  But we are highly recommend to download
+the latest stable from the official Minecraft Forge website
+
+* **[Download official STABLE from Forge website
+  ](https://files.minecraftforge.net/)**
+
+{% for build_hash in site.data.forge_builds | sort: "key", "last" %}
+{% assign build = build_hash[1] %}
+* **Minecraft Forge build version {{ build.mf_version }}**  
+  *{{ build.time | date: "%a, %e. %b %Y %R %z" }} for Minecraft {{
+    build.mc_version
+  }}*
+  - **[Download Installer {{ build.jar_installer.name }}]({{
+    site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url
+    }})**  
+    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{
+      build.jar_installer.maven-sha1
+    }} %}`
+  - **[Download Universal {{ build.jar_universal.name }}]({{
+    site.numeric_io.github_maven_url }}/{{ build.jar_universal.maven-url
+    }})**  
+    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{
+      build.jar_universal.maven-sha1
+    }} %}`
+{% endfor %}
+
 Install
 -------
 

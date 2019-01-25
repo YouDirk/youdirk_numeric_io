@@ -2,11 +2,6 @@
   "time": "2018-01-25T08:11:18+01:00",
   "mc_version": "1.12",
   "mf_version": "1.12-14.0.97-1.12-pre",
-  "changelog": [
-    "This is the changelog of this build.",
-    "This is line 2 ...",
-    "And so on ... :)"
-  ],
   "jar_installer": {
     "name": "forge-1.12-14.0.97-1.12-pre-installer.jar",
     "maven-url": "net/minecraftforge/forge/1.12-14.0.97-1.12-pre/forge-1.12-14.0.97-1.12-pre-installer.jar",
