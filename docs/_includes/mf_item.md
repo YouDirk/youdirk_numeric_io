@@ -18,13 +18,13 @@
 
 **Minecraft Forge build version {{ include.build.mf_version }}**  
 <span class="mf_item_stats">{{
-  include.build.time | date: "%a, %e. %b %Y %R %Z"
+  include.build.time | date: "%a, %e. %b %Y %R %z"
 }} for Minecraft {{
   include.build.mc_version
 }} -- __tags:__ {%
   for tag in include.build.tags %} <span class="mf_item_tag">{{
     tag }}</span>{%
-  endfor %}.</span>  
+  endfor %}</span>  
 <span class="mf_item_link">[Installer ({{
   include.build.jar_installer.name
 }})]({{
