@@ -59,7 +59,7 @@ the latest stable from the official Minecraft Forge website
 
 {% comment %}
 {% assign build = build_hash[1] %}
-{% comment %}
+{% endcomment %}
 
 {% include mf_item.md build=build %}
 {% endfor %}
