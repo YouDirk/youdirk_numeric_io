@@ -67,12 +67,18 @@ span.mf_item_tag {
   padding: 3px;
   spacing: 2px;
   font-weight: bold;
+  font-color: #202020;
 }
 
 span.more {
+  display: block;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  font-size: 90%;
+  font-size: 85%;
+  font-weight: bold;
+}
+span.more a {
+  font-size: 85%;
   font-weight: bold;
 }
