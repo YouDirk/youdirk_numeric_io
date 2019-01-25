@@ -4,15 +4,15 @@
   "mf_version": "1.12-14.12.93-1.13-dummy",
   "tags": ["unstable", "development"],
   "jar_installer": {
-    "name": "forge-1.13-24.0.97-1.13-pre-installer.jar",
-    "maven-url": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar",
-    "maven-sha1": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar.sha1",
-    "maven-md5": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar.md5"
+    "name": "forge-1.12-14.12.93-1.13-dummy-installer.jar",
+    "maven-url": "net/minecraftforge/forge/1.12-14.12.93-1.13-dummy/forge-1.13-24.0.97-1.13-pre-installer.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.12-14.12.93-1.13-dummy/forge-1.13-24.0.97-1.13-pre-installer.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.12-14.12.93-1.13-dummy/forge-1.13-24.0.97-1.13-pre-installer.jar.md5"
   },
   "jar_universal": {
-    "name": "forge-1.13-24.0.97-1.13-pre-universal.jar",
-    "maven-url": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-universal.jar",
-    "maven-sha1": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-universal.jar.sha1",
-    "maven-md5": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-universal.jar.md5"
+    "name": "forge-1.12-14.12.93-1.13-dummy-universal.jar",
+    "maven-url": "net/minecraftforge/forge/1.12-14.12.93-1.13-dummy/forge-1.13-24.0.97-1.13-pre-universal.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.12-14.12.93-1.13-dummy/forge-1.13-24.0.97-1.13-pre-universal.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.12-14.12.93-1.13-dummy/forge-1.13-24.0.97-1.13-pre-universal.jar.md5"
   }
 }
