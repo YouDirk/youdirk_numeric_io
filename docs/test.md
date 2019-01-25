@@ -4,7 +4,7 @@ permalink: /test/
 
 ## All forge builds
 
-{% assign builds_ordered = site.data.forge_builds | sort_natural | reverse %}
+{% assign builds_ordered = site.data.forge_builds | sort_natural %}
 
 {% for build_hash in builds_ordered %}
 {% assign build = build_hash[1] %}
