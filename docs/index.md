@@ -55,7 +55,8 @@ the latest stable from the official Minecraft Forge website
 {% assign fb_sorted_hash = site.data.forge_builds | sort %}
 {% for build_hash in fb_sorted_hash reversed %}
 {%   assign build = build_hash[1] %}
-{%   for promo_version in site.data.forge_promos.mf_versions %}
+{%   for promo_version in site.data.forge_promos.mf_versions | inspect %}
+{{ promo_version }}
 {%     if build.mf_version == promo_version %}
 {%       include mf_item.md build=build promo=promo_version %}
 {%       break %}
