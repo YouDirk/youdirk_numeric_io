@@ -22,7 +22,7 @@
 
 {% for promo_vec in site.data.forge_promos %}
 {%   if build.mf_version == promo_vec[0] %}
-(%     assign promo = promo_vec[1] %}
+{%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}
 {% endfor %}
