@@ -1,3 +1,4 @@
+---
 {% comment %}
 # This file is part of the `youdirk_numeric_io` Minecraft mod
 # Copyright (C) 2019  Dirk "YouDirk" Lehmann
@@ -16,20 +17,26 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-**Minecraft Forge build version {{ include.build.mf_version }}**  
-_<div class="mf_item_stats">{{
-  include.build.time | date: "%a, %e. %b %Y %R %Z"
-}} for Minecraft {{
-  include.build.mc_version
-}} -- __tags:__ {%
-  for tag in include.build.tags %} <span class="mf_item_tag">{{
-    tag }}</span>{%
-  endfor %}.</div>_  
-[Installer ({{ include.build.jar_installer.name }})]({{
-site.numeric_io.github_maven_url }}/{{
-  include.build.jar_installer.maven-url
-}}),
-[Universal ({{ include.build.jar_universal.name }})]({{
-site.numeric_io.github_maven_url }}/{{
-  include.build.jar_universal.maven-url
-}})
+permalink: /minecraft-forge-all/
+
+---
+
+Minecraft Forge development builds
+----------------------------------
+
+We are poviding some **unstable development** builds of Minecraft
+Forge which you can download.  But we are highly recommend to download
+the latest stable from the official Minecraft Forge website
+
+* **[Download official STABLE from Minecraft Forge website
+  ](https://files.minecraftforge.net/)**
+
+<span class="more">[Back to Home](..)</span>
+
+{% assign fb_sorted_hash = site.data.forge_builds | sort %}
+{% for build_hash in fb_sorted_hash reversed %}
+{% assign build = build_hash[1] %}
+{% include mf_item.md build=build %}
+{% endfor %}
+
+<span class="more">[Back to Home](..)</span>
