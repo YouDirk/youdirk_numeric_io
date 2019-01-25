@@ -52,9 +52,7 @@ the latest stable from the official Minecraft Forge website
   ](https://files.minecraftforge.net/)**
 
 {% assign fb_sorted_hash = site.data.forge_builds | sort %}
-{% assign fb_reversed = fb_sorted_hash | reverse %}
-{{ fb_reversed }}
-{% for build_hash in fb_reversed %}
+{% for build_hash in fb_sorted_hash reversed %}
 {% assign build = build_hash[1] %}
 {% include mf_item.md build=build %}
 {% endfor %}
