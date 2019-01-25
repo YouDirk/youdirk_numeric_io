@@ -23,11 +23,11 @@ _{{ include.build.time | date: "%a, %e. %b %Y %R %Z" }} for Minecraft {{
   for tag in include.build.tags %} <span class="mf_item_tag">{{
     tag }}</span>{%
   endfor %}._  
-[Download Installer ({{ include.build.jar_installer.name }})]({{
+[Installer ({{ include.build.jar_installer.name }})]({{
 site.numeric_io.github_maven_url }}/{{
   include.build.jar_installer.maven-url
 }}),
-[Download Universal ({{ include.build.jar_universal.name }})]({{
+[Universal ({{ include.build.jar_universal.name }})]({{
 site.numeric_io.github_maven_url }}/{{
   include.build.jar_universal.maven-url
 }})
