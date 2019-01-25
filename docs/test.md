@@ -25,6 +25,4 @@ permalink: /test/
     {{ line }}
   {% endfor %}
   ```
-{% endcomment %}
-
 {% endfor %}
