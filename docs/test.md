@@ -12,16 +12,16 @@ permalink: /test/
     build.mc_version
   }}*
   - Download Installer (JAR): [{{ build.jar_installer.name }}]({{
-    site.numeric_io.maven_path }}/{{ build.jar_installer.maven-url }})  
-{% comment %}
+    site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url }})  
     `sha1: {% include_relative
-       site.numeric_io.maven_path/build.jar_universal.maven-sha1
-     }`
+       {{ site.numeric_io.maven_path }}/{{ build.jar_universal.maven-sha1 }}
+     %}`
+{% comment %}
   - Download Universal (JAR): [{{ build.jar_universal.name }}]({{
-    site.numeric_io.maven_path }}/{{ build.jar_universal.maven-url }})  
+    site.numeric_io.github_maven_url }}/{{ build.jar_universal.maven-url }})  
     `sha1: {% include_relative
       site.numeric_io.maven_path/build.jar_universal.maven-sha1
-    }`
+    %}`
   Changelog
   ```
   {% for line in build.changelog %}
