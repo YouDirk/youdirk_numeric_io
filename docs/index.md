@@ -53,9 +53,14 @@ the latest stable from the official Minecraft Forge website
   ](https://files.minecraftforge.net/)**
 
 {% assign fb_sorted_hash = site.data.forge_builds | sort %}
-{% for build_hash in fb_sorted_hash reversed | limit:2 %}
-{% assign build = build_hash[1] %}
-{% include mf_item.md build=build %}
+{% for build_hash in fb_sorted_hash reversed %}
+{%   assign build = build_hash[1] %}
+{%   for promo_version in site.data.forge_promos.mf_versions %}
+{%     if build.mf_version == promo_version %}
+{%       include mf_item.md build=build promo=promo_version %}
+{%       break %}
+{%     endif %}
+{%   endfor %}
 {% endfor %}
 <span class="more">...  
 [< Show all Minecraft Forge builds >](minecraft-forge-all)</span>

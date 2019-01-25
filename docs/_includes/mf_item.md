@@ -16,7 +16,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-**Minecraft Forge build version {{ include.build.mf_version }}**  
+**{% if include.promo
+  %}[{{include.promo }}] {%
+endif %}Minecraft Forge build version {{ include.build.mf_version }}**  
 <span class="mf_item_stats">{{
   include.build.time | date: "%a, %e. %b %Y %R %z"
 }} for Minecraft {{
