@@ -4,7 +4,7 @@ permalink: /test/
 
 ## All forge builds
 
-{% assign builds_ordered = site.data.forge_builds | sort | reverse %}
+{% assign builds_ordered = site.data.forge_builds | sort: "mf_version", "first" %}
 {{ builds_ordered }}
 
 {% for build_hash in site.data.forge_builds %}
