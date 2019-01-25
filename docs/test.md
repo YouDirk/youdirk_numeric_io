@@ -12,11 +12,11 @@ permalink: /test/
     build.mc_version
   }}*
 
-        Changelog
-        *********
+    Changelog
+    *********
         
-        {% for line in build.changelog %}{{ line }}
-        {% endfor %}
+    {% for line in build.changelog %}{{ line }}
+    {% endfor %}
   - Download Installer (JAR): [{{ build.jar_installer.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url
     }})  
@@ -26,3 +26,11 @@ permalink: /test/
     }})  
     `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_universal.maven-sha1 }} %}`
 {% endfor %}
+
+```
+Hello Worl
+
+this is a test
+
+...
+```
