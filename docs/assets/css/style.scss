@@ -62,16 +62,17 @@ span.mf_item_stats {
 }
 
 span.mf_item_tag {
-  background-color: #92a8d1;
+  background-color: #c8dbff;
   border-radius: 5px;
-  padding: 4px;
+  padding: 3px;
   spacing: 2px;
-  font-style: oblique;
+  font-weight: bold;
 }
 
 span.more {
   margin-left: auto;
   margin-right: auto;
-  font-size: 80%;
-  font-style: oblique;
+  text-align: center;
+  font-size: 90%;
+  font-weight: bold;
 }
