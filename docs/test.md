@@ -11,13 +11,13 @@ permalink: /test/
   *{{ build.time | date: "%a, %e. %b %Y %R %z" }} for Minecraft {{
     build.mc_version
   }}*
-  - Download Installer (JAR): [{{ build.jar_installer.name }}]({{
+  - **[Download Installer {{ build.jar_installer.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url
-    }})  
+    }})**  
     `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_installer.maven-sha1 }} %}`
-  - Download Universal (JAR): [{{ build.jar_universal.name }}]({{
+  - **[Download Universal {{ build.jar_universal.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_universal.maven-url
-    }})  
+    }})**  
     `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_universal.maven-sha1 }} %}`
 
         Changelog
