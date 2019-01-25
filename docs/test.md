@@ -11,6 +11,7 @@ permalink: /test/
   *{{ build.time | date: "%a, %e. %b %Y %R %Z" }} for Minecraft {{
     build.mc_version
   }}*
+{% comment %}
   - Download Installer (JAR): [{{ build.jar_installer.name }}]({{
     site.numeric_io.maven_path }}/{{ build.jar_installer.maven-url }})  
     `sha1: {% include_relative
@@ -27,5 +28,6 @@ permalink: /test/
     {{ line }}
   {% endfor %}
   ```
+{% endcomment %}
 
 {% endfor %}
