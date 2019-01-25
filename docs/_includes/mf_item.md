@@ -14,10 +14,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Include variables: include.build, include.show_nopromo
+#
 {% endcomment %}
 
-**{% if include.promo
-  %}[{{include.promo }}] {%
+{% for promo_vec in site.data.forge_promos %}
+{%   if build.mf_version == promo_vec[0] %}
+(%     assign promo = promo_vec[1] %}
+{%     break %}
+{%   endif %}
+{% endfor %}
+{% if include.show_nopromo or promo %}
+**{% if promo
+  %}[{{ promo }}] {%
 endif %}Minecraft Forge build version {{ include.build.mf_version }}**  
 <span class="mf_item_stats">{{
   include.build.time | date: "%a, %e. %b %Y %R %z"
@@ -37,3 +48,4 @@ site.numeric_io.github_maven_url }}/{{
 site.numeric_io.github_maven_url }}/{{
   include.build.jar_universal.maven-url
 }})</span>
+{% endif %}
