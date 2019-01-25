@@ -31,8 +31,8 @@ mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Negative values** (*Two's Complement encoding*) are supported
 
-Download
---------
+## Download
+-----------
 
 You can download the current *YouDirk Numeric I/O Minecraft mod*
 `youdirk_numeric_io` stable here
@@ -43,6 +43,7 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
      (TAR.GZ)]({{ site.github.tar_url }})**
 
 ### Download Minecraft Forge
+----------------------------
 
 We are poviding some **unstable development** builds of Minecraft
 Forge which you can download.  But we are highly recommend to download
@@ -59,8 +60,8 @@ the latest stable from the official Minecraft Forge website
 <span class="more">[Show all Minecraft Forge builds
                    ](minecraft-forge-all)</span>
 
-Install
--------
+## Install
+----------
 
 To install you need *[...] TODO*
 
