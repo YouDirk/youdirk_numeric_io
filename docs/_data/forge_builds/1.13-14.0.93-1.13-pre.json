@@ -1,0 +1,18 @@
+{
+  "time": "2019-01-25T01:11:18+01:00",
+  "mc_version": "1.13",
+  "mf_version": "1.13-14.0.93-1.13-pre",
+  "tags": ["unstable", "development"],
+  "jar_installer": {
+    "name": "forge-1.13-24.0.97-1.13-pre-installer.jar",
+    "maven-url": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar.md5"
+  },
+  "jar_universal": {
+    "name": "forge-1.13-24.0.97-1.13-pre-universal.jar",
+    "maven-url": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-universal.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-universal.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-universal.jar.md5"
+  }
+}

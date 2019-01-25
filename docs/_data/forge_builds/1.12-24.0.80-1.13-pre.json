@@ -1,7 +1,7 @@
 {
   "time": "2018-01-25T08:11:18+01:00",
   "mc_version": "1.12",
-  "mf_version": "1.12-14.0.97-1.12-pre",
+  "mf_version": "1.12-24.0.80-1.13-pre",
   "tags": ["unstable", "development"],
   "jar_installer": {
     "name": "forge-1.12-14.0.97-1.12-pre-installer.jar",

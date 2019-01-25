@@ -48,7 +48,7 @@ We are poviding some **unstable development** builds of Minecraft
 Forge which you can download.  But we are highly recommend to download
 the latest stable from the official Minecraft Forge website
 
-* **[Download official STABLE from Forge website
+* **[Download official STABLE from Minecraft Forge website
   ](https://files.minecraftforge.net/)**
 
 {% for build_hash in site.data.forge_builds | sort %}
