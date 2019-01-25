@@ -10,7 +10,8 @@ permalink: /test/
 * **Minecraft Forge build version {{ build.mf_version }}**  
   *{{ build.time | date: "%a, %e. %b %Y %R %z" }} for Minecraft {{
     build.mc_version
-  }}*  
+  }}*
+
         Changelog
         *********
         
