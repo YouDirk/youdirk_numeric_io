@@ -10,15 +10,13 @@ permalink: /test/
 * **Minecraft Forge build version {{ build.mf_version }}**  
   *{{ build.time | date: "%a, %e. %b %Y %R %z" }} for Minecraft {{
     build.mc_version
-  }}*
-```text  
-Changelog
-*********
+  }}*<pre><code>
+  Changelog
+  *********
 
-{% for line in build.changelog %}{{ line }}
-{% endfor %}
-
-```
+  {% for line in build.changelog %}{{ line }}
+  {% endfor %}
+</code></pre>
   - Download Installer (JAR): [{{ build.jar_installer.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url
     }})  
