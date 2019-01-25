@@ -1,4 +1,4 @@
 {
   "1.13-24.0.97-1.13-pre": {"color": "#ffd0d0", "name": "latest-build"},
-  "1.12-24.0.80-1.13-pre": {"color": "#d0ffd8", "name": "seems-to-work"}
+  "1.12-24.0.80-1.13-dummy": {"color": "#d0ffd8", "name": "seems-to-work"}
 }
