@@ -1,4 +1,3 @@
----
 {% comment %}
 # This file is part of the `youdirk_numeric_io` Minecraft mod
 # Copyright (C) 2019  Dirk "YouDirk" Lehmann
@@ -17,23 +16,18 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
----
-
 * **Minecraft Forge build version {{ include.build.mf_version }}**  
   *{{ include.build.time | date: "%a, %e. %b %Y %R %Z" }} for Minecraft {{
     include.build.mc_version
-  }}*
-  - **[Download Installer {{ include.build.jar_installer.name }}]({{
+  }} - tags: {%
+    for tag in include.build.tags
+      %}<span>{{ tag }}</span>{%
+    endfor %}*
+  - [Download Installer {{ include.build.jar_installer.name }}]({{
     site.numeric_io.github_maven_url }}/{{
       include.build.jar_installer.maven-url
-    }})**  
-    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{
-      include.build.jar_installer.maven-sha1
-    }} %}`
+    }})
   - **[Download Universal {{ include.build.jar_universal.name }}]({{
     site.numeric_io.github_maven_url }}/{{
       include.build.jar_universal.maven-url
-    }})**  
-    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{
-      include.build.jar_universal.maven-sha1
-    }} %}`
+    }})
