@@ -31,7 +31,7 @@ the latest stable from the official Minecraft Forge website
 * **[Download official STABLE from Minecraft Forge website
   ](https://files.minecraftforge.net/)**
 
-<span class="more">[Back to Home](.)</span>
+<span class="more">[< Back to Home >](.)</span>
 
 {% assign fb_sorted_hash = site.data.forge_builds | sort %}
 {% for build_hash in fb_sorted_hash reversed %}
@@ -39,4 +39,4 @@ the latest stable from the official Minecraft Forge website
 {% include mf_item.md build=build %}
 {% endfor %}
 
-<span class="more">[Back to Home](.)</span>
+<span class="more">[< Back to Home >](.)</span>

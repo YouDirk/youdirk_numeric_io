@@ -57,7 +57,7 @@ the latest stable from the official Minecraft Forge website
 {% assign build = build_hash[1] %}
 {% include mf_item.md build=build %}
 {% endfor %}
-<span class="more">[Show all Minecraft Forge builds
+<span class="more">[< Show all Minecraft Forge builds >
                    ](minecraft-forge-all)</span>
 
 ## Install

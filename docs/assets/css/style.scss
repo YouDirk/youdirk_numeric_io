@@ -61,11 +61,17 @@ span.mf_item_stats {
   font-family: monospace;
 }
 
-span.mf_item_stats {
-  font-size: 80%;
-  font-style: italic;
+span.mf_item_tag {
+  background-color: #92a8d1;
+  border-radius: 5px;
+  padding: 4px;
+  spacing: 2px;
+  font-style: oblique;
 }
+
 span.more {
+  margin-left: auto;
+  margin-right: auto;
   font-size: 80%;
   font-style: oblique;
 }
