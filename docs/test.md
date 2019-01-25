@@ -4,6 +4,8 @@ permalink: /test/
 
 ## All forge builds
 
+{{site.data.forge_builds}}
+
 {% for build_hash in site.data.forge_builds %}
 {% assign build = build_hash[1] %}
 
@@ -11,13 +13,13 @@ permalink: /test/
   *{{ build.time | date: "%a, %e. %b %Y %R %z" }} for Minecraft {{
     build.mc_version
   }}*
-  - <b>[Download Installer {{ build.jar_installer.name }}]({{
+  - **[Download Installer {{ build.jar_installer.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url
-    }})</b>  
+    }})**  
     `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_installer.maven-sha1 }} %}`
-  - <b>[Download Universal {{ build.jar_universal.name }}]({{
+  - **[Download Universal {{ build.jar_universal.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_universal.maven-url
-    }})</b>  
+    }})**  
     `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_universal.maven-sha1 }} %}`
 
         Changelog
