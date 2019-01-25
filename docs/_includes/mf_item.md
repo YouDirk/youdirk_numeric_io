@@ -15,18 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
+
 * **Minecraft Forge build version {{ include.build.mf_version }}**  
-  *{{ include.build.time | date: "%a, %e. %b %Y %R %Z" }} for Minecraft {{
+  `{{ include.build.time | date: "%a, %e. %b %Y %R %Z" }} for Minecraft {{
     include.build.mc_version
   }} -- __tags:__ {%
     for tag in include.build.tags
       %} <span class="mf_item_tag">{{ tag }}</span>{%
-    endfor %}*  
-  [Download Installer {{ include.build.jar_installer.name }}]({{
+    endfor %}`  
+  [Download Installer: {{ include.build.jar_installer.name }}]({{
   site.numeric_io.github_maven_url }}/{{
     include.build.jar_installer.maven-url
-  }})  
-  [Download Universal {{ include.build.jar_universal.name }}]({{
+  }}),
+  [Download Universal: {{ include.build.jar_universal.name }}]({{
   site.numeric_io.github_maven_url }}/{{
     include.build.jar_universal.maven-url
   }})
