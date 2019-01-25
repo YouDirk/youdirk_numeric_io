@@ -51,7 +51,7 @@ the latest stable from the official Minecraft Forge website
 * **[Download official STABLE from Minecraft Forge website
   ](https://files.minecraftforge.net/)**
 
-{% for build_hash in site.data.forge_builds | sort %}
+{% for build_hash in site.data.forge_builds | sort: "0" %}
 {% assign build = build_hash[1] %}
 {% include mf_item.md build=build %}
 {% endfor %}
