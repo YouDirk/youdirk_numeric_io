@@ -4,10 +4,10 @@ permalink: /test/
 
 ## All forge builds
 
-{% assign builds_ordered = site.data.forge_builds | sort_natural %}
+{% assign builds_ordered = site.data.forge_builds | sort_natural | reverse %}
 {{builds_ordered}}
 
-{% for build_hash in site.data.forge_builds | sort_natural %}
+{% for build_hash in site.data.forge_builds | sort_natural | reverse %}
 {% assign build = build_hash[1] %}
 
 * **Minecraft Forge build version {{ build.mf_version }}**  
