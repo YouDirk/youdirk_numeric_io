@@ -1,5 +1,5 @@
 ---
-permalink: /test/
+
 ---
 
 ## All forge builds
