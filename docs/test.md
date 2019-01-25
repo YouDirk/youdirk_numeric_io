@@ -4,8 +4,7 @@ permalink: /test/
 
 ## All forge builds
 
-{% site.data.forge_builds | sort: 0, "last" %}
-{% for build_hash in site.data.forge_builds %}
+{% for build_hash in {{ site.data.forge_builds | sort: 0, "last" }} %}
 {% assign build = build_hash[1] %}
 
 * **Minecraft Forge build version {{ build.mf_version }}**  
@@ -15,11 +14,15 @@ permalink: /test/
   - **[Download Installer {{ build.jar_installer.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_installer.maven-url
     }})**  
-    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_installer.maven-sha1 }} %}`
+    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{
+      build.jar_installer.maven-sha1
+    }} %}`
   - **[Download Universal {{ build.jar_universal.name }}]({{
     site.numeric_io.github_maven_url }}/{{ build.jar_universal.maven-url
     }})**  
-    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{ build.jar_universal.maven-sha1 }} %}`
+    `sha1sum: {% include_relative {{ site.numeric_io.maven_path }}/{{
+      build.jar_universal.maven-sha1
+    }} %}`
 
         Changelog
         *********
