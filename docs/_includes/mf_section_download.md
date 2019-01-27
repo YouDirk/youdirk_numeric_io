@@ -27,21 +27,17 @@ the latest stable from the official Minecraft Forge website
 * **[Download official STABLE from Minecraft Forge website
   ](https://files.minecraftforge.net/)**
 
-{% comment %}
 {% if include.show_nopromo %}
 <span class="more">[< Back to Home >](.)</span>
 {% endif %}
-{% endcomment %}
 {% assign fb_sorted_hash = site.data.forge_builds | sort %}
 {% for build_hash in fb_sorted_hash reversed %}
 {%   assign build = build_hash[1] %}
 {%   include mf_item.md build=build show_nopromo=include.show_nopromo %}
 {% endfor %}
-{% comment %}
 {% if include.show_nopromo %}
 <span class="more">[< Back to Home >](.)</span>
 {% else %}
 <span class="more">
 [< show all Minecraft Forge builds >](minecraft-forge-all)</span>
 {% endif %}
-{% endcomment %}
