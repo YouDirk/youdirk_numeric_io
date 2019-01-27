@@ -31,10 +31,8 @@ mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Negative values** (*Two's Complement encoding*) are supported
 
-For detailed ingame usage take a look to the
-
-* [**Wiki** on github.com
-  ]({{site.numeric_io.github_url}}/wiki)
+For a detailed ingame usage take a look to our [**Wiki** at
+github.com]({{site.numeric_io.github_url}}/wiki).
 
 ## Download
 -----------
@@ -63,7 +61,7 @@ Issues & Bug reports
 If you found a *bug* or if you like to provide a *feature-request*
 then take a look to the
 
-* [**Bug Tracking System** on github.com
+* [**Bug Tracking System** at github.com
   ]({{site.numeric_io.github_url}}/issues)
 
 Contributing
@@ -74,7 +72,7 @@ Contributing
 You can contribute some tutorials or instructions how to use the
 *YouDirk Numeric I/O Minecraft mod* by writing it down to the
 
-* [**Wiki** on github.com
+* [**Wiki** at github.com
   ]({{site.numeric_io.github_url}}/wiki)
 
 ### Assets / Hacking
