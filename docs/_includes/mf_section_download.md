@@ -19,7 +19,7 @@
 # Include variables: include.show_nopromo
 #
 {% endcomment %}
-{% comment %}
+
 We are poviding some **unstable development** builds of Minecraft
 Forge which you can download.  But we are highly recommend to download
 the latest stable from the official Minecraft Forge website
@@ -41,4 +41,3 @@ the latest stable from the official Minecraft Forge website
 <span class="more">
 [< show all Minecraft Forge builds >](minecraft-forge-all)</span>
 {% endif %}
-{% endcomment %}

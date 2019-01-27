@@ -1,5 +1,6 @@
-/* upper overriding  */
 {
+  "_comment": "upper overriding",
+
   "1.12-24.0.80-1.13-dummy": {"color": "#deffde", "name": "seems-to-work"},
   "1.13-24.0.93-1.13-dummy": {"color": "#dedede", "name": "used-for-develop"},
   "1.13-24.0.97-1.13-pre": {"color": "#ffdede", "name": "latest-build"}
