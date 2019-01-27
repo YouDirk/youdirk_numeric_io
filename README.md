@@ -18,9 +18,8 @@
 YouDirk Numeric I/O Minecraft mod
 =================================
 
-This are the source of the `youdirk_numeric_io` [Minecraft
-Forge](https://github.com/MinecraftForge/MinecraftForge) mod.  It adds
-to the game
+This are the source of the **YouDirk Numeric I/O Minecraft mod**
+`youdirk_numeric_io`.  It adds to the game
 
 * **Blocks** which are **outputing decimal (and hexadecimal) numbers**
   to represent the connected binary encoded Redstone Wires
@@ -30,6 +29,9 @@ to the game
   connected Redstone Wires
 
 * **Negative values** (*Two's Complement encoding*) are supported
+
+For a detailed ingame usage take a look to our [**Wiki** at
+github.com](https://github.com/YouDirk/youdirk_numeric_io/wiki).
 
 Initial idea
 ------------
@@ -60,7 +62,7 @@ Contributing
 You can contribute some tutorials or instructions how to use the
 *YouDirk Numeric I/O Minecraft mod* by writing it down to the
 
-* [**Wiki** on github.com
+* [**Wiki** (github.com)
   ](https://github.com/YouDirk/youdirk_numeric_io/wiki)
 
 ### Assets / Hacking
@@ -69,6 +71,6 @@ If you want to contribute some **code** or **assets** such like
 *models*, *textures* or *sounds* then take a look to the GitHub
 repository and read the
 
-* [**Contribution Guidelines** on github.com](CONTRIBUTING.md)
+* [**Contribution Guidelines** (github.com)](CONTRIBUTING.md)
 
 Well, so have fun with it :)
