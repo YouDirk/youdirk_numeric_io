@@ -26,7 +26,7 @@ the latest stable from the official Minecraft Forge website
 
 * **[Download official STABLE from Minecraft Forge website
   ](https://files.minecraftforge.net/)**
-
+{% comment %}
 {% if include.show_nopromo %}
 <span class="more">[< Back to Home >](.)</span>
 {% endif %}
@@ -41,3 +41,4 @@ the latest stable from the official Minecraft Forge website
 <span class="more">
 [< show all Minecraft Forge builds >](minecraft-forge-all)</span>
 {% endif %}
+{% endcomment %}
