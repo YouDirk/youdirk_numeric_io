@@ -67,7 +67,6 @@ span.mf_item_tag {
   padding: 3px;
   spacing: 2px;
   font-weight: bold;
-  font-color: #202020;
 }
 
 span.more {
@@ -81,6 +80,10 @@ span.more {
 span.more a {
   font-size: 95%;
   font-weight: bold;
+  color: #d2b1ff;
+}
+span.more a:hover {
+  color: #ba87ff;
 }
 
 span.mf_item_link {
@@ -89,15 +92,11 @@ span.mf_item_link {
 span.mf_item_link a {
   font-size: 90%;
   font-weight: bold;
-  font-color: #d2b1ff;
-}
-span.mf_item_link a:hover {
-  font-color: #ba87ff;
 }
 
 span.mf_item_promo {
   padding: 3px;
   border-radius: 5px;
   spacing-right: 6px;
-  font-color: #303030;
+  color: #303030;
 }
