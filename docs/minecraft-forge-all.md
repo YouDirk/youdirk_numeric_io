@@ -24,19 +24,4 @@ permalink: /minecraft-forge-all/
 Minecraft Forge development builds
 ----------------------------------
 
-We are poviding some **unstable development** builds of Minecraft
-Forge which you can download.  But we are highly recommend to download
-the latest stable from the official Minecraft Forge website
-
-* **[Download official STABLE from Minecraft Forge website
-  ](https://files.minecraftforge.net/)**
-
-<span class="more">[< Back to Home >](.)</span>
-
-{% assign fb_sorted_hash = site.data.forge_builds | sort %}
-{% for build_hash in fb_sorted_hash reversed %}
-{%   assign build = build_hash[1] %}
-{%   include mf_item.md build=build show_nopromo=true %}
-{% endfor %}
-
-<span class="more">[< Back to Home >](.)</span>
+{% include mf_section_download.md _nopromo=true %}

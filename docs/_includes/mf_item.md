@@ -30,7 +30,7 @@
 {% if include.show_nopromo or promo %}
 **{% if promo
   %}<span class="mf_item_promo" style="background-color: {{
-  promo.color }};">[{{ promo.name }}]</span> {%
+  promo.color }};">{{ promo.name }}</span> {%
 endif %}Minecraft Forge build version {{ include.build.mf_version }}**  
 <span class="mf_item_stats">{{
   include.build.time | date: "%a, %e. %b %Y %R %z"
