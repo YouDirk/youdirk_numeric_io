@@ -50,9 +50,7 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 ### Download Minecraft Forge
 ----------------------------
 
-{% comment %}
-{% include mf_section_download.md show_nopromo=false %}
-{% endcomment %}
+TODO
 
 ## Install
 ----------

@@ -24,6 +24,4 @@ permalink: /minecraft-forge-all/
 Minecraft Forge development builds
 ----------------------------------
 
-{% comment %}
-{% include mf_section_download.md show_nopromo=true %}
-{% endcomment %}
+TODO

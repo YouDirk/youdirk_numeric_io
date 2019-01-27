@@ -19,14 +19,14 @@
 # Include variables: include.show_nopromo
 #
 {% endcomment %}
-
+{% comment %}
 We are poviding some **unstable development** builds of Minecraft
 Forge which you can download.  But we are highly recommend to download
 the latest stable from the official Minecraft Forge website
 
 * **[Download official STABLE from Minecraft Forge website
   ](https://files.minecraftforge.net/)**
-{% comment %}
+
 {% if include.show_nopromo %}
 <span class="more">[< Back to Home >](.)</span>
 {% endif %}
