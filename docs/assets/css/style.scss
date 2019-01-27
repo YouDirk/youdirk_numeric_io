@@ -80,10 +80,10 @@ span.more {
 span.more a {
   font-size: 95%;
   font-weight: bold;
-  color: #ba87ff;
+  color: #a96aff;
 }
 span.more a:hover {
-  color: #a96aff;
+  color: #9445ff;
 }
 
 span.mf_item_link {
@@ -95,8 +95,9 @@ span.mf_item_link a {
 }
 
 span.mf_item_promo {
-  padding: 3px;
+  font-size: 95%;
+  padding: 6px;
   border-radius: 5px;
-  spacing-right: 6px;
-  color: #666666;
+  margin-right: 6px;
+  color: #858585;
 }
