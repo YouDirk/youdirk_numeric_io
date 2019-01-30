@@ -67,6 +67,12 @@ ifeq (,$(SED_CMD))
           for installation.  Or use your Linux package manager.)
 endif
 
+DATE_CMD = $(call _CMD_TEST,date)
+ifeq (,$(DATE_CMD))
+  $(error DATE command not found!  Try '$$> pacman -S msys/coreutils' \
+          for installation.  Or use your Linux package manager.)
+endif
+
 ifneq (,$(TEST_GIT))
   GIT_CMD = "$(call _CMD_TEST,git)"
   ifeq ("",$(GIT_CMD))
@@ -189,12 +195,21 @@ MF_JAVADOC_DIR = $(MF_SUBFORGE_DIR)/$(JAVADOC_DIR)
 
 DOCS_DIR = docs
 MAVEN_DIR = $(DOCS_DIR)/maven
-MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(subst .,/,$(MF_GROUP))/$(MF_NAME)
+MAVEN_FORGE_RELDIR = $(subst .,/,$(MF_GROUP))/$(MF_NAME)
+MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)
+DOCS_DATA_DIR = $(DOCS_DIR)/_data
+DOCS_FORGEBUILDS_DIR = $(DOCS_DATA_DIR)/forge_builds
 
 LOGO_FILE = youdirk_numeric_io.png
 WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
 BUGTRACKING_URL = https://github.com/YouDirk/youdirk_numeric_io/issues
 UPDATE_JSON_URL = $(WEBSITE_URL)/releases/update.json
+
+_BLANK :=
+define NL
+
+$(_BLANK)
+endef
 
 # ********************************************************************
 # Environment variables
@@ -346,6 +361,47 @@ $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
 .PHONY: config_all
 config_all: build.gradle \
   $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
+
+# ********************************************************************
+
+# bash_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
+_DOCS_FBUILDS_SUBREGEX = $(SED_CMD) -i ':a;N;$$!ba;s~\n~<nl>~g; ' $(1) \
+  && $(SED_CMD) -i \
+'s~\(<nl> *"$(2)" *: *{ *<nl>[^}]*"$(3)" *:\)[^<]*~\1 "$(4)",~g; '$(\
+)'s~<nl>~\n~g; ' $(1)
+
+# bash_cmd _DOCS_FBUILDS_SUBREGEX(file, mf_version, kind, file_ext)
+_DOCS_FBUILDS_WHOLESUB = \
+  $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),name,$(\
+         )$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
+  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-url,$(\
+            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
+  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-sha1,$(\
+            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).sha1) \$(NL) \
+  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-md5,$(\
+            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
+
+.SECONDEXPANSION:
+$(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
+  $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
+	@echo Generating '$@'
+	@if [ ! -f $@ ]; then \
+	  cp -f $< $@; \
+	  $(SED_CMD) -i \
+'s~^\( *"time" *:\).*$$~\1 "'`$(DATE_CMD) -Iseconds`'",~; '\
+	  $@; \
+	fi
+	@$(SED_CMD) -i \
+'s~^\( *"mc_version" *:\).*$$~\1 "'`echo $* | \
+	  $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'`'",~; '\
+'s~^\( *"mf_version" *:\).*$$~\1 "$*",~; '\
+	  $@
+	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,installer,jar)
+	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,universal,jar)
+	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,userdev,jar)
+	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,launcher,jar)
+	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,src,jar)
+	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,mdk,zip)
 
 # ********************************************************************
 

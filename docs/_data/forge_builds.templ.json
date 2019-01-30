@@ -1,0 +1,48 @@
+{
+  "time": "",
+  "mc_version": "",
+  "mf_version": "",
+  "tags": ["unstable"],
+  "jar_installer": {
+    "name": "",
+    "maven-url": "",
+    "maven-sha1": "",
+    "maven-md5": "",
+    "_dummy_eos": ""
+  },
+  "jar_universal": {
+    "name": "",
+    "maven-url": "",
+    "maven-sha1": "",
+    "maven-md5": "",
+    "_dummy_eos": ""
+  },
+  "jar_userdev": {
+    "name": "",
+    "maven-url": "",
+    "maven-sha1": "",
+    "maven-md5": "",
+    "_dummy_eos": ""
+  },
+  "jar_launcher": {
+    "name": "",
+    "maven-url": "",
+    "maven-sha1": "",
+    "maven-md5": "",
+    "_dummy_eos": ""
+  },
+  "jar_src": {
+    "name": "",
+    "maven-url": "",
+    "maven-sha1": "",
+    "maven-md5": "",
+    "_dummy_eos": ""
+  },
+  "zip_mdk": {
+    "name": "",
+    "maven-url": "",
+    "maven-sha1": "",
+    "maven-md5": "",
+    "_dummy_eos": ""
+  }
+}
