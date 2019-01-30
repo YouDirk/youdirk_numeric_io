@@ -206,32 +206,32 @@ JAVA_HOME := $(MY_JAVA_HOME)
 # Target definitions
 
 .PHONY: all
-all: gradle_all src
+all: config_all
 	./gradlew classes
 
 .PHONY: classes
-classes: gradle_all src
+classes: config_all
 	./gradlew classes
 
 .PHONY: run_client
-run_client: gradle_all src
+run_client: config_all
 	./gradlew runClient
 
 .PHONY: run_server
-run_server: gradle_all src
+run_server: config_all
 	./gradlew runServer
 
 .PHONY: build
-build: gradle_all src
+build: config_all
 	./gradlew build
 
 .PHONY: javadoc
-javadoc: gradle_all src $(JAVADOC_DIR)/index.html
+javadoc: config_all $(JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
 	  _2WINPATH,$(PWD)/$(JAVADOC_DIR)/index.html) || true
 
 .PHONY: mf_javadoc
-mf_javadoc: gradle_all src $(MF_JAVADOC_DIR)/index.html
+mf_javadoc: config_all $(MF_JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
 	  _2WINPATH,$(PWD)/$(MF_JAVADOC_DIR)/index.html) || true
 
@@ -249,7 +249,7 @@ jdk_version:
 # --- Maintaining only ---
 
 .PHONY: bootstrap
-bootstrap: minecraft_forge gradle_all src
+bootstrap: minecraft_forge config_all
 
 .PHONY: maven
 maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
@@ -302,9 +302,6 @@ $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
 "s~{nl}description \\?= \\?'''.*{nl}'''~{nl}description='''{nl}$(MODDESC){nl}'''~g; "\
 's~{nl}~\n~g; ' $@
 
-.PHONY: src
-src: $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
-
 gradle: $(MF_DIR)/gradle
 	cp -rf $< $@
 gradlew: $(MF_DIR)/gradlew gradle
@@ -332,9 +329,6 @@ build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
 '\nminecraft {~g; '\
 	  $< > $@
 
-.PHONY: gradle_all
-gradle_all: build.gradle
-
 .PHONY: mf_deinit
 mf_deinit:
 	$(MAKE) TEST_GIT=1 _mf_deinit
@@ -348,6 +342,10 @@ $(JAVADOC_DIR)/index.html: $(JAVA_FILES)
 $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
 	cd $(MF_DIR) \
 	  && ./gradlew setup :forge:licenseFormat :forge:javadoc || true
+
+.PHONY: config_all
+config_all: build.gradle \
+  $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
 
 # ********************************************************************
 
