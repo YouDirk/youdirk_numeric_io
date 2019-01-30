@@ -171,6 +171,8 @@ JAVA_DIR = src/main/java
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
 JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
 
+RUN_DIR = run
+
 JAVA_FILES = $(shell $(FIND_CMD) $(JAVA_DIR) -name '*.java')
 
 MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
@@ -233,9 +235,12 @@ mf_javadoc: gradle_all src $(MF_JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
 	  _2WINPATH,$(PWD)/$(MF_JAVADOC_DIR)/index.html) || true
 
+.PHONY: clean_run
+clean_run:
+	-rm -rf $(RUN_DIR)
 .PHONY: clean
-clean: _clean_bak
-	-rm -rf .gradle $(BUILD_DIR) run
+clean: _clean_bak clean_run
+	-rm -rf .gradle $(BUILD_DIR)
 
 .PHONY: jdk_version
 jdk_version:
