@@ -355,7 +355,7 @@ _clean_minecraft_forge:
 	  && $(GIT_CMD) clean -xdf
 
 .PHONY: clean_all
-clean_all: clean clean_maven clean_bootstrap clean_minecraft_forge
+clean_all: clean clean_bootstrap clean_minecraft_forge
 
 .PHONY: _clean_bak
 _clean_bak:
@@ -366,9 +366,5 @@ clean_bootstrap:
 	-rm -f build.gradle gradle.properties
 	-rm -rf gradle gradlew{,.bat}
 	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
-
-.PHONY: clean_maven
-clean_maven:
-	-rm -rf $(MAVEN_DIR)
 
 # ********************************************************************
