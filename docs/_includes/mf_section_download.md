@@ -30,7 +30,7 @@ the latest stable from the official Minecraft Forge website
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
-{% assign fb_sorted_hash = site.data.forge_builds | sort "time" %}
+{% assign fb_sorted_hash = site.data.forge_builds | sort: "time" %}
 {% for build_hash in fb_sorted_hash reversed %}
 {%   assign build = build_hash[1] %}
 {%   include mf_item.md build=build show_nopromo=include.show_nopromo %}

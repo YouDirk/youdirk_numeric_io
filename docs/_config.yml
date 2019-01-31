@@ -36,5 +36,6 @@ numeric_io:
 # Some advantages ...
 plugins:
 - jekyll
+- liquid
 sass:
   style: compressed
