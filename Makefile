@@ -420,6 +420,14 @@ _cache:
 
 # ********************************************************************
 
+# sed_cmd _DOCS_FBUILDS_JSONPARSE(key)
+_DOCS_FBUILDS_JSONPARSE = 's~^[ \t]*"$(1)" *: *"\([^"]*\).*~\1~p;'
+
+# sed_cmd _DOCS_FBUILDS_LISTREGEX(key, value)
+_DOCS_FBUILDS_LISTREGEX = 's~^\([ \t]*"$(1)" *: *\[\)[^]]*~\1$(2)~g;'
+# comma_list _DOCS_FBUILDS_LISTPARSE(key)
+_DOCS_FBUILDS_LISTPARSE = 's~^[ \t]*"$(1)" *: *\[\([^]]*\).*~\1~p;'
+
 # sh_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
 _DOCS_FBUILDS_SUBREGEX = $(SED_CMD) -i ':a;N;$$!ba; '$(\
   )'s~\(\n *"$(2)" *: *{ *\n[^}]*"$(3)" *: *"\)[^"]*~\1$(4)~g;' $(1)
@@ -438,15 +446,19 @@ _DOCS_FBUILDS_WHOLESUB = \
 .SECONDEXPANSION:
 $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
   $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
-	@if [ ! -f $@ ]; then \
+	@if [ -f $@ ]; then \
+	  date_time='$(shell $(SED_CMD) -n \
+	               $(call _DOCS_FBUILDS_JSONPARSE,time) $@)'; \
+	  tags='$(shell $(SED_CMD) -n \
+	          $(call _DOCS_FBUILDS_LISTPARSE,tags) $@)'; \
+	else \
 	  echo Generating '$@'; \
-	  cp -f $< $@; \
-	  $(SED_CMD) -i $(\
-	  )$(call _SRC_PACK_SEDJSON,time,$(shell \
-	          $(DATE_CMD) -Iseconds))$(\
-	  )\
-	    $@; \
-	fi
+	  date_time="`$(DATE_CMD) -Iseconds`"; \
+	  tags='"unstable"'; \
+	fi; \
+	cp -f $< $@; \
+	$(SED_CMD) -i $(call _SRC_PACK_SEDJSON,time,'"$$date_time"') $@; \
+	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $@;
 	@echo Updating '$@'
 	@$(SED_CMD) -i $(\
 	)$(call _SRC_PACK_SEDJSON,mc_version,$(shell \

@@ -2,7 +2,7 @@
   "time": "<DUMMY>",
   "mc_version": "<DUMMY>",
   "mf_version": "<DUMMY>",
-  "tags": ["unstable"],
+  "tags": ["unstable", "<DUMMY1>", "<DUMMY2>"],
   "jar_installer": {
     "name": "<DUMMY>",
     "maven-url": "<DUMMY>",
