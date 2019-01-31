@@ -50,35 +50,47 @@ MF_FALLBACK_INODES =
 CREDITS = Dirk (YouDirk) Lehmann
 
 # End of Configuration
+include .makefile.cache.inc
 # ********************************************************************
 # Linux/MSYS2 commands, feature check
+ifneq (,$(_CACHE_FILE))
 
 _CMD_TEST = $(shell which $(1) 2> /dev/null)
 
 FIND_CMD = $(call _CMD_TEST,find)
 ifeq (,$(FIND_CMD))
+  $(shell rm -f $(_CACHE_FILE))
   $(error FIND command not found!  Try '$$> pacman -S msys/findutils' \
           for installation.  Or use your Linux package manager.)
+else
+  $(shell echo "FIND_CMD = $(FIND_CMD)" >> $(_CACHE_FILE))
 endif
 
 SED_CMD = $(call _CMD_TEST,sed)
 ifeq (,$(SED_CMD))
+  $(shell rm -f $(_CACHE_FILE))
   $(error SED command not found!  Try '$$> pacman -S msys/sed' \
           for installation.  Or use your Linux package manager.)
+else
+  $(shell echo "SED_CMD = $(SED_CMD)" >> $(_CACHE_FILE))
 endif
 
 DATE_CMD = $(call _CMD_TEST,date)
 ifeq (,$(DATE_CMD))
+  $(shell rm -f $(_CACHE_FILE))
   $(error DATE command not found!  Try '$$> pacman -S msys/coreutils' \
           for installation.  Or use your Linux package manager.)
+else
+  $(shell echo "DATE_CMD = $(DATE_CMD)" >> $(_CACHE_FILE))
 endif
 
-ifneq (,$(TEST_GIT))
-  GIT_CMD = "$(call _CMD_TEST,git)"
-  ifeq ("",$(GIT_CMD))
-    $(error GIT command not found!  Try '$$> pacman -S msys/git' \
-            for installation.  Or use your Linux package manager.)
-  endif
+GIT_CMD = "$(call _CMD_TEST,git)"
+ifeq ("",$(GIT_CMD))
+  $(shell rm -f $(_CACHE_FILE))
+  $(error GIT command not found!  Try '$$> pacman -S msys/git' \
+          for installation.  Or use your Linux package manager.)
+else
+  $(shell echo "GIT_CMD = $(GIT_CMD)" >> $(_CACHE_FILE))
 endif
 
 BROWSER_CMD = "$(call _CMD_TEST,/usr/bin/firefox)"
@@ -92,9 +104,22 @@ ifeq ("",$(BROWSER_CMD))
   $(warning BROWSER command not found!  Using Microsoft Edge)
   BROWSER_CMD = /c/windows/explorer.exe microsoft-edge:
 endif
+$(shell echo "BROWSER_CMD = $(BROWSER_CMD)" >> $(_CACHE_FILE))
+
+endif # ifneq (,$(_CACHE_FILE))
+# -----------------------------
+
+ifneq (,$(TEST_GIT))
+  ifeq ("",$(GIT_CMD))
+    $(shell rm -f $(_CACHE_FILE))
+    $(error GIT command not found!  Try '$$> pacman -S msys/git' \
+            for installation.  Or use your Linux package manager.)
+  endif
+endif
 
 # --------------------------------------------------------------------
 # Find JDK installation
+ifneq (,$(_CACHE_FILE))
 
 JDK_PATH := $(shell echo $(JDK_PATH) \
 	            | $(SED_CMD) 's/"//g; s/'\''//g; s/\\ / /g;')
@@ -132,12 +157,15 @@ else
   endif
 
   ifeq (,$(MY_JAVA_HOME))
+    $(shell rm -f $(_CACHE_FILE))
     $(error JAVAC command not found!  Please install the 'Java SE \
             Development Kit (JDK)' and/or set Makefile configuration \
             variable JDK_PATH)
   endif
 endif
+$(shell echo "MY_JAVA_HOME = $(MY_JAVA_HOME)" >> $(_CACHE_FILE))
 
+endif # ifneq (,$(_CACHE_FILE))
 # MY_JAVA_HOME is set from here
 # --------------------------------------------------------------------
 
@@ -179,7 +207,9 @@ JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
 
 RUN_DIR = run
 
-JAVA_FILES = $(shell $(FIND_CMD) $(JAVA_DIR) -name '*.java')
+# FIND_CMD not available at first call without _CACHE_FILE
+JAVA_FILES := $(shell $(FIND_CMD) $(JAVA_DIR) -name '*.java' \
+                      2> /dev/null || echo $(JAVA_DIR))
 
 MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
 MF_GROUP = net.minecraftforge
@@ -255,7 +285,7 @@ clean_run:
 	-rm -rf $(RUN_DIR)
 .PHONY: clean
 clean: _clean_bak clean_run
-	-rm -rf .gradle $(BUILD_DIR)
+	-rm -rf .gradle $(BUILD_DIR) .makefile.cache.inc
 
 .PHONY: jdk_version
 jdk_version:
@@ -382,6 +412,12 @@ $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
 config_all: build.gradle \
   $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
 
+.PHONY: _cache
+_cache:
+.makefile.cache.inc: Makefile
+	-rm -f $@
+	$(MAKE) _CACHE_FILE=$@ _cache
+
 # ********************************************************************
 
 # sh_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
@@ -426,6 +462,10 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 
 # ********************************************************************
 
+.PHONY: _clean_bak
+_clean_bak:
+	-rm -f $(shell $(FIND_CMD) . -name '*~')
+
 .PHONY: clean_minecraft_forge
 clean_minecraft_forge:
 	$(MAKE) TEST_GIT=1 _clean_minecraft_forge
@@ -434,17 +474,13 @@ _clean_minecraft_forge:
 	cd $(MF_DIR) && $(GIT_CMD) checkout build.gradle \
 	  && $(GIT_CMD) clean -xdf
 
-.PHONY: clean_all
-clean_all: clean clean_bootstrap clean_minecraft_forge
-
-.PHONY: _clean_bak
-_clean_bak:
-	-rm -f $(shell $(FIND_CMD) . -name '*~')
-
 .PHONY: clean_bootstrap
 clean_bootstrap:
 	-rm -f build.gradle gradle.properties
 	-rm -rf gradle gradlew{,.bat}
 	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
+
+.PHONY: clean_all
+clean_all: clean clean_bootstrap clean_minecraft_forge
 
 # ********************************************************************
