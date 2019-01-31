@@ -63,7 +63,7 @@ ifeq (,$(FIND_CMD))
   $(error FIND command not found!  Try '$$> pacman -S msys/findutils' \
           for installation.  Or use your Linux package manager.)
 else
-  $(shell echo "FIND_CMD = $(FIND_CMD)" >> $(_CACHE_FILE))
+  $(shell echo 'FIND_CMD = $(FIND_CMD)' >> $(_CACHE_FILE))
 endif
 
 SED_CMD = $(call _CMD_TEST,sed)
@@ -72,7 +72,7 @@ ifeq (,$(SED_CMD))
   $(error SED command not found!  Try '$$> pacman -S msys/sed' \
           for installation.  Or use your Linux package manager.)
 else
-  $(shell echo "SED_CMD = $(SED_CMD)" >> $(_CACHE_FILE))
+  $(shell echo 'SED_CMD = $(SED_CMD)' >> $(_CACHE_FILE))
 endif
 
 DATE_CMD = $(call _CMD_TEST,date)
@@ -81,7 +81,7 @@ ifeq (,$(DATE_CMD))
   $(error DATE command not found!  Try '$$> pacman -S msys/coreutils' \
           for installation.  Or use your Linux package manager.)
 else
-  $(shell echo "DATE_CMD = $(DATE_CMD)" >> $(_CACHE_FILE))
+  $(shell echo 'DATE_CMD = $(DATE_CMD)' >> $(_CACHE_FILE))
 endif
 
 GIT_CMD = "$(call _CMD_TEST,git)"
@@ -90,7 +90,7 @@ ifeq ("",$(GIT_CMD))
   $(error GIT command not found!  Try '$$> pacman -S msys/git' \
           for installation.  Or use your Linux package manager.)
 else
-  $(shell echo "GIT_CMD = $(GIT_CMD)" >> $(_CACHE_FILE))
+  $(shell echo 'GIT_CMD = $(GIT_CMD)' >> $(_CACHE_FILE))
 endif
 
 BROWSER_CMD = "$(call _CMD_TEST,/usr/bin/firefox)"
@@ -104,7 +104,7 @@ ifeq ("",$(BROWSER_CMD))
   $(warning BROWSER command not found!  Using Microsoft Edge)
   BROWSER_CMD = /c/windows/explorer.exe microsoft-edge:
 endif
-$(shell echo "BROWSER_CMD = $(BROWSER_CMD)" >> $(_CACHE_FILE))
+$(shell echo 'BROWSER_CMD = $(BROWSER_CMD)' >> $(_CACHE_FILE))
 
 endif # ifneq (,$(_CACHE_FILE))
 # -----------------------------
@@ -163,7 +163,7 @@ else
             variable JDK_PATH)
   endif
 endif
-$(shell echo "MY_JAVA_HOME = $(MY_JAVA_HOME)" >> $(_CACHE_FILE))
+$(shell echo 'MY_JAVA_HOME = $(MY_JAVA_HOME)' >> $(_CACHE_FILE))
 
 endif # ifneq (,$(_CACHE_FILE))
 # MY_JAVA_HOME is set from here
@@ -308,7 +308,7 @@ minecraft_forge:
 	$(MAKE) TEST_GIT=1 _minecraft_forge
 .PHONY: _minecraft_forge
 _minecraft_forge:
-	$(GIT_CMD) submodule update --init $(MF_DIR)
+	$(GIT_CMD) submodule update -f --init $(MF_DIR)
 	cd $(MF_DIR) && $(GIT_CMD) checkout -f $(MF_BRANCH) \
 	  && $(GIT_CMD) pull -f --rebase \
 	  $(foreach INODE,$(MF_FALLBACK_INODES), \
