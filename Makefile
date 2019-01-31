@@ -230,6 +230,14 @@ MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)
 DOCS_DATA_DIR = $(DOCS_DIR)/_data
 DOCS_FORGEBUILDS_DIR = $(DOCS_DATA_DIR)/forge_builds
 
+# FIND_CMD not available at first call without _CACHE_FILE
+MAVEN_FORGE_VERSIONDIRS := $(shell $(FIND_CMD) $(MAVEN_FORGE_DIR)/* \
+        -type d 2> /dev/null || echo $(MAVEN_FORGE_DIR))
+MAVEN_FORGE_VERSIONS = $(patsubst $(MAVEN_FORGE_DIR)/%,%,\
+                         $(MAVEN_FORGE_VERSIONDIRS))
+DOCS_FORGEBUILDS_JSONS = $(patsubst %,$(DOCS_FORGEBUILDS_DIR)/%.json,\
+                           $(MAVEN_FORGE_VERSIONS))
+
 LOGO_FILE = youdirk_numeric_io.png
 WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
 BUGTRACKING_URL = https://github.com/YouDirk/youdirk_numeric_io/issues
@@ -296,8 +304,10 @@ jdk_version:
 .PHONY: bootstrap
 bootstrap: minecraft_forge config_all
 
+# New MAKE instance, to update DOCS_FORGEBUILDS_JSONS
 .PHONY: maven
 maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
+	$(MAKE) website_data
 
 # --- End of Maintaining only ---
 
@@ -471,6 +481,19 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,launcher,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,src,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,mdk,zip)
+
+# sed_cmd _WEBSITE_PROMO_REGEX(name, version)
+_WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
+
+.PHONY: $(DOCS_DATA_DIR)/forge_promos.json
+$(DOCS_DATA_DIR)/forge_promos.json:
+	@echo Updating '$@'
+	@$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
+	)$(word $(words $(MAVEN_FORGE_VERSIONS)),$(MAVEN_FORGE_VERSIONS))) \
+	  $@
+
+.PHONY: website_data
+website_data: $(DOCS_FORGEBUILDS_JSONS) $(DOCS_DATA_DIR)/forge_promos.json
 
 # ********************************************************************
 
