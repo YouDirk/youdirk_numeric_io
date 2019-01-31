@@ -454,23 +454,21 @@ _DOCS_FBUILDS_WHOLESUB = \
   && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-md5,$(\
             )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
 
-# TODO generating forge_promos.json ...
 .SECONDEXPANSION:
 $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
   $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
 	@if [ -f $@ ]; then \
-	  date_time='$(shell $(SED_CMD) -n \
-	               $(call _DOCS_FBUILDS_JSONPARSE,time) $@)'; \
-	  tags='$(shell $(SED_CMD) -n \
-	          $(call _DOCS_FBUILDS_LISTPARSE,tags) $@)'; \
+	  date_time="`$(SED_CMD) -n \
+	              $(call _DOCS_FBUILDS_JSONPARSE,time) $@`"; \
+	  tags="`$(SED_CMD) -n \
+	         $(call _DOCS_FBUILDS_LISTPARSE,tags) $@`"; \
 	else \
 	  echo Generating '$@'; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
 	  tags='"unstable"'; \
-	  echo Updating 'latest-build' in 'forge_promos.json'; \
+	  echo Updating 'latest-build' to '$*' in 'forge_promos.json'; \
 	  $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
-)$(word $(words $(MAVEN_FORGE_VERSIONS)),$(MAVEN_FORGE_VERSIONS)))\
-	    $(DOCS_DATA_DIR)/forge_promos.json; \
+	    )$*) $(DOCS_DATA_DIR)/forge_promos.json; \
 	fi; \
 	cp -f $< $@; \
 	$(SED_CMD) -i $(call _SRC_PACK_SEDJSON,time,'"$$date_time"') $@; \
