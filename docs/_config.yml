@@ -34,8 +34,5 @@ numeric_io:
   maven_path: maven
 
 # Some advantages ...
-plugins:
-- jekyll
-- liquid
 sass:
   style: compressed
