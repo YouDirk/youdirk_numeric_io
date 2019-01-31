@@ -294,28 +294,39 @@ $(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
 	cd $(MF_DIR) \
 	  && ./gradlew setup :forge:licenseFormat :forge:publish
 
+# sed_cmd _SRC_PACK_SEDJSON(key, value)
+_SRC_PACK_SEDJSON = 's~^\([ \t]*"$(1)" *: *"\)[^"]*~\1$(2)~g;'
+
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta Makefile
-	$(SED_CMD) \
-'s~^\([ \t]*\)"description" \?:.*"~\1"description": "$(MODDESC_ONELINE)'\
-'"~g; '\
-	  $< > $@
+	@echo Generating '$@'
+	@$(SED_CMD) $(\
+	)$(call _SRC_PACK_SEDJSON,description,$(MODDESC_ONELINE))$(\
+	) $< > $@
+
+# sed_cmd _SRC_MODS_SEDCMD(key, value)
+_SRC_MODS_SEDCMD = 's~^\([ \t]*$(1) *= *"\)[^"]*~\1$(2)~g;'
+
+# sed_cmd _SRC_MODS_SEDGROUP(file, group, key, value)
+_SRC_MODS_SEDGROUP = $(SED_CMD) -i \
+  ':a;N;$$!ba; s~\(\n *\[\[$(2)\]\][^\n]*\n[^[]*$(3) *= *"\)[^"]*~\1$(4)~g;'\
+  $(1)
 
 $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
-	$(SED_CMD) \
-'s~^updateJSONURL \?=[^#]*~updateJSONURL="$(UPDATE_JSON_URL)"~g; '\
-'s~^issueTrackerURL \?=[^#]*~issueTrackerURL="$(BUGTRACKING_URL)"~g; '\
-'s~^displayURL \?=[^#]*~displayURL="$(WEBSITE_URL)"~g; '\
-'s~^logoFile \?=[^#]*~logoFile="$(LOGO_FILE)"~g; '\
-'s~^modId \?=[^#]*~modId="$(MODID)"~g; '\
-'s~^version \?=[^#]*~version="$(VERSION_FULL)"~g; '\
-'s~^displayName \?=[^#]*~displayName="$(MODNAME)"~g; '\
-'s~^authors \?=[^#]*~authors="$(CREDITS)"~g; '\
-'s~^credits \?=[^#]*~credits="$(MODTHANKS)"~g; '\
-'s~^\[\[dependencies.examplemod\]\] \?[^#]*~[[dependencies.$(MODID)]]~g; '\
+	@echo Generating '$@'
+	@$(SED_CMD) $(\
+	)$(call _SRC_MODS_SEDCMD,updateJSONURL,$(UPDATE_JSON_URL))$(\
+	)$(call _SRC_MODS_SEDCMD,issueTrackerURL,$(BUGTRACKING_URL))$(\
+	)$(call _SRC_MODS_SEDCMD,displayURL,$(WEBSITE_URL))$(\
+	)$(call _SRC_MODS_SEDCMD,logoFile,$(LOGO_FILE))$(\
+	)$(call _SRC_MODS_SEDCMD,authors,$(CREDITS))$(\
+	)$(call _SRC_MODS_SEDCMD,credits,$(MODTHANKS))\
+'s~^\[\[dependencies.examplemod\]\]\( *\)[^ #]*~[[dependencies.$(MODID)]]\1~g; '\
 	  $< > $@
-	$(SED_CMD) -i ':a;N;$$!ba;s~\n~{nl}~g; ' $@ && $(SED_CMD) -i \
-"s~{nl}description \\?= \\?'''.*{nl}'''~{nl}description='''{nl}$(MODDESC){nl}'''~g; "\
-'s~{nl}~\n~g; ' $@
+	@$(SED_CMD) -i ':a;N;$$!ba; '"s~\\ndescription \\?= \\?'''.*\\n'''"\
+"~\\ndescription='''\\n$(MODDESC)\\n'''~g;" $@
+	@$(call _SRC_MODS_SEDGROUP,$@,mods,modId,$(MODID))
+	@$(call _SRC_MODS_SEDGROUP,$@,mods,version,$(VERSION_FULL))
+	@$(call _SRC_MODS_SEDGROUP,$@,mods,displayName,$(MODNAME))
 
 gradle: $(MF_DIR)/gradle
 	cp -rf $< $@
@@ -325,17 +336,26 @@ gradlew.bat: $(MF_DIR)/gradlew.bat gradlew
 	cp -f $< $@
 gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
 	cp -f $< $@
+
+# sed_cmd _BUILD_GRADLE_SEDVAL(key, value)
+_BUILD_GRADLE_SEDVAL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
+
+# sed_cmd _BUILD_GRADLE_SED_AT(key, value)
+_BUILD_GRADLE_SED_AT = 's~@$(1)@~$(2)~g;'
+
 build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
-	$(SED_CMD) \
-'s~^version \?=[^/]*~version = "$(VERSION_FULL)"~g; '\
-'s~^group \?=[^/]*~group = "$(GROUP)"~g; '\
-'s~^archivesBaseName \?=[^/]*~archivesBaseName = "$(MODID)"~g; '\
-'s~@MAPPING_CHANNEL@~$(MCP_MAPPING_CHANNEL)~g; '\
-'s~@MAPPING_VERSION@~$(MCP_MAPPING_VERSION)~g; '\
-'s~@FORGE_GROUP@~$(MF_GROUP)~g; '\
-'s~@FORGE_NAME@~$(MF_NAME)~g; '\
-'s~@FORGE_VERSION@~$(MF_VERSION_FULL)~g; '\
-'s~@MC_VERSION@~$(MF_VERSION_FULL)~g; '\
+	@echo Generating '$@'
+	@$(SED_CMD) $(\
+	)$(call _BUILD_GRADLE_SEDVAL,version,$(VERSION_FULL))$(\
+	)$(call _BUILD_GRADLE_SEDVAL,group,$(GROUP))$(\
+	)$(call _BUILD_GRADLE_SEDVAL,archivesBaseName,$(MODID))$(\
+	)$(call _BUILD_GRADLE_SED_AT,MAPPING_CHANNEL,$(MCP_MAPPING_CHANNEL))$(\
+	)$(call _BUILD_GRADLE_SED_AT,MAPPING_VERSION,$(MCP_MAPPING_VERSION))$(\
+	)$(call _BUILD_GRADLE_SED_AT,FORGE_GROUP,$(MF_GROUP))$(\
+	)$(call _BUILD_GRADLE_SED_AT,FORGE_NAME,$(MF_NAME))$(\
+	)$(call _BUILD_GRADLE_SED_AT,FORGE_VERSION,$(MF_VERSION_FULL))$(\
+	)$(call _BUILD_GRADLE_SED_AT,MC_VERSION,$(MF_VERSION_FULL))$(\
+	)\
 's~META_INF/mods.toml~META-INF/mods.toml~g; '\
 's~minecraft \?{~repositories {\n'\
 "  maven { url 'file://' + rootProject.file('$(MAVEN_DIR)')"\
@@ -364,13 +384,11 @@ config_all: build.gradle \
 
 # ********************************************************************
 
-# bash_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
-_DOCS_FBUILDS_SUBREGEX = $(SED_CMD) -i ':a;N;$$!ba;s~\n~<nl>~g; ' $(1) \
-  && $(SED_CMD) -i \
-'s~\(<nl> *"$(2)" *: *{ *<nl>[^}]*"$(3)" *:\)[^<]*~\1 "$(4)",~g; '$(\
-)'s~<nl>~\n~g; ' $(1)
+# sh_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
+_DOCS_FBUILDS_SUBREGEX = $(SED_CMD) -i ':a;N;$$!ba; '$(\
+  )'s~\(\n *"$(2)" *: *{ *\n[^}]*"$(3)" *: *"\)[^"]*~\1$(4)~g;' $(1)
 
-# bash_cmd _DOCS_FBUILDS_SUBREGEX(file, mf_version, kind, file_ext)
+# sh_cmd _DOCS_FBUILDS_SUBREGEX(file, mf_version, kind, file_ext)
 _DOCS_FBUILDS_WHOLESUB = \
   $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),name,$(\
          )$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
@@ -384,18 +402,21 @@ _DOCS_FBUILDS_WHOLESUB = \
 .SECONDEXPANSION:
 $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
   $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
-	@echo Generating '$@'
 	@if [ ! -f $@ ]; then \
+	  echo Generating '$@'; \
 	  cp -f $< $@; \
-	  $(SED_CMD) -i \
-'s~^\( *"time" *:\).*$$~\1 "'`$(DATE_CMD) -Iseconds`'",~; '\
-	  $@; \
+	  $(SED_CMD) -i $(\
+	  )$(call _SRC_PACK_SEDJSON,time,$(shell \
+	          $(DATE_CMD) -Iseconds))$(\
+	  )\
+	    $@; \
 	fi
-	@$(SED_CMD) -i \
-'s~^\( *"mc_version" *:\).*$$~\1 "'`echo $* | \
-	  $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'`'",~; '\
-'s~^\( *"mf_version" *:\).*$$~\1 "$*",~; '\
-	  $@
+	@echo Updating '$@'
+	@$(SED_CMD) -i $(\
+	)$(call _SRC_PACK_SEDJSON,mc_version,$(shell \
+	        echo $* | $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'))$(\
+	)$(call _SRC_PACK_SEDJSON,mf_version,$*)$(\
+	) $@
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,installer,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,universal,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,userdev,jar)

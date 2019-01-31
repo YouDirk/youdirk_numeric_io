@@ -8,25 +8,25 @@ modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[24,)" #mandatory (24 is current forge version)
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json"#optional
+updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json" #optional
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/YouDirk/youdirk_numeric_io/issues"#optional
+issueTrackerURL="https://github.com/YouDirk/youdirk_numeric_io/issues" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://youdirk.github.io/youdirk_numeric_io"#optional
+displayURL="https://youdirk.github.io/youdirk_numeric_io" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="youdirk_numeric_io.png"#optional
+logoFile="youdirk_numeric_io.png" #optional
 # A text field displayed in the mod UI
-credits="To the MCP team and the Forge programmers to make it possible to ez programming Minecraft mods :)"#optional
+credits="To the MCP team and the Forge programmers to make it possible to ez programming Minecraft mods :)" #optional
 # A text field displayed in the mod UI
-authors="Dirk (YouDirk) Lehmann"#optional
+authors="Dirk (YouDirk) Lehmann" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="youdirk_numeric_io"#mandatory
+modId="youdirk_numeric_io" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.13-0.0.0.1-dummy"#mandatory
+version="1.13-0.0.0.1-dummy" #mandatory
  # A display name for the mod
-displayName="YouDirk Numeric I/O"#mandatory
+displayName="YouDirk Numeric I/O" #mandatory
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 This mod adds:
@@ -37,7 +37,7 @@ This mod adds:
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-#[[dependencies.youdirk_numeric_io]]#optional
+#[[dependencies.youdirk_numeric_io]] #optional
 #    # the modid of the dependency
 #    modId="forge" #mandatory
 #    # Does this dependency have to exist - if not, ordering below must be specified
