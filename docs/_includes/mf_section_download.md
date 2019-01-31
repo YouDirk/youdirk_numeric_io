@@ -31,7 +31,8 @@ the latest stable from the official Minecraft Forge website
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
 {% assign fb_nokey = site.data.forge_builds | map: 1 %}
-{% assign fb_sorted = fb_nokey | sort: "time" %}
+{{ fb_nokey }}
+{% assign fb_sorted = fb_nokey | sort %}
 {% for build in fb_sorted reversed %}
 {%   include mf_item.md build=build show_nopromo=include.show_nopromo %}
 {% endfor %}
