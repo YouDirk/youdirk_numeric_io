@@ -326,7 +326,8 @@ _minecraft_forge:
 
 $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
   .git/modules/$(MF_DIR)/FETCH_HEAD
-	$(SED_CMD) -i "s~$(MF_GROUP).test~$(MF_GROUP)~g; "\
+	@echo Updating '$@'
+	@$(SED_CMD) -i "s~$(MF_GROUP).test~$(MF_GROUP)~g; "\
 "s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + "\
 "rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; " $@
 
@@ -453,6 +454,7 @@ _DOCS_FBUILDS_WHOLESUB = \
   && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-md5,$(\
             )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
 
+# TODO generating forge_promos.json ...
 .SECONDEXPANSION:
 $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
   $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
@@ -465,6 +467,10 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	  echo Generating '$@'; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
 	  tags='"unstable"'; \
+	  echo Updating 'latest-build' in 'forge_promos.json'; \
+	  $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
+)$(word $(words $(MAVEN_FORGE_VERSIONS)),$(MAVEN_FORGE_VERSIONS)))\
+	    $(DOCS_DATA_DIR)/forge_promos.json; \
 	fi; \
 	cp -f $< $@; \
 	$(SED_CMD) -i $(call _SRC_PACK_SEDJSON,time,'"$$date_time"') $@; \
@@ -485,15 +491,8 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 # sed_cmd _WEBSITE_PROMO_REGEX(name, version)
 _WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
 
-.PHONY: $(DOCS_DATA_DIR)/forge_promos.json
-$(DOCS_DATA_DIR)/forge_promos.json:
-	@echo Updating '$@'
-	@$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
-	)$(word $(words $(MAVEN_FORGE_VERSIONS)),$(MAVEN_FORGE_VERSIONS))) \
-	  $@
-
 .PHONY: website_data
-website_data: $(DOCS_FORGEBUILDS_JSONS) $(DOCS_DATA_DIR)/forge_promos.json
+website_data: $(DOCS_FORGEBUILDS_JSONS)
 
 # ********************************************************************
 
