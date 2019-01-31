@@ -32,3 +32,9 @@ numeric_io:
   website_url: https://youdirk.github.io/youdirk_numeric_io
   github_maven_url: https://github.com/YouDirk/youdirk_numeric_io/raw/master/docs/maven
   maven_path: maven
+
+# Some advantages ...
+plugins:
+- jekyll
+sass:
+  style: compressed
