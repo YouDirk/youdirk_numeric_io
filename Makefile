@@ -326,7 +326,7 @@ _minecraft_forge:
 
 $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
   .git/modules/$(MF_DIR)/FETCH_HEAD
-	@echo Updating '$@'
+	@echo "Updating '$@'"
 	@$(SED_CMD) -i "s~$(MF_GROUP).test~$(MF_GROUP)~g; "\
 "s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + "\
 "rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; " $@
@@ -339,7 +339,7 @@ $(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
 _SRC_PACK_SEDJSON = 's~^\([ \t]*"$(1)" *: *"\)[^"]*~\1$(2)~g;'
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta Makefile
-	@echo Generating '$@'
+	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
 	)$(call _SRC_PACK_SEDJSON,description,$(MODDESC_ONELINE))$(\
 	) $< > $@
@@ -353,7 +353,7 @@ _SRC_MODS_SEDGROUP = $(SED_CMD) -i \
   $(1)
 
 $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
-	@echo Generating '$@'
+	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
 	)$(call _SRC_MODS_SEDCMD,updateJSONURL,$(UPDATE_JSON_URL))$(\
 	)$(call _SRC_MODS_SEDCMD,issueTrackerURL,$(BUGTRACKING_URL))$(\
@@ -385,7 +385,7 @@ _BUILD_GRADLE_SEDVAL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
 _BUILD_GRADLE_SED_AT = 's~@$(1)@~$(2)~g;'
 
 build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
-	@echo Generating '$@'
+	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
 	)$(call _BUILD_GRADLE_SEDVAL,version,$(VERSION_FULL))$(\
 	)$(call _BUILD_GRADLE_SEDVAL,group,$(GROUP))$(\
@@ -421,7 +421,8 @@ $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
 
 .PHONY: config_all
 config_all: build.gradle \
-  $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta
+  $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta \
+  $(DOCS_DATA_DIR)/forge_promos.json
 
 .PHONY: _cache
 _cache:
@@ -463,17 +464,24 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	  tags="`$(SED_CMD) -n \
 	         $(call _DOCS_FBUILDS_LISTPARSE,tags) $@`"; \
 	else \
-	  echo Generating '$@'; \
+	  echo "Generating '$@'"; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
 	  tags='"unstable"'; \
-	  echo Updating 'latest-build' to '$*' in 'forge_promos.json'; \
+	  latest="`$(SED_CMD) -n $(call _WEBSITE_PROMO_PARSE,latest-build)\
+	           $(DOCS_DATA_DIR)/forge_promos.json`"; \
+	  if [ $$latest = $(MF_VERSION_FULL) ]; then \
+	    echo "Updating 'seems-to-work' to '$(MF_VERSION_FULL)'"; \
+	    $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,seems-to-work,$(\
+	      )$(MF_VERSION_FULL)) $(DOCS_DATA_DIR)/forge_promos.json; \
+	  fi; \
+	  echo "Updating 'latest-build' to '$*'"; \
 	  $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
 	    )$*) $(DOCS_DATA_DIR)/forge_promos.json; \
 	fi; \
 	cp -f $< $@; \
 	$(SED_CMD) -i $(call _SRC_PACK_SEDJSON,time,'"$$date_time"') $@; \
 	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $@;
-	@echo Updating '$@'
+	@echo "Updating '$@'"
 	@$(SED_CMD) -i $(\
 	)$(call _SRC_PACK_SEDJSON,mc_version,$(shell \
 	        echo $* | $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'))$(\
@@ -488,6 +496,14 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 
 # sed_cmd _WEBSITE_PROMO_REGEX(name, version)
 _WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
+
+# version _WEBSITE_PROMO_PARSE(name)
+_WEBSITE_PROMO_PARSE = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
+
+$(DOCS_DATA_DIR)/forge_promos.json: Makefile
+	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"; \
+	$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,used-for-develop,$(\
+	                )$(MF_VERSION_FULL)) $@
 
 .PHONY: website_data
 website_data: $(DOCS_FORGEBUILDS_JSONS)
