@@ -31,7 +31,7 @@ the latest stable from the official Minecraft Forge website
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
 {% for cur in site.data.forge_builds %}
-{% assign fb_nokey[forloop.index0] = cur[1] %}
+{% assign fb_nokey[0] = cur[1] %}
 {% endif %}
 {{ fb_nokey }}
 {% comment %}
