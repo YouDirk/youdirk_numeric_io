@@ -20,6 +20,7 @@
 #
 {% endcomment %}
 
+{{ site.data.forge_promos }}
 {% assign promo = nil %}
 {% for promo_vec in site.data.forge_promos %}
 {%   if build.mf_version == promo_vec[0] %}
