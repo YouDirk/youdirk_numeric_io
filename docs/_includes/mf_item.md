@@ -22,12 +22,12 @@
 
 {% assign promo_nokey = "" | split: "," %}
 {% for cur in site.data.forge_promos %}
-{%   assign cur[1].key = cur[0] %}
 {%   assign promo_nokey = promo_nokey | push: cur[1] %}
+{%   assign promo_nokey.key = cur[0] %}
 {% endfor %}
-{{promo_nokey}}
+{{ promo_nokey }}
 {% assign promo_sorted = promo_nokey | sort: "priority" %}
-{{promo_sorted}}
+{{ promo_sorted }}
 {% assign promo = nil %}
 {% for promo_hash in promo_sorted reversed %}
 {%   if build.mf_version == promo_hash.key %}
