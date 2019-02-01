@@ -33,7 +33,7 @@ the latest stable from the official Minecraft Forge website
 {% assign fb_nokey = "" | split: "," %}
 {% for cur in site.data.forge_builds %}
 {% assign fb_nokey = fb_nokey | push: "Hello" %}
-{% endif %}
+{% endfor %}
 {{ fb_nokey }}
 {% comment %}
 {% assign fb_sorted = fb_nokey | sort: "time" %}
