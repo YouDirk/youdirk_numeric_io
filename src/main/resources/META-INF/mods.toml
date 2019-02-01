@@ -7,8 +7,6 @@
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[24,)" #mandatory (24 is current forge version)
-# A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json" #optional
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/YouDirk/youdirk_numeric_io/issues" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -27,6 +25,8 @@ modId="youdirk_numeric_io" #mandatory
 version="1.13-0.0.0.1-dummy" #mandatory
  # A display name for the mod
 displayName="YouDirk Numeric I/O" #mandatory
+# A URL to query for updates for this mod. See the JSON update specification <here>
+updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 This mod adds:
@@ -35,7 +35,6 @@ This mod adds:
  * Blocks which you can input a number
  * Negative values (Two\'s Complements) are supported
 '''
-
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.youdirk_numeric_io]] #optional
     # the modid of the dependency

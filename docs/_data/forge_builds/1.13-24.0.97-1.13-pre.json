@@ -2,7 +2,7 @@
   "time": "2019-01-25T01:11:18+01:00",
   "mc_version": "1.13",
   "mf_version": "1.13-24.0.97-1.13-pre",
-  "tags": ["unstable"],
+  "tags": ["unstable", "first-build"],
   "jar_installer": {
     "name": "forge-1.13-24.0.97-1.13-pre-installer.jar",
     "maven-url": "net/minecraftforge/forge/1.13-24.0.97-1.13-pre/forge-1.13-24.0.97-1.13-pre-installer.jar",

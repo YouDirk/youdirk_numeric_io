@@ -29,7 +29,7 @@ MC_VERSION = 1.13
 
 # Official version from <https://files.minecraftforge.net/> or self
 # deployed version from DOCS/MAVEN directory
-MF_VERSION = 24.0.97-1.13-pre
+MF_VERSION = 24.0.147-1.13-pre
 
 # Official Mappings are here <http://export.mcpbot.bspk.rs/>
 MCP_MAPPING_CHANNEL = snapshot
@@ -369,11 +369,11 @@ $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
 	@$(call _SRC_MODS_SEDGROUP,$@,mods,version,$(VERSION_FULL))
 	@$(call _SRC_MODS_SEDGROUP,$@,mods,displayName,$(MODNAME))
 
-gradle: $(MF_DIR)/gradle
-	cp -rf $< $@
-gradlew: $(MF_DIR)/gradlew gradle
+gradlew: $(MF_DIR)/gradlew
 	cp -f $< $@
-gradlew.bat: $(MF_DIR)/gradlew.bat gradlew
+gradle: $(MF_DIR)/gradle gradlew
+	cp -rf $< $@
+gradlew.bat: $(MF_DIR)/gradlew.bat gradle
 	cp -f $< $@
 gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
 	cp -f $< $@

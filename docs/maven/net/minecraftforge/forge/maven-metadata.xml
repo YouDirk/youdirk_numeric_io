@@ -3,10 +3,11 @@
   <groupId>net.minecraftforge</groupId>
   <artifactId>forge</artifactId>
   <versioning>
-    <release>1.13-24.0.97-1.13-pre</release>
+    <release>1.13-24.0.147-1.13-pre</release>
     <versions>
       <version>1.13-24.0.97-1.13-pre</version>
+      <version>1.13-24.0.147-1.13-pre</version>
     </versions>
-    <lastUpdated>20190124114729</lastUpdated>
+    <lastUpdated>20190201043524</lastUpdated>
   </versioning>
 </metadata>
