@@ -30,8 +30,9 @@ the latest stable from the official Minecraft Forge website
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
+{% assign fb_nokey = "" | split: "," %}
 {% for cur in site.data.forge_builds %}
-{% assign fb_nokey[0] = cur[1] %}
+{% assign fb_nokey = fb_nokey | push: cur[1] %}
 {% endif %}
 {{ fb_nokey }}
 {% comment %}
