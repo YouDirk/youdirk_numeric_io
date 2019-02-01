@@ -30,11 +30,11 @@ the latest stable from the official Minecraft Forge website
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
-{% assign fb_nokey = "" | split "," %}
 {% for cur in site.data.forge_builds %}
 {% assign fb_nokey[forloop.index0] = cur[1] %}
 {% endif %}
 {{ fb_nokey }}
+{% comment %}
 {% assign fb_sorted = fb_nokey | sort: "time" %}
 {% for build in fb_sorted reversed %}
 {%   include mf_item.md build=build show_nopromo=include.show_nopromo %}
@@ -45,3 +45,4 @@ the latest stable from the official Minecraft Forge website
 <span class="more">
 [< show all Minecraft Forge builds >](minecraft-forge-all)</span>
 {% endif %}
+{% endcomment %}
