@@ -501,12 +501,39 @@ _WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
 _WEBSITE_PROMO_PARSE = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
 
 $(DOCS_DATA_DIR)/forge_promos.json: Makefile
-	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"; \
-	$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,used-for-develop,$(\
-	                )$(MF_VERSION_FULL)) $@
+	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
+	@$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,used-for-develop,$(\
+	                 )$(MF_VERSION_FULL)) $@
+
+.PHONY: website_mf_addtag
+website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
+	@if [ -z "$(TAG)" ]; then \
+	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
+	       > /dev/stderr; \
+	  exit 1; \
+	fi
+	@echo "Adding tag '$(TAG)' to Forge build '$(MF_VERSION_FULL)'"
+	@tags="`$(SED_CMD) -n \
+	       $(call _DOCS_FBUILDS_LISTPARSE,tags) $<`"; \
+	tags="$$tags, \"$(TAG)\""; \
+	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $<;
+
+.PHONY: website_mf_rmtag
+website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
+	@if [ -z "$(TAG)" ]; then \
+	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
+	       > /dev/stderr; \
+	  exit 1; \
+	fi
+	@echo "Removing tag '$(TAG)' from Forge build '$(MF_VERSION_FULL)'"
+	@tags="`$(SED_CMD) -n \
+	       $(call _DOCS_FBUILDS_LISTPARSE,tags) $<`"; \
+	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g; \
+	       s~, *$$~~g; s~^, *~~g; s~, *,~,~g;'`"; \
+	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $<;
 
 .PHONY: website_data
-website_data: $(DOCS_FORGEBUILDS_JSONS)
+website_data: config_all $(DOCS_FORGEBUILDS_JSONS)
 
 # ********************************************************************
 
