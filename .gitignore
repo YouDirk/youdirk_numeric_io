@@ -20,7 +20,7 @@
 *.bak
 
 # Build stuff
-/.makefile.cache.inc
+/.makefile.cache.mk
 /.gradle
 /build
 /run

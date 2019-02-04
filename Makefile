@@ -50,7 +50,7 @@ MF_FALLBACK_INODES =
 CREDITS = Dirk (YouDirk) Lehmann
 
 # End of Configuration
-include .makefile.cache.inc
+include .makefile.cache.mk
 # ********************************************************************
 # Linux/MSYS2 commands, feature check
 ifneq (,$(_CACHE_FILE))
@@ -292,8 +292,8 @@ mf_javadoc: config_all $(MF_JAVADOC_DIR)/index.html
 clean_run:
 	-rm -rf $(RUN_DIR)
 .PHONY: clean
-clean: _clean_bak clean_run
-	-rm -rf .gradle $(BUILD_DIR) .makefile.cache.inc
+clean: _clean_bak clean_run _clean_makecache
+	-rm -rf .gradle $(BUILD_DIR)
 
 .PHONY: jdk_version
 jdk_version:
@@ -426,7 +426,7 @@ config_all: build.gradle \
 
 .PHONY: _cache
 _cache:
-.makefile.cache.inc: Makefile
+.makefile.cache.mk: Makefile
 	-rm -f $@
 	$(MAKE) _CACHE_FILE=$@ _cache
 
@@ -537,6 +537,12 @@ website_data: config_all $(DOCS_FORGEBUILDS_JSONS)
 
 # ********************************************************************
 
+# _CLEAN_MAKECACHE must be the last in the dependency list, because it
+# will be regenerated during recursive CLEAN calls
+.PHONY: _clean_makecache
+_clean_makecache:
+	rm -f .makefile.cache.mk
+
 .PHONY: _clean_bak
 _clean_bak:
 	-rm -f $(shell $(FIND_CMD) . -name '*~')
@@ -556,6 +562,6 @@ clean_bootstrap:
 	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
 .PHONY: clean_all
-clean_all: clean clean_bootstrap clean_minecraft_forge
+clean_all: clean_bootstrap clean_minecraft_forge clean _clean_makecache
 
 # ********************************************************************
