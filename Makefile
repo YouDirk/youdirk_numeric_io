@@ -14,249 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Configuration
 
-# (optional) JAVA_HOME path, if not automatically detected
-JDK_PATH =
+include makefile.config.mk
 
-# YouDirk Numeric I/O Version (without Minecraft Version)
-#   Take a look to the conventions for versioning
-#   <https://mcforge.readthedocs.io/en/latest/conventions/versioning/>
-VERSION = 0.0.0.1-dummy
-
-# Dependency Version stuff
-MC_VERSION = 1.13
-
-# Official version from <https://files.minecraftforge.net/> or self
-# deployed version from DOCS/MAVEN directory
-MF_VERSION = 24.0.147-1.13-pre
-
-# Official Mappings are here <http://export.mcpbot.bspk.rs/>
-MCP_MAPPING_CHANNEL = snapshot
-MCP_MAPPING_VERSION = 20180921-1.13
-
-# Mincraft Forge branch/commit from which will be bootstraped
-MF_BRANCH = 1.13-pre
-
-# Mincraft Forge branch/commit from which will be bootstraped
-# if current development is too heavily
-MF_FALLBACK_BRANCH = origin/1.12.x
-
-# (optional) Inodes (files, directories, etc) relative to
-# MINECRAFT_FORGE directory which will be using fallback versions
-MF_FALLBACK_INODES =
-
-# Comma separated list
-CREDITS = Dirk (YouDirk) Lehmann
-
-# End of Configuration
 include .makefile.cache.mk
-# ********************************************************************
-# Linux/MSYS2 commands, feature check
-ifneq (,$(_CACHE_FILE))
+include makefile.check.mk
 
-_CMD_TEST = $(shell which $(1) 2> /dev/null)
-
-FIND_CMD = $(call _CMD_TEST,find)
-ifeq (,$(FIND_CMD))
-  $(shell rm -f $(_CACHE_FILE))
-  $(error FIND command not found!  Try '$$> pacman -S msys/findutils' \
-          for installation.  Or use your Linux package manager.)
-else
-  $(shell echo 'FIND_CMD = $(FIND_CMD)' >> $(_CACHE_FILE))
-endif
-
-SED_CMD = $(call _CMD_TEST,sed)
-ifeq (,$(SED_CMD))
-  $(shell rm -f $(_CACHE_FILE))
-  $(error SED command not found!  Try '$$> pacman -S msys/sed' \
-          for installation.  Or use your Linux package manager.)
-else
-  $(shell echo 'SED_CMD = $(SED_CMD)' >> $(_CACHE_FILE))
-endif
-
-DATE_CMD = $(call _CMD_TEST,date)
-ifeq (,$(DATE_CMD))
-  $(shell rm -f $(_CACHE_FILE))
-  $(error DATE command not found!  Try '$$> pacman -S msys/coreutils' \
-          for installation.  Or use your Linux package manager.)
-else
-  $(shell echo 'DATE_CMD = $(DATE_CMD)' >> $(_CACHE_FILE))
-endif
-
-GIT_CMD = "$(call _CMD_TEST,git)"
-ifeq ("",$(GIT_CMD))
-  $(shell rm -f $(_CACHE_FILE))
-  $(error GIT command not found!  Try '$$> pacman -S msys/git' \
-          for installation.  Or use your Linux package manager.)
-else
-  $(shell echo 'GIT_CMD = $(GIT_CMD)' >> $(_CACHE_FILE))
-endif
-
-BROWSER_CMD = "$(call _CMD_TEST,/usr/bin/firefox)"
-ifeq ("",$(BROWSER_CMD))
-  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Mozilla\ Firefox/firefox.exe)" 
-endif
-ifeq ("",$(BROWSER_CMD))
-  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Internet\ Explorer/iexplore.exe)" 
-endif
-ifeq ("",$(BROWSER_CMD))
-  $(warning BROWSER command not found!  Using Microsoft Edge)
-  BROWSER_CMD = /c/windows/explorer.exe microsoft-edge:
-endif
-$(shell echo 'BROWSER_CMD = $(BROWSER_CMD)' >> $(_CACHE_FILE))
-
-endif # ifneq (,$(_CACHE_FILE))
-# -----------------------------
-
-ifneq (,$(TEST_GIT))
-  ifeq ("",$(GIT_CMD))
-    $(shell rm -f $(_CACHE_FILE))
-    $(error GIT command not found!  Try '$$> pacman -S msys/git' \
-            for installation.  Or use your Linux package manager.)
-  endif
-endif
-
-# --------------------------------------------------------------------
-# Find JDK installation
-ifneq (,$(_CACHE_FILE))
-
-JDK_PATH := $(shell echo $(JDK_PATH) \
-	            | $(SED_CMD) 's/"//g; s/'\''//g; s/\\ / /g;')
-
-# bool _JDK_FOUND(java_home)
-_JDK_FOUND = $(shell (test -f "$(1)/bin/javac.exe" \
-                      || test -f "$(1)/bin/javac") && echo -n 1)
-
-# latest_path _JDK_LATEST(potentially_path)
-_JDK_LATEST = $(shell d=($(1)/jdk*); IFS=$$'\n'; echo "$${d[*]}" \
-                      | $(SED_CMD) -n '$$p')
-
-ifneq (,$(call _JDK_FOUND,$(JDK_PATH)))
-  # Configuration variable set
-  MY_JAVA_HOME = $(JDK_PATH)
-
-else ifneq (,$(call _JDK_FOUND,$(JAVA_HOME)))
-  # JAVA_HOME environment variable set
-  MY_JAVA_HOME = $(JAVA_HOME)
-
-else ifneq (,$(call _CMD_TEST,javac))
-  # JAVAC in PATH found, set JAVA_HOME:=(empty)
-  MY_JAVA_HOME =
-
-else
-  # Try commonly known locations
-  _TRY_HOME = $(call _JDK_LATEST,"/c/Program Files (x86)/Java")
-  ifneq (,$(call _JDK_FOUND,$(_TRY_HOME)))
-    MY_JAVA_HOME = $(_TRY_HOME)
-  endif
-
-  _TRY_HOME = $(call _JDK_LATEST,"/c/Program Files/Java")
-  ifneq (,$(call _JDK_FOUND,$(_TRY_HOME)))
-    MY_JAVA_HOME = $(_TRY_HOME)
-  endif
-
-  ifeq (,$(MY_JAVA_HOME))
-    $(shell rm -f $(_CACHE_FILE))
-    $(error JAVAC command not found!  Please install the 'Java SE \
-            Development Kit (JDK)' and/or set Makefile configuration \
-            variable JDK_PATH)
-  endif
-endif
-$(shell echo 'MY_JAVA_HOME = $(MY_JAVA_HOME)' >> $(_CACHE_FILE))
-
-endif # ifneq (,$(_CACHE_FILE))
-# MY_JAVA_HOME is set from here
-# --------------------------------------------------------------------
+include makefile.variables.mk
 
 # ********************************************************************
-# Variable definitions
-
-# win_path_escaped _2WINPATH_ESCAPE(unix_path)
-_2WINPATH = $(shell echo $(1) | $(SED_CMD) 's~^/\(.\)/~\1:/~;s~ ~\\ ~g')
-
-VERSION_FULL = $(MC_VERSION)-$(VERSION)
-
-# Display name of the mod
-MODNAME = YouDirk Numeric I/O
-
-MODDESC_ONELINE = This is the official $(MODNAME) Minecraft mod \
-                  'youdirk_numeric_io'.
-
-# Mult-line description of the mod
-MODDESC = This mod adds:\n\
-\n\
-* Blocks which are outputing (hexa-)decimal numbers\n\
-* Blocks which you can input a number\n\
-* Negative values (Two\\\'s Complements) are supported
-
-# Credits of the mod
-MODTHANKS = To the MCP team and the Forge programmers to make it \
-            possible to ez programming Minecraft mods :)
-
-# Conventions here
-#   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
-MODID = youdirk_numeric_io
-GROUP = net.dj_l.$(MODID)
-
-BUILD_DIR = build
-RESOURCES_DIR = src/main/resources
-JAVA_DIR = src/main/java
-METAINF_DIR = $(RESOURCES_DIR)/META-INF
-JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
-
-RUN_DIR = run
-
-# FIND_CMD not available at first call without _CACHE_FILE
-JAVA_FILES := $(shell $(FIND_CMD) $(JAVA_DIR) -name '*.java' \
-                      2> /dev/null || echo $(JAVA_DIR))
-
-MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
-MF_GROUP = net.minecraftforge
-MF_NAME = forge
-
-MF_DIR = minecraft_forge
-MF_MDK_DIR = $(MF_DIR)/mdk
-MF_RESOURCES_DIR = $(MF_MDK_DIR)/$(RESOURCES_DIR)
-MF_METAINF_DIR = $(MF_MDK_DIR)/$(METAINF_DIR)
-
-MF_SUBFORGE_DIR = $(MF_DIR)/projects/forge
-MF_JAVADOC_DIR = $(MF_SUBFORGE_DIR)/$(JAVADOC_DIR)
-
-DOCS_DIR = docs
-MAVEN_DIR = $(DOCS_DIR)/maven
-MAVEN_FORGE_RELDIR = $(subst .,/,$(MF_GROUP))/$(MF_NAME)
-MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)
-DOCS_DATA_DIR = $(DOCS_DIR)/_data
-DOCS_FORGEBUILDS_DIR = $(DOCS_DATA_DIR)/forge_builds
-
-# FIND_CMD not available at first call without _CACHE_FILE
-MAVEN_FORGE_VERSIONDIRS := $(shell $(FIND_CMD) $(MAVEN_FORGE_DIR)/* \
-        -type d 2> /dev/null || echo $(MAVEN_FORGE_DIR))
-MAVEN_FORGE_VERSIONS = $(patsubst $(MAVEN_FORGE_DIR)/%,%,\
-                         $(MAVEN_FORGE_VERSIONDIRS))
-DOCS_FORGEBUILDS_JSONS = $(patsubst %,$(DOCS_FORGEBUILDS_DIR)/%.json,\
-                           $(MAVEN_FORGE_VERSIONS))
-
-LOGO_FILE = youdirk_numeric_io.png
-WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
-BUGTRACKING_URL = https://github.com/YouDirk/youdirk_numeric_io/issues
-UPDATE_JSON_URL = $(WEBSITE_URL)/releases/update.json
-
-_BLANK :=
-define NL
-
-$(_BLANK)
-endef
-
-# ********************************************************************
-# Environment variables
-
-PATH := $(MY_JAVA_HOME)/bin:$(PATH)
-JAVA_HOME := $(MY_JAVA_HOME)
-
-# ********************************************************************
-# Target definitions
+# Necessary Target definitions
 
 .PHONY: all
 all: config_all
@@ -311,6 +78,7 @@ maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 
 # --- End of Maintaining only ---
 
+# End of Necessary Target definitions
 # ********************************************************************
 
 .PHONY: minecraft_forge
@@ -432,116 +200,16 @@ _cache:
 
 # ********************************************************************
 
-# sed_cmd _DOCS_FBUILDS_JSONPARSE(key)
-_DOCS_FBUILDS_JSONPARSE = 's~^[ \t]*"$(1)" *: *"\([^"]*\).*~\1~p;'
-
-# sed_cmd _DOCS_FBUILDS_LISTREGEX(key, value)
-_DOCS_FBUILDS_LISTREGEX = 's~^\([ \t]*"$(1)" *: *\[\)[^]]*~\1$(2)~g;'
-# comma_list _DOCS_FBUILDS_LISTPARSE(key)
-_DOCS_FBUILDS_LISTPARSE = 's~^[ \t]*"$(1)" *: *\[\([^]]*\).*~\1~p;'
-
-# sh_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
-_DOCS_FBUILDS_SUBREGEX = $(SED_CMD) -i ':a;N;$$!ba; '$(\
-  )'s~\(\n *"$(2)" *: *{ *\n[^}]*"$(3)" *: *"\)[^"]*~\1$(4)~g;' $(1)
-
-# sh_cmd _DOCS_FBUILDS_SUBREGEX(file, mf_version, kind, file_ext)
-_DOCS_FBUILDS_WHOLESUB = \
-  $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),name,$(\
-         )$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
-  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-url,$(\
-            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
-  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-sha1,$(\
-            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).sha1) \$(NL) \
-  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-md5,$(\
-            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
-
-.SECONDEXPANSION:
-$(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
-  $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
-	@if [ -f $@ ]; then \
-	  date_time="`$(SED_CMD) -n \
-	              $(call _DOCS_FBUILDS_JSONPARSE,time) $@`"; \
-	  tags="`$(SED_CMD) -n \
-	         $(call _DOCS_FBUILDS_LISTPARSE,tags) $@`"; \
-	else \
-	  echo "Generating '$@'"; \
-	  date_time="`$(DATE_CMD) -Iseconds`"; \
-	  tags='"unstable"'; \
-	  latest="`$(SED_CMD) -n $(call _WEBSITE_PROMO_PARSE,latest-build)\
-	           $(DOCS_DATA_DIR)/forge_promos.json`"; \
-	  if [ $$latest = $(MF_VERSION_FULL) ]; then \
-	    echo "Updating 'seems-to-work' to '$(MF_VERSION_FULL)'"; \
-	    $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,seems-to-work,$(\
-	      )$(MF_VERSION_FULL)) $(DOCS_DATA_DIR)/forge_promos.json; \
-	  fi; \
-	  echo "Updating 'latest-build' to '$*'"; \
-	  $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
-	    )$*) $(DOCS_DATA_DIR)/forge_promos.json; \
-	fi; \
-	cp -f $< $@; \
-	$(SED_CMD) -i $(call _SRC_PACK_SEDJSON,time,'"$$date_time"') $@; \
-	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $@;
-	@echo "Updating '$@'"
-	@$(SED_CMD) -i $(\
-	)$(call _SRC_PACK_SEDJSON,mc_version,$(shell \
-	        echo $* | $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'))$(\
-	)$(call _SRC_PACK_SEDJSON,mf_version,$*)$(\
-	) $@
-	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,installer,jar)
-	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,universal,jar)
-	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,userdev,jar)
-	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,launcher,jar)
-	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,src,jar)
-	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,mdk,zip)
-
-# sed_cmd _WEBSITE_PROMO_REGEX(name, version)
-_WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
-
-# version _WEBSITE_PROMO_PARSE(name)
-_WEBSITE_PROMO_PARSE = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
-
-$(DOCS_DATA_DIR)/forge_promos.json: Makefile
-	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
-	@$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,used-for-develop,$(\
-	                 )$(MF_VERSION_FULL)) $@
-
-.PHONY: website_mf_addtag
-website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
-	@if [ -z "$(TAG)" ]; then \
-	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
-	       > /dev/stderr; \
-	  exit 1; \
-	fi
-	@echo "Adding tag '$(TAG)' to Forge build '$(MF_VERSION_FULL)'"
-	@tags="`$(SED_CMD) -n \
-	       $(call _DOCS_FBUILDS_LISTPARSE,tags) $<`"; \
-	tags="$$tags, \"$(TAG)\""; \
-	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $<;
-
-.PHONY: website_mf_rmtag
-website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
-	@if [ -z "$(TAG)" ]; then \
-	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
-	       > /dev/stderr; \
-	  exit 1; \
-	fi
-	@echo "Removing tag '$(TAG)' from Forge build '$(MF_VERSION_FULL)'"
-	@tags="`$(SED_CMD) -n \
-	       $(call _DOCS_FBUILDS_LISTPARSE,tags) $<`"; \
-	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g; \
-	       s~, *$$~~g; s~^, *~~g; s~, *,~,~g;'`"; \
-	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $<;
-
-.PHONY: website_data
-website_data: config_all $(DOCS_FORGEBUILDS_JSONS)
+include makefile.web.mk
 
 # ********************************************************************
+# Clean targets
 
-# _CLEAN_MAKECACHE must be the last in the dependency list, because it
-# will be regenerated during recursive CLEAN calls
+# _CLEAN_MAKECACHE must be the last one in the dependency list,
+# because it will be regenerated during recursive CLEAN calls
 .PHONY: _clean_makecache
 _clean_makecache:
-	rm -f .makefile.cache.mk
+	-rm -f .makefile.cache.mk
 
 .PHONY: _clean_bak
 _clean_bak:
@@ -564,4 +232,5 @@ clean_bootstrap:
 .PHONY: clean_all
 clean_all: clean_bootstrap clean_minecraft_forge clean _clean_makecache
 
+# End of Clean targets
 # ********************************************************************
