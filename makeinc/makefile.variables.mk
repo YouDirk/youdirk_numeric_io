@@ -18,6 +18,9 @@
 # ********************************************************************
 # Variable definitions
 
+MK_FILES =  Makefile makefile.config.mk $(patsubst \
+            %,makeinc/makefile.%.mk,check variables web regex)
+
 # win_path_escaped _2WINPATH_ESCAPE(unix_path)
 _2WINPATH = $(shell echo $(1) | $(SED_CMD) 's~^/\(.\)/~\1:/~;s~ ~\\ ~g')
 

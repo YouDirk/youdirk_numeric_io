@@ -125,7 +125,7 @@ else
     $(shell rm -f $(_CACHE_FILE))
     $(error JAVAC command not found!  Please install the 'Java SE \
             Development Kit (JDK)' and/or set Makefile configuration \
-            variable JDK_PATH)
+            variable JDK_PATH in 'makefile.config.mk')
   endif
 endif
 $(shell echo 'MY_JAVA_HOME = $(MY_JAVA_HOME)' >> $(_CACHE_FILE))

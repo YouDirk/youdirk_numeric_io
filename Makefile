@@ -21,6 +21,9 @@ include .makefile.cache.mk
 include makeinc/makefile.check.mk
 
 include makeinc/makefile.variables.mk
+include makeinc/makefile.regex.mk
+
+include makeinc/makefile.web.mk
 
 # ********************************************************************
 # Necessary Target definitions
@@ -103,39 +106,28 @@ $(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
 	cd $(MF_DIR) \
 	  && ./gradlew setup :forge:licenseFormat :forge:publish
 
-# sed_cmd _SRC_PACK_SEDJSON(key, value)
-_SRC_PACK_SEDJSON = 's~^\([ \t]*"$(1)" *: *"\)[^"]*~\1$(2)~g;'
-
-$(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta Makefile
+$(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta $(MK_FILES)
 	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
-	)$(call _SRC_PACK_SEDJSON,description,$(MODDESC_ONELINE))$(\
+	)$(call _REGEX_PACKJSON_REPL,description,$(MODDESC_ONELINE))$(\
 	) $< > $@
 
-# sed_cmd _SRC_MODS_SEDCMD(key, value)
-_SRC_MODS_SEDCMD = 's~^\([ \t]*$(1) *= *"\)[^"]*~\1$(2)~g;'
-
-# sed_cmd _SRC_MODS_SEDGROUP(file, group, key, value)
-_SRC_MODS_SEDGROUP = $(SED_CMD) -i \
-  ':a;N;$$!ba; s~\(\n *\[\[$(2)\]\][^\n]*\n[^[]*$(3) *= *"\)[^"]*~\1$(4)~g;'\
-  $(1)
-
-$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml Makefile
+$(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml $(MK_FILES)
 	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
-	)$(call _SRC_MODS_SEDCMD,updateJSONURL,$(UPDATE_JSON_URL))$(\
-	)$(call _SRC_MODS_SEDCMD,issueTrackerURL,$(BUGTRACKING_URL))$(\
-	)$(call _SRC_MODS_SEDCMD,displayURL,$(WEBSITE_URL))$(\
-	)$(call _SRC_MODS_SEDCMD,logoFile,$(LOGO_FILE))$(\
-	)$(call _SRC_MODS_SEDCMD,authors,$(CREDITS))$(\
-	)$(call _SRC_MODS_SEDCMD,credits,$(MODTHANKS))\
+	)$(call _REGEX_MODS_REPL,updateJSONURL,$(UPDATE_JSON_URL))$(\
+	)$(call _REGEX_MODS_REPL,issueTrackerURL,$(BUGTRACKING_URL))$(\
+	)$(call _REGEX_MODS_REPL,displayURL,$(WEBSITE_URL))$(\
+	)$(call _REGEX_MODS_REPL,logoFile,$(LOGO_FILE))$(\
+	)$(call _REGEX_MODS_REPL,authors,$(CREDITS))$(\
+	)$(call _REGEX_MODS_REPL,credits,$(MODTHANKS))\
 's~^\[\[dependencies.examplemod\]\]\( *\)[^ #]*~[[dependencies.$(MODID)]]\1~g; '\
 	  $< > $@
 	@$(SED_CMD) -i ':a;N;$$!ba; '"s~\\ndescription \\?= \\?'''.*\\n'''"\
 "~\\ndescription='''\\n$(MODDESC)\\n'''~g;" $@
-	@$(call _SRC_MODS_SEDGROUP,$@,mods,modId,$(MODID))
-	@$(call _SRC_MODS_SEDGROUP,$@,mods,version,$(VERSION_FULL))
-	@$(call _SRC_MODS_SEDGROUP,$@,mods,displayName,$(MODNAME))
+	@$(call _REGEX_MODS_GROUPREPL,$@,mods,modId,$(MODID))
+	@$(call _REGEX_MODS_GROUPREPL,$@,mods,version,$(VERSION_FULL))
+	@$(call _REGEX_MODS_GROUPREPL,$@,mods,displayName,$(MODNAME))
 
 gradlew: $(MF_DIR)/gradlew
 	cp -f $< $@
@@ -152,7 +144,7 @@ _BUILD_GRADLE_SEDVAL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
 # sed_cmd _BUILD_GRADLE_SED_AT(key, value)
 _BUILD_GRADLE_SED_AT = 's~@$(1)@~$(2)~g;'
 
-build.gradle: $(MF_MDK_DIR)/build.gradle Makefile gradle.properties
+build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
 	)$(call _BUILD_GRADLE_SEDVAL,version,$(VERSION_FULL))$(\
@@ -194,13 +186,9 @@ config_all: build.gradle \
 
 .PHONY: _cache
 _cache:
-.makefile.cache.mk: Makefile
+.makefile.cache.mk: $(MK_FILES)
 	-rm -f $@
 	$(MAKE) _CACHE_FILE=$@ _cache
-
-# ********************************************************************
-
-include makeinc/makefile.web.mk
 
 # ********************************************************************
 # Clean targets

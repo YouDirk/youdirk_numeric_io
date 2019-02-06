@@ -18,37 +18,25 @@
 # ********************************************************************
 # Website stuff
 
-# sed_cmd _DOCS_FBUILDS_JSONPARSE(key)
-_DOCS_FBUILDS_JSONPARSE = 's~^[ \t]*"$(1)" *: *"\([^"]*\).*~\1~p;'
-
-# sed_cmd _DOCS_FBUILDS_LISTREGEX(key, value)
-_DOCS_FBUILDS_LISTREGEX = 's~^\([ \t]*"$(1)" *: *\[\)[^]]*~\1$(2)~g;'
-# comma_list _DOCS_FBUILDS_LISTPARSE(key)
-_DOCS_FBUILDS_LISTPARSE = 's~^[ \t]*"$(1)" *: *\[\([^]]*\).*~\1~p;'
-
-# sh_cmd _DOCS_FBUILDS_SUBREGEX(file, group, key, value)
-_DOCS_FBUILDS_SUBREGEX = $(SED_CMD) -i ':a;N;$$!ba; '$(\
-  )'s~\(\n *"$(2)" *: *{ *\n[^}]*"$(3)" *: *"\)[^"]*~\1$(4)~g;' $(1)
-
-# sh_cmd _DOCS_FBUILDS_SUBREGEX(file, mf_version, kind, file_ext)
+# sh_cmd _DOCS_FBUILDS_WHOLESUB(file, mf_version, kind, file_ext)
 _DOCS_FBUILDS_WHOLESUB = \
-  $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),name,$(\
-         )$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
-  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-url,$(\
-            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
-  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-sha1,$(\
-            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).sha1) \$(NL) \
-  && $(call _DOCS_FBUILDS_SUBREGEX,$(1),$(4)_$(3),maven-md5,$(\
-            )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
+  $(call _SED_FBUILDSJSON_GROUPREPL,$(1),$(4)_$(3),name,$(\
+     )$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
+  && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),$(4)_$(3),maven-url,$(\
+     )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4)) \$(NL) \
+  && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),$(4)_$(3),maven-sha1,$(\
+     )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).sha1) \$(NL) \
+  && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),$(4)_$(3),maven-md5,$(\
+     )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
 
 .SECONDEXPANSION:
 $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
-  $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom Makefile
+  $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom $(MK_FILES)
 	@if [ -f $@ ]; then \
 	  date_time="`$(SED_CMD) -n \
-	              $(call _DOCS_FBUILDS_JSONPARSE,time) $@`"; \
+	              $(call _REGEX_FBUILDSJSON_RET,time) $@`"; \
 	  tags="`$(SED_CMD) -n \
-	         $(call _DOCS_FBUILDS_LISTPARSE,tags) $@`"; \
+	         $(call _REGEX_FBUILDSJSONLIST_RET,tags) $@`"; \
 	else \
 	  echo "Generating '$@'"; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
@@ -65,13 +53,14 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	    )$*) $(DOCS_DATA_DIR)/forge_promos.json; \
 	fi; \
 	cp -f $< $@; \
-	$(SED_CMD) -i $(call _SRC_PACK_SEDJSON,time,'"$$date_time"') $@; \
-	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $@;
+	$(SED_CMD) -i $(call _REGEX_PACKJSON_REPL,time,'"$$date_time"') $@; \
+	$(SED_CMD) -i $(call \
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $@;
 	@echo "Updating '$@'"
 	@$(SED_CMD) -i $(\
-	)$(call _SRC_PACK_SEDJSON,mc_version,$(shell \
+	)$(call _REGEX_PACKJSON_REPL,mc_version,$(shell \
 	        echo $* | $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'))$(\
-	)$(call _SRC_PACK_SEDJSON,mf_version,$*)$(\
+	)$(call _REGEX_PACKJSON_REPL,mf_version,$*)$(\
 	) $@
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,installer,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,universal,jar)
@@ -86,7 +75,7 @@ _WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
 # version _WEBSITE_PROMO_PARSE(name)
 _WEBSITE_PROMO_PARSE = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
 
-$(DOCS_DATA_DIR)/forge_promos.json: Makefile
+$(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
 	@$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,used-for-develop,$(\
 	                 )$(MF_VERSION_FULL)) $@
@@ -100,9 +89,10 @@ website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	fi
 	@echo "Adding tag '$(TAG)' to Forge build '$(MF_VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
-	       $(call _DOCS_FBUILDS_LISTPARSE,tags) $<`"; \
+	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
 	tags="$$tags, \"$(TAG)\""; \
-	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $<;
+	$(SED_CMD) -i $(call \
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_mf_rmtag
 website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
@@ -113,10 +103,11 @@ website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	fi
 	@echo "Removing tag '$(TAG)' from Forge build '$(MF_VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
-	       $(call _DOCS_FBUILDS_LISTPARSE,tags) $<`"; \
+	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
 	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g; \
 	       s~, *$$~~g; s~^, *~~g; s~, *,~,~g;'`"; \
-	$(SED_CMD) -i $(call _DOCS_FBUILDS_LISTREGEX,tags,'"$$tags"') $<;
+	$(SED_CMD) -i $(call \
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_data
 website_data: config_all $(DOCS_FORGEBUILDS_JSONS)
