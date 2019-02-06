@@ -73,7 +73,7 @@ jdk_version:
 # --- Maintaining only ---
 
 .PHONY: bootstrap
-bootstrap: | minecraft_forge config_all
+bootstrap: | forge config_all
 
 # New MAKE instance, to update DOCS_FORGEBUILDS_JSONS
 .PHONY: maven
@@ -85,11 +85,11 @@ maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 # End of Necessary Target definitions
 # ********************************************************************
 
-.PHONY: minecraft_forge
-minecraft_forge:
-	$(MAKE) TEST_GIT=1 _minecraft_forge
-.PHONY: _minecraft_forge
-_minecraft_forge:
+.PHONY: forge
+forge:
+	$(MAKE) TEST_GIT=1 _forge
+.PHONY: _forge
+_forge:
 	$(GIT_CMD) submodule update -f --init $(MF_DIR)
 	cd $(MF_DIR) && $(GIT_CMD) checkout -f $(MF_BRANCH) \
 	  && $(GIT_CMD) pull -f --rebase \
@@ -203,11 +203,11 @@ _clean_makecache:
 _clean_bak:
 	-rm -f $(shell $(FIND_CMD) . -name '*~')
 
-.PHONY: clean_minecraft_forge
-clean_minecraft_forge:
-	$(MAKE) TEST_GIT=1 _clean_minecraft_forge
-.PHONY: _clean_minecraft_forge
-_clean_minecraft_forge:
+.PHONY: clean_forge
+clean_forge:
+	$(MAKE) TEST_GIT=1 _clean_forge
+.PHONY: _clean_forge
+_clean_forge:
 	(cd $(MF_DIR) && $(GIT_CMD) checkout build.gradle \
 	  && $(GIT_CMD) clean -xdf) 2> /dev/null || true
 
@@ -218,7 +218,7 @@ clean_bootstrap:
 	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
 .PHONY: clean_all
-clean_all: | clean_bootstrap clean_minecraft_forge clean
+clean_all: | clean_bootstrap clean_forge clean
 
 # End of Clean targets
 # ********************************************************************

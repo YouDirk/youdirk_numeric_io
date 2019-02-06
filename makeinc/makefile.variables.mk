@@ -64,7 +64,7 @@ MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
 MF_GROUP = net.minecraftforge
 MF_NAME = forge
 
-MF_DIR = minecraft_forge
+MF_DIR = forge
 MF_MDK_DIR = $(MF_DIR)/mdk
 MF_RESOURCES_DIR = $(MF_MDK_DIR)/$(RESOURCES_DIR)
 MF_METAINF_DIR = $(MF_MDK_DIR)/$(METAINF_DIR)
