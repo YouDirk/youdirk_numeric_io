@@ -101,5 +101,7 @@ endef
 PATH := $(MY_JAVA_HOME)/bin:$(PATH)
 JAVA_HOME := $(MY_JAVA_HOME)
 
+export PATH JAVA_HOME
+
 # End of Variable definitions
 # ********************************************************************

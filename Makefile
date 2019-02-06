@@ -18,9 +18,9 @@
 include makefile.config.mk
 
 include .makefile.cache.mk
-include makefile.check.mk
+include makeinc/makefile.check.mk
 
-include makefile.variables.mk
+include makeinc/makefile.variables.mk
 
 # ********************************************************************
 # Necessary Target definitions
@@ -200,7 +200,7 @@ _cache:
 
 # ********************************************************************
 
-include makefile.web.mk
+include makeinc/makefile.web.mk
 
 # ********************************************************************
 # Clean targets
