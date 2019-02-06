@@ -23,38 +23,39 @@ include makeinc/makefile.check.mk
 include makeinc/makefile.variables.mk
 include makeinc/makefile.regex.mk
 
+# Must be the first target definition
+.PHONY: all
+all: | config_all
+	./gradlew classes
+
 include makeinc/makefile.web.mk
 
 # ********************************************************************
 # Necessary Target definitions
 
-.PHONY: all
-all: config_all
-	./gradlew classes
-
 .PHONY: classes
-classes: config_all
+classes: | config_all
 	./gradlew classes
 
 .PHONY: run_client
-run_client: config_all
+run_client: | config_all
 	./gradlew runClient
 
 .PHONY: run_server
-run_server: config_all
+run_server: | config_all
 	./gradlew runServer
 
 .PHONY: build
-build: config_all
+build: | config_all
 	./gradlew build
 
 .PHONY: javadoc
-javadoc: config_all $(JAVADOC_DIR)/index.html
+javadoc: | config_all $(JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
 	  _2WINPATH,$(PWD)/$(JAVADOC_DIR)/index.html) || true
 
 .PHONY: mf_javadoc
-mf_javadoc: config_all $(MF_JAVADOC_DIR)/index.html
+mf_javadoc: | config_all $(MF_JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
 	  _2WINPATH,$(PWD)/$(MF_JAVADOC_DIR)/index.html) || true
 
@@ -62,7 +63,7 @@ mf_javadoc: config_all $(MF_JAVADOC_DIR)/index.html
 clean_run:
 	-rm -rf $(RUN_DIR)
 .PHONY: clean
-clean: _clean_bak clean_run _clean_makecache
+clean: | _clean_bak clean_run _clean_makecache
 	-rm -rf .gradle $(BUILD_DIR)
 
 .PHONY: jdk_version
@@ -72,7 +73,7 @@ jdk_version:
 # --- Maintaining only ---
 
 .PHONY: bootstrap
-bootstrap: minecraft_forge config_all
+bootstrap: | minecraft_forge config_all
 
 # New MAKE instance, to update DOCS_FORGEBUILDS_JSONS
 .PHONY: maven
@@ -138,24 +139,18 @@ gradlew.bat: $(MF_DIR)/gradlew.bat gradle
 gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
 	cp -f $< $@
 
-# sed_cmd _BUILD_GRADLE_SEDVAL(key, value)
-_BUILD_GRADLE_SEDVAL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
-
-# sed_cmd _BUILD_GRADLE_SED_AT(key, value)
-_BUILD_GRADLE_SED_AT = 's~@$(1)@~$(2)~g;'
-
 build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	@echo "Generating '$@'"
 	@$(SED_CMD) $(\
-	)$(call _BUILD_GRADLE_SEDVAL,version,$(VERSION_FULL))$(\
-	)$(call _BUILD_GRADLE_SEDVAL,group,$(GROUP))$(\
-	)$(call _BUILD_GRADLE_SEDVAL,archivesBaseName,$(MODID))$(\
-	)$(call _BUILD_GRADLE_SED_AT,MAPPING_CHANNEL,$(MCP_MAPPING_CHANNEL))$(\
-	)$(call _BUILD_GRADLE_SED_AT,MAPPING_VERSION,$(MCP_MAPPING_VERSION))$(\
-	)$(call _BUILD_GRADLE_SED_AT,FORGE_GROUP,$(MF_GROUP))$(\
-	)$(call _BUILD_GRADLE_SED_AT,FORGE_NAME,$(MF_NAME))$(\
-	)$(call _BUILD_GRADLE_SED_AT,FORGE_VERSION,$(MF_VERSION_FULL))$(\
-	)$(call _BUILD_GRADLE_SED_AT,MC_VERSION,$(MF_VERSION_FULL))$(\
+	)$(call _REGEX_GRADLE_REPL,version,$(VERSION_FULL))$(\
+	)$(call _REGEX_GRADLE_REPL,group,$(GROUP))$(\
+	)$(call _REGEX_GRADLE_REPL,archivesBaseName,$(MODID))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,MAPPING_CHANNEL,$(MCP_MAPPING_CHANNEL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,MAPPING_VERSION,$(MCP_MAPPING_VERSION))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,FORGE_GROUP,$(MF_GROUP))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,FORGE_NAME,$(MF_NAME))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,FORGE_VERSION,$(MF_VERSION_FULL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,MC_VERSION,$(MF_VERSION_FULL))$(\
 	)\
 's~META_INF/mods.toml~META-INF/mods.toml~g; '\
 's~minecraft \?{~repositories {\n'\
@@ -179,10 +174,15 @@ $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
 	cd $(MF_DIR) \
 	  && ./gradlew setup :forge:licenseFormat :forge:javadoc || true
 
+# Only if $(MF_DIR) is checked out
 .PHONY: config_all
+ifeq (,$(wildcard $(MF_MDK_DIR)/build.gradle))
+config_all:
+else
 config_all: build.gradle \
   $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta \
   $(DOCS_DATA_DIR)/forge_promos.json
+endif
 
 .PHONY: _cache
 _cache:
@@ -208,8 +208,8 @@ clean_minecraft_forge:
 	$(MAKE) TEST_GIT=1 _clean_minecraft_forge
 .PHONY: _clean_minecraft_forge
 _clean_minecraft_forge:
-	cd $(MF_DIR) && $(GIT_CMD) checkout build.gradle \
-	  && $(GIT_CMD) clean -xdf
+	(cd $(MF_DIR) && $(GIT_CMD) checkout build.gradle \
+	  && $(GIT_CMD) clean -xdf) 2> /dev/null || true
 
 .PHONY: clean_bootstrap
 clean_bootstrap:
@@ -218,7 +218,7 @@ clean_bootstrap:
 	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
 .PHONY: clean_all
-clean_all: clean_bootstrap clean_minecraft_forge clean _clean_makecache
+clean_all: | clean_bootstrap clean_minecraft_forge clean
 
 # End of Clean targets
 # ********************************************************************

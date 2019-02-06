@@ -18,6 +18,13 @@
 # ********************************************************************
 # Regex Callables
 
+# sed_cmd _REGEX_GRADLE_REPL(key, value)
+_REGEX_GRADLE_REPL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
+
+# sed_cmd _REGEX_GRADLEVAR_REPL(key, value)
+_REGEX_GRADLEVAR_REPL = 's~@$(1)@~$(2)~g;'
+
+
 # sed_cmd _REGEX_PACKJSON_REPL(key, value)
 _REGEX_PACKJSON_REPL = 's~^\([ \t]*"$(1)" *: *"\)[^"]*~\1$(2)~g;'
 

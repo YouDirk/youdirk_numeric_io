@@ -104,7 +104,7 @@ website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_data
-website_data: config_all $(DOCS_FORGEBUILDS_JSONS)
+website_data: | config_all $(DOCS_FORGEBUILDS_JSONS)
 
 # End of Website stuff
 # ********************************************************************
