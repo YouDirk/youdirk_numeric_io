@@ -42,5 +42,12 @@ _REGEX_FBUILDSJSONLIST_RET = 's~^[ \t]*"$(1)" *: *\[\([^]]*\).*~\1~p;'
 _SED_FBUILDSJSON_GROUPREPL = $(SED_CMD) -i ':a;N;$$!ba; '$(\
   )'s~\(\n *"$(2)" *: *{ *\n[^}]*"$(3)" *: *"\)[^"]*~\1$(4)~g;' $(1)
 
+
+# sed_cmd _REGEX_PROMO_REPL(name, version)
+_REGEX_PROMO_REPL = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
+
+# version _REGEX_PROMO_RET(name)
+_REGEX_PROMO_RET = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
+
 # End of Regex Callables
 # ********************************************************************

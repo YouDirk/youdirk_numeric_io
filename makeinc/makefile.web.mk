@@ -41,15 +41,15 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	  echo "Generating '$@'"; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
 	  tags='"unstable"'; \
-	  latest="`$(SED_CMD) -n $(call _WEBSITE_PROMO_PARSE,latest-build)\
+	  latest="`$(SED_CMD) -n $(call _REGEX_PROMO_RET,latest-build)\
 	           $(DOCS_DATA_DIR)/forge_promos.json`"; \
 	  if [ $$latest = $(MF_VERSION_FULL) ]; then \
 	    echo "Updating 'seems-to-work' to '$(MF_VERSION_FULL)'"; \
-	    $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,seems-to-work,$(\
+	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,seems-to-work,$(\
 	      )$(MF_VERSION_FULL)) $(DOCS_DATA_DIR)/forge_promos.json; \
 	  fi; \
 	  echo "Updating 'latest-build' to '$*'"; \
-	  $(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,latest-build,$(\
+	  $(SED_CMD) -i $(call _REGEX_PROMO_REPL,latest-build,$(\
 	    )$*) $(DOCS_DATA_DIR)/forge_promos.json; \
 	fi; \
 	cp -f $< $@; \
@@ -69,15 +69,9 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,src,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,mdk,zip)
 
-# sed_cmd _WEBSITE_PROMO_REGEX(name, version)
-_WEBSITE_PROMO_REGEX = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
-
-# version _WEBSITE_PROMO_PARSE(name)
-_WEBSITE_PROMO_PARSE = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
-
 $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
-	@$(SED_CMD) -i $(call _WEBSITE_PROMO_REGEX,used-for-develop,$(\
+	@$(SED_CMD) -i $(call _REGEX_PROMO_REPL,used-for-develop,$(\
 	                 )$(MF_VERSION_FULL)) $@
 
 .PHONY: website_mf_addtag
