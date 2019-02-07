@@ -85,13 +85,12 @@ dependencies {
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
-        // TODO
-        attributes(["Specification-Title": "examplemod",
-                    "Specification-Vendor": "examplemodsareus",
-                    "Specification-Version": "24.0", // We are version 1 of the modlauncher specification
-                    "Implementation-Title": project.name,
-                    "Implementation-Version": "${version}",
-                    "Implementation-Vendor" :"examplemodsareus",
+        attributes(["Specification-Title": "youdirk_numeric_io_api",
+                    "Specification-Vendor": "YouDirk Maintained",
+                    "Specification-Version": "1.13-0.0", // We are version 1 of the modlauncher specification
+                    "Implementation-Title": "YouDirk Numeric I/O",
+                    "Implementation-Version": "1.13-0.0.0.1-dummy",
+                    "Implementation-Vendor" : "YouDirk Maintained",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }

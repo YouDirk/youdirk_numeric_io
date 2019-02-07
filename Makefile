@@ -145,12 +145,28 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	)$(call _REGEX_GRADLE_REPL,version,$(VERSION_FULL))$(\
 	)$(call _REGEX_GRADLE_REPL,group,$(GROUP))$(\
 	)$(call _REGEX_GRADLE_REPL,archivesBaseName,$(MODID))$(\
-	)$(call _REGEX_GRADLEVAR_REPL,MAPPING_CHANNEL,$(MCP_MAPPING_CHANNEL))$(\
-	)$(call _REGEX_GRADLEVAR_REPL,MAPPING_VERSION,$(MCP_MAPPING_VERSION))$(\
-	)$(call _REGEX_GRADLEVAR_REPL,FORGE_GROUP,$(MF_GROUP))$(\
-	)$(call _REGEX_GRADLEVAR_REPL,FORGE_NAME,$(MF_NAME))$(\
-	)$(call _REGEX_GRADLEVAR_REPL,FORGE_VERSION,$(MF_VERSION_FULL))$(\
-	)$(call _REGEX_GRADLEVAR_REPL,MC_VERSION,$(MF_VERSION_FULL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL \
+	        ,MAPPING_CHANNEL,$(MCP_MAPPING_CHANNEL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL \
+	        ,MAPPING_VERSION,$(MCP_MAPPING_VERSION))$(\
+	)$(call _REGEX_GRADLEVAR_REPL \
+	        ,FORGE_GROUP,$(MF_GROUP))$(\
+	)$(call _REGEX_GRADLEVAR_REPL \
+	        ,FORGE_NAME,$(MF_NAME))$(\
+	)$(call _REGEX_GRADLEVAR_REPL \
+	        ,FORGE_VERSION,$(MF_VERSION_FULL))$(\
+	)$(call _REGEX_GRADLEMANIFEST_REPL \
+	        ,Specification-Title,$(MODID)_api)$(\
+	)$(call _REGEX_GRADLEMANIFEST_REPL \
+	        ,Specification-Vendor,$(VENDOR))$(\
+	)$(call _REGEX_GRADLEMANIFEST_REPL \
+	        ,Specification-Version,$(VERSION_API_FULL))$(\
+	)$(call _REGEX_GRADLEMANIFEST_REPL \
+	        ,Implementation-Title,$(MODNAME))$(\
+	)$(call _REGEX_GRADLEMANIFEST_REPL \
+	        ,Implementation-Vendor,$(VENDOR))$(\
+	)$(call _REGEX_GRADLEMANIFEST_REPL \
+	        ,Implementation-Version,$(VERSION_FULL))$(\
 	)\
 's~META_INF/mods.toml~META-INF/mods.toml~g; '\
 's~minecraft \?{~repositories {\n'\

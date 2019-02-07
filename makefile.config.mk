@@ -24,7 +24,12 @@ JDK_PATH =
 # YouDirk Numeric I/O Version (without Minecraft Version)
 #   Take a look to the conventions for versioning
 #   <https://mcforge.readthedocs.io/en/latest/conventions/versioning/>
-VERSION = 0.0.0.1-dummy
+
+# MAJORMOD.MAJORAPI
+VERSION_API = 0.0
+
+# MAJORMOD.MAJORAPI.MINOR.PATCH
+VERSION = $(VERSION_API).0.1-dummy
 
 # Dependency Version stuff
 MC_VERSION = 1.13
@@ -47,6 +52,9 @@ MF_FALLBACK_BRANCH = origin/1.12.x
 # (optional) Inodes (files, directories, etc) relative to
 # MINECRAFT_FORGE directory which will be using fallback versions
 MF_FALLBACK_INODES =
+
+# Name of your fork
+VENDOR = YouDirk Maintained
 
 # Comma separated list
 CREDITS = Dirk (YouDirk) Lehmann

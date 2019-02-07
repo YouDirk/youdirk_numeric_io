@@ -24,6 +24,10 @@ MK_FILES =  Makefile makefile.config.mk $(patsubst \
 # win_path_escaped _2WINPATH_ESCAPE(unix_path)
 _2WINPATH = $(shell echo $(1) | $(SED_CMD) 's~^/\(.\)/~\1:/~;s~ ~\\ ~g')
 
+# MCVERSION-MAJORMOD.MAJORAPI
+VERSION_API_FULL = $(MC_VERSION)-$(VERSION_API)
+
+# MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH
 VERSION_FULL = $(MC_VERSION)-$(VERSION)
 
 # Display name of the mod
