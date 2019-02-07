@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.dj_l</groupId>
+  <artifactId>youdirk_numeric_io</artifactId>
+  <version>1.13-0.0.0.1-dummy</version>
+  <packaging>pom</packaging>
+  <name>YouDirk Numeric I/O</name>
+  <description>This is the official YouDirk Numeric I/O Minecraft mod youdirk_numeric_io.</description>
+  <url>https://youdirk.github.io/youdirk_numeric_io</url>
+  <licenses>
+    <license>
+      <name>GPL v3.0</name>
+      <url>https://github.com/YouDirk/youdirk_numeric_io/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:https://github.com/YouDirk/youdirk_numeric_io.git</connection>
+    <developerConnection>scm:git:https://github.com/YouDirk/youdirk_numeric_io.git</developerConnection>
+    <url>https://github.com/YouDirk/youdirk_numeric_io</url>
+  </scm>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/YouDirk/youdirk_numeric_io/issues</url>
+  </issueManagement>
+</project>
