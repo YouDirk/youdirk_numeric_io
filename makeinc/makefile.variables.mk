@@ -50,9 +50,12 @@ MODTHANKS = To the MCP team and the Forge programmers to make it \
 # Conventions here
 #   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
 MODID = youdirk_numeric_io
-GROUP = net.dj_l.$(MODID)
+GROUP = net.dj_l
 
 BUILD_DIR = build
+BUILDLIBS_DIR = $(BUILD_DIR)/libs
+BUILD_JARNAME = $(MODID)-$(VERSION_FULL)
+
 RESOURCES_DIR = src/main/resources
 JAVA_DIR = src/main/java
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
@@ -80,6 +83,8 @@ DOCS_DIR = docs
 MAVEN_DIR = $(DOCS_DIR)/maven
 MAVEN_FORGE_RELDIR = $(subst .,/,$(MF_GROUP))/$(MF_NAME)
 MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)
+MAVEN_MOD_RELDIR = $(subst .,/,$(GROUP))/$(MODID)
+MAVEN_MOD_DIR = $(MAVEN_DIR)/$(MAVEN_MOD_RELDIR)
 DOCS_DATA_DIR = $(DOCS_DIR)/_data
 DOCS_FORGEBUILDS_DIR = $(DOCS_DATA_DIR)/forge_builds
 
@@ -91,10 +96,20 @@ MAVEN_FORGE_VERSIONS = $(patsubst $(MAVEN_FORGE_DIR)/%,%,\
 DOCS_FORGEBUILDS_JSONS = $(patsubst %,$(DOCS_FORGEBUILDS_DIR)/%.json,\
                            $(MAVEN_FORGE_VERSIONS))
 
+PROJECT_URL = https://github.com/YouDirk/youdirk_numeric_io
+REPOSITORY_ROOT_URL = $(PROJECT_URL)/blob/master
+LICENSE_FILE = LICENSE
+
 LOGO_FILE = youdirk_numeric_io.png
 WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
-BUGTRACKING_URL = https://github.com/YouDirk/youdirk_numeric_io/issues
 UPDATE_JSON_URL = $(WEBSITE_URL)/releases/update.json
+GIT_URL = $(PROJECT_URL).git
+
+BUGTRACKING_SYSTEM = github
+BUGTRACKING_URL = $(PROJECT_URL)/issues
+
+LICENSE_SHORT = GPL v3.0
+LICENSE_URL = $(REPOSITORY_ROOT_URL)/$(LICENSE_FILE)
 
 _BLANK :=
 define NL

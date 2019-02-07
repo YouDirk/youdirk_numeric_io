@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
 version = '1.13-0.0.0.1-dummy'
-group = 'net.dj_l.youdirk_numeric_io' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'net.dj_l' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'youdirk_numeric_io'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.

@@ -59,5 +59,18 @@ _REGEX_PROMO_REPL = 's~^\( *"\)[^"]*\(" *:.*"$(1)"\)~\1$(2)\2~g;'
 # version _REGEX_PROMO_RET(name)
 _REGEX_PROMO_RET = 's~^ *"\([^"]*\)" *:.*"$(1)".*~\1~p;'
 
+
+# sed_cmd _REGEX_POMXML_REPL(intdent_no, key, value)
+_REGEX_POMXML_REPL \
+  = 's~^\( \{$(1)\}< *$(2) *>\)[^<]*\(< */ *$(2) *>\)'$(\
+    )'~\1$(3)\2~g;'
+
+# sed_cmd _REGEX_POMXML_EXIST(key, value)
+_REGEX_POMXML_EXIST = 's~^ *< *$(1) *>$(2)< */ *$(1) *>.*~found~p;'
+
+# sed_cmd _REGEX_POMXML_ADDVERSION(version)
+_REGEX_POMXML_ADDVERSION = 's~^\( *\)\(< */ *versions *>.*\)'$(\
+  )'~\1  <version>$(1)</version>\n\1\2~g;'
+
 # End of Regex Callables
 # ********************************************************************

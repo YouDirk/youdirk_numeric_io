@@ -25,8 +25,7 @@ include makeinc/makefile.regex.mk
 
 # Must be the first target definition
 .PHONY: all
-all: | config_all
-	./gradlew classes
+all: classes
 
 include makeinc/makefile.web.mk
 
@@ -46,8 +45,7 @@ run_server: | config_all
 	./gradlew runServer
 
 .PHONY: build
-build: | config_all
-	./gradlew build
+build: | config_all $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
 
 .PHONY: javadoc
 javadoc: | config_all $(JAVADOC_DIR)/index.html
@@ -79,6 +77,10 @@ bootstrap: | forge config_all
 .PHONY: maven
 maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 	$(MAKE) website_data
+
+.PHONY: publish
+publish: | config_all \
+  $(MAVEN_MOD_DIR)/maven-metadata.xml
 
 # --- End of Maintaining only ---
 
@@ -168,7 +170,6 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	)$(call _REGEX_GRADLEMANIFEST_REPL \
 	        ,Implementation-Version,$(VERSION_FULL))$(\
 	)\
-'s~META_INF/mods.toml~META-INF/mods.toml~g; '\
 's~minecraft \?{~repositories {\n'\
 "  maven { url 'file://' + rootProject.file('$(MAVEN_DIR)')"\
 ".getAbsolutePath() }\n"\
@@ -205,6 +206,61 @@ _cache:
 .makefile.cache.mk: $(MK_FILES)
 	-rm -f $@
 	$(MAKE) _CACHE_FILE=$@ _cache
+
+# ********************************************************************
+
+.PHONY: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+$(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar:
+	./gradlew build
+
+$(MAVEN_MOD_DIR)/$(VERSION_FULL)/$(BUILD_JARNAME).jar: \
+  $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+	@echo "Generating '$@.*'"
+	@mkdir -p $(MAVEN_MOD_DIR)/$(VERSION_FULL)
+	@cp -f $< $@
+	@$(SHA1SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.sha1
+	@$(MD5SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.md5
+
+$(MAVEN_MOD_DIR)/$(VERSION_FULL)/$(BUILD_JARNAME).pom: \
+  $(MAVEN_MOD_DIR)/pom.templ.xml \
+  $(MAVEN_MOD_DIR)/$(VERSION_FULL)/$(BUILD_JARNAME).jar
+	@echo "Generating '$@.*'"
+	@$(SED_CMD) $(\
+	)$(call _REGEX_GRADLEVAR_REPL,GROUP_ID,$(GROUP))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,ARTIFACT_ID,$(MODID))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,VERSION,$(VERSION_FULL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,NAME,$(MODNAME))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,DESCRIPTION,$(MODDESC_ONELINE))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,URL,$(WEBSITE_URL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,LICENSE_NAME,$(LICENSE_SHORT))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,LICENSE_URL,$(LICENSE_URL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,SCM_CONNECTION,scm:git:$(GIT_URL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,SCM_DEVCONNECTION,scm:git:$(GIT_URL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,SCM_URL,$(PROJECT_URL))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,ISSUE_SYSTEM,$(BUGTRACKING_SYSTEM))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,ISSUE_URL,$(BUGTRACKING_URL))$(\
+	) $< > $@
+	@$(SHA1SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.sha1
+	@$(MD5SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.md5
+
+$(MAVEN_MOD_DIR)/maven-metadata.xml: \
+  $(MAVEN_MOD_DIR)/$(VERSION_FULL)/$(BUILD_JARNAME).pom
+	@echo "Updating '$@.*'"
+	@$(SED_CMD) -i $(\
+	)$(call _REGEX_POMXML_REPL,2,groupId,$(GROUP))$(\
+	)$(call _REGEX_POMXML_REPL,2,artifactId,$(MODID))$(\
+	)$(call _REGEX_POMXML_REPL,4,release,$(VERSION_FULL))$(\
+	)$(call _REGEX_POMXML_REPL,4,lastUpdated,$(shell $(DATE_CMD) \
+	        -u '+%Y%m%d%H%M%S'))$(\
+	) $@
+	@if [ -z `$(SED_CMD) -n $(call _REGEX_POMXML_EXIST,version$(\
+	         ),$(VERSION_FULL)) $@` ]; then \
+	  echo "Adding version $(VERSION_FULL) to '$@'"; \
+	  $(SED_CMD) -i \
+	    $(call _REGEX_POMXML_ADDVERSION,$(VERSION_FULL)) $@; \
+	fi
+	@$(SHA1SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.sha1
+	@$(MD5SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.md5
 
 # ********************************************************************
 # Clean targets

@@ -36,3 +36,5 @@ numeric_io:
 # Some advantages ...
 sass:
   style: compressed
+exclude:
+- maven/net/dj_l/youdirk_numeric_io/pom.templ.xml

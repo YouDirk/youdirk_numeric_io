@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>@GROUP_ID@</groupId>
+  <artifactId>@ARTIFACT_ID@</artifactId>
+  <version>@VERSION@</version>
+  <packaging>pom</packaging>
+  <name>@NAME@</name>
+  <description>@DESCRIPTION@</description>
+  <url>@URL@</url>
+  <licenses>
+    <license>
+      <name>@LICENSE_NAME@</name>
+      <url>@LICENSE_URL@</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>@SCM_CONNECTION@</connection>
+    <developerConnection>@SCM_DEVCONNECTION@</developerConnection>
+    <url>@SCM_URL@</url>
+  </scm>
+  <issueManagement>
+    <system>@ISSUE_SYSTEM@</system>
+    <url>@ISSUE_URL@</url>
+  </issueManagement>
+</project>

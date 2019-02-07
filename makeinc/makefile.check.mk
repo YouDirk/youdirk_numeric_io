@@ -49,6 +49,24 @@ else
   $(shell echo 'DATE_CMD = $(DATE_CMD)' >> $(_CACHE_FILE))
 endif
 
+MD5SUM_CMD = $(call _CMD_TEST,md5sum)
+ifeq (,$(MD5SUM_CMD))
+  $(shell rm -f $(_CACHE_FILE))
+  $(error MD5SUM command not found!  Try '$$> pacman -S msys/coreutils' \
+          for installation.  Or use your Linux package manager.)
+else
+  $(shell echo 'MD5SUM_CMD = $(MD5SUM_CMD)' >> $(_CACHE_FILE))
+endif
+
+SHA1SUM_CMD = $(call _CMD_TEST,sha1sum)
+ifeq (,$(SHA1SUM_CMD))
+  $(shell rm -f $(_CACHE_FILE))
+  $(error SHA1SUM command not found!  Try '$$> pacman -S msys/coreutils' \
+          for installation.  Or use your Linux package manager.)
+else
+  $(shell echo 'SHA1SUM_CMD = $(SHA1SUM_CMD)' >> $(_CACHE_FILE))
+endif
+
 GIT_CMD = "$(call _CMD_TEST,git)"
 ifeq ("",$(GIT_CMD))
   $(shell rm -f $(_CACHE_FILE))
