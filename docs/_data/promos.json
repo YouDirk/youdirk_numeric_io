@@ -1,0 +1,6 @@
+{
+  "_comment": "lower overriding",
+
+  "1.13-1.0.0.1": {"color": "#ffe8e8", "name": "latest"},
+  "1.13-0.0.0.1-dummy": {"color": "#e8ffe8", "name": "stable"}
+}

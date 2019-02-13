@@ -1,0 +1,14 @@
+{
+  "time": "<DUMMY>",
+  "version": "<DUMMY>",
+  "mc_version": "<DUMMY>",
+  "mf_version": "<DUMMY>",
+  "tags": ["release", "<DUMMY1>", "<DUMMY2>"],
+  "changelog": ["<LINE 1>", "<LINE 2>", "<LINE 3>"],
+  "jar": {
+    "name": "<DUMMY>",
+    "maven-url": "<DUMMY>",
+    "maven-sha1": "<DUMMY>",
+    "maven-md5": "<DUMMY>"
+  }
+}

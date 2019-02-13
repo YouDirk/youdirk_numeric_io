@@ -69,6 +69,12 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,src,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,mdk,zip)
 
+.SECONDEXPANSION:
+$(DOCS_RELEASES_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
+  $(MAVEN_MOD_DIR)/%/$(MODID)-$$*.pom $(MK_FILES)
+	echo TODO
+	touch $@
+
 $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
 	@$(SED_CMD) -i $(call _REGEX_PROMO_REPL,used-for-develop,$(\
@@ -104,7 +110,8 @@ website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_data
-website_data: | config_all $(DOCS_FORGEBUILDS_JSONS)
+website_data: | config_all $(DOCS_FORGEBUILDS_JSONS) \
+  $(DOCS_RELEASES_JSONS)
 
 # End of Website stuff
 # ********************************************************************
