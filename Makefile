@@ -184,7 +184,7 @@ mf_deinit:
 	$(MAKE) TEST_GIT=1 _mf_deinit
 .PHONY: _mf_deinit
 _mf_deinit:
-	$(GIT_CMD) submodule deinit $(MF_DIR)
+	$(GIT_CMD) submodule deinit -f $(MF_DIR)
 
 $(JAVADOC_DIR)/index.html: $(JAVA_FILES)
 	./gradlew javadoc && touch $(JAVADOC_DIR)/index.html
