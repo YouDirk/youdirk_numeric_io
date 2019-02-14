@@ -33,6 +33,7 @@ _DOCS_FBUILDS_WHOLESUB = \
 $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
   $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom $(MK_FILES)
 	@if [ -f $@ ]; then \
+	  echo "Updating '$@'"; \
 	  date_time="`$(SED_CMD) -n \
 	              $(call _REGEX_FBUILDSJSON_RET,time) $@`"; \
 	  tags="`$(SED_CMD) -n \
@@ -53,10 +54,10 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	    )$*) $(DOCS_DATA_DIR)/forge_promos.json; \
 	fi; \
 	cp -f $< $@; \
-	$(SED_CMD) -i $(call _REGEX_PACKJSON_REPL,time,'"$$date_time"') $@; \
-	$(SED_CMD) -i $(call \
-	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $@;
-	@echo "Updating '$@'"
+	$(SED_CMD) -i $(\
+	)$(call _REGEX_PACKJSON_REPL,time,'"$$date_time"')$(\
+	)$(call _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"')$(\
+	) $@;
 	@$(SED_CMD) -i $(\
 	)$(call _REGEX_PACKJSON_REPL,mc_version,$(shell \
 	        echo $* | $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'))$(\
@@ -69,11 +70,74 @@ $(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,src,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,mdk,zip)
 
+# sh_cmd _DOCS_BUILDS_WHOLESUB(file, version)
+_DOCS_BUILDS_WHOLESUB = \
+  $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,name,$(\
+     )$(MODID)-$(2).jar) \$(NL) \
+  && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,maven-url,$(\
+     )$(MAVEN_MOD_DIR)/$(2)/$(MODID)-$(2).jar) \$(NL) \
+  && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,maven-sha1,$(\
+     )$(MAVEN_MOD_DIR)/$(2)/$(MODID)-$(2).jar.sha1) \$(NL) \
+  && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,maven-md5,$(\
+     )$(MAVEN_MOD_DIR)/$(2)/$(MODID)-$(2).jar.md5)
+
 .SECONDEXPANSION:
-$(DOCS_RELEASES_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
+$(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
   $(MAVEN_MOD_DIR)/%/$(MODID)-$$*.pom $(MK_FILES)
-	echo TODO
-	touch $@
+	@if [ -f $@ ]; then \
+	  echo "Updating '$@'"; \
+	  date_time="`$(SED_CMD) -n \
+	              $(call _REGEX_FBUILDSJSON_RET,time) $@`"; \
+	  version="`$(SED_CMD) -n \
+	            $(call _REGEX_FBUILDSJSON_RET,version) $@`"; \
+	  mc_version="`$(SED_CMD) -n \
+	               $(call _REGEX_FBUILDSJSON_RET,mc_version) $@`"; \
+	  mf_version="`$(SED_CMD) -n \
+	               $(call _REGEX_FBUILDSJSON_RET,mf_version) $@`"; \
+	  mcp_channel="`$(SED_CMD) -n \
+	      $(call _REGEX_FBUILDSJSON_RET,mcp_mapping_channel) $@`"; \
+	  mcp_version="`$(SED_CMD) -n \
+	      $(call _REGEX_FBUILDSJSON_RET,mcp_mapping_version) $@`"; \
+	  tags="`$(SED_CMD) -n \
+	         $(call _REGEX_FBUILDSJSONLIST_RET,tags) $@`"; \
+	  changelog="`$(SED_CMD) -n \
+	              $(call _REGEX_FBUILDSJSONLIST_RET,changelog) $@`"; \
+	else \
+	  echo "Generating '$@'"; \
+	  date_time="`$(DATE_CMD) -Iseconds`"; \
+	  version="$(VERSION_FULL)"; \
+	  mc_version="$(MC_VERSION)"; \
+	  mf_version="$(MF_VERSION)"; \
+	  mcp_channel="$(MCP_MAPPING_CHANNEL)"; \
+	  mcp_version="$(MCP_MAPPING_VERSION)"; \
+	  tags='"release"'; \
+	  if [ -n '$(GIT_CMD)' ]; then \
+	    changelog=\"`$(GIT_CMD) log HEAD~5..HEAD -n1 --grep=changelog \
+	      -i --format="%b" | $(SED_CMD) ':a;N;$$!ba; s~\n~", "~'`\"; \
+	  else \
+	    changelog=''; \
+	  fi; \
+	  echo "Updating 'latest' to '$*'"; \
+	  $(SED_CMD) -i $(call _REGEX_PROMO_REPL,latest,$(\
+	    )$*) $(DOCS_DATA_DIR)/promos.json; \
+	  if [ -n "$$changelog" ]; then \
+	    echo "Updating 'stable' to '$*'"; \
+	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,stable,$(\
+	      )$*) $(DOCS_DATA_DIR)/promos.json; \
+	  fi; \
+	fi; \
+	cp -f $< $@; \
+	$(SED_CMD) -i $(\
+	)$(call _REGEX_PACKJSON_REPL,time,'"$$date_time"')$(\
+	)$(call _REGEX_PACKJSON_REPL,version,'"$$version"')$(\
+	)$(call _REGEX_PACKJSON_REPL,mc_version,'"$$mc_version"')$(\
+	)$(call _REGEX_PACKJSON_REPL,mf_version,'"$$mf_version"')$(\
+	)$(call _REGEX_PACKJSON_REPL,mcp_mapping_channel,'"$$mcp_channel"')$(\
+	)$(call _REGEX_PACKJSON_REPL,mcp_mapping_version,'"$$mcp_version"')$(\
+	)$(call _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"')$(\
+	)$(call _REGEX_FBUILDSJSONLIST_REPL,changelog,'"$$changelog"')$(\
+	) $@;
+	@$(call _DOCS_BUILDS_WHOLESUB,$@,$*)
 
 $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
@@ -109,9 +173,11 @@ website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	$(SED_CMD) -i $(call \
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
-.PHONY: website_data
-website_data: | config_all $(DOCS_FORGEBUILDS_JSONS) \
-  $(DOCS_RELEASES_JSONS)
+.PHONY: website_forge
+website_forge: | config_all $(DOCS_FORGEBUILDS_JSONS)
+
+.PHONY: website_mod
+website_mod: | config_all $(DOCS_BUILDS_JSONS)
 
 # End of Website stuff
 # ********************************************************************

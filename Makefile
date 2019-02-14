@@ -45,7 +45,8 @@ run_server: | config_all
 	./gradlew runServer
 
 .PHONY: build
-build: | config_all $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+build: | config_all
+	./gradlew build
 
 .PHONY: javadoc
 javadoc: | config_all $(JAVADOC_DIR)/index.html
@@ -74,13 +75,14 @@ jdk_version:
 bootstrap: | forge config_all
 
 # New MAKE instance, to update DOCS_FORGEBUILDS_JSONS
-.PHONY: maven
-maven: $(MAVEN_FORGE_DIR)/maven-metadata.xml
-	$(MAKE) website_data
+.PHONY: publish_forge
+publish_forge: $(MAVEN_FORGE_DIR)/maven-metadata.xml
+	$(MAKE) website_forge
 
+# New MAKE instance, to update DOCS_BUILDS_JSONS
 .PHONY: publish
-publish: | config_all \
-  $(MAVEN_MOD_DIR)/maven-metadata.xml
+publish: build
+	$(MAKE) website_mod
 
 # --- End of Maintaining only ---
 
@@ -209,7 +211,6 @@ _cache:
 
 # ********************************************************************
 
-.PHONY: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
 $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar:
 	./gradlew build
 

@@ -87,7 +87,7 @@ MAVEN_MOD_RELDIR = $(subst .,/,$(GROUP))/$(MODID)
 MAVEN_MOD_DIR = $(MAVEN_DIR)/$(MAVEN_MOD_RELDIR)
 DOCS_DATA_DIR = $(DOCS_DIR)/_data
 DOCS_FORGEBUILDS_DIR = $(DOCS_DATA_DIR)/forge_builds
-DOCS_RELEASES_DIR = $(DOCS_DATA_DIR)/releases
+DOCS_BUILDS_DIR = $(DOCS_DATA_DIR)/builds
 
 MAVEN_FORGE_VERSIONDIRS := $(subst /.,,$(wildcard \
         $(MAVEN_FORGE_DIR)/*/.))
@@ -100,7 +100,7 @@ DOCS_FORGEBUILDS_JSONS = $(patsubst %,$(DOCS_FORGEBUILDS_DIR)/%.json,\
         $(MAVEN_FORGE_VERSIONS))
 MAVEN_MOD_VERSIONS = $(subst $(MAVEN_MOD_DIR)/,,\
         $(MAVEN_MOD_VERSIONDIRS))
-DOCS_RELEASES_JSONS = $(patsubst %,$(DOCS_RELEASES_DIR)/%.json,\
+DOCS_BUILDS_JSONS = $(patsubst %,$(DOCS_BUILDS_DIR)/%.json,\
         $(MAVEN_MOD_VERSIONS))
 
 PROJECT_URL = https://github.com/YouDirk/youdirk_numeric_io
