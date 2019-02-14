@@ -113,7 +113,7 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	  tags='"release"'; \
 	  if [ -n '$(GIT_CMD)' ]; then \
 	    changelog=\"`$(GIT_CMD) log HEAD~5..HEAD -n1 --grep=changelog \
-	      -i --format="%b" | $(SED_CMD) ':a;N;$$!ba; s~\n~", "~'`\"; \
+	      -i --format="%b" | $(SED_CMD) ':a;N;$$!ba; s~\n~", "~g;'`\"; \
 	  else \
 	    changelog=''; \
 	  fi; \
