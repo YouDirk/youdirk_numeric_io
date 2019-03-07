@@ -177,6 +177,7 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 ".getAbsolutePath() }\n"\
 '}\n'\
 '\nminecraft {~g; '\
+'s~examplemod~$(MODID)~g; '\
 	  $< > $@
 
 .PHONY: mf_deinit

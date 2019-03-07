@@ -32,7 +32,7 @@ VERSION_API = 0.0
 VERSION = $(VERSION_API).0.1-dummy
 
 # Dependency Version stuff
-MC_VERSION = 1.13
+MC_VERSION = 1.13.2
 
 # Official version from <https://files.minecraftforge.net/> or self
 # deployed version from DOCS/MAVEN directory
@@ -43,7 +43,7 @@ MCP_MAPPING_CHANNEL = snapshot
 MCP_MAPPING_VERSION = 20180921-1.13
 
 # Mincraft Forge branch/commit from which will be bootstraped
-MF_BRANCH = 1.13-pre
+MF_BRANCH = 1.13.x
 
 # Mincraft Forge branch/commit from which will be bootstraped
 # if current development is too heavily

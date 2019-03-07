@@ -6,9 +6,19 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[24,)" #mandatory (24 is current forge version)
+loaderVersion="[25,)" #mandatory (24 is current forge version)
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/YouDirk/youdirk_numeric_io/issues" #optional
+# A list of mods - how many allowed here is determined by the individual mod loader
+[[mods]] #mandatory
+# The modid of the mod
+modId="youdirk_numeric_io" #mandatory
+# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
+version="1.13.2-0.0.0.1-dummy" #mandatory
+ # A display name for the mod
+displayName="YouDirk Numeric I/O" #mandatory
+# A URL to query for updates for this mod. See the JSON update specification <here>
+updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://youdirk.github.io/youdirk_numeric_io" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
@@ -17,16 +27,6 @@ logoFile="youdirk_numeric_io.png" #optional
 credits="To the MCP team and the Forge programmers to make it possible to ez programming Minecraft mods :)" #optional
 # A text field displayed in the mod UI
 authors="Dirk (YouDirk) Lehmann" #optional
-# A list of mods - how many allowed here is determined by the individual mod loader
-[[mods]] #mandatory
-# The modid of the mod
-modId="youdirk_numeric_io" #mandatory
-# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.13-0.0.0.1-dummy" #mandatory
- # A display name for the mod
-displayName="YouDirk Numeric I/O" #mandatory
-# A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 This mod adds:
@@ -42,7 +42,7 @@ This mod adds:
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[24,)" #mandatory
+    versionRange="[25,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -51,6 +51,6 @@ This mod adds:
 [[dependencies.youdirk_numeric_io]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.13]"
+    versionRange="[1.13.2]"
     ordering="NONE"
     side="BOTH"
