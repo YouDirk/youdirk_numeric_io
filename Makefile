@@ -100,6 +100,7 @@ _forge:
 	  $(foreach INODE,$(MF_FALLBACK_INODES), \
 	      && $(GIT_CMD) checkout $(MF_FALLBACK_BRANCH) -- $(INODE))
 
+.PHONY: $(MF_DIR)/build.gradle
 $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
   .git/modules/$(MF_DIR)/FETCH_HEAD
 	@echo "Updating '$@'"

@@ -36,7 +36,7 @@ MC_VERSION = 1.13.2
 
 # Official version from <https://files.minecraftforge.net/> or self
 # deployed version from DOCS/MAVEN directory
-MF_VERSION = 24.0.147-1.13-pre
+MF_VERSION = 25.0.73
 
 # Official Mappings are here <http://export.mcpbot.bspk.rs/>
 MCP_MAPPING_CHANNEL = snapshot
