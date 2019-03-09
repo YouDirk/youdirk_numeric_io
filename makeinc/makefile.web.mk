@@ -144,6 +144,7 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	@$(SED_CMD) -i $(call _REGEX_PROMO_REPL,used-for-develop,$(\
 	                 )$(MF_VERSION_FULL)) $@
 
+
 .PHONY: website_mf_addtag
 website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	@if [ -z "$(TAG)" ]; then \
@@ -154,24 +155,57 @@ website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	@echo "Adding tag '$(TAG)' to Forge build '$(MF_VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
 	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
-	tags="$$tags, \"$(TAG)\""; \
+	tags="`echo $$tags, \\\"$(TAG)\\\" | $(SED_CMD) $(\
+	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
 	$(SED_CMD) -i $(call \
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
+
+.PHONY: website_addtag
+website_addtag: $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json
+	@if [ -z "$(TAG)" ]; then \
+	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
+	       > /dev/stderr; \
+	  exit 1; \
+	fi
+	@echo "Adding tag '$(TAG)' to Build '$(VERSION_FULL)'"
+	@tags="`$(SED_CMD) -n \
+	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
+	tags="`echo $$tags, \\\"$(TAG)\\\" | $(SED_CMD) $(\
+	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
+	$(SED_CMD) -i $(call \
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
+
 
 .PHONY: website_mf_rmtag
 website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	@if [ -z "$(TAG)" ]; then \
-	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
+	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=bad_tag'\n" \
 	       > /dev/stderr; \
 	  exit 1; \
 	fi
 	@echo "Removing tag '$(TAG)' from Forge build '$(MF_VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
 	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
-	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g; \
-	       s~, *$$~~g; s~^, *~~g; s~, *,~,~g;'`"; \
+	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g;'$(\
+	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
 	$(SED_CMD) -i $(call \
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
+
+.PHONY: website_rmtag
+website_rmtag: $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json
+	@if [ -z "$(TAG)" ]; then \
+	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=bad_tag'\n" \
+	       > /dev/stderr; \
+	  exit 1; \
+	fi
+	@echo "Removing tag '$(TAG)' from Build '$(VERSION_FULL)'"
+	@tags="`$(SED_CMD) -n \
+	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
+	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g;'$(\
+	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
+	$(SED_CMD) -i $(call \
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
+
 
 .PHONY: website_forge
 website_forge: | config_all $(DOCS_FORGEBUILDS_JSONS)

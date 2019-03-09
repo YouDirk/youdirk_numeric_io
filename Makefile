@@ -81,7 +81,7 @@ publish_forge: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 
 # New MAKE instance, to update DOCS_BUILDS_JSONS
 .PHONY: publish
-publish: build
+publish: | build $(MAVEN_MOD_DIR)/maven-metadata.xml
 	$(MAKE) website_mod
 
 # --- End of Maintaining only ---

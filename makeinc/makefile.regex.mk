@@ -47,6 +47,8 @@ _REGEX_FBUILDSJSON_RET = 's~^[ \t]*"$(1)" *: *"\([^"]*\).*~\1~p;'
 _REGEX_FBUILDSJSONLIST_REPL = 's~^\([ \t]*"$(1)" *: *\[\)[^]]*~\1$(2)~g;'
 # comma_list _REGEX_FBUILDSJSONLIST_RET(key)
 _REGEX_FBUILDSJSONLIST_RET = 's~^[ \t]*"$(1)" *: *\[\([^]]*\).*~\1~p;'
+# comma_list _REGEX_FBUILDSJSONLIST_RMCOMMA()
+_REGEX_FBUILDSJSONLIST_RMCOMMA = 's~, *$$~~g; s~^, *~~g; s~, *,~,~g;'
 
 # sh_cmd _SED_FBUILDSJSON_GROUPREPL(file, group, key, value)
 _SED_FBUILDSJSON_GROUPREPL = $(SED_CMD) -i ':a;N;$$!ba; '$(\
