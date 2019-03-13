@@ -1,3 +1,4 @@
+---
 {% comment %}
 # This file is part of the `youdirk_numeric_io` Minecraft mod
 # Copyright (C) 2019  Dirk "YouDirk" Lehmann
@@ -14,29 +15,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-#
-# Include variables: include.show_nopromo
-#
 {% endcomment %}
 
-You can download the current *YouDirk Numeric I/O Minecraft mod*
-`youdirk_numeric_io` versions here
+permalink: /minecraft-forge-all/
 
-{% if include.show_nopromo %}
-<span class="more">[< back to Home >](.)</span>
-{% endif %}
-{% assign build_nokey = "" | split: "," %}
-{% for cur in site.data.builds %}
-{%   assign build_nokey = build_nokey | push: cur[1] %}
-{% endfor %}
-{% assign build_sorted = build_nokey | sort: "time" %}
-{% for build in build_sorted reversed %}
-{%   include item.md build=build show_nopromo=include.show_nopromo %}
-{% endfor %}
-{% if include.show_nopromo %}
-<span class="more">[< back to Home >](.)</span>
-{% else %}
-<span class="more">
-[< show all Downloads >](downloads-all)</span>
-{% endif %}
+---
+
+Minecraft Forge development builds
+----------------------------------
+
+{% include mf_section_download.md show_nopromo=true %}

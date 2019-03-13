@@ -21,8 +21,8 @@
 {% endcomment %}
 
 {% assign promo = nil %}
-{% for promo_vec in site.data.forge_promos reversed %}
-{%   if build.mf_version == promo_vec[0] %}
+{% for promo_vec in site.data.promos reversed %}
+{%   if build.version == promo_vec[0] %}
 {%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}
@@ -31,7 +31,7 @@
 **{% if promo
   %}<span class="mf_item_promo" style="background-color: {{
   promo.color }};">{{ promo.name }}</span> {%
-endif %}Minecraft Forge build version {{ include.build.mf_version }}**  
+endif %}YouDirk Numeric I/O version {{ include.build.version }}**  
 <span class="mf_item_stats">{{
   include.build.time | date: "%a, %e. %b %Y %R %z"
 }} for Minecraft {{
@@ -40,14 +40,10 @@ endif %}Minecraft Forge build version {{ include.build.mf_version }}**
   for tag in include.build.tags %} <span class="mf_item_tag">{{
     tag }}</span>{%
   endfor %}</span>  
-<span class="mf_item_link">[Installer ({{
-  include.build.jar_installer.name
+<span class="mf_item_link">[Jar File ({{
+  include.build.jar.name
 }})]({{
 site.numeric_io.github_maven_url }}/{{
-  include.build.jar_installer.maven-url
-}}),
-[Universal ({{ include.build.jar_universal.name }})]({{
-site.numeric_io.github_maven_url }}/{{
-  include.build.jar_universal.maven-url
+  include.build.jar.maven-url
 }})</span>
 {% endif %}
