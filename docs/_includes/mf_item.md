@@ -47,7 +47,7 @@ site.numeric_io.github_maven_url }}/{{
   include.build.jar_installer.maven-url
 }}),
 [Universal ({{ include.build.jar_universal.name }})]({{
-site.numeric_io.github_maven_url }}/{{
+  site.numeric_io.github_maven_url }}/{{
   include.build.jar_universal.maven-url
 }})</span>
 {% endif %}

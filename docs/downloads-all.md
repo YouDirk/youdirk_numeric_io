@@ -21,7 +21,7 @@ permalink: /downloads-all/
 
 ---
 
-Downloads
----------
+All available Downloads
+-----------------------
 
 {% include section_download.md show_nopromo=true %}

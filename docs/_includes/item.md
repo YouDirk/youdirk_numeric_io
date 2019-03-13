@@ -31,7 +31,10 @@
 **{% if promo
   %}<span class="mf_item_promo" style="background-color: {{
   promo.color }};">{{ promo.name }}</span> {%
-endif %}YouDirk Numeric I/O version {{ include.build.version }}**  
+endif %}[YouDirk Numeric I/O version {{ include.build.version }}]({{
+  site.numeric_io.github_maven_url }}/{{
+  include.build.jar.maven-url
+}})**  
 <span class="mf_item_stats">{{
   include.build.time | date: "%a, %e. %b %Y %R %z"
 }} for Minecraft {{
@@ -40,10 +43,13 @@ endif %}YouDirk Numeric I/O version {{ include.build.version }}**
   for tag in include.build.tags %} <span class="mf_item_tag">{{
     tag }}</span>{%
   endfor %}</span>  
-<span class="mf_item_link">[Jar File ({{
+<span class="mf_item_link">Jar File: ({{
   include.build.jar.name
-}})]({{
-site.numeric_io.github_maven_url }}/{{
-  include.build.jar.maven-url
-}})</span>
+}})</span>  
+**Changelog**
+```
+{% for line in include.build.changelog %}
+{{ line }}
+{% endfor %}
+```
 {% endif %}
