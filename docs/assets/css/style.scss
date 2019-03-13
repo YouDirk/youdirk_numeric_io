@@ -101,3 +101,11 @@ span.mf_item_promo {
   margin-right: 2px;
   color: #686878;
 }
+
+span.item_downloadlink a {
+  font-weight: bold;
+  color: #00ccff;
+}
+span.item_downloadlink a:hover {
+  color: #00b9e7;
+}
