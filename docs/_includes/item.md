@@ -44,13 +44,12 @@ endif %}[YouDirk Numeric I/O version {{ include.build.version }}]({{
   for tag in include.build.tags %} <span class="mf_item_tag">{{
     tag }}</span>{%
   endfor %}</span>  
-<span class="mf_item_stats">Jar File: ({{
+<span class="mf_item_stats">Jar File: **{{
   include.build.jar.name
-}})</span>  
-**Changelog**
+}}**</span>  
+<span class="mf_item_stats">Changelog:</span>
 ```
 {% for line in include.build.changelog %}{{
   line }}
-{% endfor %}
-```
+{% endfor %}```
 {% endif %}
