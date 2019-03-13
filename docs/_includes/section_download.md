@@ -1,0 +1,50 @@
+{% comment %}
+# This file is part of the `youdirk_numeric_io` Minecraft mod
+# Copyright (C) 2019  Dirk "YouDirk" Lehmann
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Include variables: include.show_nopromo
+#
+{% endcomment %}
+
+You can download the current *YouDirk Numeric I/O Minecraft mod*
+`youdirk_numeric_io` stable here
+
+* **[Download stable YouDirk Numeric I/O {{ site.numeric_io.version_stable }}
+     (ZIP)]({{ site.github.zip_url }})**
+* **[Download stable YouDirk Numeric I/O {{ site.numeric_io.version_stable }}
+     (TAR.GZ)]({{ site.github.tar_url }})**
+
+{% if include.show_nopromo %}
+<span class="more">[< back to Home >](.)</span>
+{% endif %}
+{% assign build_nokey = "" | split: "," %}
+{% for cur in site.data.builds %}
+{%   assign build_nokey = build_nokey | push: cur[1] %}
+{% endfor %}
+{% assign build_sorted = build_nokey | sort: "time" %}
+{% for build in build_sorted reversed %}
+{% comment %}
+{%   include mf_item.md build=build show_nopromo=include.show_nopromo %}
+{% endcomment %}
+{{ build.version }}
+{% endfor %}
+{% if include.show_nopromo %}
+<span class="more">[< back to Home >](.)</span>
+{% else %}
+<span class="more">
+[< show all Downloads >](minecraft-forge-all-TODO)</span>
+{% endif %}

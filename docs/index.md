@@ -37,13 +37,7 @@ github.com]({{site.numeric_io.github_url}}/wiki).
 ## Download
 -----------
 
-You can download the current *YouDirk Numeric I/O Minecraft mod*
-`youdirk_numeric_io` stable here
-
-* **[Download stable YouDirk Numeric I/O {{ site.numeric_io.version_stable }}
-     (ZIP)]({{ site.github.zip_url }})**
-* **[Download stable YouDirk Numeric I/O {{ site.numeric_io.version_stable }}
-     (TAR.GZ)]({{ site.github.tar_url }})**
+{% include mf_section_download.md show_nopromo=false %}
 
 ### Download Minecraft Forge
 ----------------------------
