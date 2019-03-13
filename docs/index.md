@@ -37,7 +37,7 @@ github.com]({{site.numeric_io.github_url}}/wiki).
 ## Download
 -----------
 
-{% include mf_section_download.md show_nopromo=false %}
+{% include section_download.md show_nopromo=false %}
 
 ### Download Minecraft Forge
 ----------------------------
