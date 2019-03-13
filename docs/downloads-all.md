@@ -17,11 +17,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-permalink: /minecraft-forge-all/
+permalink: /downloads-all/
 
 ---
 
-Minecraft Forge development builds
-----------------------------------
+Downloads
+---------
 
-{% include mf_section_download.md show_nopromo=true %}
+{% include section_download.md show_nopromo=true %}

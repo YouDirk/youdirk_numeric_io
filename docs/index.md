@@ -34,8 +34,8 @@ mod** `youdirk_numeric_io`.  It adds to the game
 For a detailed ingame usage take a look to our [**Wiki** at
 github.com]({{site.numeric_io.github_url}}/wiki).
 
-## Download
------------
+## Downloads
+------------
 
 {% include section_download.md show_nopromo=false %}
 

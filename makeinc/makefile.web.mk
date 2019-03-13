@@ -75,11 +75,11 @@ _DOCS_BUILDS_WHOLESUB = \
   $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,name,$(\
      )$(MODID)-$(2).jar) \$(NL) \
   && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,maven-url,$(\
-     )$(MAVEN_MOD_DIR)/$(2)/$(MODID)-$(2).jar) \$(NL) \
+     )$(MAVEN_MOD_RELDIR)/$(2)/$(MODID)-$(2).jar) \$(NL) \
   && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,maven-sha1,$(\
-     )$(MAVEN_MOD_DIR)/$(2)/$(MODID)-$(2).jar.sha1) \$(NL) \
+     )$(MAVEN_MOD_RELDIR)/$(2)/$(MODID)-$(2).jar.sha1) \$(NL) \
   && $(call _SED_FBUILDSJSON_GROUPREPL,$(1),jar,maven-md5,$(\
-     )$(MAVEN_MOD_DIR)/$(2)/$(MODID)-$(2).jar.md5)
+     )$(MAVEN_MOD_RELDIR)/$(2)/$(MODID)-$(2).jar.md5)
 
 .SECONDEXPANSION:
 $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
