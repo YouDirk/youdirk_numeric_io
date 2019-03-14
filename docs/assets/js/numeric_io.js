@@ -20,4 +20,4 @@ function init()
   document.getElementById("sidebar").innerHTML = "Hello World";
 }
 
-document.addEventListener('load', init, false);
+init();
