@@ -34,7 +34,16 @@ numeric_io:
   maven_path: maven
 
 # Some advantages ...
+
 sass:
   style: compressed
+
 exclude:
 - maven/net/dj_l/youdirk_numeric_io/pom.templ.xml
+
+defaults:
+- scope:
+    path: ""
+    type: "pages"
+  values:
+    layout: numeric_io
