@@ -21,8 +21,8 @@
 {
   "homepage": "{{ site.numeric_io.website_url }}",
   "<mcversion>": {
-    "<modversion>": "<changelog for this version>",
-    "_comment": "List all versions of your mod for the given Minecraft version, along with their changelogs",
+    "<modversion>": "<patch_notes for this version>",
+    "_comment": "List all versions of your mod for the given Minecraft version, along with their patch_notes",
     "_comment": "TODO"
 
   },

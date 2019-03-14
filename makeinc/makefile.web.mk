@@ -100,8 +100,8 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	      $(call _REGEX_FBUILDSJSON_RET,mcp_mapping_version) $@`"; \
 	  tags="`$(SED_CMD) -n \
 	         $(call _REGEX_FBUILDSJSONLIST_RET,tags) $@`"; \
-	  changelog="`$(SED_CMD) -n \
-	              $(call _REGEX_FBUILDSJSONLIST_RET,changelog) $@`"; \
+	  patch_notes="`$(SED_CMD) -n \
+	              $(call _REGEX_FBUILDSJSONLIST_RET,patch_notes) $@`"; \
 	else \
 	  echo "Generating '$@'"; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
@@ -112,15 +112,16 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	  mcp_version="$(MCP_MAPPING_VERSION)"; \
 	  tags='"release"'; \
 	  if [ -n '$(GIT_CMD)' ]; then \
-	    changelog=\"`$(GIT_CMD) log HEAD~5..HEAD -n1 --grep=changelog \
-	      -i --format="%b" | $(SED_CMD) ':a;N;$$!ba; s~\n~", "~g;'`\"; \
+	    patch_notes=\"`$(GIT_CMD) log HEAD~5..HEAD -n1 \
+	      --grep=patch_notes -i --format="%b" | $(SED_CMD) \
+	      ':a;N;$$!ba; s~\n~", "~g;'`\"; \
 	  else \
-	    changelog=''; \
+	    patch_notes='<None> :('; \
 	  fi; \
 	  echo "Updating 'latest' to '$*'"; \
 	  $(SED_CMD) -i $(call _REGEX_PROMO_REPL,latest,$(\
 	    )$*) $(DOCS_DATA_DIR)/promos.json; \
-	  if [ -n "$$changelog" ]; then \
+	  if [ -n "$$patch_notes" ]; then \
 	    echo "Updating 'stable' to '$*'"; \
 	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,stable,$(\
 	      )$*) $(DOCS_DATA_DIR)/promos.json; \
@@ -135,7 +136,7 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	)$(call _REGEX_PACKJSON_REPL,mcp_mapping_channel,'"$$mcp_channel"')$(\
 	)$(call _REGEX_PACKJSON_REPL,mcp_mapping_version,'"$$mcp_version"')$(\
 	)$(call _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"')$(\
-	)$(call _REGEX_FBUILDSJSONLIST_REPL,changelog,'"$$changelog"')$(\
+	)$(call _REGEX_FBUILDSJSONLIST_REPL,changelog,'"$$patch_notes"')$(\
 	) $@;
 	@$(call _DOCS_BUILDS_WHOLESUB,$@,$*)
 

@@ -6,7 +6,7 @@
   "mcp_mapping_channel": "snapshot",
   "mcp_mapping_version": "20180921-1.13",
   "tags": ["release"],
-  "changelog": ["* Test patch added", "", "* bugfixes and so on", "  - Such like this", "  - and that and so", "", "The eeeeend ... xD", ""],
+  "patch_notes": ["* Test patch added", "", "* bugfixes and so on", "  - Such like this", "  - and that and so", "", "The eeeeend ... xD", ""],
   "jar": {
     "name": "youdirk_numeric_io-1.13-0.0.0.1-dummy.jar",
     "maven-url": "net/dj_l/youdirk_numeric_io/1.13-0.0.0.1-dummy/youdirk_numeric_io-1.13-0.0.0.1-dummy.jar",

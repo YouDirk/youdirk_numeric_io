@@ -6,7 +6,7 @@
   "mcp_mapping_channel": "<DUMMY>",
   "mcp_mapping_version": "<DUMMY>",
   "tags": ["release", "<DUMMY1>", "<DUMMY2>"],
-  "changelog": ["<LINE 1>", "<LINE 2>", "<LINE 3>"],
+  "patch_notes": ["<LINE 1>", "<LINE 2>", "<LINE 3>"],
   "jar": {
     "name": "<DUMMY>",
     "maven-url": "<DUMMY>",
