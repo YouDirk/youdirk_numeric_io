@@ -18,7 +18,6 @@
 {% endcomment %}
 
 permalink: /downloads-all/
-layout: numeric_io
 ---
 
 All available Downloads

@@ -18,7 +18,6 @@
 {% endcomment %}
 
 permalink: /minecraft-forge-all/
-layout: numeric_io
 ---
 
 Minecraft Forge development builds

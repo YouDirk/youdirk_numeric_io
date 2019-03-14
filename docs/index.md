@@ -17,7 +17,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-layout: numeric_io
 ---
 
 This is the official website of the **YouDirk Numeric I/O Minecraft
