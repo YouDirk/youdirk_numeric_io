@@ -17,8 +17,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
+title: Downloads - YouDirk Numeric I/O
 permalink: /downloads-all/
 ---
+{% include common.html %}
 
 All available Downloads
 -----------------------

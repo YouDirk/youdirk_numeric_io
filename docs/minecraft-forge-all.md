@@ -17,8 +17,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
+title: Minecraft Forge builds - YouDirk Numeric I/O
 permalink: /minecraft-forge-all/
 ---
+{% include common.html %}
 
 Minecraft Forge development builds
 ----------------------------------

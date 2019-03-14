@@ -18,6 +18,7 @@
 {% endcomment %}
 
 ---
+{% include common.html %}
 
 This is the official website of the **YouDirk Numeric I/O Minecraft
 mod** `youdirk_numeric_io`.  It adds to the game
