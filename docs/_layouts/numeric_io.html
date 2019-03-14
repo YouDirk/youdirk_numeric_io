@@ -17,11 +17,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-permalink: /minecraft-forge-all/
-layout: numeric_io
+layout: default
 ---
+<script type="text/javascript" src="{{
+             '/assets/js/numeric_io.js' | relative_url }}"></script>
 
-Minecraft Forge development builds
-----------------------------------
-
-{% include mf_section_download.md show_nopromo=true %}
+{{ content }}
