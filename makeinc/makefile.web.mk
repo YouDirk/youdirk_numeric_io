@@ -162,7 +162,10 @@ website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_addtag
-website_addtag: $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json
+website_addtag: | config_all $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json \
+                website_addtag_nodep
+.PHONY: website_addtag_nodep
+website_addtag_nodep: | config_all
 	@if [ -z "$(TAG)" ]; then \
 	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
 	       > /dev/stderr; \
@@ -170,11 +173,13 @@ website_addtag: $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json
 	fi
 	@echo "Adding tag '$(TAG)' to Build '$(VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
-	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
+	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) \
+	              $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json`"; \
 	tags="`echo $$tags, \\\"$(TAG)\\\" | $(SED_CMD) $(\
 	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
 	$(SED_CMD) -i $(call \
-	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') \
+	           $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json;
 
 
 .PHONY: website_mf_rmtag
@@ -193,7 +198,10 @@ website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_rmtag
-website_rmtag: $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json
+website_rmtag: | config_all $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json \
+               website_rmtag_nodep
+.PHONY: website_rmtag_nodep
+website_rmtag_nodep: | config_all
 	@if [ -z "$(TAG)" ]; then \
 	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=bad_tag'\n" \
 	       > /dev/stderr; \
@@ -201,11 +209,13 @@ website_rmtag: $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json
 	fi
 	@echo "Removing tag '$(TAG)' from Build '$(VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
-	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) $<`"; \
+	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) \
+	              $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json`"; \
 	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g;'$(\
 	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
 	$(SED_CMD) -i $(call \
-	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
+	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') \
+	           $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json;
 
 
 .PHONY: website_forge
