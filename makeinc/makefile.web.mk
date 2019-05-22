@@ -116,15 +116,21 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	      --grep=patch_notes -i --format="%b" | $(SED_CMD) \
 	      ':a;N;$$!ba; s~\n~", "~g;'`\"; \
 	  else \
-	    patch_notes='<None> :('; \
+	    patch_notes='""'; \
+	    echo "warning: GIT not found!  Could not generate PATCH_NOTES"$(\
+                )"." >&2; \
 	  fi; \
 	  echo "Updating 'latest' to '$*'"; \
 	  $(SED_CMD) -i $(call _REGEX_PROMO_REPL,latest,$(\
 	    )$*) $(DOCS_DATA_DIR)/promos.json; \
-	  if [ -n "$$patch_notes" ]; then \
+	  if [ "$$patch_notes" != '""' ]; then \
 	    echo "Updating 'stable' to '$*'"; \
 	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,stable,$(\
 	      )$*) $(DOCS_DATA_DIR)/promos.json; \
+	  else \
+	    patch_notes='"<Not a stable version>"'; \
+	    echo "warning: PATCH_NOTES not given!  Release will NOT"$(\
+	        )" be promoted as stable." >&2; \
 	  fi; \
 	fi; \
 	cp -f $< $@; \
@@ -136,7 +142,7 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	)$(call _REGEX_PACKJSON_REPL,mcp_mapping_channel,'"$$mcp_channel"')$(\
 	)$(call _REGEX_PACKJSON_REPL,mcp_mapping_version,'"$$mcp_version"')$(\
 	)$(call _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"')$(\
-	)$(call _REGEX_FBUILDSJSONLIST_REPL,changelog,'"$$patch_notes"')$(\
+	)$(call _REGEX_FBUILDSJSONLIST_REPL,patch_notes,'"$$patch_notes"')$(\
 	) $@;
 	@$(call _DOCS_BUILDS_WHOLESUB,$@,$*)
 
