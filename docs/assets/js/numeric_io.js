@@ -17,7 +17,15 @@
 
 function init()
 {
-  document.getElementById("sidebar").innerHTML = "Hello World";
+  var links = document.getElementById("sidebar")
+                      .getElementsByClassName("button");
+  var a_zip1 = links[0];
+  var a_targs2 = links[1];
+
+  a_zip1.innerHTML
+    = a_zip1.innerHTML.replace(/\.zip file/, "Mod stable");
+  a_targs2.innerHTML
+    = a_targs2.innerHTML.replace(/\.tar\.gz file/, "Forge");
 }
 
-init();
+window.addEventListener('load', init, false);
