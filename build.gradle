@@ -11,8 +11,9 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-version = '1.13.2-0.0.0.1-dummy'
+version = '1.13.2-0.0.0.2-dummy'
 group = 'net.dj_l' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'youdirk_numeric_io'
 
@@ -104,9 +105,31 @@ jar {
             "Specification-Vendor": "YouDirk Maintained",
             "Specification-Version": "1.13.2-0.0", // We are version 1 of ourselves
             "Implementation-Title": "YouDirk Numeric I/O",
-            "Implementation-Version": "1.13.2-0.0.0.1-dummy",
+            "Implementation-Version": "1.13.2-0.0.0.2-dummy",
             "Implementation-Vendor" : "YouDirk Maintained",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish task
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
     }
 }

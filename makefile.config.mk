@@ -29,14 +29,14 @@ JDK_PATH =
 VERSION_API = 0.0
 
 # MAJORMOD.MAJORAPI.MINOR.PATCH
-VERSION = $(VERSION_API).0.1-dummy
+VERSION = $(VERSION_API).0.2-dummy
 
 # Dependency Version stuff
 MC_VERSION = 1.13.2
 
 # Official version from <https://files.minecraftforge.net/> or self
 # deployed version from DOCS/MAVEN directory
-MF_VERSION = 25.0.73
+MF_VERSION = 25.0.214
 
 # Official Mappings are here <http://export.mcpbot.bspk.rs/>
 MCP_MAPPING_CHANNEL = snapshot
