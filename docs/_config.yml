@@ -35,6 +35,10 @@ numeric_io:
 
 # Some advantages ...
 
+# Generating a sitemap.xml for Google Search Console
+plugins:
+  - jekyll-sitemap
+
 sass:
   style: compressed
 
