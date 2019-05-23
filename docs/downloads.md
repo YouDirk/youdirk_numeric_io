@@ -17,12 +17,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-title: Minecraft Forge builds - YouDirk Numeric I/O
-permalink: /minecraft-forge-all/
+title: Downloads
+description: YouDirk Numeric I/O Minecraft mod
+permalink: /downloads/
 ---
 {% include common.html %}
 
-Minecraft Forge development builds
-----------------------------------
+All available Downloads
+-----------------------
 
-{% include mf_section_download.md show_nopromo=true %}
+{% include section_download.md show_nopromo=true %}
