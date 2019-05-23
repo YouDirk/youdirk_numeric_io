@@ -17,8 +17,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-title: YouDirk Numeric I/O
-description: A Minecraft Forge mod for decimal I/O support
+site.title: YouDirk Numeric I/O
+site.description: A Minecraft Forge mod for decimal I/O support
 ---
 {% include common.html %}
 
