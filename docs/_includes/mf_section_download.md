@@ -42,5 +42,5 @@ the latest stable from the official Minecraft Forge website
 <span class="more">[< back to Home >](.)</span>
 {% else %}
 <span class="more">
-[< show all Minecraft Forge builds >](minecraft-forge-all)</span>
+[< show all Minecraft Forge builds >](minecraft-forge)</span>
 {% endif %}
