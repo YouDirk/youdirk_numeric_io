@@ -21,7 +21,7 @@ title: Minecraft Forge builds
 description: YouDirk Numeric I/O Minecraft mod
 permalink: /minecraft-forge/
 ---
-{% include common.html %}
+{% include common.html title=page.title description=page.description %}
 
 Minecraft Forge development builds
 ----------------------------------

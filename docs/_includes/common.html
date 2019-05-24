@@ -14,19 +14,28 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Include variables: include.title include.description
+#
 {% endcomment %}
 
 <script type="text/javascript">
-  var title_tag = document.getElementsByTagName("title");
-  var header_tag = document.getElementsByTagName("header");
-  if ("{{ page.title }}" != "") {
-    header_tag.getElementsByTagName("h1").innerHTML = "{{ page.title }}";
-    title_tag.innerHTML = "{{ page.title }}";
+  function inline_init()
+  {
+    var title_tag = document.getElementsByTagName("title");
+    var header_tag = document.getElementsByTagName("header");
+    if ("{{ include.title }}" != "") {
+      header_tag.getElementsByTagName("h1").innerHTML = "{{ include.title }}";
+      title_tag.innerHTML = "{{ include.title }}";
+    }
+    if ("{{ include.description }}" != "") {
+      header_tag.getElementsByTagName("h2").innerHTML = "{{ include.description }}";
+      title_tag.innerHTML.concat(" | {{ include.title }}");
+    }
   }
-  if ("{{ page.description }}" != "") {
-    header_tag.getElementsByTagName("h2").innerHTML = "{{ page.description }}";
-    title_tag.innerHTML.concat(" | {{ page.title }}");
-  }
+
+  window.addEventListener('load', inline_init, false);
 </script>
 <script type="text/javascript" src="{{
              '/assets/js/numeric_io.js' | relative_url }}"></script>

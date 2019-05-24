@@ -21,7 +21,7 @@ title: Downloads
 description: YouDirk Numeric I/O Minecraft mod
 permalink: /downloads/
 ---
-{% include common.html %}
+{% include common.html title=page.title description=page.description %}
 
 All available Downloads
 -----------------------
