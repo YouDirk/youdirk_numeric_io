@@ -17,11 +17,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-title: Minecraft Forge builds
-description: YouDirk Numeric I/O Minecraft mod
 permalink: /minecraft-forge/
 ---
-{% include common.html title=page.title description=page.description %}
+{% include common.html
+   title="Minecraft Forge builds"
+   description="YouDirk Numeric I/O Minecraft mod" %}
 
 Minecraft Forge development builds
 ----------------------------------
