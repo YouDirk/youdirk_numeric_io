@@ -23,15 +23,18 @@
 <script type="text/javascript">
   function inline_init()
   {
-    var title_tag = document.getElementsByTagName("title");
-    var header_tag = document.getElementsByTagName("header");
+    var title_tag = document.getElementsByTagName("title")[0];
+    var header_tag = document.getElementsByTagName("header")[0];
     if ("{{ include.title }}" != "") {
-      header_tag.getElementsByTagName("h1").innerHTML = "{{ include.title }}";
+      header_tag.getElementsByTagName("h1")[0].innerHTML = "{{
+        include.title }}";
       title_tag.innerHTML = "{{ include.title }}";
     }
     if ("{{ include.description }}" != "") {
-      header_tag.getElementsByTagName("h2").innerHTML = "{{ include.description }}";
-      title_tag.innerHTML.concat(" | {{ include.title }}");
+      header_tag.getElementsByTagName("h2")[0].innerHTML = "{{
+        include.description }}";
+      title_tag.innerHTML = title_tag.innerHTML.concat(" | {{
+        include.description }}");
     }
   }
 
