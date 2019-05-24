@@ -20,7 +20,7 @@
 permalink: /minecraft-forge/
 ---
 {% include common.html
-   title="Minecraft Forge builds"
+   title="Download MC Forge"
    description="YouDirk Numeric I/O Minecraft mod" %}
 
 Minecraft Forge development builds

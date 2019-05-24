@@ -23,9 +23,9 @@ function init()
   var a_targz2 = links[1];
 
   a_zip1.innerHTML
-    = a_zip1.innerHTML.replace(/\.zip file/, "Mod stable");
+    = a_zip1.innerHTML.replace(/(>)[^>]*$/, "$1Mod Stable");
   a_targz2.innerHTML
-    = a_targz2.innerHTML.replace(/\.tar\.gz file/, "Forge");
+    = a_targz2.innerHTML.replace(/(>)[^>]*$/, "$1MC Forge");
 }
 
 window.addEventListener('load', init, false);
