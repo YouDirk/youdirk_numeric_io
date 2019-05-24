@@ -111,6 +111,7 @@ LOGO_FILE = youdirk_numeric_io.png
 WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
 UPDATE_JSON_URL = $(WEBSITE_URL)/releases/update.json
 GIT_URL = $(PROJECT_URL).git
+GITHUB_RAW_URL = $(PROJECT_URL)/raw/master
 
 BUGTRACKING_SYSTEM = github
 BUGTRACKING_URL = $(PROJECT_URL)/issues

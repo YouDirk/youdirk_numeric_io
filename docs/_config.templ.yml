@@ -27,10 +27,10 @@ github:
   zip_url: /youdirk_numeric_io/releases/dummy.zip
   tar_url: /youdirk_numeric_io/releases/dummy.tar.gz
 numeric_io:
-  version_stable: 1.13.2-0.0.0.2-dummy
-  github_url: https://github.com/YouDirk/youdirk_numeric_io
-  website_url: https://youdirk.github.io/youdirk_numeric_io
-  github_maven_url: https://github.com/YouDirk/youdirk_numeric_io/raw/master/docs/maven
+  version_stable: @VERSION_STABLE@
+  github_url: @GITHUB_URL@
+  website_url: @WEBSITE_URL@
+  github_maven_url: @GITHUB_MAVEN_URL@
 
 # Some advantages ...
 

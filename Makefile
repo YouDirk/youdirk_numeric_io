@@ -202,7 +202,7 @@ config_all:
 else
 config_all: build.gradle \
   $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta \
-  $(DOCS_DATA_DIR)/forge_promos.json
+  $(DOCS_DATA_DIR)/forge_promos.json $(DOCS_DIR)/_config.yml
 endif
 
 .PHONY: _cache

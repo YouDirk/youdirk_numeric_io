@@ -18,6 +18,16 @@
 # ********************************************************************
 # Website stuff
 
+$(DOCS_DIR)/_config.yml: $(DOCS_DIR)/_config.templ.yml $(MK_FILES)
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(\
+	  )$(call _REGEX_GRADLEVAR_REPL,VERSION_STABLE,$(VERSION_FULL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,GITHUB_URL,$(PROJECT_URL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_URL,$(WEBSITE_URL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,GITHUB_MAVEN_URL,$(\
+                  )$(GITHUB_RAW_URL)/$(MAVEN_DIR))$(\
+	  ) $< > $@
+
 # sh_cmd _DOCS_FBUILDS_WHOLESUB(file, mf_version, kind, file_ext)
 _DOCS_FBUILDS_WHOLESUB = \
   $(call _SED_FBUILDSJSON_GROUPREPL,$(1),$(4)_$(3),name,$(\
