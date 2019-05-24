@@ -17,8 +17,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-title: Downloads
-description: YouDirk Numeric I/O Minecraft mod
+{% assign site.title = "Downloads" %}
+{% assign site.description = "YouDirk Numeric I/O Minecraft mod" %}
 permalink: /downloads/
 ---
 {% include common.html %}
