@@ -16,5 +16,17 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
+<script type="text/javascript">
+  var title_tag = document.getElementsByTagName("title");
+  var header_tag = document.getElementsByTagName("header");
+  if ("{{ page.title }}" != "") {
+    header_tag.getElementsByTagName("h1").innerHTML = "{{ page.title }}";
+    title_tag.innerHTML = "{{ page.title }}";
+  }
+  if ("{{ page.description }}" != "") {
+    header_tag.getElementsByTagName("h2").innerHTML = "{{ page.description }}";
+    title_tag.innerHTML.concat(" | {{ page.title }}");
+  }
+</script>
 <script type="text/javascript" src="{{
              '/assets/js/numeric_io.js' | relative_url }}"></script>
