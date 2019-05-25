@@ -74,5 +74,12 @@ _REGEX_POMXML_EXIST = 's~^ *< *$(1) *>$(2)< */ *$(1) *>.*~found~p;'
 _REGEX_POMXML_ADDVERSION = 's~^\( *\)\(< */ *versions *>.*\)'$(\
   )'~\1  <version>$(1)</version>\n\1\2~g;'
 
+
+# sed_cmd _REGEX_WEBCONFIG_RET(name)
+_REGEX_WEBCONFIG_RET = 's~^ *$(1) *: *\(.*\)~\1~p;'
+
+# sed_cmd _REGEX_WEBCONFIG_REPL(name, value)
+_REGEX_WEBCONFIG_REPL = 's~^\( *$(1) *: *\).*~\1$(2)~g;'
+
 # End of Regex Callables
 # ********************************************************************

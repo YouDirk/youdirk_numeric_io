@@ -19,14 +19,23 @@
 # Website stuff
 
 $(DOCS_DIR)/_config.yml: $(DOCS_DIR)/_config.templ.yml $(MK_FILES)
-	@echo "Generating '$@'"
-	@$(SED_CMD) $(\
-	  )$(call _REGEX_GRADLEVAR_REPL,VERSION_STABLE,$(VERSION_FULL))$(\
+	@echo "Updating '$@'"; \
+	version_stable="`$(SED_CMD) -n \
+	    $(call _REGEX_WEBCONFIG_RET,version_stable) $@`"; \
+	zip_url="`$(SED_CMD) -n \
+	    $(call _REGEX_WEBCONFIG_RET,zip_url) $@`"; \
+	tar_url="`$(SED_CMD) -n \
+	    $(call _REGEX_WEBCONFIG_RET,tar_url) $@`"; \
+	$(SED_CMD) $(\
 	  )$(call _REGEX_GRADLEVAR_REPL,GITHUB_URL,$(PROJECT_URL))$(\
 	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_URL,$(WEBSITE_URL))$(\
 	  )$(call _REGEX_GRADLEVAR_REPL,GITHUB_MAVEN_URL,$(\
                   )$(GITHUB_RAW_URL)/$(MAVEN_DIR))$(\
-	  ) $< > $@
+	  )$(call _REGEX_WEBCONFIG_REPL,version_stable,$(\
+                  )'"$$version_stable"')$(\
+	  )$(call _REGEX_WEBCONFIG_REPL,zip_url,'"$$zip_url"')$(\
+	  )$(call _REGEX_WEBCONFIG_REPL,tar_url,'"$$tar_url"')$(\
+	  ) $< > $@;
 
 # sh_cmd _DOCS_FBUILDS_WHOLESUB(file, mf_version, kind, file_ext)
 _DOCS_FBUILDS_WHOLESUB = \
@@ -137,6 +146,9 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	    echo "Updating 'stable' to '$*'"; \
 	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,stable,$(\
 	      )$*) $(DOCS_DATA_DIR)/promos.json; \
+	    $(SED_CMD) -i $(\
+	      )$(call _REGEX_WEBCONFIG_REPL,version_stable,$*)$(\
+	      ) $(DOCS_DIR)/_config.yml; \
 	  else \
 	    patch_notes='"<Not a stable version>"'; \
 	    echo "warning: PATCH_NOTES not given!  Release will NOT"$(\
