@@ -41,11 +41,13 @@ the latest stable from the official Minecraft Forge website
 {%   for build in fb_sorted reversed %}
 {%     include mf_item.md build=build show_nopromo=include.show_nopromo %}
 {%   endfor %}
-{%   if include.show_nopromo %}
+{%   unless include.show_nopromo %}
+{%     break %}
+{%   endunless %}
+{% endfor %}
+{% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
-{%   else %}
+{% else %}
 <span class="more">
 [< show all Minecraft Forge builds >](minecraft-forge)</span>
-{%     break %}
-{%   endif %}
-{% endfor %}
+{% endif %}
