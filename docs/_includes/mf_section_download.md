@@ -31,7 +31,7 @@ the latest stable from the official Minecraft Forge website
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
 {% assign mcversions_sorted = site.data.forge_builds | sort %}
-{% for cur_mcversion in mcversions_sorted %}
+{% for cur_mcversion in mcversions_sorted reversed %}
 ### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
 {%   assign fb_nokey = "" | split: "," %}
 {%   for cur in cur_mcversion[1] %}
@@ -46,5 +46,6 @@ the latest stable from the official Minecraft Forge website
 {%   else %}
 <span class="more">
 [< show all Minecraft Forge builds >](minecraft-forge)</span>
+{%     break %}
 {%   endif %}
 {% endfor %}
