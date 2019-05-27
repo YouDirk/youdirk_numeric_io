@@ -2,6 +2,6 @@
   "_comment": "lower overriding",
 
   "1.13.2-25.0.214": {"color": "#ffe8e8", "name": "latest-build"},
-  "1.13.2-25.0.73": {"color": "#e8e8f8", "name": "used-for-develop"},
+  "1.13.2-25.0.214": {"color": "#e8e8f8", "name": "used-for-develop"},
   "1.13.2-25.0.73": {"color": "#e8ffe8", "name": "seems-to-work"}
 }

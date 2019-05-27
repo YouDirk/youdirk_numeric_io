@@ -22,7 +22,6 @@ theme: jekyll-theme-architect
 show_downloads: true
 google_analytics:
 
-# TODO: Needs to be dynamicly adapted
 github:
   zip_url: <dummy.zip>
   tar_url: <dummy.tar.gz>

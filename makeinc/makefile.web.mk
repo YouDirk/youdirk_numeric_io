@@ -149,6 +149,10 @@ $(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	    $(SED_CMD) -i $(\
 	      )$(call _REGEX_WEBCONFIG_REPL,version_stable,$*)$(\
 	      ) $(DOCS_DIR)/_config.yml; \
+	    $(SED_CMD) -i $(\
+	      )$(call _REGEX_WEBCONFIG_REPL,zip_url,$(GITHUB_RAW_URL)$(\
+	      )/$(MAVEN_DIR)/$(MAVEN_MOD_RELDIR)/$*/$(MODID)-$*.jar)$(\
+	      ) $(DOCS_DIR)/_config.yml; \
 	  else \
 	    patch_notes='"<Not a stable version>"'; \
 	    echo "warning: PATCH_NOTES not given!  Release will NOT"$(\
@@ -172,6 +176,11 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	@echo "Updating 'used-for-develop' to '$(MF_VERSION_FULL)'"
 	@$(SED_CMD) -i $(call _REGEX_PROMO_REPL,used-for-develop,$(\
 	                 )$(MF_VERSION_FULL)) $@
+	@$(SED_CMD) -i $(\
+	    )$(call _REGEX_WEBCONFIG_REPL,tar_url,$(GITHUB_RAW_URL)$(\
+	    )/$(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)/$(MF_VERSION_FULL)/$(\
+	    )$(MF_NAME)-$(MF_VERSION_FULL)-installer.jar)$(\
+	    ) $(DOCS_DIR)/_config.yml;
 
 
 .PHONY: website_mf_addtag

@@ -18,7 +18,7 @@ version="1.13.2-0.0.0.2-dummy" #mandatory
  # A display name for the mod
 displayName="YouDirk Numeric I/O" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/releases/update.json" #optional
+updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://youdirk.github.io/youdirk_numeric_io" #optional
 # A file name (in the root of the mod JAR) containing a logo for display

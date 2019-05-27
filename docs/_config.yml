@@ -22,10 +22,9 @@ theme: jekyll-theme-architect
 show_downloads: true
 google_analytics:
 
-# TODO: Needs to be dynamicly adapted
 github:
-  zip_url: /youdirk_numeric_io/releases/dummy.zip
-  tar_url: /youdirk_numeric_io/releases/dummy.tar.gz
+  zip_url: https://github.com/YouDirk/youdirk_numeric_io/raw/master/docs/maven/net/dj_l/youdirk_numeric_io/1.13-0.0.0.1-dummy/youdirk_numeric_io-1.13-0.0.0.1-dummy.jar
+  tar_url: https://github.com/YouDirk/youdirk_numeric_io/raw/master/docs/maven/net/minecraftforge/forge/1.13.2-25.0.214/forge-1.13.2-25.0.214-installer.jar
 numeric_io:
   version_stable: 1.13.2-0.0.0.2-dummy
   github_url: https://github.com/YouDirk/youdirk_numeric_io
