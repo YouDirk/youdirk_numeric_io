@@ -30,7 +30,8 @@ the latest stable from the official Minecraft Forge website
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
-{% for cur_mcversion in site.data.forge_builds %}
+{% assign mcversions_sorted = site.data.forge_builds | sort %}
+{% for cur_mcversion in mcversions_sorted %}
 ### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
 {%   assign fb_nokey = "" | split: "," %}
 {%   for cur in cur_mcversion[1] %}
