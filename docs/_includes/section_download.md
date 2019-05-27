@@ -27,7 +27,7 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
 {% for cur_mcversion in site.data.builds %}
-### for Minecraft {{ cur_mcversion[1] }}
+### Minecraft {{ cur_mcversion[0] }}
 {%   assign build_nokey = "" | split: "," %}
 {%   for cur in cur_mcversion[1] %}
 {%     assign build_nokey = build_nokey | push: cur[1] %}
