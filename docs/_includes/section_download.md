@@ -45,5 +45,5 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 <span class="more">[< back to Home >](.)</span>
 {% else %}
 <span class="more">
-[< show **older** Downloads >](downloads)</span>
+[< show *OLDER* Downloads >](downloads)</span>
 {% endif %}
