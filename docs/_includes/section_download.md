@@ -42,4 +42,4 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 <span class="more">
 [< show all Downloads >](downloads)</span>
 {%   endif %}
-{% endif %}
+{% endfor %}
