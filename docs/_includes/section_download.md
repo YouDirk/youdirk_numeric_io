@@ -26,7 +26,8 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
-{% for cur_mcversion in site.data.builds %}
+{% assign mcversions_sorted = site.data.builds | sort %}
+{% for cur_mcversion in mcversions_sorted reversed %}
 ### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
 {%   assign build_nokey = "" | split: "," %}
 {%   for cur in cur_mcversion[1] %}
@@ -36,10 +37,13 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 {%   for build in build_sorted reversed %}
 {%     include item.md build=build show_nopromo=include.show_nopromo %}
 {%   endfor %}
-{%   if include.show_nopromo %}
-<span class="more">[< back to Home >](.)</span>
-{%   else %}
-<span class="more">
-[< show all Downloads >](downloads)</span>
-{%   endif %}
+{%   unless include.show_nopromo %}
+{%     break %}
+{%   endunless %}
 {% endfor %}
+{% if include.show_nopromo %}
+<span class="more">[< back to Home >](.)</span>
+{% else %}
+<span class="more">
+[< show **older** Downloads >](downloads)</span>
+{% endif %}
