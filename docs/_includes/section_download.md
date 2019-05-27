@@ -26,17 +26,20 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
-{% assign build_nokey = "" | split: "," %}
-{% for cur in site.data.builds %}
-{%   assign build_nokey = build_nokey | push: cur[1] %}
-{% endfor %}
-{% assign build_sorted = build_nokey | sort: "time" %}
-{% for build in build_sorted reversed %}
-{%   include item.md build=build show_nopromo=include.show_nopromo %}
-{% endfor %}
-{% if include.show_nopromo %}
+{% for cur_mcversion in site.data.builds %}
+### for Minecraft {{ cur_mcversion[1] }}
+{%   assign build_nokey = "" | split: "," %}
+{%   for cur in cur_mcversion[1] %}
+{%     assign build_nokey = build_nokey | push: cur[1] %}
+{%   endfor %}
+{%   assign build_sorted = build_nokey | sort: "time" %}
+{%   for build in build_sorted reversed %}
+{%     include item.md build=build show_nopromo=include.show_nopromo %}
+{%   endfor %}
+{%   if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>
-{% else %}
+{%   else %}
 <span class="more">
 [< show all Downloads >](downloads)</span>
+{%   endif %}
 {% endif %}
