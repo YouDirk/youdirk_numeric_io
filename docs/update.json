@@ -19,8 +19,8 @@
 
 ---
 {
-  "homepage": "{{ site.numeric_io.website_url }}/",{%
-   assign mcversions_sorted = site.data.builds | sort %}{%
+  "homepage": "{{ site.numeric_io.website_url }}/",
+{% assign mcversions_sorted = site.data.builds | sort %}{%
    for cur_mcversion in mcversions_sorted reversed %}
   "{{ cur_mcversion[0] | replace: "-", "." }}": { {%
      assign build_nokey = "" | split: "," %}{%
