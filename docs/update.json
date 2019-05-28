@@ -19,11 +19,11 @@
 
 ---
 {
-  "homepage": "{{ site.numeric_io.website_url }}/",
-{% assign mcversions_sorted = site.data.builds | sort %}{%
+  "homepage": "{{ site.numeric_io.website_url }}/",{%
+   assign mcversions_sorted = site.data.builds | sort %}{%
    for cur_mcversion in mcversions_sorted reversed %}
-  "{{ cur_mcversion[0] | replace: "-", "." }}": {
-{%   assign build_nokey = "" | split: "," %}{%
+  "{{ cur_mcversion[0] | replace: "-", "." }}": {{%
+     assign build_nokey = "" | split: "," %}{%
      for cur in cur_mcversion[1] %}{%
        assign build_nokey = build_nokey | push: cur[1] %}{%
      endfor %}{%
@@ -31,12 +31,12 @@
      for build in build_sorted reversed %}
     "{{ build.mc_version }}": "{%
       for line in build.patch_notes %}{{
-        line | xml_escape }}\n{%
-      endfor %}",
-{%   endfor %}
+        line | smartify }}\n{%
+      endfor %}",{%
+     endfor %}
     "_dummy": "last item"
-  },
-{% endfor %}
+  },{%
+   endfor %}
 
   "promos": {
     "<mcversion>-latest": "<modversion>",
