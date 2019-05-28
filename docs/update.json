@@ -49,10 +49,10 @@
      if forloop.first %}{%
        for promo_vec in site.data.promos reversed %}{%
          if promo_vec[1].name == "latest" %}{%
-    "{{ mc_version_name }}-latest": "{{ promo_vec[0] }}",
+    "{{ mc_version_name }}-latest": "{{ promo_vec[0] }}",{%
          endif %}{%
          if promo_vec[1].name == "stable" %}{%
-    "{{ mc_version_name }}-recommended": "{{ promo_vec[0] }}",
+    "{{ mc_version_name }}-recommended": "{{ promo_vec[0] }}",{%
          endif %}{%
        endfor %}{%
      else %}
