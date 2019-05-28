@@ -38,7 +38,7 @@
   %}<span class="mf_item_promo" style="background-color: {{
   promo.color }};">{{ promo.name
 }}</span> {%
-endif %}<span class="item_downloadlink">[YouDirk Numeric I/O version {{
+endif %}<span class="item_downloadlink">[YouDirk Numeric I/O {{
   include.build.version }}]({{
   site.numeric_io.github_maven_url }}/{{
   include.build.jar.maven-url
