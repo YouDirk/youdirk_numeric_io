@@ -36,7 +36,7 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 {%   assign build_sorted = build_nokey | sort: "time" %}
 {%   for build in build_sorted reversed %}
 {%     include item.md build=build show_nopromo=include.show_nopromo
-                       latest_fallback=forloop.first %}
+                       old_stable=forloop.first %}
 {%   endfor %}
 {%   unless include.show_nopromo %}
 {%     break %}
