@@ -29,6 +29,7 @@ numeric_io:
   version_stable: <1.xx.x-0.0.0.x-dummy>
   github_url: @GITHUB_URL@
   website_url: @WEBSITE_URL@
+  downloads_rel_url: @DOWNLOADS_REL@
   github_maven_url: @GITHUB_MAVEN_URL@
 
 # Some advantages ...

@@ -112,6 +112,7 @@ LICENSE_FILE = LICENSE
 
 LOGO_FILE = youdirk_numeric_io.png
 WEBSITE_URL = https://youdirk.github.io/youdirk_numeric_io
+WEBSITE_DOWNLOADS_REL = downloads
 UPDATE_JSON_URL = $(WEBSITE_URL)/update.json
 GIT_URL = $(PROJECT_URL).git
 GITHUB_RAW_URL = $(PROJECT_URL)/raw/master
