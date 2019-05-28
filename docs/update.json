@@ -31,7 +31,7 @@
      for build in build_sorted reversed %}
     "{{ build.version }}": "{%
       for line in build.patch_notes %}{{
-        line | replace: "\"", "\\\"" }}\n{%
+        line | smartify }}\n{%
       endfor %}"{% unless forloop.last %},{% endunless %}{%
      endfor %}
   },{%
@@ -47,14 +47,19 @@
      endfor %}{%
      assign build_sorted = build_nokey | sort: "time" %}{%
      if forloop.first %}{%
-       for build in build_sorted reversed %}
-       "{{ build.version }}": "TODO",{%
+       for promo_vec in site.data.promos reversed %}{%
+         if promo_vec[1].name == "latest" %}{%
+    "{{ mc_version_name }}-latest": "{{ promo_vec[0] }}",
+         endif %}{%
+         if promo_vec[1].name == "stable" %}{%
+    "{{ mc_version_name }}-recommended": "{{ promo_vec[0] }}",
+         endif %}{%
        endfor %}{%
      else %}
     "{{ mc_version_name }}-latest": "{{ build_sorted[0].version }}",
-    "{{ mc_version_name }}-recommended": "{{ build_sorted[0].version }}"{%
-      unless forloop.last %},{% endunless %}{%
+    "{{ mc_version_name }}-recommended": "{{ build_sorted[0].version }}",{%
      endif %}{%
    endfor %}
+    "_dummy": "last item"
   }
 }
