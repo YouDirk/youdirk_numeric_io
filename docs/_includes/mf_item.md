@@ -16,13 +16,20 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #
-# Include variables: include.build, include.show_nopromo
+# Include variables: include.build, include.show_nopromo,
+#                    include.latest_fallback
 #
 {% endcomment %}
 
 {% assign promo = nil %}
 {% for promo_vec in site.data.forge_promos reversed %}
-{%   if build.mf_version == promo_vec[0] %}
+{% comment %}
+  Logical parentheses are from right to left
+  mf_version == promo_vec[0] || (name == "latest" && latest_fallback)
+{% endcomment %}
+{%   if build.mf_version == promo_vec[0]
+        or promo_vec[1].name == "seems-to-work"
+        and include.latest_fallback %}
 {%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}

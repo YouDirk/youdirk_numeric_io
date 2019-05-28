@@ -39,7 +39,8 @@ the latest stable from the official Minecraft Forge website
 {%   endfor %}
 {%   assign fb_sorted = fb_nokey | sort: "time" %}
 {%   for build in fb_sorted reversed %}
-{%     include mf_item.md build=build show_nopromo=include.show_nopromo %}
+{%     include mf_item.md build=build show_nopromo=include.show_nopromo
+                          latest_fallback=forloop.first %}
 {%   endfor %}
 {%   unless include.show_nopromo %}
 {%     break %}
