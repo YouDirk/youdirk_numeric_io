@@ -31,7 +31,7 @@
      for build in build_sorted reversed %}
     "{{ build.version }}": "{%
       for line in build.patch_notes %}{{
-        line | smartify }}\n{%
+        line | replace: '"', '\"' }}\n{%
       endfor %}"{% unless forloop.last %},{% endunless %}{%
      endfor %}
   },{%
