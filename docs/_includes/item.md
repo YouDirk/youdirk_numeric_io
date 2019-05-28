@@ -28,7 +28,7 @@
   version == promo_vec[0] || (name == "latest" && latest_fallback)
 {% endcomment %}
 1. x{{ include.latest_fallback }}x
-2. x{{ promo_vec[1].name }}x
+2. x{{ promo_vec.name }}x
 {%   if build.version == promo_vec[0]
         or promo_vec[1].name == "latest" and include.latest_fallback %}
 {%     assign promo = promo_vec[1] %}
