@@ -45,7 +45,7 @@
      for cur in cur_mcversion[1] %}{%
        assign build_nokey = build_nokey | push: cur[1] %}{%
      endfor %}{%
-     assign build_sorted = build_nokey | sort: "time" %}{%{%
+     assign build_sorted = build_nokey | sort: "time" %}{%
      if forloop.first %}{%
        for build in build_sorted reversed %}
        "{{ build.version }}": "TODO",{%
