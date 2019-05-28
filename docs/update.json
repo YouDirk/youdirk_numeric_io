@@ -29,9 +29,9 @@
      endfor %}{%
      assign build_sorted = build_nokey | sort: "time" %}{%
      for build in build_sorted reversed %}
-    "{{ build.mc_version }}": "{%
+    "{{ build.version }}": "{%
       for line in build.patch_notes %}{{
-        line }}\n{%
+        line | replace: "\"", "\\\"" }}\n{%
       endfor %}",{%
      endfor %}
     "_dummy": "last item"
