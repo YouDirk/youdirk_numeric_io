@@ -51,5 +51,5 @@ endif %}[YouDirk Numeric I/O version {{ include.build.version }}]({{
 Patch Notes
 ***********
 {% for line in include.build.patch_notes %}
-{{   line }}{% endfor %}```
+{{   line | xml_escape }}{% endfor %}```
 {% endif %}
