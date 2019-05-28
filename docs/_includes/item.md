@@ -31,8 +31,9 @@
 {% if promo
   %}<span class="mf_item_promo" style="background-color: {{
   promo.color }};">{{ promo.name
-}}</span> <span class="item_downloadlink">{%
-endif %}[YouDirk Numeric I/O version {{ include.build.version }}]({{
+}}</span> {%
+endif %}<span class="item_downloadlink">[YouDirk Numeric I/O version {{
+  include.build.version }}]({{
   site.numeric_io.github_maven_url }}/{{
   include.build.jar.maven-url
 }})</span>  
