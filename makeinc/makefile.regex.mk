@@ -18,6 +18,13 @@
 # ********************************************************************
 # Regex Callables
 
+# sed_cmd _REGEX_FILENAME_RET
+_REGEX_FILENAME_RET = 's~^.*/\([^/]\+\)~\1~;'
+
+# sed_cmd _REGEX_DIRNAME_RET
+_REGEX_DIRNAME_RET = 's~^\(.*\)/[^/]\+~\1~;'
+
+
 # sed_cmd _REGEX_GRADLE_REPL(key, value)
 _REGEX_GRADLE_REPL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
 

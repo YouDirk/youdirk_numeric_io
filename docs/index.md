@@ -32,7 +32,7 @@ mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Negative values** (*Two's Complement encoding*) are supported
 
-For a detailed ingame usage take a look to our [**Wiki** at
+For a detailed in-game usage take a look to our [**Wiki** at
 github.com]({{site.numeric_io.github_url}}/wiki).
 
 ## Downloads

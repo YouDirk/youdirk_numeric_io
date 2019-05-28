@@ -49,8 +49,10 @@ _DOCS_FBUILDS_WHOLESUB = \
      )$(MAVEN_FORGE_RELDIR)/$(2)/$(MF_NAME)-$(2)-$(3).$(4).md5)
 
 .SECONDEXPANSION:
-$(DOCS_FORGEBUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/forge_builds.templ.json \
+$(DOCS_FORGEBUILDS_VERSION_DIR)/%.json: \
+  $(DOCS_DATA_DIR)/forge_builds.templ.json \
   $(MAVEN_FORGE_DIR)/%/$(MF_NAME)-$$*.pom $(MK_FILES)
+	@mkdir -p $(shell echo $@ | $(SED_CMD) $(_REGEX_DIRNAME_RET))
 	@if [ -f $@ ]; then \
 	  echo "Updating '$@'"; \
 	  date_time="`$(SED_CMD) -n \
@@ -101,8 +103,9 @@ _DOCS_BUILDS_WHOLESUB = \
      )$(MAVEN_MOD_RELDIR)/$(2)/$(MODID)-$(2).jar.md5)
 
 .SECONDEXPANSION:
-$(DOCS_BUILDS_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
+$(DOCS_BUILDS_VERSION_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
   $(MAVEN_MOD_DIR)/%/$(MODID)-$$*.pom $(MK_FILES)
+	@mkdir -p $(shell echo $@ | $(SED_CMD) $(_REGEX_DIRNAME_RET))
 	@if [ -f $@ ]; then \
 	  echo "Updating '$@'"; \
 	  date_time="`$(SED_CMD) -n \
@@ -184,7 +187,7 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 
 
 .PHONY: website_mf_addtag
-website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
+website_mf_addtag: $(DOCS_FORGEBUILDS_VERSION_DIR)/$(MF_VERSION_FULL).json
 	@if [ -z "$(TAG)" ]; then \
 	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=new_tag'\n" \
 	       > /dev/stderr; \
@@ -199,8 +202,8 @@ website_mf_addtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_addtag
-website_addtag: | config_all $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json \
-                website_addtag_nodep
+website_addtag: | config_all \
+  $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json website_addtag_nodep
 .PHONY: website_addtag_nodep
 website_addtag_nodep: | config_all
 	@if [ -z "$(TAG)" ]; then \
@@ -211,16 +214,16 @@ website_addtag_nodep: | config_all
 	@echo "Adding tag '$(TAG)' to Build '$(VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
 	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) \
-	              $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json`"; \
+	              $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json`"; \
 	tags="`echo $$tags, \\\"$(TAG)\\\" | $(SED_CMD) $(\
 	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
 	$(SED_CMD) -i $(call \
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') \
-	           $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json;
+	           $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json;
 
 
 .PHONY: website_mf_rmtag
-website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
+website_mf_rmtag: $(DOCS_FORGEBUILDS_VERSION_DIR)/$(MF_VERSION_FULL).json
 	@if [ -z "$(TAG)" ]; then \
 	  echo -e "\nERROR: Usage '$$> $(MAKE) $@ TAG=bad_tag'\n" \
 	       > /dev/stderr; \
@@ -235,8 +238,8 @@ website_mf_rmtag: $(DOCS_FORGEBUILDS_DIR)/$(MF_VERSION_FULL).json
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') $<;
 
 .PHONY: website_rmtag
-website_rmtag: | config_all $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json \
-               website_rmtag_nodep
+website_rmtag: | config_all \
+  $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json website_rmtag_nodep
 .PHONY: website_rmtag_nodep
 website_rmtag_nodep: | config_all
 	@if [ -z "$(TAG)" ]; then \
@@ -247,12 +250,12 @@ website_rmtag_nodep: | config_all
 	@echo "Removing tag '$(TAG)' from Build '$(VERSION_FULL)'"
 	@tags="`$(SED_CMD) -n \
 	       $(call _REGEX_FBUILDSJSONLIST_RET,tags) \
-	              $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json`"; \
+	              $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json`"; \
 	tags="`echo $$tags | $(SED_CMD) 's~\"$(TAG)\"~~g;'$(\
 	      )$(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
 	$(SED_CMD) -i $(call \
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') \
-	           $(DOCS_BUILDS_DIR)/$(VERSION_FULL).json;
+	           $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json;
 
 
 .PHONY: website_forge
