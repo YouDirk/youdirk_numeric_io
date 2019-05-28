@@ -1,0 +1,16 @@
+{
+  "time": "2019-05-28T03:11:44+02:00",
+  "version": "1.14.1-0.0.0.2-dummy",
+  "mc_version": "1.14.1",
+  "mf_version": "25.0.214",
+  "mcp_mapping_channel": "snapshot",
+  "mcp_mapping_version": "20180921-1.13",
+  "tags": ["release"],
+  "patch_notes": ["<Not a\" \" stable\" version>"],
+  "jar": {
+    "name": "youdirk_numeric_io-1.13.2-0.0.0.2-dummy.jar",
+    "maven-url": "net/dj_l/youdirk_numeric_io/1.13.2-0.0.0.2-dummy/youdirk_numeric_io-1.13.2-0.0.0.2-dummy.jar",
+    "maven-sha1": "net/dj_l/youdirk_numeric_io/1.13.2-0.0.0.2-dummy/youdirk_numeric_io-1.13.2-0.0.0.2-dummy.jar.sha1",
+    "maven-md5": "net/dj_l/youdirk_numeric_io/1.13.2-0.0.0.2-dummy/youdirk_numeric_io-1.13.2-0.0.0.2-dummy.jar.md5"
+  }
+}
