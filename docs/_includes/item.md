@@ -47,9 +47,9 @@ endif %}[YouDirk Numeric I/O version {{ include.build.version }}]({{
 <span class="mf_item_stats">File: **{{
   include.build.jar.name
 }}**</span>
-```
+<div>```
 Patch Notes
 ***********
 {% for line in include.build.patch_notes %}
-{{   line | xml_escape }}{% endfor %}```
+{{   line }}{% endfor %}```</div>
 {% endif %}

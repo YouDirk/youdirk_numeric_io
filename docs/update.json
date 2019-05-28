@@ -32,9 +32,8 @@
     "{{ build.version }}": "{%
       for line in build.patch_notes %}{{
         line | replace: "\"", "\\\"" }}\n{%
-      endfor %}",{%
+      endfor %}"{% unless forloop.last %},{% endunless %}{%
      endfor %}
-    "_dummy": "last item"
   },{%
    endfor %}
 
