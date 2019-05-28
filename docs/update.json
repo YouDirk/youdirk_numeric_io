@@ -45,21 +45,18 @@
      for cur in cur_mcversion[1] %}{%
        assign build_nokey = build_nokey | push: cur[1] %}{%
      endfor %}{%
-     assign build_sorted = build_nokey | sort: "time" %}{%
+     assign build_sorted = build_nokey | sort: "time" %}
+    "{{ mc_version_name }}-latest": "{{ build_sorted[0].version }}",{%
      if forloop.first %}{%
        for promo_vec in site.data.promos reversed %}{%
-         if promo_vec[1].name == "latest" %}
-    "{{ mc_version_name }}-latest": "{{ promo_vec[0] }}",{%
-         endif %}{%
          if promo_vec[1].name == "stable" %}
-    "{{ mc_version_name }}-recommended": "{{ promo_vec[0] }}",{%
+    "{{ mc_version_name }}-recommended": "{{ promo_vec[0] }}"{%
          endif %}{%
        endfor %}{%
      else %}
-    "{{ mc_version_name }}-latest": "{{ build_sorted[0].version }}",
-    "{{ mc_version_name }}-recommended": "{{ build_sorted[0].version }}",{%
+    "{{ mc_version_name }}-recommended": "{{ build_sorted[0].version }}"{%
      endif %}{%
+     unless forloop.last %},{% endunless %}{%
    endfor %}
-    "_dummy": "last item"
   }
 }
