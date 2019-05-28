@@ -28,7 +28,7 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 {% endif %}
 {% assign mcversions_sorted = site.data.builds | sort %}
 {% for cur_mcversion in mcversions_sorted reversed %}
-### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
+#### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
 {%   assign build_nokey = "" | split: "," %}
 {%   for cur in cur_mcversion[1] %}
 {%     assign build_nokey = build_nokey | push: cur[1] %}
