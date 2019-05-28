@@ -23,7 +23,4 @@ permalink: /downloads/
    title="Downloads"
    description="YouDirk Numeric I/O Minecraft mod" %}
 
-All available Downloads
------------------------
-
 {% include section_download.md show_nopromo=true %}

@@ -23,7 +23,4 @@ permalink: /minecraft-forge/
    title="Download MC Forge"
    description="YouDirk Numeric I/O Minecraft mod" %}
 
-Minecraft Forge development builds
-----------------------------------
-
 {% include mf_section_download.md show_nopromo=true %}
