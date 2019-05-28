@@ -31,7 +31,7 @@
      for build in build_sorted reversed %}
     "{{ build.mc_version }}": "{%
       for line in build.patch_notes %}{{
-        line | replace: "\"", "\\\"" }}\n{%
+        line }}\n{%
       endfor %}",{%
      endfor %}
     "_dummy": "last item"
