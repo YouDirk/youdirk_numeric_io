@@ -17,7 +17,7 @@
 
 #
 # Include variables: include.build, include.show_nopromo,
-#                    include.latest_fallback
+#                    include.old_stable
 #
 {% endcomment %}
 
@@ -25,11 +25,11 @@
 {% for promo_vec in site.data.forge_promos reversed %}
 {% comment %}
   Logical parentheses are from right to left
-  mf_version == promo_vec[0] || (name == "latest" && latest_fallback)
+  mf_version == promo_vec[0] || (name == "old-stable" && old_stable)
 {% endcomment %}
 {%   if build.mf_version == promo_vec[0]
-        or promo_vec[1].name == "seems-to-work"
-        and include.latest_fallback %}
+        or promo_vec[1].name == "old-stable"
+        and include.old_stable %}
 {%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}
