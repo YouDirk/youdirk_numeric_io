@@ -17,7 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 {% endcomment %}
 
-permalink: /({{site.numeric_io.downloads_rel_url}}/
+permalink: /({{ site.numeric_io.downloads_rel_url }}/
 ---
 {% include common.html
    title="Downloads"

@@ -46,5 +46,5 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 <span class="more">[< back to Home >](.)</span>
 {% else %}
 <span class="more">
-[< show all Downloads >]({{ downloads_rel_url }})</span>
+[< show all Downloads >]({{ site.numeric_io.downloads_rel_url }})</span>
 {% endif %}
