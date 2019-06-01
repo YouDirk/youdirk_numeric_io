@@ -31,6 +31,12 @@ $(DOCS_DIR)/_config.yml: $(DOCS_DIR)/_config.templ.yml $(MK_FILES)
 	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_URL,$(WEBSITE_URL))$(\
 	  )$(call _REGEX_GRADLEVAR_REPL,DOWNLOADS_REL,$(\
 	          )$(WEBSITE_DOWNLOADS_REL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_WIKI_REL,$(\
+	          )$(WEBSITE_WIKI_REL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_ISSUES_REL,$(\
+	          )$(WEBSITE_ISSUES_REL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_CONTRIB_DOC_REL,$(\
+	          )$(WEBSITE_CONTRIB_DOC_REL))$(\
 	  )$(call _REGEX_GRADLEVAR_REPL,GITHUB_MAVEN_URL,$(\
                   )$(GITHUB_RAW_URL)/$(MAVEN_DIR))$(\
 	  )$(call _REGEX_WEBCONFIG_REPL,version_stable,$(\

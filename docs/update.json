@@ -19,7 +19,7 @@
 
 ---
 {
-  "homepage": "{{ site.numeric_io.website_url }}/",
+  "homepage": "{{ site.numeric_io.website_url }}/{{ downloads_rel_url }}",
 {% assign mcversions_sorted = site.data.builds | sort %}{%
    for cur_mcversion in mcversions_sorted reversed %}
   "{{ cur_mcversion[0] | replace: "-", "." }}": { {%

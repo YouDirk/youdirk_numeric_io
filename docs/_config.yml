@@ -30,6 +30,9 @@ numeric_io:
   github_url: https://github.com/YouDirk/youdirk_numeric_io
   website_url: https://youdirk.github.io/youdirk_numeric_io
   downloads_rel_url: downloads
+  wiki_rel_url: wiki
+  issues_rel_url: issues
+  contribdoc_rel_url: blob/master/CONTRIBUTING.md
   github_maven_url: https://github.com/YouDirk/youdirk_numeric_io/raw/master/docs/maven
 
 # Some advantages ...

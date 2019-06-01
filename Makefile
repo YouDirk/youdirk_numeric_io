@@ -200,9 +200,9 @@ $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
 ifeq (,$(wildcard $(MF_MDK_DIR)/build.gradle))
 config_all:
 else
-config_all: build.gradle \
+config_all: build.gradle $(DOCS_DIR)/_config.yml \
   $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta \
-  $(DOCS_DATA_DIR)/forge_promos.json $(DOCS_DIR)/_config.yml
+  $(DOCS_DATA_DIR)/forge_promos.json
 endif
 
 .PHONY: _cache

@@ -30,6 +30,9 @@ numeric_io:
   github_url: @GITHUB_URL@
   website_url: @WEBSITE_URL@
   downloads_rel_url: @DOWNLOADS_REL@
+  wiki_rel_url: @WEBSITE_WIKI_REL@
+  issues_rel_url: @WEBSITE_ISSUES_REL@
+  contribdoc_rel_url: @WEBSITE_CONTRIB_DOC_REL@
   github_maven_url: @GITHUB_MAVEN_URL@
 
 # Some advantages ...
