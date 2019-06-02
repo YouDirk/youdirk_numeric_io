@@ -106,6 +106,9 @@ MAVEN_MOD_VERSIONS = $(subst $(MAVEN_MOD_DIR)/,,\
 DOCS_BUILDS_JSONS = $(patsubst %,$(DOCS_BUILDS_VERSION_DIR)/%.json,\
         $(MAVEN_MOD_VERSIONS))
 
+MAVEN_FORGE_CURINSTALLER = $(MAVEN_FORGE_DIR)/$(MF_VERSION_FULL)$(\
+        )/$(MF_NAME)-$(MF_VERSION_FULL)-installer.jar
+
 PROJECT_URL = https://github.com/YouDirk/youdirk_numeric_io
 REPOSITORY_ROOT_URL = $(PROJECT_URL)/blob/master
 LICENSE_FILE = LICENSE

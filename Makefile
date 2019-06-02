@@ -48,6 +48,10 @@ run_server: | config_all
 build: | config_all
 	./gradlew build
 
+.PHONY: run_productive
+run_productive: | config_all
+	$(MAKE) TEST_LAUNCHER_PROD=1 _run_productive
+
 .PHONY: javadoc
 javadoc: | config_all $(JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
@@ -63,7 +67,7 @@ clean_run:
 	-rm -rf $(RUN_DIR)
 .PHONY: clean
 clean: | _clean_bak clean_run _clean_makecache
-	-rm -rf .gradle $(BUILD_DIR)
+	-rm -rf .gradle installer.log $(BUILD_DIR)
 
 .PHONY: jdk_version
 jdk_version:
@@ -75,8 +79,8 @@ jdk_version:
 bootstrap: | forge config_all
 
 # New MAKE instance, to update DOCS_FORGEBUILDS_JSONS
-.PHONY: publish_forge
-publish_forge: $(MAVEN_FORGE_DIR)/maven-metadata.xml
+.PHONY: mf_publish
+mf_publish: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 	$(MAKE) website_forge
 
 # New MAKE instance, to update DOCS_BUILDS_JSONS
@@ -300,4 +304,39 @@ clean_bootstrap:
 clean_all: | clean_bootstrap clean_forge clean
 
 # End of Clean targets
+# ********************************************************************
+
+# For tests with productive Launcher installation, downloaded from
+# https://www.minecraft.net/download/
+
+# Build only if file not exist
+$(MAVEN_FORGE_CURINSTALLER):
+	$(MAKE) $(MAVEN_FORGE_DIR)/maven-metadata.xml
+
+.PHONY: mf_install
+mf_install: | config_all
+	$(MAKE) TEST_LAUNCHER_PROD=1 _mf_install
+.PHONY: _mf_install
+_mf_install: $(MAVEN_FORGE_CURINSTALLER)
+	java -jar $<
+
+.PHONY: install
+install: | config_all
+	$(MAKE) TEST_LAUNCHER_PROD=1 _install
+.PHONY: _install
+_install: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+	@if [ ! -d "$(LAUNCHER_PATH)/versions/$(MC_VERSION)-$(MF_NAME)$(\
+	           )-$(MF_VERSION)" ]; then \
+	  $(MAKE) _mf_install; \
+	else \
+	  echo 'skipped: Minecraft Forge $(MF_VERSION_FULL)$(\
+	       ) installation'; \
+	fi
+	cp -f $< "$(LAUNCHER_PATH)/mods/"
+
+.PHONY: _run_productive
+_run_productive: _install
+	$(LAUNCHER_PROD_CMD)
+
+# End productive Launcher stuff
 # ********************************************************************

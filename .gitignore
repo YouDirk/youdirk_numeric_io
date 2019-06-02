@@ -24,3 +24,6 @@
 /.gradle
 /build
 /run
+
+# Install stuff
+/installer.log

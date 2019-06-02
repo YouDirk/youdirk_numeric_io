@@ -189,9 +189,7 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	                 )$(MF_VERSION_FULL)) $@
 	@$(SED_CMD) -i $(\
 	    )$(call _REGEX_WEBCONFIG_REPL,tar_url,$(GITHUB_RAW_URL)$(\
-	    )/$(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)/$(MF_VERSION_FULL)/$(\
-	    )$(MF_NAME)-$(MF_VERSION_FULL)-installer.jar)$(\
-	    ) $(DOCS_DIR)/_config.yml;
+	    )/$(MAVEN_FORGE_CURINSTALLER)) $(DOCS_DIR)/_config.yml;
 
 
 .PHONY: website_mf_addtag

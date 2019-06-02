@@ -68,20 +68,26 @@ else
 endif
 
 GIT_CMD = "$(call _CMD_TEST,git)"
-ifeq ("",$(GIT_CMD))
-  $(shell rm -f $(_CACHE_FILE))
-  $(error GIT command not found!  Try '$$> pacman -S msys/git' \
-          for installation.  Or use your Linux package manager.)
-else
-  $(shell echo 'GIT_CMD = $(GIT_CMD)' >> $(_CACHE_FILE))
+# if FAIL: GIT_CMD == ""
+$(shell echo 'GIT_CMD = $(GIT_CMD)' >> $(_CACHE_FILE))
+
+LAUNCHER_PROD_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)$(\
+                      )/Minecraft/MinecraftLauncher.exe)"
+ifeq ("",$(LAUNCHER_PROD_CMD))
+  LAUNCHER_PROD_CMD = "$(call _CMD_TEST,/c/Program\ Files/Minecraft$(\
+                        )/MinecraftLauncher.exe)"
 endif
+# if FAIL: LAUNCHER_PROD_CMD == ""
+$(shell echo 'LAUNCHER_PROD_CMD = $(LAUNCHER_PROD_CMD)' >> $(_CACHE_FILE))
 
 BROWSER_CMD = "$(call _CMD_TEST,/usr/bin/firefox)"
 ifeq ("",$(BROWSER_CMD))
-  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Mozilla\ Firefox/firefox.exe)" 
+  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Mozilla\ Firefox$(\
+                  )/firefox.exe)" 
 endif
 ifeq ("",$(BROWSER_CMD))
-  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Internet\ Explorer/iexplore.exe)" 
+  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Internet\ Explorer$(\
+                  )/iexplore.exe)" 
 endif
 ifeq ("",$(BROWSER_CMD))
   $(warning BROWSER command not found!  Using Microsoft Edge)
@@ -98,6 +104,43 @@ ifneq (,$(TEST_GIT))
     $(error GIT command not found!  Try '$$> pacman -S msys/git' \
             for installation.  Or use your Linux package manager.)
   endif
+endif
+
+ifneq (,$(TEST_LAUNCHER_PROD))
+  ifeq ("",$(LAUNCHER_PROD_CMD))
+    $(shell rm -f $(_CACHE_FILE))
+    $(error Minecraft Launcher (productive) not installed!  Please \
+            download and install it from \
+            'https://www.minecraft.net/download/' and try again.)
+  endif
+
+  # Remove this IF condition for Linux compatibility
+  ifeq (,$(APPDATA))
+    $(shell rm -f $(_CACHE_FILE))
+    $(error Environment variable $$APPDATA to AppData path not set!  \
+            Possible issues: You are not using Windows and/or not running \
+            MAKE in a MSYS2 environment.)
+  endif
+
+  _LAUNCHER_PATH_FOUND = $(shell test -d $(1) && echo -n 1)
+
+  # LAUNCHER_PATH inital not set.
+
+  _TRY_LAUNCHER_PATH = $(shell echo "$(APPDATA)" | $(SED_CMD) \
+                         '/^.:/{s~^\(.\):~/\L\1~;s~\\~/~g;}')/.minecraft
+  ifneq (,$(call _LAUNCHER_PATH_FOUND,"$(_TRY_LAUNCHER_PATH)"))
+    # Path seems to work
+    LAUNCHER_PATH = $(_TRY_LAUNCHER_PATH)
+  endif
+
+  ifeq (,$(LAUNCHER_PATH))
+    $(shell rm -f $(_CACHE_FILE))
+    $(error '.minecraft' path not found!  Run the productive \
+            Minecraft Launcher one time to create it.)
+  endif
+
+  $(shell mkdir -p "$(LAUNCHER_PATH)/versions" "$(LAUNCHER_PATH)/mods")
+  # LAUNCHER_PROD_CMD && LAUNCHER_PATH are set from here
 endif
 
 # --------------------------------------------------------------------
