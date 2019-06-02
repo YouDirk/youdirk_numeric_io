@@ -16,6 +16,17 @@
 
 
 # ********************************************************************
+# Needed for checks (regex included after this file)
+
+# win_path_escaped _2WINPATH_ESCAPE(unix_path)
+_2WINPATH = $(shell echo '$(1)' | \
+    $(SED_CMD) '/^\/.\//{s~^/\(.\)/~\1:/~;s~ ~\\ ~g}')
+
+# unix_path_escaped _2UNIXPATH_ESCAPE(win_path)
+_2UNIXPATH = $(shell echo '$(1)' | \
+    $(SED_CMD) '/^.:/{s~^\(.\):~/\L\1~;s~\\~/~g;s~ ~\\ ~g}')
+
+# ********************************************************************
 # Linux/MSYS2 commands, feature check
 
 ifneq (,$(_CACHE_FILE))
@@ -126,9 +137,9 @@ ifneq (,$(TEST_LAUNCHER_PROD))
 
   # LAUNCHER_PATH inital not set.
 
-  _TRY_LAUNCHER_PATH = $(shell echo "$(APPDATA)" | $(SED_CMD) \
-                         '/^.:/{s~^\(.\):~/\L\1~;s~\\~/~g;}')/.minecraft
-  ifneq (,$(call _LAUNCHER_PATH_FOUND,"$(_TRY_LAUNCHER_PATH)"))
+  # Win2Unix path; spaces escaped
+  _TRY_LAUNCHER_PATH = $(call _2UNIXPATH,$(APPDATA))/.minecraft
+  ifneq (,$(call _LAUNCHER_PATH_FOUND,$(_TRY_LAUNCHER_PATH)))
     # Path seems to work
     LAUNCHER_PATH = $(_TRY_LAUNCHER_PATH)
   endif
@@ -139,7 +150,7 @@ ifneq (,$(TEST_LAUNCHER_PROD))
             Minecraft Launcher one time to create it.)
   endif
 
-  $(shell mkdir -p "$(LAUNCHER_PATH)/versions" "$(LAUNCHER_PATH)/mods")
+  $(shell mkdir -p $(LAUNCHER_PATH)/versions $(LAUNCHER_PATH)/mods)
   # LAUNCHER_PROD_CMD && LAUNCHER_PATH are set from here
 endif
 

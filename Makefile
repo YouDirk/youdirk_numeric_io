@@ -55,12 +55,14 @@ run_productive: | config_all
 .PHONY: javadoc
 javadoc: | config_all $(JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
-	  _2WINPATH,$(PWD)/$(JAVADOC_DIR)/index.html) || true
+	  _2WINPATH,$(shell echo $$PWD)/$(JAVADOC_DIR)/index.html) \
+	  || true
 
 .PHONY: mf_javadoc
 mf_javadoc: | config_all $(MF_JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
-	  _2WINPATH,$(PWD)/$(MF_JAVADOC_DIR)/index.html) || true
+	  _2WINPATH,$(shell echo $$PWD)/$(MF_JAVADOC_DIR)/index.html) \
+	  || true
 
 .PHONY: clean_run
 clean_run:
@@ -325,14 +327,14 @@ install: | config_all
 	$(MAKE) TEST_LAUNCHER_PROD=1 _install
 .PHONY: _install
 _install: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
-	@if [ ! -d "$(LAUNCHER_PATH)/versions/$(MC_VERSION)-$(MF_NAME)$(\
-	           )-$(MF_VERSION)" ]; then \
+	@if [ ! -d $(LAUNCHER_PATH)/versions/$(MC_VERSION)-$(MF_NAME)$(\
+	           )-$(MF_VERSION) ]; then \
 	  $(MAKE) _mf_install; \
 	else \
 	  echo 'skipped: Minecraft Forge $(MF_VERSION_FULL)$(\
 	       ) installation'; \
 	fi
-	cp -f $< "$(LAUNCHER_PATH)/mods/"
+	cp -f $< $(LAUNCHER_PATH)/mods/
 
 .PHONY: _run_productive
 _run_productive: _install
