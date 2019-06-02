@@ -53,16 +53,18 @@ BUILD_DIR = build
 BUILDLIBS_DIR = $(BUILD_DIR)/libs
 BUILD_JARNAME = $(MODID)-$(VERSION_FULL)
 
-RESOURCES_DIR = src/main/resources
-JAVA_DIR = src/main/java
+SRC_DIR = src
+RESOURCES_DIR = $(SRC_DIR)/main/resources
+JAVA_DIR = $(SRC_DIR)/main/java
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
 JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
 
 RUN_DIR = run
 
 # FIND_CMD not available at first call without _CACHE_FILE
-JAVA_FILES := $(shell $(FIND_CMD) $(JAVA_DIR) -name '*.java' \
-                      2> /dev/null || echo $(JAVA_DIR))
+SRC_FILES := $(shell $(FIND_CMD) $(SRC_DIR) \
+        -type f -a ! -name 'pack.mcmeta' -a ! -name 'mods.toml' \
+        2> /dev/null || echo $(SRC_DIR))
 
 MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
 MF_GROUP = net.minecraftforge

@@ -198,7 +198,7 @@ mf_deinit:
 _mf_deinit:
 	$(GIT_CMD) submodule deinit -f $(MF_DIR)
 
-$(JAVADOC_DIR)/index.html: $(JAVA_FILES)
+$(JAVADOC_DIR)/index.html: $(SRC_FILES)
 	./gradlew javadoc && touch $(JAVADOC_DIR)/index.html
 
 $(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
@@ -223,7 +223,7 @@ _cache:
 
 # ********************************************************************
 
-$(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar:
+$(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar: $(SRC_FILES)
 	./gradlew build
 
 $(MAVEN_MOD_DIR)/$(VERSION_FULL)/$(BUILD_JARNAME).jar: \
