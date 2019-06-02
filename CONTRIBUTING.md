@@ -73,6 +73,55 @@ I. Guidelines
 
 **********************************************************************
 
+**********************************************************************
+The current development environment is only tested on
+* Windows 10
+* using `MSYS2` as POSIX compatible `bash` shell environment
+* `GNU make` to define build rules. To install run command in MSYS2 shell `$> pacman -S msys/make`
+* all other dependencies should be checked in `makefile.check.mk` and outputs an error with an instruction what and how to install
+
+Until `CONTRIBUTING.md` [#4](https://github.com/YouDirk/youdirk_numeric_io/issues/4) is written, here a short reference about the current implemented `make` `targets:`. You can run it using the command `$> make <target>`
+
+```make
+all <default>: run Java compiler and build all Mod classes (same as CLASSES)
+classes: Same as official Forge command `$> ./gradlew classes`
+run_client: Same as official Forge command `$> ./gradlew runClient`
+run_server: Same as official Forge command `$> ./gradlew runServer`
+build: Same as official Forge command `$> ./gradlew build`
+run_productive: Run MF_INSTALL, INSTALL and runs the official Minecraft Launcher downloaded from https://www.minecraft.net/download/
+javadoc: Generate a Javadoc documentation of the Mod-API and open it in browser
+mf_javadoc: Generate a Javadoc documentation of the Forge-API and open it in browser
+
+clean_run: Reset all Minecraft runtime-configuration which are set during RUN_CLIENT, RUN_SERVER
+clean: Remove all temporay/cache files which will be generated during work
+
+jdk_version: Output JDK which will be used. Useful if you have more than one installed on your system
+
+bootstrap: Run FORGE followed by CONFIG_ALL
+mf_publish: Build Forge Installer Jars and copy it to maven repository and add Version-Data to website
+publish: Run BUILD, copy Mod-Jar to maven repository and add Version-Data to website
+clean_all: Delete all files which can be re-generated. Also files which are commited to Git. Useful for maintaining and upgrade to a new Minecraft-Version and/or Forge-Version
+
+website_addtag: Same and WEBSITE_ADDTAG_NODEP, but check if Mod was PUBLISH before
+website_addtag_nodep: Add a Tag on website to the current Mod-Version
+website_rmtag: Same and WEBSITE_RMTAG_NODEP, but check if Forge was PUBLISH before
+website_rmtag_nodep: Remove a Tag on website from the current Mod-Version
+
+website_mf_addtag: Add a Tag on website from the current Forge-Version
+website_mf_rmtag: Remove a Tag on website from the current Forge-Version
+
+config_all: Generate all config files which are generally needed for the whole project. Normally it will called automatically
+forge: clone/checkout Git submodule `forge`, the latest official Minecraft Forge source for branch defined in makefile.config.mk
+install: Run BUILD, MF_INSTALL and install the Mod to the official Minecraft Launcher downloaded from https://www.minecraft.net/download/
+website_forge: Same as MF_PUBLISH, but a copy of the Forge Jars must be already in maven repository
+clean_bootstrap: Delete all files which are generated via BOOTSTRAP
+clean_forge: Delete all files which are generated via FORGE
+mf_deinit: Deinit the Forge Git submodule `forge` which was generated via FORGE
+mf_install: Compile Forge Installer Jar and install it to official Minecraft Launcher downloaded from https://www.minecraft.net/download/
+website_mod: Same as PUBLISH, but a copy of the Mod Jar must be already in maven repository
+```
+**********************************************************************
+
 II. Recommended toolchain
 -------------------------
 
