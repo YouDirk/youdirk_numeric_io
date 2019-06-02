@@ -88,9 +88,9 @@ $(DOCS_FORGEBUILDS_VERSION_DIR)/%.json: \
 	)$(call _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"')$(\
 	) $@;
 	@$(SED_CMD) -i $(\
+	)$(call _REGEX_PACKJSON_REPL,version,$*)$(\
 	)$(call _REGEX_PACKJSON_REPL,mc_version,$(shell \
 	        echo $* | $(SED_CMD) 's~^\([^-]*\)-.*$$~\1~'))$(\
-	)$(call _REGEX_PACKJSON_REPL,mf_version,$*)$(\
 	) $@
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,installer,jar)
 	@$(call _DOCS_FBUILDS_WHOLESUB,$@,$*,universal,jar)
@@ -137,7 +137,7 @@ $(DOCS_BUILDS_VERSION_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
 	  version="$(VERSION_FULL)"; \
 	  mc_version="$(MC_VERSION)"; \
-	  mf_version="$(MF_VERSION)"; \
+	  mf_version="$(MF_VERSION_FULL)"; \
 	  mcp_channel="$(MCP_MAPPING_CHANNEL)"; \
 	  mcp_version="$(MCP_MAPPING_VERSION)"; \
 	  tags='"release"'; \

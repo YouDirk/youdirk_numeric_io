@@ -18,8 +18,8 @@
   ],
 
   "time": "2019-05-22T17:33:08+02:00",
+  "version": "1.13.2-25.0.214",
   "mc_version": "1.13.2",
-  "mf_version": "1.13.2-25.0.214",
   "tags": ["unstable"],
   "jar_installer": {
     "name": "forge-1.13.2-25.0.214-installer.jar",

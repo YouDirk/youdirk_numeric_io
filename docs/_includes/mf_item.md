@@ -25,9 +25,9 @@
 {% for promo_vec in site.data.forge_promos reversed %}
 {% comment %}
   Logical parentheses are from right to left
-  mf_version == promo_vec[0] || (name == "old-stable" && old_stable)
+  version == promo_vec[0] || (name == "old-stable" && old_stable)
 {% endcomment %}
-{%   if build.mf_version == promo_vec[0]
+{%   if build.version == promo_vec[0]
         or promo_vec[1].name == "old-stable"
         and include.old_stable %}
 {%     assign promo = promo_vec[1] %}
@@ -38,7 +38,7 @@
 **{% if promo
   %}<span class="mf_item_promo" style="background-color: {{
   promo.color }};">{{ promo.name }}</span> {%
-endif %}Minecraft Forge build {{ include.build.mf_version }}**  
+endif %}Minecraft Forge build {{ include.build.version }}**  
 <span class="mf_item_stats">{{
   include.build.time | date: "%a, %e. %b %Y %R %z"
 }} for Minecraft {{

@@ -18,8 +18,8 @@
   ],
 
   "time": "2019-02-01T05:35:25+01:00",
+  "version": "1.13-24.0.147-1.13-pre",
   "mc_version": "1.13",
-  "mf_version": "1.13-24.0.147-1.13-pre",
   "tags": ["unstable"],
   "jar_installer": {
     "name": "forge-1.13-24.0.147-1.13-pre-installer.jar",

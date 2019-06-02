@@ -20,7 +20,7 @@
   "time": "2019-02-14T06:56:17+01:00",
   "version": "1.13-0.0.0.1-dummy",
   "mc_version": "1.13",
-  "mf_version": "24.0.147-1.13-pre",
+  "mf_version": "1.13-24.0.147-1.13-pre",
   "mcp_mapping_channel": "snapshot",
   "mcp_mapping_version": "20180921-1.13",
   "tags": ["release", "dummy"],
