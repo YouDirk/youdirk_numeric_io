@@ -82,11 +82,11 @@ GIT_CMD = "$(call _CMD_TEST,git)"
 # if FAIL: GIT_CMD == ""
 $(shell echo 'GIT_CMD = $(GIT_CMD)' >> $(_CACHE_FILE))
 
-LAUNCHER_PROD_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)$(\
-                      )/Minecraft/MinecraftLauncher.exe)"
+LAUNCHER_PROD_CMD = "$(call _CMD_TEST,/c/Program\ Files/Minecraft$(\
+                      )/MinecraftLauncher.exe)"
 ifeq ("",$(LAUNCHER_PROD_CMD))
-  LAUNCHER_PROD_CMD = "$(call _CMD_TEST,/c/Program\ Files/Minecraft$(\
-                        )/MinecraftLauncher.exe)"
+  LAUNCHER_PROD_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)$(\
+                        )/Minecraft/MinecraftLauncher.exe)"
 endif
 # if FAIL: LAUNCHER_PROD_CMD == ""
 $(shell echo 'LAUNCHER_PROD_CMD = $(LAUNCHER_PROD_CMD)' >> $(_CACHE_FILE))
@@ -97,8 +97,16 @@ ifeq ("",$(BROWSER_CMD))
                   )/firefox.exe)" 
 endif
 ifeq ("",$(BROWSER_CMD))
+  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)/$(\
+                  )Mozilla\ Firefox/firefox.exe)" 
+endif
+ifeq ("",$(BROWSER_CMD))
   BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Internet\ Explorer$(\
                   )/iexplore.exe)" 
+endif
+ifeq ("",$(BROWSER_CMD))
+  BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)/$(\
+                  )Internet\ Explorer/iexplore.exe)" 
 endif
 ifeq ("",$(BROWSER_CMD))
   $(warning BROWSER command not found!  Using Microsoft Edge)
