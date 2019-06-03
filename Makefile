@@ -69,7 +69,8 @@ clean_run:
 	-rm -rf $(RUN_DIR)
 .PHONY: clean
 clean: | _clean_bak clean_run _clean_makecache
-	-rm -rf .gradle installer.log $(BUILD_DIR)
+	-rm -rf .gradle installer.log forge-*-installer.jar.log \
+	  $(BUILD_DIR)
 
 .PHONY: jdk_version
 jdk_version:

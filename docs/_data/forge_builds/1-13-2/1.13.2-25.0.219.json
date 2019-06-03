@@ -1,0 +1,60 @@
+{
+  "_license": [
+    "This file is part of the `youdirk_numeric_io` Minecraft mod",
+    "Copyright (C) 2019  Dirk \"YouDirk\" Lehmann",
+    "",
+    "This program is free software: you can redistribute it and/or modify",
+    "it under the terms of the GNU General Public License as published by",
+    "the Free Software Foundation, either version 3 of the License, or",
+    "(at your option) any later version.",
+    "",
+    "This program is distributed in the hope that it will be useful,",
+    "but WITHOUT ANY WARRANTY; without even the implied warranty of",
+    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+    "GNU General Public License for more details.",
+    "",
+    "You should have received a copy of the GNU General Public License",
+    "along with this program.  If not, see <https://www.gnu.org/licenses/>."
+  ],
+
+  "time": "2019-06-03T19:36:37+02:00",
+  "version": "1.13.2-25.0.219",
+  "mc_version": "1.13.2",
+  "tags": ["unstable"],
+  "jar_installer": {
+    "name": "forge-1.13.2-25.0.219-installer.jar",
+    "maven-url": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-installer.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-installer.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-installer.jar.md5"
+  },
+  "jar_universal": {
+    "name": "forge-1.13.2-25.0.219-universal.jar",
+    "maven-url": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-universal.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-universal.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-universal.jar.md5"
+  },
+  "jar_userdev": {
+    "name": "forge-1.13.2-25.0.219-userdev.jar",
+    "maven-url": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-userdev.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-userdev.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-userdev.jar.md5"
+  },
+  "jar_launcher": {
+    "name": "forge-1.13.2-25.0.219-launcher.jar",
+    "maven-url": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-launcher.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-launcher.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-launcher.jar.md5"
+  },
+  "jar_src": {
+    "name": "forge-1.13.2-25.0.219-src.jar",
+    "maven-url": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-src.jar",
+    "maven-sha1": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-src.jar.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-src.jar.md5"
+  },
+  "zip_mdk": {
+    "name": "forge-1.13.2-25.0.219-mdk.zip",
+    "maven-url": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-mdk.zip",
+    "maven-sha1": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-mdk.zip.sha1",
+    "maven-md5": "net/minecraftforge/forge/1.13.2-25.0.219/forge-1.13.2-25.0.219-mdk.zip.md5"
+  }
+}
