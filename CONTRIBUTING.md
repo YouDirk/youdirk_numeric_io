@@ -94,7 +94,7 @@ run_productive: Run MF_INSTALL, INSTALL and runs the official Minecraft Launcher
 javadoc: Generate a Javadoc documentation for the Mod-API and open it in browser
 mf_javadoc: Generate a Javadoc documentation for the Forge-API and open it in browser
 
-clean_run: Reset all Minecraft runtime-configuration which are set during RUN_CLIENT, RUN_SERVER
+clean_run: Reset all Minecraft runtime-configuration which were set during RUN_CLIENT, RUN_SERVER
 clean: Remove all temporay/cache files which were generated during work
 
 jdk_version: Output JDK version which will be used. Useful if you have more than one installed on your system
