@@ -128,12 +128,6 @@ BUGTRACKING_URL = $(PROJECT_URL)/$(WEBSITE_ISSUES_REL)
 LICENSE_SHORT = GPL v3.0
 LICENSE_URL = $(REPOSITORY_ROOT_URL)/$(LICENSE_FILE)
 
-_BLANK :=
-define NL
-
-$(_BLANK)
-endef
-
 # --------------------------------------------------------------------
 # Environment variables
 

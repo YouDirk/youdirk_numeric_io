@@ -16,7 +16,15 @@
 
 
 # ********************************************************************
-# Needed for checks (regex included after this file)
+# Needed for checks (variables are included after this file)
+
+# Newline variable and Error prefix variable
+_BLANK :=
+define NL
+
+$(_BLANK)
+endef
+ERRB = $(NL)$(NL)  ERROR:
 
 # win_path_escaped _2WINPATH_ESCAPE(unix_path)
 _2WINPATH = $(shell echo '$(1)' | \
@@ -36,8 +44,8 @@ _CMD_TEST = $(shell which $(1) 2> /dev/null)
 FIND_CMD = $(call _CMD_TEST,find)
 ifeq (,$(FIND_CMD))
   $(shell rm -f $(_CACHE_FILE))
-  $(error FIND command not found!  Try '$$> pacman -S msys/findutils' \
-          for installation.  Or use your Linux package manager.)
+  $(error $(ERRB) FIND command not found!  Try '$$> pacman -S \
+    msys/findutils' for installation.  Or use your Linux package manager)
 else
   $(shell echo 'FIND_CMD = $(FIND_CMD)' >> $(_CACHE_FILE))
 endif
@@ -45,8 +53,8 @@ endif
 SED_CMD = $(call _CMD_TEST,sed)
 ifeq (,$(SED_CMD))
   $(shell rm -f $(_CACHE_FILE))
-  $(error SED command not found!  Try '$$> pacman -S msys/sed' \
-          for installation.  Or use your Linux package manager.)
+  $(error $(ERRB) SED command not found!  Try '$$> pacman -S \
+    msys/sed' for installation.  Or use your Linux package manager)
 else
   $(shell echo 'SED_CMD = $(SED_CMD)' >> $(_CACHE_FILE))
 endif
@@ -54,8 +62,8 @@ endif
 DATE_CMD = $(call _CMD_TEST,date)
 ifeq (,$(DATE_CMD))
   $(shell rm -f $(_CACHE_FILE))
-  $(error DATE command not found!  Try '$$> pacman -S msys/coreutils' \
-          for installation.  Or use your Linux package manager.)
+  $(error $(ERRB) DATE command not found!  Try '$$> pacman -S \
+    msys/coreutils' for installation.  Or use your Linux package manager)
 else
   $(shell echo 'DATE_CMD = $(DATE_CMD)' >> $(_CACHE_FILE))
 endif
@@ -63,8 +71,8 @@ endif
 MD5SUM_CMD = $(call _CMD_TEST,md5sum)
 ifeq (,$(MD5SUM_CMD))
   $(shell rm -f $(_CACHE_FILE))
-  $(error MD5SUM command not found!  Try '$$> pacman -S msys/coreutils' \
-          for installation.  Or use your Linux package manager.)
+  $(error $(ERRB) MD5SUM command not found!  Try '$$> pacman -S \
+    msys/coreutils' for installation.  Or use your Linux package manager)
 else
   $(shell echo 'MD5SUM_CMD = $(MD5SUM_CMD)' >> $(_CACHE_FILE))
 endif
@@ -72,8 +80,8 @@ endif
 SHA1SUM_CMD = $(call _CMD_TEST,sha1sum)
 ifeq (,$(SHA1SUM_CMD))
   $(shell rm -f $(_CACHE_FILE))
-  $(error SHA1SUM command not found!  Try '$$> pacman -S msys/coreutils' \
-          for installation.  Or use your Linux package manager.)
+  $(error $(ERRB) SHA1SUM command not found!  Try '$$> pacman -S \
+    msys/coreutils' for installation.  Or use your Linux package manager)
 else
   $(shell echo 'SHA1SUM_CMD = $(SHA1SUM_CMD)' >> $(_CACHE_FILE))
 endif
@@ -120,32 +128,32 @@ endif # ifneq (,$(_CACHE_FILE))
 ifneq (,$(TEST_GIT))
   ifeq ("",$(GIT_CMD))
     $(shell rm -f $(_CACHE_FILE))
-    $(error GIT command not found!  Try '$$> pacman -S msys/git' \
-            for installation.  Or use your Linux package manager.)
+    $(error $(ERRB) GIT command not found!  Try '$$> pacman -S msys/git' \
+            for installation.  Or use your Linux package manager)
   endif
 endif
 
 ifneq (,$(TEST_LAUNCHER_PROD))
   ifeq ("",$(LAUNCHER_PROD_CMD))
     $(shell rm -f $(_CACHE_FILE))
-    $(error Minecraft Launcher (productive) not installed!  Please \
-            download and install it from \
-            'https://www.minecraft.net/download/' and try again.)
+    $(error $(ERRB) Minecraft Launcher (productive) not installed!  \
+            Please download and install it from \
+            'https://www.minecraft.net/download/' and try again)
   endif
 
   # Remove this IF condition for Linux compatibility
   ifeq (,$(APPDATA))
     $(shell rm -f $(_CACHE_FILE))
-    $(error Environment variable $$APPDATA to AppData path not set!  \
-            Possible issues: You are not using Windows and/or not running \
-            MAKE in a MSYS2 environment.)
+    $(error $(ERRB) Environment variable $$APPDATA to AppData path not \
+            set!  Possible issues: You are not using Windows and/or not \
+            running MAKE in a MSYS2 environment.  Feel free to port this \
+            Makefile to another OS, for Linux it should be possible. \
+            See bug tracking '#28')
   endif
 
   _LAUNCHER_PATH_FOUND = $(shell test -d $(1) && echo -n 1)
+  LAUNCHER_PATH =
 
-  # LAUNCHER_PATH inital not set.
-
-  # Win2Unix path; spaces escaped
   _TRY_LAUNCHER_PATH = $(call _2UNIXPATH,$(APPDATA))/.minecraft
   ifneq (,$(call _LAUNCHER_PATH_FOUND,$(_TRY_LAUNCHER_PATH)))
     # Path seems to work
@@ -154,8 +162,8 @@ ifneq (,$(TEST_LAUNCHER_PROD))
 
   ifeq (,$(LAUNCHER_PATH))
     $(shell rm -f $(_CACHE_FILE))
-    $(error '.minecraft' path not found!  Run the productive \
-            Minecraft Launcher one time to create it.)
+    $(error $(ERRB) '.minecraft' path not found!  Run the productive \
+            Minecraft Launcher one time to create it)
   endif
 
   $(shell mkdir -p $(LAUNCHER_PATH)/versions $(LAUNCHER_PATH)/mods)
@@ -191,20 +199,14 @@ else ifneq (,$(call _CMD_TEST,javac))
 
 else
   # Try commonly known locations
-  _TRY_HOME = $(call _JDK_LATEST,"/c/Program Files (x86)/Java")
-  ifneq (,$(call _JDK_FOUND,$(_TRY_HOME)))
-    MY_JAVA_HOME = $(_TRY_HOME)
+  MY_JAVA_HOME = $(call _JDK_LATEST,"/c/Program Files/Java")
+  ifeq (,$(call _JDK_FOUND,$(MY_JAVA_HOME)))
+    MY_JAVA_HOME = $(call _JDK_LATEST,"/c/Program Files (x86)/Java")
   endif
-
-  _TRY_HOME = $(call _JDK_LATEST,"/c/Program Files/Java")
-  ifneq (,$(call _JDK_FOUND,$(_TRY_HOME)))
-    MY_JAVA_HOME = $(_TRY_HOME)
-  endif
-
-  ifeq (,$(MY_JAVA_HOME))
+  ifeq (,$(call _JDK_FOUND,$(MY_JAVA_HOME)))
     $(shell rm -f $(_CACHE_FILE))
-    $(error JAVAC command not found!  Please install the 'Java SE \
-            Development Kit (JDK)' and/or set Makefile configuration \
+    $(error $(ERRB) JAVAC command not found!  Please install the 'Java \
+            SE Development Kit (JDK)' and/or set Makefile configuration \
             variable JDK_PATH in 'makefile.config.mk')
   endif
 endif
