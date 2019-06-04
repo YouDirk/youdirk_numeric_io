@@ -116,9 +116,15 @@ _forge:
 $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
   .git/modules/$(MF_DIR)/FETCH_HEAD $(MF_DIR)/.gitignore
 	@echo "Updating '$@'"
-	@$(SED_CMD) -i "s~$(MF_GROUP).test~$(MF_GROUP)~g; "\
-"s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + "\
-"rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; " $@
+	@$(SED_CMD) -i \
+	  "s~$(MF_GROUP).test~$(MF_GROUP)~g;$(\
+	  )s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + $(\
+	  )rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; " $@
+	@if [ -z "`$(SED_CMD) -n '\~../$(MAVEN_DIR)~i\ok' $@`" ]; then \
+	  echo -e "$(ERR2) Could not patch maven repository in file" \
+	          "'$@'!\n" >&2; \
+	  exit 1; \
+	fi
 
 $(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
 	cd $(MF_DIR) \
@@ -138,11 +144,13 @@ $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml $(MK_FILES)
 	)$(call _REGEX_MODS_REPL,displayURL,$(WEBSITE_URL))$(\
 	)$(call _REGEX_MODS_REPL,logoFile,$(LOGO_FILE))$(\
 	)$(call _REGEX_MODS_REPL,authors,$(CREDITS))$(\
-	)$(call _REGEX_MODS_REPL,credits,$(MODTHANKS))\
-'s~^\[\[dependencies.examplemod\]\]\( *\)[^ #]*~[[dependencies.$(MODID)]]\1~g; '\
-	  $< > $@
-	@$(SED_CMD) -i ':a;N;$$!ba; '"s~\\ndescription \\?= \\?'''.*\\n'''"\
-"~\\ndescription='''\\n$(MODDESC)\\n'''~g;" $@
+	)$(call _REGEX_MODS_REPL,credits,$(MODTHANKS))$(\
+	)'s~^\[\[dependencies.examplemod\]\]\( *\)[^ #]*$(\
+	  )~[[dependencies.$(MODID)]]\1~g;' \
+	$< > $@
+	@$(SED_CMD) -i \
+	  ':a;N;$$!ba; '"s~\\ndescription \\?= \\?'''.*\\n'''$(\
+	  )~\\ndescription='''\\n$(MODDESC)\\n'''~g;" $@
 	@$(call _REGEX_MODS_GROUPREPL,$@,mods,modId,$(MODID))
 	@$(call _REGEX_MODS_GROUPREPL,$@,mods,version,$(VERSION_FULL))
 	@$(call _REGEX_MODS_GROUPREPL,$@,mods,displayName,$(MODNAME))
@@ -184,14 +192,13 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	        ,Implementation-Vendor,$(VENDOR))$(\
 	)$(call _REGEX_GRADLEMANIFEST_REPL \
 	        ,Implementation-Version,$(VERSION_FULL))$(\
-	)\
-'s~minecraft \?{~repositories {\n'\
-"  maven { url 'file://' + rootProject.file('$(MAVEN_DIR)')"\
-".getAbsolutePath() }\n"\
-'}\n'\
-'\nminecraft {~g; '\
-'s~examplemod~$(MODID)~g; '\
-	  $< > $@
+	)'s~minecraft \?{~repositories {\n'$(\
+	  )"  maven { url 'file://' + rootProject.file('$(MAVEN_DIR)')"$(\
+	  )".getAbsolutePath() }\n"$(\
+	  )'}\n'$(\
+	  )'\nminecraft {~g;'$(\
+	)'s~examplemod~$(MODID)~g;' \
+	$< > $@
 
 .PHONY: mf_deinit
 mf_deinit:

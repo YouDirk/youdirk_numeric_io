@@ -25,6 +25,7 @@ define NL
 $(_BLANK)
 endef
 ERRB = $(NL)$(NL)  ERROR:
+ERR2 = \n  ERROR:
 
 # win_path_escaped _2WINPATH_ESCAPE(unix_path)
 _2WINPATH = $(shell echo '$(1)' | \
