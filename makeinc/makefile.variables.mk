@@ -131,10 +131,12 @@ LICENSE_URL = $(REPOSITORY_ROOT_URL)/$(LICENSE_FILE)
 # --------------------------------------------------------------------
 # Environment variables
 
-PATH := $(MY_JAVA_HOME)/bin:$(PATH)
-JAVA_HOME := $(MY_JAVA_HOME)
+ifneq (,$(MY_JAVA_HOME))
+  PATH := $(MY_JAVA_HOME)/bin:$(PATH)
+  JAVA_HOME := $(MY_JAVA_HOME)
 
-export PATH JAVA_HOME
+  export PATH JAVA_HOME
+endif
 
 # End of Variable definitions
 # ********************************************************************

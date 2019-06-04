@@ -188,21 +188,21 @@ _JDK_LATEST = $(shell d=($(1)/jdk*); IFS=$$'\n'; echo "$${d[*]}" \
 
 ifneq (,$(call _JDK_FOUND,$(JDK_PATH)))
   # Configuration variable set
-  MY_JAVA_HOME = $(JDK_PATH)
+  MY_JAVA_HOME := $(JDK_PATH)
 
 else ifneq (,$(call _JDK_FOUND,$(JAVA_HOME)))
   # JAVA_HOME environment variable set
-  MY_JAVA_HOME = $(JAVA_HOME)
+  MY_JAVA_HOME := $(JAVA_HOME)
 
 else ifneq (,$(call _CMD_TEST,javac))
   # JAVAC in PATH found, set JAVA_HOME:=(empty)
-  MY_JAVA_HOME =
+  MY_JAVA_HOME :=
 
 else
   # Try commonly known locations
-  MY_JAVA_HOME = $(call _JDK_LATEST,"/c/Program Files/Java")
+  MY_JAVA_HOME := $(call _JDK_LATEST,"/c/Program Files/Java")
   ifeq (,$(call _JDK_FOUND,$(MY_JAVA_HOME)))
-    MY_JAVA_HOME = $(call _JDK_LATEST,"/c/Program Files (x86)/Java")
+    MY_JAVA_HOME := $(call _JDK_LATEST,"/c/Program Files (x86)/Java")
   endif
   ifeq (,$(call _JDK_FOUND,$(MY_JAVA_HOME)))
     $(shell rm -f $(_CACHE_FILE))
