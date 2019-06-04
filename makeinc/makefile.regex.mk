@@ -24,6 +24,8 @@ _REGEX_FILENAME_RET = 's~^.*/\([^/]\+\)~\1~;'
 # sed_cmd _REGEX_DIRNAME_RET
 _REGEX_DIRNAME_RET = 's~^\(.*\)/[^/]\+~\1~;'
 
+# sed_cmd _REGEX_DOS2UNIX_NL
+_REGEX_DOS2UNIX_NL = ':a;N;$$!ba; s~\r~~g;'
 
 # sed_cmd _REGEX_GRADLE_REPL(key, value)
 _REGEX_GRADLE_REPL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'

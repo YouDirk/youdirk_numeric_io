@@ -129,6 +129,8 @@ $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
 $(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
 	cd $(MF_DIR) \
 	  && ./gradlew setup :forge:licenseFormat :forge:publish
+	@$(SED_CMD) -i $(_REGEX_DOS2UNIX_NL) $@ \
+	               `$(FIND_CMD) $(MAVEN_FORGE_DIR) -name '*.pom'`
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta $(MK_FILES)
 	@echo "Generating '$@'"
@@ -156,17 +158,22 @@ $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml $(MK_FILES)
 	@$(call _REGEX_MODS_GROUPREPL,$@,mods,displayName,$(MODNAME))
 
 gradlew: $(MF_DIR)/gradlew
-	cp -f $< $@
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
 gradle: $(MF_DIR)/gradle gradlew
 	cp -rf $< $@
 gradlew.bat: $(MF_DIR)/gradlew.bat gradle
-	cp -f $< $@
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
+
 gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
-	cp -f $< $@
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
 
 build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(\
+	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
+	@$(SED_CMD) -i $(\
 	)$(call _REGEX_GRADLE_REPL,version,$(VERSION_FULL))$(\
 	)$(call _REGEX_GRADLE_REPL,group,$(GROUP))$(\
 	)$(call _REGEX_GRADLE_REPL,archivesBaseName,$(MODID))$(\
@@ -198,7 +205,7 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	  )'}\n'$(\
 	  )'\nminecraft {~g;'$(\
 	)'s~examplemod~$(MODID)~g;' \
-	$< > $@
+	$@
 
 .PHONY: mf_deinit
 mf_deinit:

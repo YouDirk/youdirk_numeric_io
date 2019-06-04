@@ -103,25 +103,25 @@ $(shell echo 'LAUNCHER_PROD_CMD = $(LAUNCHER_PROD_CMD)' >> $(_CACHE_FILE))
 BROWSER_CMD = "$(call _CMD_TEST,/usr/bin/firefox)"
 ifeq ("",$(BROWSER_CMD))
   BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Mozilla\ Firefox$(\
-                  )/firefox.exe)" 
+                  )/firefox.exe)"
 endif
 ifeq ("",$(BROWSER_CMD))
   BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)/$(\
-                  )Mozilla\ Firefox/firefox.exe)" 
+                  )Mozilla\ Firefox/firefox.exe)"
 endif
 ifeq ("",$(BROWSER_CMD))
   BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files/Internet\ Explorer$(\
-                  )/iexplore.exe)" 
+                  )/iexplore.exe)"
 endif
 ifeq ("",$(BROWSER_CMD))
   BROWSER_CMD = "$(call _CMD_TEST,/c/Program\ Files\ \(x86\)/$(\
-                  )Internet\ Explorer/iexplore.exe)" 
+                  )Internet\ Explorer/iexplore.exe)"
 endif
 ifeq ("",$(BROWSER_CMD))
   $(warning BROWSER command not found!  Using Microsoft Edge)
   BROWSER_CMD = /c/windows/explorer.exe microsoft-edge:
 endif
-$(shell echo 'BROWSER_CMD = $(BROWSER_CMD)' >> $(_CACHE_FILE))
+$(shell echo 'BROWSER_CMD = $(BROWSER_CMD) ' >> $(_CACHE_FILE))
 
 endif # ifneq (,$(_CACHE_FILE))
 # -----------------------------
