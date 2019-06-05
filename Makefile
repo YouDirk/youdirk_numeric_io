@@ -121,8 +121,8 @@ $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
 	  )s~^\([ \t]*\)url *'file://.*'repo'.*$$~\\1url 'file://' + $(\
 	  )rootProject.file('../$(MAVEN_DIR)').getAbsolutePath()~g; " $@
 	@if [ -z "`$(SED_CMD) -n '\~../$(MAVEN_DIR)~i\ok' $@`" ]; then \
-	  echo -e "$(ERR2) Could not patch maven repository in file" \
-	          "'$@'!\n" >&2; \
+	  printf "$(ERR2) Could not patch maven repository in file" \
+	         "'$@'!\n\n" >&2; \
 	  exit 1; \
 	fi
 
@@ -330,9 +330,9 @@ clean_all: | clean_bootstrap clean_forge clean
 .PHONY: _os_windows
 _os_windows:
 	@if [ -z "$(OS_IS_WIN)" ]; then \
-	  echo -e "$(ERR2) This action runs only under Windows OS :($(\
-                  ) ...  You need to setup your productive Minecraft$(\
-	          ) Launcher manually.\n" >&2; \
+	  printf "$(ERR2) This action runs only under Windows OS :($(\
+                 ) ...  You need to setup your productive Minecraft$(\
+	         ) Launcher manually.\n\n" >&2; \
 	  exit 1; \
 	fi
 
