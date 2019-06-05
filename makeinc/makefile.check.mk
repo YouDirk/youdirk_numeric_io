@@ -87,6 +87,16 @@ else
   $(shell echo 'SHA1SUM_CMD = $(SHA1SUM_CMD)' >> $(_CACHE_FILE))
 endif
 
+UNAME_CMD = $(call _CMD_TEST,uname)
+ifeq (,$(UNAME_CMD))
+  $(shell rm -f $(_CACHE_FILE))
+  $(error $(ERRB) UNAME_CMD command not found!  Try '$$> pacman -S \
+    msys/coreutils' for installation.  Or use your Linux package manager)
+else
+  $(shell echo 'UNAME_CMD = $(UNAME_CMD)' >> $(_CACHE_FILE))
+endif
+
+
 GIT_CMD = "$(call _CMD_TEST,git)"
 # if FAIL: GIT_CMD == ""
 $(shell echo 'GIT_CMD = $(GIT_CMD)' >> $(_CACHE_FILE))
@@ -122,6 +132,15 @@ ifeq ("",$(BROWSER_CMD))
   BROWSER_CMD = /c/windows/explorer.exe microsoft-edge:
 endif
 $(shell echo 'BROWSER_CMD = $(BROWSER_CMD) ' >> $(_CACHE_FILE))
+
+OS_IS_WIN = $(shell test \( \
+  -n "`echo $(OS) | sed -n '/^windows/Ip'`" \
+  -o -n "`$(UNAME_CMD) -o | sed -n '/^msys/Ip'`" \
+  -o -n "`$(UNAME_CMD) -o | sed -n '/^mingw/Ip'`" \
+  -o -n "`$(UNAME_CMD) -s | sed -n '/^msys/Ip'`" \
+  -o -n "`$(UNAME_CMD) -s | sed -n '/^mingw/Ip'`" \
+\) && echo -n 1)
+$(shell echo 'OS_IS_WIN = $(OS_IS_WIN)' >> $(_CACHE_FILE))
 
 endif # ifneq (,$(_CACHE_FILE))
 # -----------------------------

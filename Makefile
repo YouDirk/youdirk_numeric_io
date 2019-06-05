@@ -49,7 +49,7 @@ build: | config_all
 	./gradlew build
 
 .PHONY: run_productive
-run_productive: | config_all
+run_productive: | config_all _os_windows
 	$(MAKE) TEST_LAUNCHER_PROD=1 _run_productive
 
 .PHONY: javadoc
@@ -327,19 +327,28 @@ clean_all: | clean_bootstrap clean_forge clean
 # For tests with productive Launcher installation, downloaded from
 # https://www.minecraft.net/download/
 
+.PHONY: _os_windows
+_os_windows:
+	@if [ -z "$(OS_IS_WIN)" ]; then \
+	  echo -e "$(ERR2) This action runs only under Windows OS :($(\
+                  ) ...  You need to setup your productive Minecraft$(\
+	          ) Launcher manually.\n" >&2; \
+	  exit 1; \
+	fi
+
 # Build only if file not exist
 $(MAVEN_FORGE_CURINSTALLER):
 	$(MAKE) $(MAVEN_FORGE_DIR)/maven-metadata.xml
 
 .PHONY: mf_install
-mf_install: | config_all
+mf_install: | config_all _os_windows
 	$(MAKE) TEST_LAUNCHER_PROD=1 _mf_install
 .PHONY: _mf_install
 _mf_install: $(MAVEN_FORGE_CURINSTALLER)
 	java -jar $<
 
 .PHONY: install
-install: | config_all
+install: | config_all _os_windows
 	$(MAKE) TEST_LAUNCHER_PROD=1 _install
 .PHONY: _install
 _install: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
