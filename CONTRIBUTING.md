@@ -78,7 +78,11 @@ XXX. Temporary Fast written stuff
 ## Linux
 Mod-Development on Linux is now officially supported. The most `make`
 targets are working. Exceptions are the following targets
-* `mf_install`, `install` and `run_productive`
+* ~~`mf_install`~~, ~~`install`~~ and ~~`run_productive`~~
+
+But the **recommended** way to test your code works fine. Use the
+targets
+* `run_client` and `run_server`
 
 It seems that there exist no official Minecraft Launcher for Linux.
 For that you must install the Forge-Jar and Mod-Jar manually to your
