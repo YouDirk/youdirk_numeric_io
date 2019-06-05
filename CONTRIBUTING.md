@@ -84,9 +84,10 @@ But the **recommended** way to test your code works fine. Use the
 targets
 * `run_client` and `run_server`
 
-It seems that there exist no official Minecraft Launcher for Linux.
-For that you must install the Forge-Jar and Mod-Jar manually to your
-productive installation.  Such as every other user :P ...
+It seems that there doesn't exist an official Minecraft Launcher for
+Linux.  For that reason you must install the Forge-Jar and Mod-Jar
+manually to your productive Minecraft installation.  Such as every
+other user :P ...
 
 tested on system:
 * Debian 10.0 (Buster), Kernel `Linux 4.19.0-5-amd64`
