@@ -195,7 +195,7 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 .PHONY: website_mf_addtag
 website_mf_addtag: $(DOCS_FORGEBUILDS_VERSION_DIR)/$(MF_VERSION_FULL).json
 	@if [ -z "$(TAG)" ]; then \
-	  echo -e "$(ERR2) Usage '$$> $(MAKE) $@ TAG=new_tag'\n" >&2; \
+	  printf "$(ERR2) Usage '$$> $(MAKE) $@ TAG=new_tag'\n\n" >&2; \
 	  exit 1; \
 	fi
 	@echo "Adding tag '$(TAG)' to Forge build '$(MF_VERSION_FULL)'"
@@ -212,7 +212,7 @@ website_addtag: | config_all \
 .PHONY: website_addtag_nodep
 website_addtag_nodep: | config_all
 	@if [ -z "$(TAG)" ]; then \
-	  echo -e "$(ERR2) Usage '$$> $(MAKE) $@ TAG=new_tag'\n" >&2; \
+	  printf "$(ERR2) Usage '$$> $(MAKE) $@ TAG=new_tag'\n\n" >&2; \
 	  exit 1; \
 	fi
 	@echo "Adding tag '$(TAG)' to Build '$(VERSION_FULL)'"
@@ -229,7 +229,7 @@ website_addtag_nodep: | config_all
 .PHONY: website_mf_rmtag
 website_mf_rmtag: $(DOCS_FORGEBUILDS_VERSION_DIR)/$(MF_VERSION_FULL).json
 	@if [ -z "$(TAG)" ]; then \
-	  echo -e "$(ERR2) Usage '$$> $(MAKE) $@ TAG=bad_tag'\n" >&2; \
+	  printf "$(ERR2) Usage '$$> $(MAKE) $@ TAG=bad_tag'\n\n" >&2; \
 	  exit 1; \
 	fi
 	@echo "Removing tag '$(TAG)' from Forge build '$(MF_VERSION_FULL)'"
@@ -246,7 +246,7 @@ website_rmtag: | config_all \
 .PHONY: website_rmtag_nodep
 website_rmtag_nodep: | config_all
 	@if [ -z "$(TAG)" ]; then \
-	  echo -e "$(ERR2) Usage '$$> $(MAKE) $@ TAG=bad_tag'\n" >&2; \
+	  printf "$(ERR2) Usage '$$> $(MAKE) $@ TAG=bad_tag'\n\n" >&2; \
 	  exit 1; \
 	fi
 	@echo "Removing tag '$(TAG)' from Build '$(VERSION_FULL)'"
