@@ -75,14 +75,43 @@ I. Guidelines
 
 XXX. Temporary Fast written stuff
 ---------------------------------
+## Linux
+Mod-Development on Linux is now officially supported. The most `make`
+targets are working. Exceptions are the following targets
+* `mf_install`, `install` and `run_productive`
 
-The current development environment is only tested on
+It seems that there exist no official Minecraft Launcher for Linux.
+For that you must install the Forge-Jar and Mod-Jar manually to your
+productive installation.  Such as every other user :P ...
+
+tested on system:
+* Debian 10.0 (Buster), Kernel `Linux 4.19.0-5-amd64`
+* JDK: Oracle Java SE Development Kit `1.8.0_211` for `Linux amd64`
+* necessary *GLX Info*
+    ```make
+    direct rendering: Yes
+    glx vendor string: NVIDIA Corporation
+    glx version string: 1.4
+    OpenGL renderer string: GeForce GTX 850M/PCIe/SSE2
+    OpenGL core profile version string: 4.6.0 NVIDIA 430.14
+    OpenGL core profile shading language version string: 4.60 NVIDIA
+    ```
+
+## Default Windows 10
+The current mostly used development environment is
 * Windows 10 (x86_64)
 * using `MSYS2` as POSIX compatible `bash` shell environment
-* `GNU make` to define build rules. To install run command in MSYS2 shell `$> pacman -S msys/make`
-* all other dependencies will be checked automatically in `makefile.check.mk` and outputs an error with an instruction what and how to install
+* `GNU make` to define build rules. To install run command in MSYS2
+  shell `$> pacman -S msys/make`
+* all other dependencies will be checked automatically in
+  `makefile.check.mk` and outputs an error with an instruction what
+  and how to install
 
-Until `CONTRIBUTING.md` [#4](https://github.com/YouDirk/youdirk_numeric_io/issues/4) was not fully written, here comes a short reference about the currently implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make` `targets:`. You can run it using the command `$> make <target>`
+Until `CONTRIBUTING.md`
+[#4](https://github.com/YouDirk/youdirk_numeric_io/issues/4) was not
+fully written, here comes a short reference about the currently
+implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make`
+`targets:`. You can run it using the command `$> make <target>`
 
 ```make
 all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
