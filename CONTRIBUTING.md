@@ -73,8 +73,6 @@ I. Guidelines
 
 **********************************************************************
 
-XXX. Temporary Fast written stuff
----------------------------------
 ## Linux
 Mod-Development on Linux is now officially supported. The most `make`
 targets are working. Exceptions are the following targets
@@ -119,25 +117,36 @@ implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make`
 `targets:`. You can run it using the command `$> make <target>`
 
 ```make
+# --- Necessary targets ---
 all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
 classes: Same as official Forge command `$> ./gradlew classes`
 run_client: Same as official Forge command `$> ./gradlew runClient`
 run_server: Same as official Forge command `$> ./gradlew runServer`
 build: Same as official Forge command `$> ./gradlew build`
 run_productive: Run MF_INSTALL, INSTALL and runs the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
-javadoc: Generate a Javadoc documentation for the Mod-API and open it in browser
-mf_javadoc: Generate a Javadoc documentation for the Forge-API and open it in browser
+publish: Runs BUILD, copy Mod-Jar to maven repository and add Version-Data to website
+jdk_version: Output JDK version which will be used. Useful if you have more than one installed on your system
 
+# --- Removing temporary files ---
 clean_run: Reset all Minecraft runtime-configuration which were set during RUN_CLIENT, RUN_SERVER
 clean: Remove all temporay/cache files which were generated during work
 
-jdk_version: Output JDK version which will be used. Useful if you have more than one installed on your system
+# --- Documentation stuff ---
+javadoc: Generate a Javadoc documentation for the Mod-API and open it in browser
+mf_javadoc: Generate a Javadoc documentation for the Forge-API and open it in browser
 
-bootstrap: Runs FORGE followed by CONFIG_ALL
+clean_javadoc: Delete generated Mod-API documentation to enforce regeneration
+mf_clean_javadoc: Delete generated Forge-API documentation to enforce regeneration
+
+# --- Developing on Forge sources ---
+mf_classes: Runs Java compiler and build all Forge classes
 mf_publish: Build Forge Installer Jars, copy it to maven repository and add Version-Data to website
-publish: Runs BUILD, copy Mod-Jar to maven repository and add Version-Data to website
-clean_all: Delete all files which are possible to re-generate. Also files which were commited to Git. Useful for maintaining and upgrade to a new Minecraft-Version and/or Forge-Version
 
+# --- Maintaining only ---
+bootstrap: Runs FORGE followed by CONFIG_ALL
+clean_all: Delete all files which are possible to re-generate. Also files which were commited to Git.  Useful for maintaining and upgrade to a new Minecraft-Version and/or Forge-Version
+
+# --- Website stuff ---
 website_addtag: Same as WEBSITE_ADDTAG_NODEP, but check if Mod was PUBLISH before
 website_addtag_nodep: Add a Tag of the current Mod-Version on website
 website_rmtag: Same as WEBSITE_RMTAG_NODEP, but check if Mod was PUBLISH before
@@ -146,6 +155,7 @@ website_rmtag_nodep: Remove a Tag of the current Mod-Version from website
 website_mf_addtag: Add a Tag of the current Forge-Version on website
 website_mf_rmtag: Remove a Tag of the current Forge-Version from website
 
+# --- Others ---
 config_all: Generate all config files which are generally needed for the whole project. Normally it will called automatically
 forge: clone/checkout Git submodule `forge`, the latest official Minecraft Forge source for branch defined in makefile.config.mk
 install: Run BUILD, MF_INSTALL and install the Mod-Jar to the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
