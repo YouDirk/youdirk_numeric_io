@@ -46,11 +46,17 @@ MCP_MAPPING_VERSION = 20180921-1.13
 MF_BRANCH = 1.13.x
 
 # Mincraft Forge branch/commit from which will be bootstraped
-# if current development is too heavily
-MF_FALLBACK_BRANCH = origin/1.12.x
+# if current development is too heavily.
+#
+# Or a MincraftForge Fork with your own patches
+#
+MF_FALLBACK_BRANCH = upstream/for-1.13.x
 
 # (optional) Inodes (files, directories, etc) relative to
 # MINECRAFT_FORGE directory which will be using fallback versions
+#
+# example: MF_FALLBACK_INODES = src/fmllauncher
+#
 MF_FALLBACK_INODES =
 
 # Name of your fork
