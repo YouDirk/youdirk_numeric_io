@@ -52,6 +52,10 @@ build: | config_all
 run_productive: | config_all _os_windows
 	$(MAKE) TEST_LAUNCHER_PROD=1 _run_productive
 
+.PHONY: mf_classes
+mf_classes: | config_all $(MF_BUILD_SRG2MCP_DIR)/output.zip
+	cd $(MF_DIR) && ./gradlew :forge:classes
+
 .PHONY: javadoc
 javadoc: | config_all $(JAVADOC_DIR)/index.html
 	$(BROWSER_CMD)file:///$(call \
@@ -112,7 +116,6 @@ _forge:
 	$(error $(ERRB) Git submodule FORGE not cloned, your action \
                 need it!  '$$> MAKE FORGE' is an ez way do it)
 
-.PHONY: $(MF_DIR)/build.gradle
 $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
   .git/modules/$(MF_DIR)/FETCH_HEAD $(MF_DIR)/.gitignore
 	@echo "Updating '$@'"
@@ -126,11 +129,14 @@ $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
 	  exit 1; \
 	fi
 
-$(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
+$(MF_BUILD_SRG2MCP_DIR)/output.zip: $(MF_DIR)/build.gradle
+	cd $(MF_DIR) && ./gradlew setup
+	$(TOUCH_VCMD) $@
+
+$(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_BUILD_SRG2MCP_DIR)/output.zip
 	cd $(MF_DIR) \
-	  && ./gradlew setup :forge:licenseFormat :forge:publish
-	@$(SED_CMD) -i $(_REGEX_DOS2UNIX_NL) $@ \
-	               `$(FIND_CMD) $(MAVEN_FORGE_DIR) -name '*.pom'`
+	  && ./gradlew :forge:licenseFormat :forge:publish
+	@$(DOS2UNIX_VCMD) $@ `$(FIND_CMD) $(MAVEN_FORGE_DIR) -name '*.pom'`
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta $(MK_FILES)
 	@echo "Generating '$@'"
@@ -159,20 +165,20 @@ $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml $(MK_FILES)
 
 gradlew: $(MF_DIR)/gradlew
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
+	@$(call DOS2UNIX_CP_VCMD,$<,$@)
 gradle: $(MF_DIR)/gradle gradlew
 	cp -rf $< $@
 gradlew.bat: $(MF_DIR)/gradlew.bat gradle
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
+	@$(call DOS2UNIX_CP_VCMD,$<,$@)
 
 gradle.properties: $(MF_MDK_DIR)/gradle.properties gradlew.bat
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
+	@$(call DOS2UNIX_CP_VCMD,$<,$@)
 
 build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(_REGEX_DOS2UNIX_NL) $< > $@
+	@$(call DOS2UNIX_CP_VCMD,$<,$@)
 	@$(SED_CMD) -i $(\
 	)$(call _REGEX_GRADLE_REPL,version,$(VERSION_FULL))$(\
 	)$(call _REGEX_GRADLE_REPL,group,$(GROUP))$(\
@@ -217,7 +223,7 @@ _mf_deinit:
 $(JAVADOC_DIR)/index.html: $(SRC_FILES)
 	./gradlew javadoc && touch $(JAVADOC_DIR)/index.html
 
-$(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
+$(MF_JAVADOC_DIR)/index.html: $(MF_BUILD_SRG2MCP_DIR)/output.zip
 	cd $(MF_DIR) \
 	  && ./gradlew setup :forge:licenseFormat :forge:javadoc || true
 

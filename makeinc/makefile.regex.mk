@@ -92,3 +92,16 @@ _REGEX_WEBCONFIG_REPL = 's~^\( *$(1) *: *\).*~\1$(2)~g;'
 
 # End of Regex Callables
 # ********************************************************************
+# Virtual shell commands
+
+# TOUCH_VCMD <file>
+TOUCH_VCMD = $(SED_CMD) -i ';'
+
+# DOS2UNIX_VCMD <file1> <file2> <file3> ...
+DOS2UNIX_VCMD = $(SED_CMD) -i $(_REGEX_DOS2UNIX_NL)
+
+# DOS2UNIX_CP_VCMD(<from file>, <to file>)
+DOS2UNIX_VCMD = $(SED_CMD) $(_REGEX_DOS2UNIX_NL) $(1) > $(2)
+
+# End of Virtual shell commands
+# ********************************************************************
