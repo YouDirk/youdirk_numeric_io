@@ -52,9 +52,28 @@ build: | config_all
 run_productive: | config_all _os_windows
 	$(MAKE) TEST_LAUNCHER_PROD=1 _run_productive
 
-.PHONY: mf_classes
-mf_classes: | config_all $(MF_BUILD_SRG2MCP_DIR)/output.zip
-	cd $(MF_DIR) && ./gradlew :forge:classes
+# New MAKE instance, to update DOCS_BUILDS_JSONS
+.PHONY: publish
+publish: | build $(MAVEN_MOD_DIR)/maven-metadata.xml
+	$(MAKE) website_mod
+
+.PHONY: jdk_version
+jdk_version:
+	javac -version
+
+# --------------------------------------------------------------------
+# Removing temporary files
+
+.PHONY: clean_run
+clean_run:
+	-rm -rf $(RUN_DIR)
+.PHONY: clean
+clean: | _clean_bak clean_run _clean_makecache
+	-rm -rf .gradle installer.log forge-*-installer.jar.log \
+	  $(BUILD_DIR)
+
+# --------------------------------------------------------------------
+# Documentation stuff
 
 .PHONY: javadoc
 javadoc: | config_all $(JAVADOC_DIR)/index.html
@@ -68,34 +87,26 @@ mf_javadoc: | config_all $(MF_JAVADOC_DIR)/index.html
 	  _2WINPATH,$(shell echo $$PWD)/$(MF_JAVADOC_DIR)/index.html) \
 	  || true
 
-.PHONY: clean_run
-clean_run:
-	-rm -rf $(RUN_DIR)
-.PHONY: clean
-clean: | _clean_bak clean_run _clean_makecache
-	-rm -rf .gradle installer.log forge-*-installer.jar.log \
-	  $(BUILD_DIR)
+# --------------------------------------------------------------------
+# Developing on Forge sources
 
-.PHONY: jdk_version
-jdk_version:
-	javac -version
-
-# --- Maintaining only ---
-
-.PHONY: bootstrap
-bootstrap: | forge config_all
+.PHONY: mf_classes
+mf_classes: | config_all $(MF_DIR)/build.gradle
+	cd $(MF_DIR) && ./gradlew :forge:classes
 
 # New MAKE instance, to update DOCS_FORGEBUILDS_JSONS
 .PHONY: mf_publish
 mf_publish: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 	$(MAKE) website_forge
 
-# New MAKE instance, to update DOCS_BUILDS_JSONS
-.PHONY: publish
-publish: | build $(MAVEN_MOD_DIR)/maven-metadata.xml
-	$(MAKE) website_mod
+# --------------------------------------------------------------------
+# Maintaining only
 
-# --- End of Maintaining only ---
+.PHONY: bootstrap
+bootstrap: | forge config_all
+
+.PHONY: clean_all
+clean_all: | clean_bootstrap clean_forge clean
 
 # End of Necessary Target definitions
 # ********************************************************************
@@ -116,8 +127,13 @@ _forge:
 	$(error $(ERRB) Git submodule FORGE not cloned, your action \
                 need it!  '$$> MAKE FORGE' is an ez way do it)
 
-$(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
+$(MF_BUILD_SRG2MCP_DIR)/output.zip: .git/modules/$(MF_DIR)/HEAD \
   .git/modules/$(MF_DIR)/FETCH_HEAD $(MF_DIR)/.gitignore
+	cd $(MF_DIR) && ./gradlew setup
+	@$(TOUCH_VCMD) $@
+
+.PHONY: $(MF_DIR)/build.gradle
+$(MF_DIR)/build.gradle: $(MF_BUILD_SRG2MCP_DIR)/output.zip
 	@echo "Updating '$@'"
 	@$(SED_CMD) -i \
 	  "s~$(MF_GROUP).test~$(MF_GROUP)~g;$(\
@@ -129,13 +145,9 @@ $(MF_DIR)/build.gradle: .git/modules/$(MF_DIR)/HEAD \
 	  exit 1; \
 	fi
 
-$(MF_BUILD_SRG2MCP_DIR)/output.zip: $(MF_DIR)/build.gradle
-	cd $(MF_DIR) && ./gradlew setup
-	$(TOUCH_VCMD) $@
-
-$(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_BUILD_SRG2MCP_DIR)/output.zip
-	cd $(MF_DIR) \
-	  && ./gradlew :forge:licenseFormat :forge:publish
+.PHONY: $(MAVEN_FORGE_DIR)/maven-metadata.xml
+$(MAVEN_FORGE_DIR)/maven-metadata.xml: $(MF_DIR)/build.gradle
+	cd $(MF_DIR) && ./gradlew :forge:licenseFormat :forge:publish
 	@$(DOS2UNIX_VCMD) $@ `$(FIND_CMD) $(MAVEN_FORGE_DIR) -name '*.pom'`
 
 $(RESOURCES_DIR)/pack.mcmeta: $(MF_RESOURCES_DIR)/pack.mcmeta $(MK_FILES)
@@ -221,11 +233,12 @@ _mf_deinit:
 	$(GIT_CMD) submodule deinit -f $(MF_DIR)
 
 $(JAVADOC_DIR)/index.html: $(SRC_FILES)
-	./gradlew javadoc && touch $(JAVADOC_DIR)/index.html
+	./gradlew javadoc || true
+	@$(TOUCH_VCMD) $@
 
-$(MF_JAVADOC_DIR)/index.html: $(MF_BUILD_SRG2MCP_DIR)/output.zip
-	cd $(MF_DIR) \
-	  && ./gradlew setup :forge:licenseFormat :forge:javadoc || true
+$(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
+	cd $(MF_DIR) && ./gradlew :forge:javadoc || true
+	@$(TOUCH_VCMD) $@
 
 # Only if $(MF_DIR) is checked out
 .PHONY: config_all
@@ -324,8 +337,13 @@ clean_bootstrap:
 	-rm -rf gradle gradlew{,.bat}
 	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
-.PHONY: clean_all
-clean_all: | clean_bootstrap clean_forge clean
+.PHONY: clean_javadoc
+clean_javadoc:
+	rm -rf $(JAVADOC_DIR)
+
+.PHONY: mf_clean_javadoc
+mf_clean_javadoc:
+	rm -rf $(MF_JAVADOC_DIR)
 
 # End of Clean targets
 # ********************************************************************
