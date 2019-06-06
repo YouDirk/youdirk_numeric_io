@@ -134,11 +134,11 @@ endif
 $(shell echo 'BROWSER_CMD = $(BROWSER_CMD) ' >> $(_CACHE_FILE))
 
 OS_IS_WIN = $(shell test \( \
-  -n "`echo $(OS) | sed -n '/^windows/Ip'`" \
-  -o -n "`$(UNAME_CMD) -o | sed -n '/^msys/Ip'`" \
-  -o -n "`$(UNAME_CMD) -o | sed -n '/^mingw/Ip'`" \
-  -o -n "`$(UNAME_CMD) -s | sed -n '/^msys/Ip'`" \
-  -o -n "`$(UNAME_CMD) -s | sed -n '/^mingw/Ip'`" \
+  -n "`echo $(OS) | $(SED_CMD) -n '/^windows/Ip'`" \
+  -o -n "`$(UNAME_CMD) -o | $(SED_CMD) -n '/^msys/Ip'`" \
+  -o -n "`$(UNAME_CMD) -o | $(SED_CMD) -n '/^mingw/Ip'`" \
+  -o -n "`$(UNAME_CMD) -s | $(SED_CMD) -n '/^msys/Ip'`" \
+  -o -n "`$(UNAME_CMD) -s | $(SED_CMD) -n '/^mingw/Ip'`" \
 \) && echo -n 1)
 $(shell echo 'OS_IS_WIN = $(OS_IS_WIN)' >> $(_CACHE_FILE))
 
