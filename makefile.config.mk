@@ -55,7 +55,10 @@ MF_FALLBACK_BRANCH = upstream/for-1.13.x
 # (optional) Inodes (files, directories, etc) relative to
 # MINECRAFT_FORGE directory which will be using fallback versions
 #
-# example: MF_FALLBACK_INODES = src/fmllauncher
+# MF_FALLBACK_INODES = \
+#   src/fmllauncher \
+#   src/main/java/net/minecraftforge/fml \
+#   ...
 #
 MF_FALLBACK_INODES =
 
