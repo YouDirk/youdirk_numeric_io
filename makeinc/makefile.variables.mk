@@ -41,8 +41,7 @@ MODDESC = This mod adds:\n\
 * Negative values (Two\\\'s Complements) are supported
 
 # Credits of the mod
-MODTHANKS = To the MCP team and the Forge programmers to make it \
-            possible to ez programming Minecraft mods :)
+MODTHANKS = MCP, Minecraft Forge
 
 # Conventions here
 #   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
