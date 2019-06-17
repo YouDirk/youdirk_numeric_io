@@ -17,29 +17,39 @@
 
 
 package net.dj_l.youdirk_numeric_io;
-
 import net.dj_l.youdirk_numeric_io.common.*;
 
-import net.minecraftforge.eventbus.api.IEventBus;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-// TODO: Necessary?
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
+// Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.InterModComms;
+
+// Event Bus
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+// Events
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BlockEvent;
 
+// Gameplay
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.init.Blocks;
+import net.minecraft.block.Block;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
+
+// Non Minecraft/Forge
 import java.util.stream.Collectors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /* TODO: Currently not working :( ... Forge API change?
 
@@ -117,6 +127,17 @@ public class YoudirkNumericIO
   public void onServerStarting(FMLServerStartingEvent event) {
     // do something when the server starts
     LOGGER.info("HELLO from server starting");
+  }
+
+  // Test event, on destroying a Block
+  @SubscribeEvent
+  public void onBlockBreak(BlockEvent.BreakEvent event)
+  {
+    event.getWorld().playSound(Minecraft.getInstance().player,
+      event.getPos(), SoundEvents.ENTITY_WITCH_DEATH, SoundCategory.BLOCKS,
+      1.0f, 1.0f);
+    LOGGER.debug("Destroyed Block {}",
+                 event.getState().getBlock().getRegistryName());
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
