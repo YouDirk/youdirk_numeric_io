@@ -34,19 +34,25 @@ include makeinc/makefile.web.mk
 
 .PHONY: classes
 classes: | config_all
-	./gradlew classes
+	./gradlew $(ARGS) classes
 
 .PHONY: run_client
 run_client: | config_all
-	./gradlew runClient
+	./gradlew $(ARGS) runClient
 
 .PHONY: run_server
 run_server: | config_all
-	./gradlew runServer
+	@echo "Agreeing EULA '$(RUN_DIR)/eula.txt'" \
+	  && mkdir -p $(RUN_DIR) && echo "eula=true" > $(RUN_DIR)/eula.txt
+	./gradlew $(ARGS) runServer $(_SERVER_NOGUI)
+
+.PHONY: run_server_nogui
+run_server_nogui: _SERVER_NOGUI = --args nogui
+run_server_nogui: run_server
 
 .PHONY: build
 build: | config_all
-	./gradlew build
+	./gradlew $(ARGS) build
 
 .PHONY: run_productive
 run_productive: | config_all _os_windows

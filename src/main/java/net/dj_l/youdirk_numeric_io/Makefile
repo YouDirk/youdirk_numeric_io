@@ -15,7 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-MAKE_CMD = $(MAKE) -C ../../../../../..
+MAKE_CMD = $(MAKE) -C ../../../../../.. ARGS="$(ARGS)"
 
 # Default target
 .PHONY: all

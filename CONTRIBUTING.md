@@ -122,6 +122,7 @@ all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
 classes: Same as official Forge command `$> ./gradlew classes`
 run_client: Same as official Forge command `$> ./gradlew runClient`
 run_server: Same as official Forge command `$> ./gradlew runServer`
+run_server_nogui: Same as RUN_SERVER, but run in terminal/console mode instead of open a GUI
 build: Same as official Forge command `$> ./gradlew build`
 run_productive: Run MF_INSTALL, INSTALL and runs the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
 publish: Runs BUILD, copy Mod-Jar to maven repository and add Version-Data to website
