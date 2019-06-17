@@ -37,10 +37,16 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
+// API
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+
 // Gameplay
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.world.World;
 import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
+import net.minecraft.util.math.BlockPos;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.SoundEvents;
@@ -129,15 +135,29 @@ public class YoudirkNumericIO
     LOGGER.info("HELLO from server starting");
   }
 
+  // EntityPlayerSP is not part of DEDICATED_SERVER
+  @OnlyIn(Dist.CLIENT)
+  private void _c_onBlockBreak(World world, BlockPos pos)
+  {
+    world.playSound(Minecraft.getInstance().player, pos,
+      SoundEvents.ENTITY_WITCH_DEATH, SoundCategory.BLOCKS, 1.0f, 1.0f);
+  }
+
   // Test event, on destroying a Block
   @SubscribeEvent
   public void onBlockBreak(BlockEvent.BreakEvent event)
   {
-    event.getWorld().playSound(Minecraft.getInstance().player,
-      event.getPos(), SoundEvents.ENTITY_WITCH_DEATH, SoundCategory.BLOCKS,
-      1.0f, 1.0f);
-    LOGGER.debug("Destroyed Block {}",
-                 event.getState().getBlock().getRegistryName());
+    World world = event.getWorld().getWorld();
+
+    if (world.isRemote()) {
+      this._c_onBlockBreak(world, event.getPos());
+
+      LOGGER.debug("Client Destroyed Block {}",
+                   event.getState().getBlock().getRegistryName());
+    } else {
+      LOGGER.debug("Server Destroyed Block {}",
+                   event.getState().getBlock().getRegistryName());
+    }
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
