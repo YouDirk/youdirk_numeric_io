@@ -16,17 +16,18 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.client;
+import net.dj_l.youdirk_numeric_io.common.*;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.IEventBus;
 
 // Events
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 
 /**
- * Setup stuff for BOTH: logical server AND logical client
+ * Setup stuff logical Client
  */
 public class Setup
 {
@@ -35,9 +36,10 @@ public class Setup
     eventBus.addListener(this::_init);
   }
 
-  private void _init(FMLCommonSetupEvent event)
+  private void _init(FMLClientSetupEvent event)
   {
     // some preinit code
-    Log.ger.info("Common Setup::_init()");
+    Log.ger.info("Client Setup::_init(), game settings: {}",
+                 event.getMinecraftSupplier().get().gameSettings);
   }
 }

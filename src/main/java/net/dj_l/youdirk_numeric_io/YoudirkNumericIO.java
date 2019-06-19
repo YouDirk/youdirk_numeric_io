@@ -29,7 +29,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -57,50 +56,42 @@ import java.util.stream.Collectors;
 @Mod(Props.MODID)
 public class YoudirkNumericIO
 {
-  public static final Logger LOGGER = LogManager.getLogger(Props.MODID);
-
-  private final Setup setupCommon;
+  private final net.dj_l.youdirk_numeric_io.common.Setup setupCommon;
+  private final net.dj_l.youdirk_numeric_io.server.Setup setupServer;
+  private final net.dj_l.youdirk_numeric_io.client.Setup setupClient;
 
   public YoudirkNumericIO() {
-    IEventBus fmlEventBus
+    IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+    IEventBus modEventBus
       = FMLJavaModLoadingContext.get().getModEventBus();
 
-    this.setupCommon = new Setup(fmlEventBus);
+    this.setupCommon
+      = new net.dj_l.youdirk_numeric_io.common.Setup(modEventBus);
+    this.setupServer
+      = new net.dj_l.youdirk_numeric_io.server.Setup(forgeEventBus);
+    this.setupClient
+      = new net.dj_l.youdirk_numeric_io.client.Setup(modEventBus);
 
     // Register the enqueueIMC method for modloading
-    fmlEventBus.addListener(this::enqueueIMC);
+    modEventBus.addListener(this::enqueueIMC);
     // Register the processIMC method for modloading
-    fmlEventBus.addListener(this::processIMC);
-    // Register the doClientStuff method for modloading
-    fmlEventBus.addListener(this::doClientStuff);
+    modEventBus.addListener(this::processIMC);
 
-    // Register ourselves for server and other game events we are interested in
-    MinecraftForge.EVENT_BUS.register(this);
-  }
-
-  private void doClientStuff(final FMLClientSetupEvent event) {
-    // do something that can only be done on the client
-    LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+    forgeEventBus.register(this);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event)
   {
     // some example code to dispatch IMC to another mod
-    InterModComms.sendTo(Props.MODID, "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+    InterModComms.sendTo(Props.MODID, "helloworld", () -> { Log.ger.info("Hello world from the MDK"); return "Hello world";});
   }
 
   private void processIMC(final InterModProcessEvent event)
   {
     // some example code to receive and process InterModComms from other mods
-    LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m->m.getMessageSupplier().get()).
-                collect(Collectors.toList()));
-  }
-  // You can use SubscribeEvent and let the Event Bus discover methods to call
-  @SubscribeEvent
-  public void onServerStarting(FMLServerStartingEvent event) {
-    // do something when the server starts
-    LOGGER.info("HELLO from server starting");
+    Log.ger.info("Got IMC {}", event.getIMCStream().
+                 map(m->m.getMessageSupplier().get()).
+                 collect(Collectors.toList()));
   }
 
   // EntityPlayerSP is not part of DEDICATED_SERVER
@@ -120,11 +111,11 @@ public class YoudirkNumericIO
     if (world.isRemote()) {
       this._c_onBlockBreak(world, event.getPos());
 
-      LOGGER.debug("Client Destroyed Block {}",
-                   event.getState().getBlock().getRegistryName());
+      Log.ger.debug("Client Destroyed Block {}",
+                    event.getState().getBlock().getRegistryName());
     } else {
-      LOGGER.debug("Server Destroyed Block {}",
-                   event.getState().getBlock().getRegistryName());
+      Log.ger.debug("Server Destroyed Block {}",
+                    event.getState().getBlock().getRegistryName());
     }
   }
 
@@ -135,7 +126,7 @@ public class YoudirkNumericIO
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
       // register a new block here
-      LOGGER.info("HELLO from Register Block");
+      Log.ger.info("HELLO from Register Block");
     }
   }
 

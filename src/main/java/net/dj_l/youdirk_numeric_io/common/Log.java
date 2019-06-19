@@ -18,26 +18,12 @@
 
 package net.dj_l.youdirk_numeric_io.common;
 
-// Event Bus
-import net.minecraftforge.eventbus.api.IEventBus;
-
-// Events
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+// Non Minecraft/Forge
+import org.apache.logging.log4j.LogManager;
 
 
-/**
- * Setup stuff for BOTH: logical server AND logical client
- */
-public class Setup
+public abstract class Log
 {
-  public Setup(IEventBus eventBus)
-  {
-    eventBus.addListener(this::_init);
-  }
-
-  private void _init(FMLCommonSetupEvent event)
-  {
-    // some preinit code
-    Log.ger.info("Common Setup::_init()");
-  }
+  public static final org.apache.logging.log4j.Logger
+    ger = LogManager.getLogger(Props.MODID);
 }
