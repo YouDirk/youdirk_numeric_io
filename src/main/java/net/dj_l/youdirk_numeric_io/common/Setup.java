@@ -18,8 +18,27 @@
 
 package net.dj_l.youdirk_numeric_io.common;
 
+// Event Bus
+import net.minecraftforge.eventbus.api.IEventBus;
 
-public abstract class Props
+// Events
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+
+// Gameplay
+import net.minecraft.init.Blocks;
+
+
+public class Setup
 {
-  public static final String MODID = "youdirk_numeric_io";
+  public Setup(IEventBus fmlEventBus)
+  {
+    fmlEventBus.addListener(this::_init);
+  }
+
+  private void _init(final FMLCommonSetupEvent event)
+  {
+    // some preinit code
+    LOGGER.info("HELLO FROM PREINIT");
+    LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+  }
 }

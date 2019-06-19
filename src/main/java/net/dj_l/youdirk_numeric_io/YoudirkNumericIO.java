@@ -29,7 +29,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -44,7 +43,6 @@ import net.minecraftforge.api.distmarker.Dist;
 // Gameplay
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.world.World;
-import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 
@@ -54,44 +52,21 @@ import net.minecraft.util.SoundCategory;
 
 // Non Minecraft/Forge
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-/* TODO: Currently not working :( ... Forge API change?
-
-@Mod(
-     modid = "youdirk_numeric_io",
-     certificateFingerprint = "",
-
-     guiFactory = "", // TODO config screen
-
-     // FALSE: mods.toml overrides
-     useMetadata = false,
-     canBeDeactivated = false,
-
-     // Same JAR for Server and Client
-     clientSideOnly = false,
-     serverSideOnly = false,
-
-     // Allow also to connect to remote side if the mod is not present
-     acceptableRemoteVersions = "*",
-
-     // Allow also to load vanilla worlds
-     acceptableSaveVersions = "*"
-     )
-*/
 
 @Mod(Props.MODID)
 public class YoudirkNumericIO
 {
   public static final Logger LOGGER = LogManager.getLogger(Props.MODID);
 
+  private final Setup setupCommon;
+
   public YoudirkNumericIO() {
     IEventBus fmlEventBus
       = FMLJavaModLoadingContext.get().getModEventBus();
 
-    // Register the setup method for modloading
-    fmlEventBus.addListener(this::setup);
+    this.setupCommon = new Setup(fmlEventBus);
+
     // Register the enqueueIMC method for modloading
     fmlEventBus.addListener(this::enqueueIMC);
     // Register the processIMC method for modloading
@@ -101,13 +76,6 @@ public class YoudirkNumericIO
 
     // Register ourselves for server and other game events we are interested in
     MinecraftForge.EVENT_BUS.register(this);
-  }
-
-  private void setup(final FMLCommonSetupEvent event)
-  {
-    // some preinit code
-    LOGGER.info("HELLO FROM PREINIT");
-    LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
   }
 
   private void doClientStuff(final FMLClientSetupEvent event) {
