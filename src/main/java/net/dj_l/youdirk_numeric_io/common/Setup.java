@@ -23,6 +23,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 // Events
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+
+// IMC
+import net.minecraftforge.fml.InterModComms;
+
+// Non Minecraft/Forge
+import java.util.Random;
 
 
 /**
@@ -33,11 +41,40 @@ public class Setup
   public Setup(IEventBus eventBus)
   {
     eventBus.addListener(this::_init);
+    eventBus.addListener(this::_enqueueInitialIMC);
+    eventBus.addListener(this::_processInitialIMC);
   }
 
   private void _init(FMLCommonSetupEvent event)
   {
     // some preinit code
     Log.ger.info("Common Setup::_init()");
+  }
+
+  private final long _IMC_CHECKVAL = new Random().nextLong();
+  private void _enqueueInitialIMC(InterModEnqueueEvent event)
+  {
+    boolean send = InterModComms.sendTo(Props.MODID, "init_check",
+                                        () -> this._IMC_CHECKVAL);
+
+    if (!send) {
+      throw new YoudirkNumericIOException(
+        "Could not send initial Self Check IMC message!");
+    }
+  }
+
+  private void _processInitialIMC(InterModProcessEvent event)
+  {
+    long count = event.getIMCStream(t -> t == "init_check")
+      .filter(t -> t.getMessageSupplier().get().equals(this._IMC_CHECKVAL))
+      .count();
+
+    if (count > 1) {
+      throw new YoudirkNumericIOException(
+        "Too much Self Check IMC messages send!");
+    } else if (count < 1) {
+      throw new YoudirkNumericIOException(
+        "Could not receive Self Check IMC message!");
+    }
   }
 }
