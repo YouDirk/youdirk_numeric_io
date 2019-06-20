@@ -28,6 +28,7 @@ include makeinc/makefile.regex.mk
 all: classes
 
 include makeinc/makefile.web.mk
+include makeinc/makefile.run.mk
 
 # ********************************************************************
 # Necessary Target definitions
@@ -41,9 +42,7 @@ run_client: | config_all
 	./gradlew $(ARGS) runClient
 
 .PHONY: run_server
-run_server: | config_all
-	@echo "Agreeing EULA '$(RUN_DIR)/eula.txt'" \
-	  && mkdir -p $(RUN_DIR) && echo "eula=true" > $(RUN_DIR)/eula.txt
+run_server: | config_all _run_server_deps
 	./gradlew $(ARGS) runServer $(_SERVER_NOGUI)
 
 .PHONY: run_server_nogui

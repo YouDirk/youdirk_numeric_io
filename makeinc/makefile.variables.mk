@@ -60,6 +60,7 @@ METAINF_DIR = $(RESOURCES_DIR)/META-INF
 JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
 
 RUN_DIR = run
+RUN_TEMPL_DIR = run.templ
 
 # FIND_CMD not available at first call without _CACHE_FILE
 SRC_FILES := $(shell $(FIND_CMD) $(SRC_DIR) \
