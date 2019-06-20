@@ -30,7 +30,9 @@ mod** `youdirk_numeric_io`.  It adds to the game
   it)**.  These will be encoded to binary and outputed to the
   connected Redstone Wires
 
-* **Negative values** (*Two's Complement encoding*) are supported
+* **Negative values** (*Two´s Complement encoding*) are supported
+
+* **Multiplayer support**
 
 For a detailed in-game usage take a look to our [**Wiki** at
 github.com]({{site.numeric_io.github_url}}/{{

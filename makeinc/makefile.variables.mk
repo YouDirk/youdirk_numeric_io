@@ -38,7 +38,8 @@ MODDESC = This mod adds:\n\
 \n\
 * Blocks which are outputing (hexa-)decimal numbers\n\
 * Blocks which you can input a number\n\
-* Negative values (Two\\\'s Complements) are supported
+* Negative values (Two\\´s Complements) are supported\n\
+* Multiplayer support
 
 # Credits of the mod
 MODTHANKS = MCP, Minecraft Forge

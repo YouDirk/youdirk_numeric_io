@@ -28,7 +28,9 @@ This are the source of the **YouDirk Numeric I/O Minecraft mod**
   it)**.  These will be encoded to binary and outputed to the
   connected Redstone Wires
 
-* **Negative values** (*Two's Complement encoding*) are supported
+* **Negative values** (*Two´s Complement encoding*) are supported
+
+* **Multiplayer support**
 
 For a detailed ingame usage take a look to our [**Wiki** at
 github.com](https://github.com/YouDirk/youdirk_numeric_io/wiki).

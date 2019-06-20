@@ -33,7 +33,8 @@ This mod adds:
  
  * Blocks which are outputing (hexa-)decimal numbers
  * Blocks which you can input a number
- * Negative values (Two\'s Complements) are supported
+ * Negative values (Two´s Complements) are supported
+ * Multiplayer support
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.youdirk_numeric_io]] #optional
