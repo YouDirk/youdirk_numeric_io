@@ -241,7 +241,8 @@ $(JAVADOC_DIR)/index.html: $(SRC_FILES)
 	./gradlew javadoc || true
 	@$(TOUCH_VCMD) $@
 
-$(MF_JAVADOC_DIR)/index.html: $(MF_DIR)/build.gradle
+# Depends on $(MF_DIR)/BUILD.GRADLE, but it is PHONY
+$(MF_JAVADOC_DIR)/index.html: $(MF_BUILD_SRG2MCP_DIR)/output.zip
 	cd $(MF_DIR) && ./gradlew :forge:javadoc || true
 	@$(TOUCH_VCMD) $@
 
