@@ -19,7 +19,7 @@
 # Variable definitions
 
 MK_FILES =  Makefile makefile.config.mk $(patsubst \
-            %,makeinc/makefile.%.mk,check variables web regex)
+            %,makeinc/makefile.%.mk,check variables regex web run)
 
 # MCVERSION-MAJORMOD.MAJORAPI
 VERSION_API_FULL = $(MC_VERSION)-$(VERSION_API)

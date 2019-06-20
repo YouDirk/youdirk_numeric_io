@@ -38,7 +38,7 @@ classes: | config_all
 	./gradlew $(ARGS) classes
 
 .PHONY: run_client
-run_client: | config_all
+run_client: | config_all _run_client_deps
 	./gradlew $(ARGS) runClient
 
 .PHONY: run_server

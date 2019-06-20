@@ -29,5 +29,13 @@ $(RUN_DIR)/server.properties: $(RUN_TEMPL_DIR)/server.properties
 	@echo "Generating '$@'" \
 	  && mkdir -p $(RUN_DIR) && cp -f $< $@
 
+
+.PHONY: _run_client_deps
+_run_client_deps: $(RUN_DIR)/servers.dat
+
+$(RUN_DIR)/servers.dat: $(RUN_TEMPL_DIR)/servers.dat
+	@echo "Generating '$@'" \
+	  && mkdir -p $(RUN_DIR) && cp -f $< $@
+
 # End of Runtime Config stuff
 # ********************************************************************
