@@ -19,6 +19,9 @@
 package net.dj_l.youdirk_numeric_io.common;
 
 
+/**
+ * Some hard coded variables which we need everywhere
+ */
 public abstract class Props
 {
   public static final String MODID = "youdirk_numeric_io";

@@ -27,7 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 
 /**
- * Setup stuff logical Client
+ * Setup stuff for logical Client
  */
 public class Setup
 {
@@ -39,7 +39,7 @@ public class Setup
   private void _init(FMLClientSetupEvent event)
   {
     // some preinit code
-    Log.ger.info("Client Setup::_init(), game settings: {}",
-                 event.getMinecraftSupplier().get().gameSettings);
+    Log.ger.debug("Client Setup::_init(), game settings: {}",
+                  event.getMinecraftSupplier().get().gameSettings);
   }
 }

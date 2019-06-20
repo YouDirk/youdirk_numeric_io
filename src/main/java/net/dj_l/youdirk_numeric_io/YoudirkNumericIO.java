@@ -49,6 +49,9 @@ import net.minecraft.util.SoundCategory;
 import java.util.stream.Collectors;
 
 
+/**
+ * The beginning of all =D
+ */
 @Mod(Props.MODID)
 public class YoudirkNumericIO
 {
@@ -103,7 +106,7 @@ public class YoudirkNumericIO
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
       // register a new block here
-      Log.ger.info("HELLO from Register Block");
+      Log.ger.debug("HELLO from Register Block");
     }
   }
 

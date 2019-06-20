@@ -48,7 +48,7 @@ public class Setup
   private void _init(FMLCommonSetupEvent event)
   {
     // some preinit code
-    Log.ger.info("Common Setup::_init()");
+    Log.ger.debug("Common Setup::_init()");
   }
 
   private final long _IMC_CHECKVAL = new Random().nextLong();

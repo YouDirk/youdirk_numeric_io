@@ -27,7 +27,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 
 /**
- * Setup stuff logical Server
+ * Setup stuff for logical Server
  */
 public class Setup
 {
@@ -39,6 +39,6 @@ public class Setup
   private void _init(FMLServerStartingEvent event)
   {
     // some preinit code
-    Log.ger.info("Server Setup::_init()");
+    Log.ger.debug("Server Setup::_init()");
   }
 }

@@ -22,6 +22,9 @@ package net.dj_l.youdirk_numeric_io.common;
 import org.apache.logging.log4j.LogManager;
 
 
+/**
+ * Our Logger which we need everywhere in the Mod
+ */
 public abstract class Log
 {
   public static final org.apache.logging.log4j.Logger
