@@ -45,11 +45,19 @@ public class Setup
     eventBus.addListener(this::_processInitialIMC);
   }
 
+  /* *************************************************************  */
+
   private void _init(FMLCommonSetupEvent event)
   {
-    // some preinit code
-    Log.ger.debug("Common Setup::_init()");
+    _init_network_messages();
   }
+
+  private void _init_network_messages()
+  {
+    Net.registerMessage(1, NetMessageTestSound.class);
+  }
+
+  /* *************************************************************  */
 
   private final long _IMC_CHECKVAL = new Random().nextLong();
   private void _enqueueInitialIMC(InterModEnqueueEvent event)

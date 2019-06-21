@@ -59,7 +59,8 @@ public class YoudirkNumericIO
   private final net.dj_l.youdirk_numeric_io.server.Setup setupServer;
   private final net.dj_l.youdirk_numeric_io.client.Setup setupClient;
 
-  public YoudirkNumericIO() {
+  public YoudirkNumericIO()
+  {
     IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
     IEventBus modEventBus
       = FMLJavaModLoadingContext.get().getModEventBus();
@@ -102,12 +103,13 @@ public class YoudirkNumericIO
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
   // Event bus for receiving Registry Events)
   @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-  public static class RegistryEvents {
+  public static class RegistryEvents
+  {
     @SubscribeEvent
-    public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
+    public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
+    {
       // register a new block here
       Log.ger.debug("HELLO from Register Block");
     }
   }
-
 }
