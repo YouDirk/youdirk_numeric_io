@@ -225,8 +225,13 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	)'s~minecraft \?{~repositories {\n'$(\
 	  )"  maven { url 'file://' + rootProject.file('$(MAVEN_DIR)')"$(\
 	  )".getAbsolutePath() }\n"$(\
-	  )'}\n'$(\
-	  )'\nminecraft {~g;'$(\
+	  )'}\n\n'$(\
+	  )'minecraft {\n\n'$(\
+	  )'    tasks.withType(JavaCompile) {\n'$(\
+	  )'      options.compilerArgs << "-Xlint:unchecked"'$(\
+	                            )' << "-Xlint:deprecation"\n'$(\
+	  )'    }\n'$(\
+	  )'~g;'$(\
 	)'s~examplemod~$(MODID)~g;' \
 	$@
 
