@@ -21,6 +21,7 @@ package net.dj_l.youdirk_numeric_io.common;
 // Network
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 // Gameplay
 import net.minecraft.util.ResourceLocation;
@@ -48,13 +49,9 @@ public abstract class Net
     return Net.PROTOCOL_VERSION;
   }
 
-  public static final SimpleChannel get()
-  {
-    return Net.CHANNEL;
-  }
-
-  public static void registerMessage(int index,
-                                     Class<? extends NetMessage> msgClass)
+  @SuppressWarnings("unchecked")
+  public static <T extends NetMessage<T>>
+  void registerMessage(int index, Class<T> msgClass)
   {
     NetMessage inst;
 
@@ -68,6 +65,12 @@ public abstract class Net
 
     Net.CHANNEL.registerMessage(index, msgClass, inst.getEncoder(),
                                 inst.getDecoder(), inst.getReceiver());
+  }
+
+  public static <T extends NetMessage<T>>
+  void send(PacketDistributor.PacketTarget target, T msg)
+  {
+    Net.CHANNEL.send(target, msg);
   }
 
   /* *************************************************************  */

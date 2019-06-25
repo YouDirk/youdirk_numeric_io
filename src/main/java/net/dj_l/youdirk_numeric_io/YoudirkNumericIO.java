@@ -20,33 +20,16 @@ package net.dj_l.youdirk_numeric_io;
 import net.dj_l.youdirk_numeric_io.common.*;
 
 // Forge Mod Loader
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BlockEvent;
-
-// API
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
-
-// Gameplay
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraft.world.World;
-import net.minecraft.block.Block;
-import net.minecraft.util.math.BlockPos;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
-
-// Non Minecraft/Forge
-import java.util.stream.Collectors;
 
 
 /**
@@ -55,53 +38,31 @@ import java.util.stream.Collectors;
 @Mod(Props.MODID)
 public class YoudirkNumericIO
 {
+  public static IEventBus FORGE_BUS;
+  public static IEventBus MOD_BUS;
+
   private final net.dj_l.youdirk_numeric_io.common.Setup setupCommon;
   private final net.dj_l.youdirk_numeric_io.server.Setup setupServer;
   private final net.dj_l.youdirk_numeric_io.client.Setup setupClient;
 
   public YoudirkNumericIO()
   {
-    IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-    IEventBus modEventBus
+    this.FORGE_BUS = MinecraftForge.EVENT_BUS;
+    this.MOD_BUS
       = FMLJavaModLoadingContext.get().getModEventBus();
 
     this.setupCommon
-      = new net.dj_l.youdirk_numeric_io.common.Setup(modEventBus);
+      = new net.dj_l.youdirk_numeric_io.common.Setup(this.MOD_BUS);
     this.setupServer
-      = new net.dj_l.youdirk_numeric_io.server.Setup(forgeEventBus);
+      = new net.dj_l.youdirk_numeric_io.server.Setup(this.FORGE_BUS);
     this.setupClient
-      = new net.dj_l.youdirk_numeric_io.client.Setup(modEventBus);
-
-    forgeEventBus.register(this);
-  }
-
-  // EntityPlayerSP is not part of DEDICATED_SERVER
-  @OnlyIn(Dist.CLIENT)
-  private void _c_onBlockBreak(World world, BlockPos pos)
-  {
-    world.playSound(Minecraft.getInstance().player, pos,
-      SoundEvents.ENTITY_WITCH_DEATH, SoundCategory.BLOCKS, 1.0f, 1.0f);
-  }
-
-  // Test event, on destroying a Block
-  @SubscribeEvent
-  public void onBlockBreak(BlockEvent.BreakEvent event)
-  {
-    World world = event.getWorld().getWorld();
-
-    if (world.isRemote()) {
-      this._c_onBlockBreak(world, event.getPos());
-
-      Log.ger.debug("Client Destroyed Block {}",
-                    event.getState().getBlock().getRegistryName());
-    } else {
-      Log.ger.debug("Server Destroyed Block {}",
-                    event.getState().getBlock().getRegistryName());
-    }
+      = new net.dj_l.youdirk_numeric_io.client.Setup(this.MOD_BUS);
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
   // Event bus for receiving Registry Events)
+
+  /*
   @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
   public static class RegistryEvents
   {
@@ -112,4 +73,5 @@ public class YoudirkNumericIO
       Log.ger.debug("HELLO from Register Block");
     }
   }
+  */
 }

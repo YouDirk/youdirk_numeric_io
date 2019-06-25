@@ -27,6 +27,7 @@ import java.util.function.Supplier;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+
 /**
  * Every NetMessage must implement these methods to serialize it and
  * add an event handler.
