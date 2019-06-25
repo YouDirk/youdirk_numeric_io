@@ -18,15 +18,16 @@
 
 package net.dj_l.youdirk_numeric_io.common;
 
-// Gameplay
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundCategory;
-
 // Network
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+// Gameplay
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundCategory;
 
 // Non Minecraft/Forge
 import java.util.function.Supplier;
@@ -39,7 +40,10 @@ import java.util.function.Supplier;
 public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
 {
   public final BlockPos pos;
-  public final SoundEvent sound;
+
+  // May not exist on dedicated server
+  public final ResourceLocation sound;
+
   public final SoundCategory category;
   public final float volume;
   public final float pitch;
@@ -57,7 +61,7 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
     this.pitch = 0.0f;
   }
 
-  public NetMessageTestSound(BlockPos pos, SoundEvent sound,
+  public NetMessageTestSound(BlockPos pos, ResourceLocation sound,
     SoundCategory category, float volume, float pitch)
   {
     this.pos = pos;
@@ -71,29 +75,47 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   @Override
   protected void encode(PacketBuffer buf)
   {
-    Log.ger.debug("TODO encode() ********************************");
+    buf.writeBlockPos(this.pos)
+      .writeResourceLocation(this.sound)
+      .writeString(this.category.toString())
+      .writeFloat(this.volume)
+      .writeFloat(this.pitch);
   }
 
+  //TODO: Should throw an Exception
   @Override
   protected NetMessageTestSound decode(PacketBuffer buf)
   {
-    Log.ger.debug("TODO decode() ********************************");
+    // THIS is a dummy instance
 
-    return new NetMessageTestSound();
+    return new NetMessageTestSound(
+      buf.readBlockPos(),
+      buf.readResourceLocation(),
+      SoundCategory.valueOf(buf.readString(256)),
+      buf.readFloat(),
+      buf.readFloat());
   }
 
   @Override
   protected void onReceive(Supplier<NetworkEvent.Context> ctx)
   {
-    Log.ger.debug("TODO onReceive() ********************************");
+    Log.ger.debug("Client TODO onReceive()");
 
     NetworkEvent.Context c = ctx.get();
     c.enqueueWork(() -> {
         EntityPlayerMP sender = c.getSender();
 
-        Log.ger.debug("TODO onReceive() Dooo the woooork !!! uga uga uga");
+        // TODO Fire OwnSoundEvent
+        Log.ger.debug("uga uga uga {}", this);
       });
 
     c.setPacketHandled(true);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "TestSound: "+ this.pos +", '"+  this.sound +"', "
+      + this.category +", volume="+ this.volume +", "+ this.pitch;
   }
 }

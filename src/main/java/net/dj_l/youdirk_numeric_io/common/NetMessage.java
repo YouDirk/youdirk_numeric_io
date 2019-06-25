@@ -48,7 +48,7 @@ public abstract class NetMessage<T extends NetMessage<T>>
   /**
    * Decode BUF and return a new T.
    *
-   * <b>Do not use <code>this</code>!  It´s a dummy object.</b>
+   * <b>Do not use <code>this</code>!  It´s a dummy instance.</b>
    */
   protected abstract T decode(PacketBuffer buf);
 
@@ -71,17 +71,17 @@ public abstract class NetMessage<T extends NetMessage<T>>
 
   /* *************************************************************  */
 
-  public BiConsumer<T,PacketBuffer> getEncoder()
+  public final BiConsumer<T,PacketBuffer> getEncoder()
   {
     return T::encode;
   }
 
-  public Function<PacketBuffer,T> getDecoder()
+  public final Function<PacketBuffer,T> getDecoder()
   {
     return (PacketBuffer buf) -> this.decode(buf);
   }
 
-  public BiConsumer<T,Supplier<NetworkEvent.Context>> getReceiver()
+  public final BiConsumer<T,Supplier<NetworkEvent.Context>> getReceiver()
   {
     return T::onReceive;
   }

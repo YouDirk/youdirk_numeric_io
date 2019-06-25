@@ -32,9 +32,9 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 // Gameplay
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 
 // Non Minecraft/Forge
@@ -59,13 +59,14 @@ public abstract class CommonEvents
     World world = event.getWorld().getWorld();
     if (!_isLogicalServer(world)) return;
 
-    Log.ger.debug("Server Destroyed Block {}",
-                  event.getState().getBlock().getRegistryName());
+    // SoundEvents.ENTITY_WITCH_DEATH, does not exist on dedicated server
+    final ResourceLocation sound
+      = new ResourceLocation("minecraft", "entity.witch.death");
 
     final double RADIUS_FACTOR = 100.0;
     BlockPos pos = event.getPos();
-    NetMessageTestSound msg = new NetMessageTestSound(pos,
-      SoundEvents.ENTITY_WITCH_DEATH, SoundCategory.BLOCKS, 1.0f, 1.0f);
+    NetMessageTestSound msg = new NetMessageTestSound(pos, sound,
+      SoundCategory.BLOCKS, 1.0f, 1.0f);
 
     Supplier<PacketDistributor.TargetPoint> netPos = () ->
       {
