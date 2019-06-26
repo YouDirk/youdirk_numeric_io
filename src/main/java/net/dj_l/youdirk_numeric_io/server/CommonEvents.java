@@ -63,7 +63,7 @@ public abstract class CommonEvents
     final ResourceLocation sound
       = new ResourceLocation("minecraft", "entity.witch.death");
 
-    final double RADIUS_FACTOR = 100.0;
+    final double RADIUS_FACTOR = 7.0;
     BlockPos pos = event.getPos();
     NetMessageTestSound msg = new NetMessageTestSound(pos, sound,
       SoundCategory.BLOCKS, 1.0f, 1.0f);

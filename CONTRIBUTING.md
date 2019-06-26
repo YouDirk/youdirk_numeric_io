@@ -120,13 +120,16 @@ implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make`
 # --- Necessary targets ---
 all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
 classes: Same as official Forge command `$> ./gradlew classes`
-run_client: Same as official Forge command `$> ./gradlew runClient`
-run_server: Same as official Forge command `$> ./gradlew runServer`
+run_client: Runs a client.  Same as official Forge command `$> ./gradlew runClient`
+run_client_player2: Runs another client instance for multiplayer tests
+run_client_player3: Runs a third client instance for multiplayer tests
+run_client_player4: Runs a fourth client instance for multiplayer tests
+run_server: Runs a dedicated server.  Same as official Forge command `$> ./gradlew runServer`
 run_server_nogui: Same as RUN_SERVER, but run in terminal/console mode instead of open a GUI
 build: Same as official Forge command `$> ./gradlew build`
 run_productive: Run MF_INSTALL, INSTALL and runs the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
 publish: Runs BUILD, copy Mod-Jar to maven repository and add Version-Data to website
-jdk_version: Output JDK version which will be used. Useful if you have more than one installed on your system
+jdk_version: Output JDK version which will be used.  Useful if you have more than one installed on your system
 
 # --- Removing temporary files ---
 clean_run: Reset all Minecraft runtime-configuration which were set during RUN_CLIENT, RUN_SERVER

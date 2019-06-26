@@ -39,7 +39,14 @@ classes: | config_all
 
 .PHONY: run_client
 run_client: | config_all _run_client_deps
-	./gradlew $(ARGS) runClient
+	./gradlew $(ARGS) runClient $(_CLIENT_USERNAME)
+.PHONY: run_client_player2 run_client_player3 run_client_player4
+run_client_player2: _CLIENT_USERNAME = --args " --username=player2"
+run_client_player2: run_client
+run_client_player3: _CLIENT_USERNAME = --args " --username=player3"
+run_client_player3: run_client
+run_client_player4: _CLIENT_USERNAME = --args " --username=player4"
+run_client_player4: run_client
 
 .PHONY: run_server
 run_server: | config_all _run_server_deps
