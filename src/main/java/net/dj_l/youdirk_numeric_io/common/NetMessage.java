@@ -17,6 +17,7 @@
 
 
 package net.dj_l.youdirk_numeric_io.common;
+import net.dj_l.youdirk_numeric_io.*;
 
 // Network
 import net.minecraft.network.PacketBuffer;
@@ -69,7 +70,7 @@ public abstract class NetMessage<T extends NetMessage<T>>
 
   /**
    * Verify if <code>this</code> has valid data.  Otherwise throws an
-   * Exception.
+   * Exception.  All protected member variables are set.
    */
   protected abstract void verifyDecoded() throws NetPacketErrorException;
 

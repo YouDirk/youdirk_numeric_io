@@ -18,6 +18,7 @@
 
 package net.dj_l.youdirk_numeric_io.client;
 import net.dj_l.youdirk_numeric_io.common.*;
+import net.dj_l.youdirk_numeric_io.*;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.IEventBus;

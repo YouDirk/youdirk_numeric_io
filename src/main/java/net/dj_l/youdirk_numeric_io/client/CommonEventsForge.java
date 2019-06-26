@@ -16,18 +16,30 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.client;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Non Minecraft/Forge
-import org.apache.logging.log4j.LogManager;
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
+
+// Event Bus
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+// Gameplay
+import net.minecraft.world.World;
 
 
 /**
- * Our Logger which we need everywhere in the Mod
+ * Implementation of all non-specific client-side event handlers fired
+ * on <code>FORGE</code> bus.
  */
-public abstract class Log
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
+public abstract class CommonEventsForge
 {
-  public static final org.apache.logging.log4j.Logger
-    ger = LogManager.getLogger(Props.MODID);
+  private static boolean _isLogicalClient(World world)
+  {
+    return world.isRemote();
+  }
+
 }

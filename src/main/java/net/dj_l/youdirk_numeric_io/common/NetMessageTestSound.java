@@ -17,13 +17,12 @@
 
 
 package net.dj_l.youdirk_numeric_io.common;
+import net.dj_l.youdirk_numeric_io.*;
 
 // Network
 import net.minecraft.network.PacketBuffer;
 
 // Gameplay
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundEvent;
@@ -82,7 +81,7 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   @Override
   protected NetMessageTestSound decode(PacketBuffer buf)
   {
-    // THIS is a dummy instance
+    // THIS is a dummy instance!
 
     return new NetMessageTestSound(
       buf.readBlockPos(),
@@ -95,26 +94,46 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   @Override
   protected void verifyDecoded() throws NetPacketErrorException
   {
-    /* We know that we are on client, if we are receiving it.  So this
-     * should work.
+    /* We know that we are on client side, if we are receiving this
+     * TestSound message.  So this STATIC call should work.
      */
-    WorldClient world = Minecraft.getInstance().world;
+    net.minecraft.client.multiplayer.WorldClient world
+      = net.minecraft.client.Minecraft.getInstance().world;
 
     if (this.pos == null || !world.isBlockLoaded(this.pos))
       throw new NetPacketErrorException("Not a valid Block Position: "
                                         + this.pos);
 
-    // TODO ...
-    if (this.sound == null || (new SoundEvent(this.sound)) == null)
+    /* Would be better to really open the resource to test if it
+     * exist, but too much CPU overhead.  In practise we should use
+     * something like a Lookup Table and only transfer the Key over
+     * the network.
+     */
+    if (this.sound == null || new SoundEvent(this.sound) == null)
       throw new NetPacketErrorException("Not a valid Sound Location: "
                                         + this.sound);
+
+    if (this.category == null || this.category == SoundCategory.MASTER)
+      throw new NetPacketErrorException("Not a valid Sound Category: "
+                                        + this.category);
+
+    if (this.volume < 0.0f || this.volume > 1.0f)
+      throw new NetPacketErrorException("Not a valid Sound Volume: "
+                                        + this.volume);
+
+    if (this.pitch <= 0.0f || this.pitch > 50.0f)
+      throw new NetPacketErrorException("Not a valid Sound Pitch: "
+                                        + this.pitch);
   }
 
   @Override
   protected void onReceive()
   {
-    // TODO Fire OwnSoundEvent
-    Log.ger.debug("uga uga uga {}", this);
+    /* We know that we are on client side, if we are receiving this
+     * TestSound message.  So this STATIC call should work.
+     */
+    YoudirkNumericIO.MOD_BUS.post(
+      new net.dj_l.youdirk_numeric_io.client.EventTestSound(this));
   }
 
   @Override

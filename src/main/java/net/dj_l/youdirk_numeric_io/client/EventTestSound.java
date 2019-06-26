@@ -16,18 +16,31 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.client;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Non Minecraft/Forge
-import org.apache.logging.log4j.LogManager;
-
+// Event Bus
+import net.minecraftforge.eventbus.api.Event;
 
 /**
- * Our Logger which we need everywhere in the Mod
+ * TODO: Just a TestSound event.  Remove this class it if tests are
+ * finished!
+ *
+ * <p>Fired on <code>MOD</code> bus if client got a
+ * <code>NetMessageTestSound</code> over network.</p>
  */
-public abstract class Log
+public class EventTestSound extends Event
 {
-  public static final org.apache.logging.log4j.Logger
-    ger = LogManager.getLogger(Props.MODID);
+  private final NetMessageTestSound testSoundMsg;
+
+  public EventTestSound(NetMessageTestSound testSoundMsg)
+  {
+    this.testSoundMsg = testSoundMsg;
+  }
+
+  public NetMessageTestSound getTestSoundMsg()
+  {
+    return testSoundMsg;
+  }
 }

@@ -16,18 +16,38 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.client;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Non Minecraft/Forge
-import org.apache.logging.log4j.LogManager;
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
+
+// Event Bus
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+// Gameplay
+import net.minecraft.world.World;
 
 
 /**
- * Our Logger which we need everywhere in the Mod
+ * Implementation of all non-specific client-side event handlers fired
+ * on <code>MOD</code> bus.
  */
-public abstract class Log
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+public abstract class CommonEvents
 {
-  public static final org.apache.logging.log4j.Logger
-    ger = LogManager.getLogger(Props.MODID);
+  private static boolean _isLogicalClient(World world)
+  {
+    return world.isRemote();
+  }
+
+  // TODO: Just a Test event, on destroying a Block
+  @SubscribeEvent
+  public static void onTestSound(EventTestSound event)
+  {
+    // TODO: call _isLogicalClient()
+
+    Log.ger.debug("Event handled :DD {}", event.getTestSoundMsg());
+  }
 }

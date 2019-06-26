@@ -18,6 +18,7 @@
 
 package net.dj_l.youdirk_numeric_io.server;
 import net.dj_l.youdirk_numeric_io.common.*;
+import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
@@ -25,26 +26,15 @@ import net.minecraftforge.fml.common.Mod;
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-// Events
-import net.minecraftforge.event.world.BlockEvent;
-
-// Network
-import net.minecraftforge.fml.network.PacketDistributor;
-
 // Gameplay
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundCategory;
-
-// Non Minecraft/Forge
-import java.util.function.Supplier;
 
 
 /**
- * Implementation of all non-specific server-side events
+ * Implementation of all non-specific server-side event handlers fired
+ * on <code>MOD</code> bus.
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
   private static boolean _isLogicalServer(World world)
@@ -52,29 +42,5 @@ public abstract class CommonEvents
     return !world.isRemote();
   }
 
-  // TODO: Just Test event, on destroying a Block
-  @SubscribeEvent
-  public static void onBlockBreak(BlockEvent.BreakEvent event)
-  {
-    World world = event.getWorld().getWorld();
-    if (!_isLogicalServer(world)) return;
 
-    // SoundEvents.ENTITY_WITCH_DEATH, does not exist on dedicated server
-    final ResourceLocation sound
-      = new ResourceLocation("minecraft", "entity.witch.death");
-
-    final double RADIUS_FACTOR = 7.0;
-    BlockPos pos = event.getPos();
-    NetMessageTestSound msg = new NetMessageTestSound(pos, sound,
-      SoundCategory.BLOCKS, 1.0f, 1.0f);
-
-    Supplier<PacketDistributor.TargetPoint> netPos = () ->
-      {
-       return new PacketDistributor.TargetPoint(
-         pos.getX(), pos.getY(), pos.getZ(), RADIUS_FACTOR*msg.volume,
-         world.getDimension().getType());
-      };
-
-    Net.send(PacketDistributor.NEAR.with(netPos), msg);
-  }
 }
