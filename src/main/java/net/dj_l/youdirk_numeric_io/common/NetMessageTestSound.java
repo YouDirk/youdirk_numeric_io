@@ -20,17 +20,12 @@ package net.dj_l.youdirk_numeric_io.common;
 
 // Network
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraft.entity.player.EntityPlayerMP;
 
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundCategory;
-
-// Non Minecraft/Forge
-import java.util.function.Supplier;
 
 
 /**
@@ -82,7 +77,6 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
       .writeFloat(this.pitch);
   }
 
-  //TODO: Should throw an Exception
   @Override
   protected NetMessageTestSound decode(PacketBuffer buf)
   {
@@ -91,31 +85,36 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
     return new NetMessageTestSound(
       buf.readBlockPos(),
       buf.readResourceLocation(),
-      SoundCategory.valueOf(buf.readString(256)),
+      SoundCategory.valueOf(buf.readString(Net.STRLEN)),
       buf.readFloat(),
       buf.readFloat());
   }
 
   @Override
-  protected void onReceive(Supplier<NetworkEvent.Context> ctx)
+  protected void verifyDecoded() throws NetPacketErrorException
   {
-    Log.ger.debug("Client TODO onReceive()");
+    // TODO
+    if (this.pos == null)
+      throw new NetPacketErrorException("TODO");
+  }
 
-    NetworkEvent.Context c = ctx.get();
-    c.enqueueWork(() -> {
-        EntityPlayerMP sender = c.getSender();
-
-        // TODO Fire OwnSoundEvent
-        Log.ger.debug("uga uga uga {}", this);
-      });
-
-    c.setPacketHandled(true);
+  @Override
+  protected void onReceive()
+  {
+    // TODO Fire OwnSoundEvent
+    Log.ger.debug("uga uga uga {}", this);
   }
 
   @Override
   public String toString()
   {
-    return "TestSound: "+ this.pos +", '"+  this.sound +"', "
-      + this.category +", volume="+ this.volume +", "+ this.pitch;
+    String senderName = null;
+    if (sender != null) {
+      senderName = sender.getDisplayName().getString();
+    }
+
+    return "TestSound: " +this.pos+ ", '" + this.sound+ "', "
+      +this.category+ ", volume=" +this.volume+ ", " +this.pitch
+      + (senderName == null? "": "(sender: " +senderName+ ")");
   }
 }

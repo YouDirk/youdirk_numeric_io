@@ -32,6 +32,9 @@ import net.minecraft.util.ResourceLocation;
  */
 public abstract class Net
 {
+  /** Use this for SNPRINTF like stuff on network socket  */
+  public static final int STRLEN = 256;
+
   private static final String PROTOCOL_VERSION = "1";
 
   private static final ResourceLocation CHANNEL_NAME

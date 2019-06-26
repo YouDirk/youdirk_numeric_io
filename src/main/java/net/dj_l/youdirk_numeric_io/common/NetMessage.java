@@ -21,6 +21,7 @@ package net.dj_l.youdirk_numeric_io.common;
 // Network
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 // Non Minecraft/Forge
 import java.util.function.Supplier;
@@ -33,7 +34,21 @@ import java.util.function.Function;
  * add an event handler.
  */
 public abstract class NetMessage<T extends NetMessage<T>>
+  implements Runnable
 {
+  /**
+   * <code>@Nullable</code> if we receive it on client.  Otherwise it
+   * was set during <code>verifyDecoded()</code> and
+   * <code>onReceive()</code>
+   */
+  protected EntityPlayerMP sender = null;
+
+  /**
+   * <code>@Nullable</code>, was set during
+   * <code>verifyDecoded()</code> and <code>onReceive()</code>
+   */
+  protected NetworkEvent.Context ctx = null;
+
   /**
    * A default constructor must be implemented to instanciate dummy
    * objects.  It can be empty.
@@ -41,35 +56,49 @@ public abstract class NetMessage<T extends NetMessage<T>>
   public NetMessage() {}
 
   /**
-   * Encode THIS to BUF
+   * Encode <code>this</code> to <code>buf</code>
    */
   protected abstract void encode(PacketBuffer buf);
 
   /**
-   * Decode BUF and return a new T.
+   * Decode <code>buf</code> and return a new <code>T</code>.
    *
    * <b>Do not use <code>this</code>!  It´s a dummy instance.</b>
    */
   protected abstract T decode(PacketBuffer buf);
 
   /**
-   * Enqueue the task, THIS holds the message.  Do not handle it
-   * directly in this method!
-   *
-   * Example
-   * <pre><code>
-   * NetworkEvent.Context c = ctx.get();
-   * c.enqueueWork(() -> {
-   *   EntityPlayerMP sender = c.getSender();
-   *   this.foo.bar();
-   *   // more work todo here
-   *   });
-   * c.setPacketHandled(true);
-   * </code></pre>
+   * Verify if <code>this</code> has valid data.  Otherwise throws an
+   * Exception.
    */
-  protected abstract void onReceive(Supplier<NetworkEvent.Context> ctx);
+  protected abstract void verifyDecoded() throws NetPacketErrorException;
+
+  /**
+   * Called after succeeded <code>verifyDecoded()</code> and threaded
+   * for workful CPU time.  All protected member variables are set.
+   */
+  protected abstract void onReceive();
 
   /* *************************************************************  */
+
+  @Override
+  public final void run()
+  {
+    this.verifyDecoded();
+
+    this.onReceive();
+  }
+
+  protected final void
+  onReceiveUnthreaded(Supplier<NetworkEvent.Context> ctx)
+  {
+    this.ctx = ctx.get();
+
+    this.sender = this.ctx.getSender();
+
+    this.ctx.enqueueWork(this);
+    this.ctx.setPacketHandled(true);
+  }
 
   public final BiConsumer<T,PacketBuffer> getEncoder()
   {
@@ -83,6 +112,6 @@ public abstract class NetMessage<T extends NetMessage<T>>
 
   public final BiConsumer<T,Supplier<NetworkEvent.Context>> getReceiver()
   {
-    return T::onReceive;
+    return T::onReceiveUnthreaded;
   }
 }

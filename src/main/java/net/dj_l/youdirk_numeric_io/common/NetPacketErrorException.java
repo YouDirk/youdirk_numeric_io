@@ -18,22 +18,15 @@
 
 package net.dj_l.youdirk_numeric_io.common;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.LoaderExceptionModCrash;
-
 
 /**
- * Will be thrown if something goes wrong.
+ * Will be thrown if a network packet on channel could not be
+ * verified.
  */
-public class YoudirkNumericIOException extends LoaderExceptionModCrash
+public class NetPacketErrorException extends YoudirkNumericIOException
 {
-  public YoudirkNumericIOException(String message)
+  public NetPacketErrorException(String message)
   {
-    super("ERROR: " + message, null);
-  }
-
-  public YoudirkNumericIOException(String message, Throwable cause)
-  {
-    super("ERROR: " + message, cause);
+    super("(wrong network packet, hacker :o ???): " + message);
   }
 }
