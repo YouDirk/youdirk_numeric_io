@@ -22,6 +22,8 @@ package net.dj_l.youdirk_numeric_io.common;
 import net.minecraft.network.PacketBuffer;
 
 // Gameplay
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundEvent;
@@ -93,9 +95,19 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   @Override
   protected void verifyDecoded() throws NetPacketErrorException
   {
-    // TODO
-    if (this.pos == null)
-      throw new NetPacketErrorException("TODO");
+    /* We know that we are on client, if we are receiving it.  So this
+     * should work.
+     */
+    WorldClient world = Minecraft.getInstance().world;
+
+    if (this.pos == null || !world.isBlockLoaded(this.pos))
+      throw new NetPacketErrorException("Not a valid Block Position: "
+                                        + this.pos);
+
+    // TODO ...
+    if (this.sound == null || (new SoundEvent(this.sound)) == null)
+      throw new NetPacketErrorException("Not a valid Sound Location: "
+                                        + this.sound);
   }
 
   @Override

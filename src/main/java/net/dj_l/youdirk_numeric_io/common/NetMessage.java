@@ -84,7 +84,12 @@ public abstract class NetMessage<T extends NetMessage<T>>
   @Override
   public final void run()
   {
-    this.verifyDecoded();
+    try {
+      this.verifyDecoded();
+    } catch (NetPacketErrorException e) {
+      Log.ger.warn("IGNORING network packet!", e);
+      return;
+    }
 
     this.onReceive();
   }

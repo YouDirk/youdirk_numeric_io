@@ -27,6 +27,6 @@ public class NetPacketErrorException extends YoudirkNumericIOException
 {
   public NetPacketErrorException(String message)
   {
-    super("(wrong network packet, hacker :o ???): " + message);
+    super("(invalid network packet, hacker :o ???): " + message);
   }
 }
