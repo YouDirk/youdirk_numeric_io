@@ -20,33 +20,15 @@ package net.dj_l.youdirk_numeric_io.client;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
-// Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-// Gameplay
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.util.SoundEvent;
-
 
 /**
- * Implementation of all non-specific client-side event handlers fired
- * on <code>MOD</code> bus.
+ * Will be thrown if the logical server tries to execute some client
+ * dedicated stuff.
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public class NotClientException extends YoudirkNumericIOException
 {
-  // TODO: Just a Test event, on destroying a Block
-  @SubscribeEvent
-  public static void onTestSound(TestSoundEvent event)
+  public NotClientException()
   {
-    WorldClient world = event.getClientWorldOrThrow();
-
-    NetMessageTestSound msg = event.getTestSoundMsg();
-
-    world.playSound(msg.pos, new SoundEvent(msg.sound), msg.category,
-                    msg.volume, msg.pitch, true);
+    super("Logical server tries to execute client dedicated stuff!");
   }
 }

@@ -27,9 +27,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-// Non Minecraft/Forge
-import javax.annotation.Nullable;
-
 
 /**
  * Super class of all own Events.
@@ -67,30 +64,34 @@ public class YoudirkNumericIOEvent extends Event
   }
 
   /**
-   * Returns <code>WorldClient</code> if we are on a logical client.
-   * Otherwise <code>null</code>
+   * Returns <code>WorldClient</code> if we are on a logical client,
+   * otherwise throw an Exception.
    */
-  public @Nullable net.minecraft.client.multiplayer.WorldClient
-  getClientWorld()
+  public net.minecraft.client.multiplayer.WorldClient
+  getClientWorldOrThrow()
+    throws net.dj_l.youdirk_numeric_io.client.NotClientException
   {
     World world = this.world.getWorld();
 
-    return world.isRemote()
-      ? (net.minecraft.client.multiplayer.WorldClient) world
-      : null;
+    if (!world.isRemote())
+      throw new net.dj_l.youdirk_numeric_io.client.NotClientException();
+
+    return (net.minecraft.client.multiplayer.WorldClient) world;
   }
 
   /**
-   * Returns <code>WorldServer</code> if we are on a logical server.
-   * Otherwise <code>null</code>
+   * Returns <code>WorldServer</code> if we are on a logical server,
+   * otherwise throw an Exception.
    */
-  public @Nullable net.minecraft.world.WorldServer
-  getServerWorld()
+  public net.minecraft.world.WorldServer
+  getServerWorldOrThrow()
+    throws net.dj_l.youdirk_numeric_io.server.NotServerException
   {
     World world = this.world.getWorld();
 
-    return !world.isRemote()
-      ? (net.minecraft.world.WorldServer) world
-      : null;
+    if (world.isRemote())
+      throw new net.dj_l.youdirk_numeric_io.server.NotServerException();
+
+    return (net.minecraft.world.WorldServer) world;
   }
 }

@@ -37,10 +37,5 @@ import net.minecraft.world.World;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
-  private static boolean _isLogicalServer(World world)
-  {
-    return !world.isRemote();
-  }
-
 
 }
