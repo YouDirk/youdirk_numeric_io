@@ -28,6 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Gameplay
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.util.SoundEvent;
 
 
 /**
@@ -42,8 +43,11 @@ public abstract class CommonEvents
   public static void onTestSound(TestSoundEvent event)
   {
     WorldClient world = event.getClientWorld();
-    if (world == null) return;
+    if (world == null) return; // Fired on logical client?
 
-    Log.ger.debug("Event handled :DD {}", event.getTestSoundMsg());
+    NetMessageTestSound msg = event.getTestSoundMsg();
+
+    world.playSound(msg.pos, new SoundEvent(msg.sound), msg.category,
+                    msg.volume, msg.pitch, true);
   }
 }
