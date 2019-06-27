@@ -24,9 +24,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// Event Bus
-import net.minecraftforge.eventbus.api.IEventBus;
-
 // Events
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -38,25 +35,25 @@ import net.minecraftforge.event.world.BlockEvent;
 @Mod(Props.MODID)
 public class YoudirkNumericIO
 {
-  public static IEventBus FORGE_BUS;
-  public static IEventBus MOD_BUS;
-
   private final net.dj_l.youdirk_numeric_io.common.Setup setupCommon;
   private final net.dj_l.youdirk_numeric_io.server.Setup setupServer;
   private final net.dj_l.youdirk_numeric_io.client.Setup setupClient;
 
   public YoudirkNumericIO()
   {
-    this.FORGE_BUS = MinecraftForge.EVENT_BUS;
-    this.MOD_BUS
-      = FMLJavaModLoadingContext.get().getModEventBus();
+    YoudirkNumericIOEvent.init(
+      MinecraftForge.EVENT_BUS,
+      FMLJavaModLoadingContext.get().getModEventBus());
 
     this.setupCommon
-      = new net.dj_l.youdirk_numeric_io.common.Setup(this.MOD_BUS);
+      = new net.dj_l.youdirk_numeric_io.common.Setup(
+            YoudirkNumericIOEvent.MOD_BUS);
     this.setupServer
-      = new net.dj_l.youdirk_numeric_io.server.Setup(this.FORGE_BUS);
+      = new net.dj_l.youdirk_numeric_io.server.Setup(
+            YoudirkNumericIOEvent.FORGE_BUS);
     this.setupClient
-      = new net.dj_l.youdirk_numeric_io.client.Setup(this.MOD_BUS);
+      = new net.dj_l.youdirk_numeric_io.client.Setup(
+            YoudirkNumericIOEvent.MOD_BUS);
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD

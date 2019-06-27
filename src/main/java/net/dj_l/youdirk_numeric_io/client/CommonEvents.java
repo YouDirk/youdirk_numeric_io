@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Gameplay
-import net.minecraft.world.World;
+import net.minecraft.client.multiplayer.WorldClient;
 
 
 /**
@@ -37,16 +37,12 @@ import net.minecraft.world.World;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
-  private static boolean _isLogicalClient(World world)
-  {
-    return world.isRemote();
-  }
-
   // TODO: Just a Test event, on destroying a Block
   @SubscribeEvent
-  public static void onTestSound(EventTestSound event)
+  public static void onTestSound(TestSoundEvent event)
   {
-    // TODO: call _isLogicalClient()
+    WorldClient world = event.getClientWorld();
+    if (world == null) return;
 
     Log.ger.debug("Event handled :DD {}", event.getTestSoundMsg());
   }

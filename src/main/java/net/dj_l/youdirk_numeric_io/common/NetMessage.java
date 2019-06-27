@@ -25,6 +25,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 // Non Minecraft/Forge
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -42,13 +43,13 @@ public abstract class NetMessage<T extends NetMessage<T>>
    * was set during <code>verifyDecoded()</code> and
    * <code>onReceive()</code>
    */
-  protected EntityPlayerMP sender = null;
+  protected @Nullable EntityPlayerMP sender = null;
 
   /**
    * <code>@Nullable</code>, was set during
    * <code>verifyDecoded()</code> and <code>onReceive()</code>
    */
-  protected NetworkEvent.Context ctx = null;
+  protected @Nullable NetworkEvent.Context ctx = null;
 
   /**
    * A default constructor must be implemented to instanciate dummy

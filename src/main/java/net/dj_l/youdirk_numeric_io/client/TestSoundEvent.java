@@ -23,6 +23,10 @@ import net.dj_l.youdirk_numeric_io.*;
 // Event Bus
 import net.minecraftforge.eventbus.api.Event;
 
+// Gameplay
+import net.minecraft.world.IWorld;
+
+
 /**
  * TODO: Just a TestSound event.  Remove this class it if tests are
  * finished!
@@ -30,12 +34,14 @@ import net.minecraftforge.eventbus.api.Event;
  * <p>Fired on <code>MOD</code> bus if client got a
  * <code>NetMessageTestSound</code> over network.</p>
  */
-public class EventTestSound extends Event
+public class TestSoundEvent extends YoudirkNumericIOEvent
 {
   private final NetMessageTestSound testSoundMsg;
 
-  public EventTestSound(NetMessageTestSound testSoundMsg)
+  public TestSoundEvent(IWorld world, NetMessageTestSound testSoundMsg)
   {
+    super(world);
+
     this.testSoundMsg = testSoundMsg;
   }
 

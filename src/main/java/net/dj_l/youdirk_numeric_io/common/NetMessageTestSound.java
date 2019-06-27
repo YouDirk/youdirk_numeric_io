@@ -23,6 +23,7 @@ import net.dj_l.youdirk_numeric_io.*;
 import net.minecraft.network.PacketBuffer;
 
 // Gameplay
+import net.minecraft.world.IWorld;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundEvent;
@@ -95,10 +96,9 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   protected void verifyDecoded() throws NetPacketErrorException
   {
     /* We know that we are on client side, if we are receiving this
-     * TestSound message.  So this STATIC call should work.
+     * TestSound message.  So this STATIC CLIENT call should work.
      */
-    net.minecraft.client.multiplayer.WorldClient world
-      = net.minecraft.client.Minecraft.getInstance().world;
+    IWorld world = net.minecraft.client.Minecraft.getInstance().world;
 
     if (this.pos == null || !world.isBlockLoaded(this.pos))
       throw new NetPacketErrorException("Not a valid Block Position: "
@@ -130,10 +130,13 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   protected void onReceive()
   {
     /* We know that we are on client side, if we are receiving this
-     * TestSound message.  So this STATIC call should work.
+     * TestSound message.  So these STATIC CLIENT calls should
+     * work.
      */
-    YoudirkNumericIO.MOD_BUS.post(
-      new net.dj_l.youdirk_numeric_io.client.EventTestSound(this));
+    IWorld world = net.minecraft.client.Minecraft.getInstance().world;
+
+    YoudirkNumericIOEvent.post(
+      new net.dj_l.youdirk_numeric_io.client.TestSoundEvent(world, this));
   }
 
   @Override
@@ -145,7 +148,7 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
     }
 
     return "TestSound: " +this.pos+ ", '" + this.sound+ "', "
-      +this.category+ ", volume=" +this.volume+ ", " +this.pitch
+      +this.category+ ", volume=" +this.volume+ ", pitch=" +this.pitch
       + (senderName == null? "": "(sender: " +senderName+ ")");
   }
 }
