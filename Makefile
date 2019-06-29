@@ -234,7 +234,7 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	)$(call _REGEX_GRADLEMANIFEST_REPL \
 	        ,Specification-Vendor,$(VENDOR))$(\
 	)$(call _REGEX_GRADLEMANIFEST_REPL \
-	        ,Specification-Version,$(VERSION_API_FULL))$(\
+	        ,Specification-Version,$(VERSION_SPEC))$(\
 	)$(call _REGEX_GRADLEMANIFEST_REPL \
 	        ,Implementation-Title,$(MODNAME))$(\
 	)$(call _REGEX_GRADLEMANIFEST_REPL \

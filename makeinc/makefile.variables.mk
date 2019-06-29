@@ -21,14 +21,11 @@
 MK_FILES =  Makefile makefile.config.mk $(patsubst \
             %,makeinc/makefile.%.mk,check variables regex web run)
 
-# Version format: MAJOR.API{-SUFFIX}
-VERSION_API = $(VER_MAJOR).$(VER_API).$(VER_MINOR)$(VER_SUFFIX)
+# Version format: MAJOR.API.MINOR
+VERSION_SPEC = $(VER_MAJOR).$(VER_API).$(VER_MINOR)
 
 # Version format: MAJOR.API.MINOR.PATCH{-SUFFIX}
 VERSION = $(VER_MAJOR).$(VER_API).$(VER_MINOR).$(VER_PATCH)$(VER_SUFFIX)
-
-# Version format: MCVERSION-MAJOR.API{-SUFFIX}
-VERSION_API_FULL = $(MC_VERSION)-$(VERSION_API)
 
 # Version format: MCVERSION-MAJOR.API.MINOR.PATCH{-SUFFIX}
 VERSION_FULL = $(MC_VERSION)-$(VERSION)

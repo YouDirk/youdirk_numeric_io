@@ -80,13 +80,13 @@ public abstract class Net
   /* *************************************************************  */
 
   /**
-   * The version format is: MAJOR.API.MINOR
+   * The version format is: "MAJOR.API.MINOR"
    *
    * <p>The following rules decides, which side is accepting which
    * remote version.</p>
    *
    * <pre><code>
-   * 1. If (Remote.Version > Local.Version):
+   * 1. If (Remote.Version >= Local.Version):
    *      ACCEPT and let decide the remote host
    *
    *    So we make sure that the newer implementation decides if

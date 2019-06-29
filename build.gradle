@@ -108,7 +108,7 @@ jar {
         attributes([
             "Specification-Title": "youdirk_numeric_io_api",
             "Specification-Vendor": "YouDirk Maintained",
-            "Specification-Version": "1.13.2-0.1.0-dev", // We are version 1 of ourselves
+            "Specification-Version": "0.1.0", // We are version 1 of ourselves
             "Implementation-Title": "YouDirk Numeric I/O",
             "Implementation-Version": "1.13.2-0.1.0.0-dev",
             "Implementation-Vendor" : "YouDirk Maintained",
