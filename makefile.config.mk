@@ -24,12 +24,20 @@ JDK_PATH =
 # YouDirk Numeric I/O Version (without Minecraft Version)
 #   Take a look to the conventions for versioning
 #   <https://mcforge.readthedocs.io/en/latest/conventions/versioning/>
-
-# MAJORMOD.MAJORAPI
-VERSION_API = 0.0
-
-# MAJORMOD.MAJORAPI.MINOR.PATCH
-VERSION = $(VERSION_API).0.2-dummy
+#
+# Version format: MAJOR.API.MINOR.PATCH{-SUFFIX}
+#        example: 1.1.0.25-beta
+#
+# MAJOR  - Breaking (changing/removing) gameplay mechanics changes
+# API    - Breaking (changing/removing) Network/API changes
+# MINOR  - Backward compatible (adding) Game/Network/API stuff
+# PATCH  - Bug fixes only
+# SUFFIX - (optional) -dev/-beta{X}/-rc{X}
+VER_MAJOR  = 0
+VER_API    = 1
+VER_MINOR  = 0
+VER_PATCH  = 0
+VER_SUFFIX = -dev
 
 # Dependency Version stuff
 MC_VERSION = 1.13.2

@@ -36,7 +36,7 @@ public abstract class Net
   /** Use this for SNPRINTF like stuff on network socket  */
   public static final int STRLEN = 256;
 
-  private static final String PROTOCOL_VERSION = "1";
+  private static final NetVersion netVersion = new NetVersion();
 
   private static final ResourceLocation CHANNEL_NAME
     = new ResourceLocation(Props.MODID, "main");
@@ -50,7 +50,7 @@ public abstract class Net
 
   public static final String getProtocolVersion()
   {
-    return Net.PROTOCOL_VERSION;
+    return Net.netVersion.toString();
   }
 
   @SuppressWarnings("unchecked")
@@ -79,13 +79,43 @@ public abstract class Net
 
   /* *************************************************************  */
 
+  /**
+   * The version format is: MAJOR.API.MINOR
+   *
+   * <p>The following rules decides, which side is accepting which
+   * remote version.</p>
+   *
+   * <pre><code>
+   * 1. If (Remote.Version > Local.Version):
+   *      ACCEPT and let decide the remote host
+   *
+   *    So we make sure that the newer implementation decides if
+   *    protocol is compatible.
+   *
+   * 2. If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API):
+   *      DENY, cause of breaking changes
+   *
+   *    In opposite, if you make breaking changes in the protocol then
+   *    increment the API Version
+   *
+   * 3. If (Client.MINOR >= Server.MINOR):
+   *      ACCEPT, cause there are only new features on the client
+   *    else:
+   *      DENY, cause server has new features which are not supported
+   *            by the client
+   *
+   * </code></pre>
+   */
+
   private static boolean isClientAcceptVersion(String serverVersion)
   {
-    return Net.PROTOCOL_VERSION.equals(serverVersion);
+    // TODO
+    return getProtocolVersion().equals(serverVersion);
   }
 
   private static boolean isServerAcceptVersion(String clientVersion)
   {
-    return Net.PROTOCOL_VERSION.equals(clientVersion);
+    // TODO
+    return getProtocolVersion().equals(clientVersion);
   }
 }

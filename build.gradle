@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.13.2-0.0.0.2-dummy'
+version = '1.13.2-0.1.0.0-dev'
 group = 'net.dj_l' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'youdirk_numeric_io'
 
@@ -108,9 +108,9 @@ jar {
         attributes([
             "Specification-Title": "youdirk_numeric_io_api",
             "Specification-Vendor": "YouDirk Maintained",
-            "Specification-Version": "1.13.2-0.0", // We are version 1 of ourselves
+            "Specification-Version": "1.13.2-0.1.0-dev", // We are version 1 of ourselves
             "Implementation-Title": "YouDirk Numeric I/O",
-            "Implementation-Version": "1.13.2-0.0.0.2-dummy",
+            "Implementation-Version": "1.13.2-0.1.0.0-dev",
             "Implementation-Vendor" : "YouDirk Maintained",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])

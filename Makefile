@@ -187,6 +187,18 @@ $(METAINF_DIR)/mods.toml: $(MF_METAINF_DIR)/mods.toml $(MK_FILES)
 	@$(call _REGEX_MODS_GROUPREPL,$@,mods,version,$(VERSION_FULL))
 	@$(call _REGEX_MODS_GROUPREPL,$@,mods,displayName,$(MODNAME))
 
+$(JAVA_DIR)/%.java: $(JAVA_DIR)/%.java.templ $(MK_FILES)
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(\
+	)$(call _REGEX_GRADLEVAR_REPL,MODID,$(MODID))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,MC_VERSION,$(MC_VERSION))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,VERSION_MAJOR,$(VER_MAJOR))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,VERSION_API,$(VER_API))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,VERSION_MINOR,$(VER_MINOR))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,VERSION_PATCH,$(VER_PATCH))$(\
+	)$(call _REGEX_GRADLEVAR_REPL,VERSION_SUFFIX,$(VER_SUFFIX))$(\
+	) $< > $@
+
 gradlew: $(MF_DIR)/gradlew
 	@echo "Generating '$@'"
 	@$(call DOS2UNIX_CP_VCMD,$<,$@)
@@ -264,8 +276,8 @@ ifeq (,$(wildcard $(MF_MDK_DIR)/build.gradle))
 config_all:
 else
 config_all: build.gradle $(DOCS_DIR)/_config.yml \
-  $(METAINF_DIR)/mods.toml $(RESOURCES_DIR)/pack.mcmeta \
-  $(DOCS_DATA_DIR)/forge_promos.json
+  $(METAINF_DIR)/mods.toml $(JAVA_MOD_DIR)/common/Props.java \
+  $(RESOURCES_DIR)/pack.mcmeta $(DOCS_DATA_DIR)/forge_promos.json
 endif
 
 .PHONY: _cache

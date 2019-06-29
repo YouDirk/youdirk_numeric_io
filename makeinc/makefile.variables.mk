@@ -21,10 +21,16 @@
 MK_FILES =  Makefile makefile.config.mk $(patsubst \
             %,makeinc/makefile.%.mk,check variables regex web run)
 
-# MCVERSION-MAJORMOD.MAJORAPI
+# Version format: MAJOR.API{-SUFFIX}
+VERSION_API = $(VER_MAJOR).$(VER_API).$(VER_MINOR)$(VER_SUFFIX)
+
+# Version format: MAJOR.API.MINOR.PATCH{-SUFFIX}
+VERSION = $(VER_MAJOR).$(VER_API).$(VER_MINOR).$(VER_PATCH)$(VER_SUFFIX)
+
+# Version format: MCVERSION-MAJOR.API{-SUFFIX}
 VERSION_API_FULL = $(MC_VERSION)-$(VERSION_API)
 
-# MCVERSION-MAJORMOD.MAJORAPI.MINOR.PATCH
+# Version format: MCVERSION-MAJOR.API.MINOR.PATCH{-SUFFIX}
 VERSION_FULL = $(MC_VERSION)-$(VERSION)
 
 # Display name of the mod
@@ -48,6 +54,7 @@ MODTHANKS = MCP, Minecraft Forge
 #   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
 MODID = youdirk_numeric_io
 GROUP = net.dj_l
+MOD_RELDIR = $(subst .,/,$(GROUP))/$(MODID)
 
 BUILD_DIR = build
 BUILDLIBS_DIR = $(BUILD_DIR)/libs
@@ -56,6 +63,7 @@ BUILD_JARNAME = $(MODID)-$(VERSION_FULL)
 SRC_DIR = src
 RESOURCES_DIR = $(SRC_DIR)/main/resources
 JAVA_DIR = $(SRC_DIR)/main/java
+JAVA_MOD_DIR = $(JAVA_DIR)/$(MOD_RELDIR)
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
 JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
 
@@ -84,7 +92,7 @@ DOCS_DIR = docs
 MAVEN_DIR = $(DOCS_DIR)/maven
 MAVEN_FORGE_RELDIR = $(subst .,/,$(MF_GROUP))/$(MF_NAME)
 MAVEN_FORGE_DIR = $(MAVEN_DIR)/$(MAVEN_FORGE_RELDIR)
-MAVEN_MOD_RELDIR = $(subst .,/,$(GROUP))/$(MODID)
+MAVEN_MOD_RELDIR = $(MOD_RELDIR)
 MAVEN_MOD_DIR = $(MAVEN_DIR)/$(MAVEN_MOD_RELDIR)
 DOCS_DATA_DIR = $(DOCS_DIR)/_data
 DOCS_FORGEBUILDS_DIR = $(DOCS_DATA_DIR)/forge_builds
