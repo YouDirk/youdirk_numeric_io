@@ -125,14 +125,23 @@ implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make`
 ```make
 # --- Additional MAKE arguments ---
 
-all classes run_client% run_server build: ARGS=<gradlew arguments>
+all classes run_client% run_server build:
+
+      (optional) ARGS=<gradlew arguments>
+
   example $> make <target> ARGS=--stacktrace
   runs `./gradlew --stacktrace <target>`
 
-website_mf_addtag website_mf_rmtag website_addtag% website_rmtag%: TAG=<the tag>
+website_mf_addtag website_mf_rmtag website_addtag% website_rmtag%:
+
+      TAG=<the tag>
+
   example $> make <target> TAG=unstable
 
-mf_install_server install_server run_productive_server%: PREFIX=<install dir>
+mf_install_server install_server run_productive_server%:
+
+      PREFIX=<install dir>
+
   example1 $> make <target> PREFIX=1
   Installs to a default directory inside the project directory
 
