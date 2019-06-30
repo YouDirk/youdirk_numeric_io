@@ -21,21 +21,33 @@
 .PHONY: _run_server_deps
 _run_server_deps: $(RUN_DIR)/eula.txt $(RUN_DIR)/server.properties
 
-$(RUN_DIR)/eula.txt: $(RUN_TEMPL_DIR)/eula.txt
+%/eula.txt: $(RUN_TEMPL_DIR)/eula.txt
 	@echo "Agreeing EULA '$@'" \
-	  && mkdir -p $(RUN_DIR) && cp -f $< $@
+	  && mkdir -p "$*" && cp -f "$<" "$@"
 
-$(RUN_DIR)/server.properties: $(RUN_TEMPL_DIR)/server.properties
+%/server.properties: $(RUN_TEMPL_DIR)/server.properties
 	@echo "Generating '$@'" \
-	  && mkdir -p $(RUN_DIR) && cp -f $< $@
+	  && mkdir -p "$*" && cp -f "$<" "$@"
+
+
+.PHONY: _run_productive_server_deps
+_run_productive_server_deps: \
+  $(call _INSTALL_SERVERDIR_ESC_CMD,$(PREFIX))/eula.txt
 
 
 .PHONY: _run_client_deps
 _run_client_deps: $(RUN_DIR)/servers.dat
 
-$(RUN_DIR)/servers.dat: $(RUN_TEMPL_DIR)/servers.dat
+%/servers.dat: $(RUN_TEMPL_DIR)/servers.dat
 	@echo "Generating '$@'" \
-	  && mkdir -p $(RUN_DIR) && cp -f $< $@
+	  && mkdir -p "$*" && cp -f "$<" "$@"
+
+# --- Others ---
+
+# Removes circular dependency warning
+$(RUN_TEMPL_DIR)/eula.txt $(RUN_TEMPL_DIR)/server.properties \
+  $(RUN_TEMPL_DIR)/servers.dat:
+	$(error $(ERRB) '$@' is part of the sources!)
 
 # End of Runtime Config stuff
 # ********************************************************************

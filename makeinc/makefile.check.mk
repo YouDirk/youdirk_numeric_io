@@ -26,6 +26,10 @@ $(_BLANK)
 endef
 ERRB = $(NL)$(NL)  ERROR:
 ERR2 = \n  ERROR:
+define ERRS
+        
+endef
+WAR2 = \n  WARNING:
 
 # win_path_escaped _2WINPATH_ESCAPE(unix_path)
 _2WINPATH = $(shell echo '$(1)' | \
@@ -183,7 +187,8 @@ ifneq (,$(TEST_LAUNCHER_PROD))
   ifeq (,$(LAUNCHER_PATH))
     $(shell rm -f $(_CACHE_FILE))
     $(error $(ERRB) '.minecraft' path not found!  Run the productive \
-            Minecraft Launcher one time to create it)
+            Minecraft Launcher one time and close it.  After closing \
+            try again)
   endif
 
   $(shell mkdir -p $(LAUNCHER_PATH)/versions $(LAUNCHER_PATH)/mods)

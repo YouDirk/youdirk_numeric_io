@@ -60,13 +60,20 @@ run_server_nogui: run_server
 build: | config_all
 	./gradlew $(ARGS) build
 
-.PHONY: run_productive
-run_productive: | config_all _os_windows
-	$(MAKE) TEST_LAUNCHER_PROD=1 _run_productive
+.PHONY: run_productive_client
+run_productive_client: | config_all _os_windows
+	$(MAKE) TEST_LAUNCHER_PROD=1 _run_productive_client
+
+.PHONY: run_productive_server
+run_productive_server: | config_all _run_productive_server
+
+.PHONY: run_productive_server_nogui
+run_productive_server_nogui: _SERVER_NOGUI = nogui
+run_productive_server_nogui: run_productive_server
 
 # New MAKE instance, to update DOCS_BUILDS_JSONS
 .PHONY: publish
-publish: | build $(MAVEN_MOD_DIR)/maven-metadata.xml
+publish: | config_all build $(MAVEN_MOD_DIR)/maven-metadata.xml
 	$(MAKE) website_mod
 
 .PHONY: jdk_version
@@ -394,30 +401,78 @@ _os_windows:
 $(MAVEN_FORGE_CURINSTALLER):
 	$(MAKE) $(MAVEN_FORGE_DIR)/maven-metadata.xml
 
-.PHONY: mf_install
-mf_install: | config_all _os_windows
-	$(MAKE) TEST_LAUNCHER_PROD=1 _mf_install
-.PHONY: _mf_install
-_mf_install: $(MAVEN_FORGE_CURINSTALLER)
+# --- Client ---
+
+.PHONY: mf_install_client
+mf_install_client: | config_all _os_windows
+	$(MAKE) TEST_LAUNCHER_PROD=1 _mf_install_client
+.PHONY: _mf_install_client
+_mf_install_client: $(MAVEN_FORGE_CURINSTALLER)
 	java -jar $<
 
-.PHONY: install
-install: | config_all _os_windows
-	$(MAKE) TEST_LAUNCHER_PROD=1 _install
-.PHONY: _install
-_install: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+.PHONY: install_client
+install_client: | config_all _os_windows
+	$(MAKE) TEST_LAUNCHER_PROD=1 _install_client
+.PHONY: _install_client
+_install_client: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
 	@if [ ! -d $(LAUNCHER_PATH)/versions/$(MC_VERSION)-$(MF_NAME)$(\
 	           )-$(MF_VERSION) ]; then \
-	  $(MAKE) _mf_install; \
+	  $(MAKE) _mf_install_client; \
 	else \
 	  echo 'skipped: Minecraft Forge $(MF_VERSION_FULL)$(\
 	       ) installation'; \
 	fi
-	cp -f $< $(LAUNCHER_PATH)/mods/
+	mkdir -p $(LAUNCHER_PATH)/mods && cp -f $< $(LAUNCHER_PATH)/mods/
 
-.PHONY: _run_productive
-_run_productive: _install
+.PHONY: _run_productive_client
+_run_productive_client: _install_client
 	$(LAUNCHER_PROD_CMD)
+
+# --- Server ---
+
+.PHONY: _productive_server_dir
+_productive_server_dir:
+	@instdir="$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))"; \
+	if [ -z "$(PREFIX)" ]; then \
+	  printf \
+	  "$(ERR2) Usage '$$> $(MAKE) <target> PREFIX=1' installs to$(\
+	    ) directory '$(RUN_SERVERPROD_DIR)'\n$(\
+	  )$(ERRS)    or '$$> $(MAKE) <target> PREFIX=\"/c/path_to$(\
+	    )/installdir\"'\n\n" >&2; \
+	  exit 1; \
+	fi; \
+	if [ "$(PREFIX)" = "1" ]; then \
+	  printf "$(WAR2) Using default install directory '$$instdir'!$(\
+	         )\n\n" >&2; \
+	fi
+
+.PHONY: mf_install_server
+mf_install_server: \
+  | config_all _productive_server_dir $(MAVEN_FORGE_CURINSTALLER)
+	@instdir="$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))"; \
+	installer="`echo $$PWD`/$(MAVEN_FORGE_CURINSTALLER)"; \
+	echo "Installing Minecraft Forge Server to '$$instdir'"; \
+	mkdir -p "$$instdir" && cd "$$instdir" \
+	  && java -jar "$$installer" --installServer
+
+.PHONY: install_server
+install_server: \
+  | config_all _productive_server_dir $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+	@instdir="$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))"; \
+	if [ ! -f "$$instdir/$(RUN_SERVER_JARNAME).jar" ]; then \
+	  $(MAKE) mf_install_server PREFIX="$$instdir"; \
+	else \
+	  echo 'skipped: Minecraft Forge Server $(MF_VERSION_FULL)$(\
+	       ) installation'; \
+	fi; \
+	mkdir -p "$$instdir/mods/" \
+	  && cp -fv $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar "$$instdir/mods/"
+
+.PHONY: _run_productive_server
+_run_productive_server: | config_all _productive_server_dir install_server \
+  _run_productive_server_deps
+	cd "$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))" \
+	 && java -jar $(RUN_SERVER_JARNAME).jar $(_SERVER_NOGUI)
 
 # End productive Launcher stuff
 # ********************************************************************

@@ -27,6 +27,9 @@ _REGEX_DIRNAME_RET = 's~^\(.*\)/[^/]\+~\1~;'
 # sed_cmd _REGEX_DOS2UNIX_NL
 _REGEX_DOS2UNIX_NL = ':a;N;$$!ba; s~\r~~g;'
 
+# sed_cmd _REGEX_ESCAPE_SPACE_REPL
+_REGEX_ESCAPE_SPACE_REPL = 's~ ~\\ ~g;'
+
 # sed_cmd _REGEX_GRADLE_REPL(key, value)
 _REGEX_GRADLE_REPL = 's~^\([ \t]*$(1) *= *['\''"]\)[^'\''"]*~\1$(2)~g;'
 
@@ -104,4 +107,18 @@ DOS2UNIX_VCMD = $(SED_CMD) -i $(_REGEX_DOS2UNIX_NL)
 DOS2UNIX_CP_VCMD = $(SED_CMD) $(_REGEX_DOS2UNIX_NL) $(1) > $(2)
 
 # End of Virtual shell commands
+# ********************************************************************
+# User defined Make functions
+
+# shell_cmd __INSTALL_SERVERDIR_CMD(prefix)
+__INSTALL_SERVERDIR_CMD = test "$(1)" = "1" \
+  && echo -n $(RUN_SERVERPROD_DIR) || echo -n $(1)
+
+# dir _INSTALL_SERVERDIR_CMD(prefix)
+_INSTALL_SERVERDIR_CMD = $(shell $(call __INSTALL_SERVERDIR_CMD,$(1)))
+
+_INSTALL_SERVERDIR_ESC_CMD = $(shell $(call __INSTALL_SERVERDIR_CMD,$(1)) \
+  | $(SED_CMD) $(_REGEX_ESCAPE_SPACE_REPL))
+
+# End of User defined Make functions
 # ********************************************************************
