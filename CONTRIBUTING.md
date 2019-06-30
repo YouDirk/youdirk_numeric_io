@@ -85,8 +85,8 @@ targets
 
 The setup for productive use of dedicated server does also work on
 Linux
-* ~~`mf_install_server`~~, ~~`install_server`~~,
-  ~~`run_productive_server`~~ and ~~`run_productive_server_nogui`~~
+* `mf_install_server`, `install_server`, `run_productive_server` and
+  `run_productive_server_nogui`
 
 It seems that there doesn't exist an official Minecraft Launcher for
 Linux.  For that reason you must install the Forge-Jar and Mod-Jar
