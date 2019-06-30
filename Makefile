@@ -422,57 +422,59 @@ _install_client: $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
 	  echo 'skipped: Minecraft Forge $(MF_VERSION_FULL)$(\
 	       ) installation'; \
 	fi
-	mkdir -p $(LAUNCHER_PATH)/mods && cp -f $< $(LAUNCHER_PATH)/mods/
+	@mkdir -p $(LAUNCHER_PATH)/mods && cp -fv $< $(LAUNCHER_PATH)/mods/
 
 .PHONY: _run_productive_client
 _run_productive_client: _install_client
-	$(LAUNCHER_PROD_CMD)
+	@echo "Running productive Minecraft Launcher"
+	@$(LAUNCHER_PROD_CMD)
 
 # --- Server ---
 
 .PHONY: _productive_server_dir
 _productive_server_dir:
-	@instdir="$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))"; \
-	if [ -z "$(PREFIX)" ]; then \
+	@if [ -z "$(PREFIX)" ]; then \
 	  printf \
 	  "$(ERR2) Usage '$$> $(MAKE) <target> PREFIX=1' installs to$(\
 	    ) directory '$(RUN_SERVERPROD_DIR)'\n$(\
 	  )$(ERRS)    or '$$> $(MAKE) <target> PREFIX=\"/c/path_to$(\
 	    )/installdir\"'\n\n" >&2; \
 	  exit 1; \
-	fi; \
-	if [ "$(PREFIX)" = "1" ]; then \
-	  printf "$(WAR2) Using default install directory '$$instdir'!$(\
-	         )\n\n" >&2; \
+	fi
+	@if [ "$(PREFIX)" = "1" ]; then \
+	  printf "$(WAR2) Using default install directory$(\
+                 ) '$(INSTALL_SERVERDIR)'!\n\n" >&2; \
 	fi
 
 .PHONY: mf_install_server
 mf_install_server: \
   | config_all _productive_server_dir $(MAVEN_FORGE_CURINSTALLER)
-	@instdir="$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))"; \
-	installer="`echo $$PWD`/$(MAVEN_FORGE_CURINSTALLER)"; \
-	echo "Installing Minecraft Forge Server to '$$instdir'"; \
-	mkdir -p "$$instdir" && cd "$$instdir" \
+	@installer="`echo $$PWD`/$(MAVEN_FORGE_CURINSTALLER)"; \
+	echo "Installing Minecraft Forge Server to$(\
+	     ) '$(INSTALL_SERVERDIR)'"; \
+	mkdir -p "$(INSTALL_SERVERDIR)" && cd "$(INSTALL_SERVERDIR)" \
 	  && java -jar "$$installer" --installServer
 
 .PHONY: install_server
-install_server: \
-  | config_all _productive_server_dir $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
-	@instdir="$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))"; \
-	if [ ! -f "$$instdir/$(RUN_SERVER_JARNAME).jar" ]; then \
-	  $(MAKE) mf_install_server PREFIX="$$instdir"; \
+install_server: | config_all \
+  _productive_server_dir $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
+	@if [ ! -f \
+             "$(INSTALL_SERVERDIR)/$(RUN_SERVER_JARNAME).jar" ]; then \
+	  $(MAKE) mf_install_server PREFIX="$(INSTALL_SERVERDIR)"; \
 	else \
 	  echo 'skipped: Minecraft Forge Server $(MF_VERSION_FULL)$(\
 	       ) installation'; \
-	fi; \
-	mkdir -p "$$instdir/mods/" \
-	  && cp -fv $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar "$$instdir/mods/"
+	fi
+	@mkdir -p "$(INSTALL_SERVERDIR)/mods/" \
+	  && cp -fv $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar $(\
+	  )"$(INSTALL_SERVERDIR)/mods/"
 
 .PHONY: _run_productive_server
-_run_productive_server: | config_all _productive_server_dir install_server \
-  _run_productive_server_deps
-	cd "$(call _INSTALL_SERVERDIR_CMD,$(PREFIX))" \
-	 && java -jar $(RUN_SERVER_JARNAME).jar $(_SERVER_NOGUI)
+_run_productive_server: | config_all \
+  _productive_server_dir install_server _run_productive_server_deps
+	@echo "Running productive dedicated Minecraft Forge server"
+	@cd "$(INSTALL_SERVERDIR)" \
+	  && java -jar $(RUN_SERVER_JARNAME).jar $(_SERVER_NOGUI)
 
 # End productive Launcher stuff
 # ********************************************************************

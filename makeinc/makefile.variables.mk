@@ -137,6 +137,13 @@ BUGTRACKING_URL = $(PROJECT_URL)/$(WEBSITE_ISSUES_REL)
 LICENSE_SHORT = GPL v3.0
 LICENSE_URL = $(REPOSITORY_ROOT_URL)/$(LICENSE_FILE)
 
+ifeq (1,$(PREFIX))
+  INSTALL_SERVERDIR = $(RUN_SERVERPROD_DIR)
+else
+  INSTALL_SERVERDIR = $(PREFIX)
+endif
+INSTALL_SERVERDIR_ESC = $(subst $(_SPACE),\ ,$(INSTALL_SERVERDIR))
+
 # --------------------------------------------------------------------
 # Environment variables
 

@@ -19,6 +19,9 @@
 # Needed for checks (variables are included after this file)
 
 # Newline variable and Error prefix variable
+_SPACE :=
+_SPACE +=
+
 _BLANK :=
 define NL
 

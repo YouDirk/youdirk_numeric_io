@@ -123,6 +123,22 @@ implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make`
 `targets:`. You can run it using the command `$> make <target>`
 
 ```make
+# --- Additional MAKE arguments ---
+
+all classes run_client% run_server build: ARGS={gradlew arguments}
+  example $> make <target> ARGS=--stacktrace
+  runs `./gradlew --stacktrace build`
+
+website_mf_addtag website_mf_rmtag website_addtag% website_rmtag%: TAG={the tag}
+  example $> make <target> TAG=unstable
+
+mf_install_server install_server run_productive_server%: PREFIX={install dir}
+  example1 $> make <target> PREFIX=1
+  Installs to a default directory inside the project directory
+
+  example2 $> make <target> PREFIX="/c/Progam Files/installdir"
+  Installs to a `/c/Progam Files/installdir`
+
 # --- Necessary targets ---
 all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
 classes: Same as official Forge command `$> ./gradlew classes`

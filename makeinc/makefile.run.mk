@@ -31,8 +31,7 @@ _run_server_deps: $(RUN_DIR)/eula.txt $(RUN_DIR)/server.properties
 
 
 .PHONY: _run_productive_server_deps
-_run_productive_server_deps: \
-  $(call _INSTALL_SERVERDIR_ESC_CMD,$(PREFIX))/eula.txt
+_run_productive_server_deps: $(INSTALL_SERVERDIR_ESC)/eula.txt
 
 
 .PHONY: _run_client_deps
