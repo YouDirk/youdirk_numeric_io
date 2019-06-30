@@ -51,20 +51,19 @@ public class NetVersion implements Comparable<NetVersion>
 
   public NetVersion(String versionString) throws YoudirkNumericIOException
   {
+    final String errStr
+      = "'" + versionString + "' is not a network protocol version!";
+
     Matcher m = VERSION_REGEX.matcher(versionString);
 
-    if (!m.matches()) {
-      throw new YoudirkNumericIOException(
-        "'" + versionString + "' is not a network protocol version!");
-    }
+    if (!m.matches()) throw new YoudirkNumericIOException(errStr);
 
     try {
-      this.MAJOR = Integer.parseUnsignedInt(m.group(1));
-      this.API = Integer.parseUnsignedInt(m.group(2));
-      this.MINOR = Integer.parseUnsignedInt(m.group(3));
-    } catch (NumberFormatException e) {
-      throw new YoudirkNumericIOException(
-        "'" + versionString + "' is not a network protocol version!");
+      this.MAJOR = Math.abs(Integer.parseInt(m.group(1)));
+      this.API = Math.abs(Integer.parseInt(m.group(2)));
+      this.MINOR = Math.abs(Integer.parseInt(m.group(3)));
+    } catch (Exception e) {
+      throw new YoudirkNumericIOException(errStr, e);
     }
   }
 
