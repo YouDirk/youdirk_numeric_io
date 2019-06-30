@@ -19,6 +19,10 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Non Minecraft/Forge
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 /**
  * Provides methods for outputing and comparing network protocol
@@ -26,31 +30,53 @@ import net.dj_l.youdirk_numeric_io.*;
  */
 public class NetVersion implements Comparable<NetVersion>
 {
-  public final int major, api, minor;
+  private final Pattern VERSION_REGEX = Pattern.compile(
+    "^([0-9]{1,4})\\.([0-9]{1,4})\\.([0-9]{1,4})$");
+
+  public final int MAJOR, API, MINOR;
 
   public NetVersion()
   {
-    this.major = Props.VERSION_MAJOR;
-    this.api = Props.VERSION_API;
-    this.minor = Props.VERSION_MINOR;
+    this.MAJOR = Props.VERSION_MAJOR;
+    this.API = Props.VERSION_API;
+    this.MINOR = Props.VERSION_MINOR;
   }
 
   public NetVersion(int major, int api, int minor)
   {
-    this.major = major;
-    this.api = api;
-    this.minor = minor;
+    this.MAJOR = major;
+    this.API = api;
+    this.MINOR = minor;
+  }
+
+  public NetVersion(String versionString) throws YoudirkNumericIOException
+  {
+    Matcher m = VERSION_REGEX.matcher(versionString);
+
+    if (!m.matches()) {
+      throw new YoudirkNumericIOException(
+        "'" + versionString + "' is not a network protocol version!");
+    }
+
+    try {
+      this.MAJOR = Integer.parseUnsignedInt(m.group(1));
+      this.API = Integer.parseUnsignedInt(m.group(2));
+      this.MINOR = Integer.parseUnsignedInt(m.group(3));
+    } catch (NumberFormatException e) {
+      throw new YoudirkNumericIOException(
+        "'" + versionString + "' is not a network protocol version!");
+    }
   }
 
   @Override
   public String toString()
   {
-    return String.format("%d.%d.%d", this.major, this.api, this.minor);
+    return String.format("%d.%d.%d", this.MAJOR, this.API, this.MINOR);
   }
 
   protected long toLong()
   {
-    return this.major*((long)1E8) + this.api*((long)1E4) + this.minor;
+    return this.MAJOR*((long)1E8) + this.API*((long)1E4) + this.MINOR;
   }
 
   /**
@@ -60,8 +86,9 @@ public class NetVersion implements Comparable<NetVersion>
   @Override
   public int compareTo(NetVersion o)
   {
-    // Do not substract, it could overflow during cast from LONG to
-    // INT!
+    /* Do not substract, it could overflow during cast from LONG to
+     * INT!
+     */
 
     long a = this.toLong();
     long b = o.toLong();
@@ -74,5 +101,10 @@ public class NetVersion implements Comparable<NetVersion>
   public boolean equals(NetVersion o)
   {
     return this.toLong() == o.toLong();
+  }
+
+  public boolean isBreaking(NetVersion o)
+  {
+    return this.MAJOR != o.MAJOR || this.API != o.API;
   }
 }

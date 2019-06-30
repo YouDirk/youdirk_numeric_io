@@ -50,12 +50,7 @@ public class Setup
 
   private void _init(FMLCommonSetupEvent event)
   {
-    _init_network_messages();
-  }
-
-  private void _init_network_messages()
-  {
-    Net.registerMessage(1, NetMessageTestSound.class);
+    NetMessageRegistry.get().registerAllMessages();
   }
 
   /* *************************************************************  */

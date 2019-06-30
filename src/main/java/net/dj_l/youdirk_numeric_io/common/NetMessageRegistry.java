@@ -20,44 +20,38 @@ package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
 
-/**
- * Provides methods for outputing and comparing Mod versions.
- */
-public class ModVersion extends NetVersion
+public class NetMessageRegistry
 {
-  public final String MC_VERSION;
-  public final int PATCH;
-  public final String SUFFIX;
-
-  public ModVersion()
+  private final RegItem[] CLASSES =
   {
-    super();
+   new RegItem(1, NetMessageTestSound.class),
+  };
 
-    this.MC_VERSION = Props.MC_VERSION;
-    this.PATCH = Props.VERSION_PATCH;
-    this.SUFFIX = Props.VERSION_SUFFIX;
+  /* *************************************************************  */
+
+  public static final NetMessageRegistry get()
+  {
+    return NetMessageRegistry.INSTANCE;
   }
 
-  public ModVersion(String mcVersion, int major, int api, int minor,
-                    int patch, String suffix)
+  public void registerAllMessages()
   {
-    super(major, api, minor);
-
-    this.MC_VERSION = mcVersion;
-    this.PATCH = patch;
-    this.SUFFIX = suffix;
+    for (RegItem m: this.CLASSES)
+      Net.registerMessage(m.netIndex, m.msgClass);
   }
 
-  @Override
-  public String toString()
-  {
-    return String.format("%s-%s.%d%s", this.MC_VERSION, super.toString(),
-                         this.PATCH, this.SUFFIX);
+  /* *************************************************************  */
+
+  private class RegItem {
+    int netIndex;
+    Class<? extends NetMessage> msgClass;
+
+    RegItem(int netIndex, Class<? extends NetMessage> msgClass) {
+      this.netIndex = netIndex;
+      this.msgClass = msgClass;
+    }
   }
 
-  @Override
-  protected long toLong()
-  {
-    return super.toLong()*((long)1E4) + this.PATCH;
-  }
+  private static final NetMessageRegistry INSTANCE
+    = new NetMessageRegistry();
 }

@@ -36,26 +36,26 @@ public abstract class Net
   /** Use this for SNPRINTF like stuff on network socket  */
   public static final int STRLEN = 256;
 
-  private static final NetVersion netVersion = new NetVersion();
+  private static final NetVersion localVersion = new NetVersion();
 
   private static final ResourceLocation CHANNEL_NAME
     = new ResourceLocation(Props.MODID, "main");
 
   private static final SimpleChannel CHANNEL
     = NetworkRegistry.newSimpleChannel(Net.CHANNEL_NAME,
-      Net::getProtocolVersion, Net::isClientAcceptVersion,
+      Net::getVersionString, Net::isClientAcceptVersion,
       Net::isServerAcceptVersion);
 
   /* *************************************************************  */
 
-  public static final String getProtocolVersion()
+  public static final String getVersionString()
   {
-    return Net.netVersion.toString();
+    return Net.localVersion.toString();
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends NetMessage<T>>
-  void registerMessage(int index, Class<T> msgClass)
+  public static
+  void registerMessage(int netIndex, Class<? extends NetMessage> msgClass)
   {
     NetMessage inst;
 
@@ -67,7 +67,7 @@ public abstract class Net
         + " purposes!", e);
     }
 
-    Net.CHANNEL.registerMessage(index, msgClass, inst.getEncoder(),
+    Net.CHANNEL.registerMessage(netIndex, msgClass, inst.getEncoder(),
                                 inst.getDecoder(), inst.getReceiver());
   }
 
@@ -107,15 +107,53 @@ public abstract class Net
    * </code></pre>
    */
 
-  private static boolean isClientAcceptVersion(String serverVersion)
+  private static boolean isClientAcceptVersion(String serverVersionString)
   {
-    // TODO
-    return getProtocolVersion().equals(serverVersion);
+    NetVersion serverVersion;
+
+    try {
+      serverVersion = new NetVersion(serverVersionString);
+    } catch (YoudirkNumericIOException e) {
+      return false;
+    }
+
+    // If (Remote.Version >= Local.Version): ACCEPT
+    if (serverVersion.compareTo(Net.localVersion) >= 0)
+      return true;
+
+    // If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API): DENY
+    if (serverVersion.isBreaking(Net.localVersion))
+      return false;
+
+    //If (Client.MINOR >= Server.MINOR): ACCEPT
+    if (Net.localVersion.MINOR >= serverVersion.MINOR)
+      return true;
+
+    return false;
   }
 
-  private static boolean isServerAcceptVersion(String clientVersion)
+  private static boolean isServerAcceptVersion(String clientVersionString)
   {
-    // TODO
-    return getProtocolVersion().equals(clientVersion);
+    NetVersion clientVersion;
+
+    try {
+      clientVersion = new NetVersion(clientVersionString);
+    } catch (YoudirkNumericIOException e) {
+      return false;
+    }
+
+    // If (Remote.Version >= Local.Version): ACCEPT
+    if (clientVersion.compareTo(Net.localVersion) >= 0)
+      return true;
+
+    // If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API): DENY
+    if (clientVersion.isBreaking(Net.localVersion))
+      return false;
+
+    //If (Client.MINOR >= Server.MINOR): ACCEPT
+    if (clientVersion.MINOR >= Net.localVersion.MINOR)
+      return true;
+
+    return getVersionString().equals(clientVersionString);
   }
 }

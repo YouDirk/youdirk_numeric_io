@@ -33,7 +33,10 @@ import java.util.function.Function;
 
 /**
  * Every NetMessage must implement these methods to serialize it and
- * add an event handler.
+ * add an event handler on receiving the message.
+ *
+ * <p><b>Additionally you need to manually add the message to the
+ * <code>NetMessageRegistry.CLASSES[]</code></b></p>
  */
 public abstract class NetMessage<T extends NetMessage<T>>
   implements Runnable
