@@ -44,7 +44,7 @@ public abstract class CommonEvents
   {
     WorldClient world = event.getClientWorldOrThrow();
 
-    NetMessageTestSound msg = event.getTestSoundMsg();
+    TestSoundNetMessage msg = event.getTestSoundMsg();
 
     world.playSound(msg.pos, new SoundEvent(msg.sound), msg.category,
                     msg.volume, msg.pitch, true);

@@ -48,7 +48,7 @@ public abstract class Net
 
   /* *************************************************************  */
 
-  public static final String getVersionString()
+  public static String getVersionString()
   {
     return Net.localVersion.toString();
   }

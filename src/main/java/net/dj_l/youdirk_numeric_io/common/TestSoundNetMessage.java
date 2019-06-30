@@ -34,7 +34,7 @@ import net.minecraft.util.SoundCategory;
  * TODO: Just a TestMessage for networking.  Remove this class it if
  * tests are finished!
  */
-public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
+public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
 {
   public final BlockPos pos;
 
@@ -49,7 +49,7 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
    * A default constructor must be implemented to instanciate dummy
    * objects.  It can be empty.
    */
-  public NetMessageTestSound()
+  public TestSoundNetMessage()
   {
     this.pos = null;
     this.sound = null;
@@ -58,7 +58,7 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
     this.pitch = 0.0f;
   }
 
-  public NetMessageTestSound(BlockPos pos, ResourceLocation sound,
+  public TestSoundNetMessage(BlockPos pos, ResourceLocation sound,
     SoundCategory category, float volume, float pitch)
   {
     this.pos = pos;
@@ -80,11 +80,11 @@ public class NetMessageTestSound extends NetMessage<NetMessageTestSound>
   }
 
   @Override
-  protected NetMessageTestSound decode(PacketBuffer buf)
+  protected TestSoundNetMessage decode(PacketBuffer buf)
   {
     // THIS is a dummy instance!
 
-    return new NetMessageTestSound(
+    return new TestSoundNetMessage(
       buf.readBlockPos(),
       buf.readResourceLocation(),
       SoundCategory.valueOf(buf.readString(Net.STRLEN)),

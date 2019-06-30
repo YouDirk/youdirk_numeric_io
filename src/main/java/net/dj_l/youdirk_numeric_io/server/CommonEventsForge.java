@@ -67,7 +67,7 @@ public abstract class CommonEventsForge
 
     final double RADIUS_FACTOR = 7.0;
     BlockPos pos = event.getPos();
-    NetMessageTestSound msg = new NetMessageTestSound(pos, sound,
+    TestSoundNetMessage msg = new TestSoundNetMessage(pos, sound,
       SoundCategory.BLOCKS, 1.0f, 1.0f);
 
     Supplier<PacketDistributor.TargetPoint> netPos = () ->

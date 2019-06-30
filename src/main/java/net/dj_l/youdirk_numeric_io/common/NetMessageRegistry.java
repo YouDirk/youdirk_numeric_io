@@ -20,16 +20,35 @@ package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
 
+/**
+ * A place where all sub-classes of <code>NetMessage</code> are
+ * collected for registering these during <code>Setup</code>.
+ * Currently there is no way to collect them automatically, so add
+ * them manually here if you implement a <code>NetMessage</code>.
+ *
+ * <p>Do not change the <code>netIndex</code> for existing items, it
+ * will break the network protocol.</p>
+ *
+ * <pre><code>
+ * private final RegItem[] CLASSES =
+ * {
+ *   new RegItem(1, MyMsg1NetMessage.class),
+ *   new RegItem(2, AnotherHereNetMessage.class),
+ *   new RegItem(4, AndSoOnNetMessage.class),
+ *   ...
+ * };
+ * </code></pre>
+ */
 public class NetMessageRegistry
 {
   private final RegItem[] CLASSES =
   {
-   new RegItem(1, NetMessageTestSound.class),
+   new RegItem(1, TestSoundNetMessage.class),
   };
 
   /* *************************************************************  */
 
-  public static final NetMessageRegistry get()
+  public static NetMessageRegistry get()
   {
     return NetMessageRegistry.INSTANCE;
   }

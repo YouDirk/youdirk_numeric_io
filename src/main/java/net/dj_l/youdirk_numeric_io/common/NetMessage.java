@@ -37,6 +37,18 @@ import java.util.function.Function;
  *
  * <p><b>Additionally you need to manually add the message to the
  * <code>NetMessageRegistry.CLASSES[]</code></b></p>
+ *
+ * <pre><code>
+ * NetMessageRegistry.java:
+ *
+ * private final RegItem[] CLASSES =
+ * {
+ *   new RegItem(1, MyMsg1NetMessage.class),
+ *   new RegItem(2, AnotherHereNetMessage.class),
+ *   new RegItem(4, AndSoOnNetMessage.class),
+ *   ...
+ * };
+ * </code></pre>
  */
 public abstract class NetMessage<T extends NetMessage<T>>
   implements Runnable

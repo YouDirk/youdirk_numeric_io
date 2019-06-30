@@ -32,20 +32,20 @@ import net.minecraft.world.IWorld;
  * finished!
  *
  * <p>Fired on <code>MOD</code> bus if client got a
- * <code>NetMessageTestSound</code> over network.</p>
+ * <code>TestSoundNetMessage</code> over network.</p>
  */
 public class TestSoundEvent extends YoudirkNumericIOEvent
 {
-  private final NetMessageTestSound testSoundMsg;
+  private final TestSoundNetMessage testSoundMsg;
 
-  public TestSoundEvent(IWorld world, NetMessageTestSound testSoundMsg)
+  public TestSoundEvent(IWorld world, TestSoundNetMessage testSoundMsg)
   {
     super(world);
 
     this.testSoundMsg = testSoundMsg;
   }
 
-  public NetMessageTestSound getTestSoundMsg()
+  public TestSoundNetMessage getTestSoundMsg()
   {
     return testSoundMsg;
   }
