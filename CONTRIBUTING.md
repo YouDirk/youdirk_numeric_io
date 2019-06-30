@@ -132,10 +132,12 @@ run_client_player3: Runs a third client instance for multiplayer tests
 run_client_player4: Runs a fourth client instance for multiplayer tests
 run_server: Runs a dedicated server.  Same as official Forge command `$> ./gradlew runServer`
 run_server_nogui: Same as RUN_SERVER, but run in terminal/console mode instead of open a GUI
+
 build: Same as official Forge command `$> ./gradlew build`
 run_productive_client: (only Windows) Run MF_INSTALL_CLIENT, INSTALL_CLIENT and runs the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
-run_productive_server: (also Linux) Run MF_INSTALL_SERVER, INSTALL_SERVER and runs the productive Server installed in `PREFIX=/c/installdir`
+run_productive_server: (also Linux) Run MF_INSTALL_SERVER, INSTALL_SERVER and runs the productive Dedicated Server installed in `PREFIX=/c/installdir`
 run_productive_server_nogui: (also Linux) Same as RUN_PRODUCTIVE_SERVER, but run in terminal/console mode instead of open a GUI
+
 publish: Runs BUILD, copy Mod-Jar to maven repository and add Version-Data to website
 jdk_version: Output JDK version which will be used.  Useful if you have more than one installed on your system
 
@@ -169,9 +171,9 @@ website_mf_rmtag: Remove a Tag of the current Forge-Version from website
 
 # --- Others ---
 install_client: (only Windows) Run BUILD, MF_INSTALL_CLIENT and install the Mod-Jar to the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
-install_server: (also Linux) Run BUILD, MF_INSTALL_SERVER and install the Mod-Jar to the productive Server installed in `PREFIX=/c/installdir`
+install_server: (also Linux) Run BUILD, MF_INSTALL_SERVER and install the Mod-Jar to the productive Dedicated Server installed in `PREFIX=/c/installdir`
 mf_install_client: (only Windows) Compile Forge Installer Jar and install the Client part to official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
-mf_install_server: (also Linux) Compile Forge Installer Jar and install a productive build of the Server part to `PREFIX=/c/installdir`
+mf_install_server: (also Linux) Compile Forge Installer Jar and install a productive Dedicated Server to `PREFIX=/c/installdir`
 config_all: Generate all config files which are generally needed for the whole project. Normally it will called automatically
 forge: clone/checkout Git submodule `forge`, the latest official Minecraft Forge source for branch defined in makefile.config.mk
 website_forge: Same as MF_PUBLISH, but a copy of the Forge Jars must be already available in maven repository
