@@ -154,6 +154,6 @@ public abstract class Net
     if (clientVersion.MINOR >= Net.localVersion.MINOR)
       return true;
 
-    return getVersionString().equals(clientVersionString);
+    return false;
   }
 }
