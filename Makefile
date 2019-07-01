@@ -87,9 +87,8 @@ jdk_version:
 clean_run:
 	-rm -rf $(RUN_DIR)
 .PHONY: clean
-clean: | _clean_bak clean_run _clean_makecache
-	-rm -rf .gradle installer.log forge-*-installer.jar.log \
-	  $(BUILD_DIR)
+clean: | _clean_bak _clean_build clean_run _clean_makecache
+	-rm -rf .gradle installer.log forge-*-installer.jar.log
 
 # --------------------------------------------------------------------
 # Documentation stuff
@@ -360,6 +359,10 @@ _clean_makecache:
 _clean_bak:
 	-rm -f $(shell $(FIND_CMD) . -name '*~')
 
+.PHONY: _clean_build
+_clean_build:
+	-rm -rf $(BUILD_DIR)
+
 .PHONY: clean_forge
 clean_forge:
 	$(MAKE) TEST_GIT=1 _clean_forge
@@ -383,7 +386,7 @@ mf_clean_javadoc:
 	rm -rf $(MF_JAVADOC_DIR)
 
 .PHONY: clean_gradlecache
-clean_gradlecache:
+clean_gradlecache: _clean_build
 	@win_home=$(call _2UNIXPATH,$(USERPROFILE)); \
 	unix_home=$(call _2UNIXPATH,$(HOME)); \
 	if [ -d "$$win_home/$(GRADLE_CACHE_DIR)" ]; then \
