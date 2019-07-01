@@ -382,6 +382,22 @@ clean_javadoc:
 mf_clean_javadoc:
 	rm -rf $(MF_JAVADOC_DIR)
 
+.PHONY: clean_gradlecache
+clean_gradlecache:
+	@win_home=$(call _2UNIXPATH,$(USERPROFILE)); \
+	unix_home=$(call _2UNIXPATH,$(HOME)); \
+	if [ -d "$$win_home/$(GRADLE_CACHE_DIR)" ]; then \
+	  my_home="$$win_home"; \
+	elif [ -d "$$unix_home/$(GRADLE_CACHE_DIR)" ]; then \
+	  my_home="$$unix_home"; \
+	else \
+	  printf "$(ERR2) Could not find the Gradle Cache!\n\n" >&2; \
+	  exit 1; \
+	fi; \
+	echo "Cleaning Gradle cache$(\
+	     ) '$$my_home/$(GRADLE_CACHE_USERREPO_DIR)'"; \
+	rm -rf "$$my_home/$(GRADLE_CACHE_USERREPO_DIR)"
+
 # End of Clean targets
 # ********************************************************************
 

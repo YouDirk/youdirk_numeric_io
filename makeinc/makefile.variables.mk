@@ -144,6 +144,11 @@ else
 endif
 INSTALL_SERVERDIR_ESC = $(subst $(_SPACE),\ ,$(INSTALL_SERVERDIR))
 
+GRADLE_DIR = .gradle
+GRADLE_CACHE_DIR = $(GRADLE_DIR)/caches
+GRADLE_CACHE_USERREPO_DIR = $(GRADLE_CACHE_DIR)/forge_gradle$(\
+  )/minecraft_user_repo
+
 # --------------------------------------------------------------------
 # Environment variables
 

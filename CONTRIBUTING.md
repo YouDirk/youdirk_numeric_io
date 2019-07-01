@@ -119,35 +119,10 @@ The current mostly used development environment is
 Until `CONTRIBUTING.md`
 [#4](https://github.com/YouDirk/youdirk_numeric_io/issues/4) was not
 fully written, here comes a short reference about the currently
-implemented (commit 4b8eeed29be9970cbf738774adf5690e4f50c48b) `make`
-`targets:`. You can run it using the command `$> make <target>`
+implemented `make` `targets:`. You can run it using the command `$>
+make <target>`
 
 ```make
-# --- Additional MAKE arguments ---
-
-all classes run_client% run_server build:
-
-      (optional) ARGS=<gradlew arguments>
-
-  example $> make <target> ARGS=--stacktrace
-  runs `./gradlew --stacktrace <target>`
-
-website_mf_addtag website_mf_rmtag website_addtag% website_rmtag%:
-
-      TAG=<the tag>
-
-  example $> make <target> TAG=unstable
-
-mf_install_server install_server run_productive_server%:
-
-      PREFIX=<install dir>
-
-  example1 $> make <target> PREFIX=1
-  Installs to a default directory inside the project directory
-
-  example2 $> make <target> PREFIX="/c/Progam Files/installdir"
-  Installs to a `/c/Progam Files/installdir`
-
 # --- Necessary targets ---
 all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
 classes: Same as official Forge command `$> ./gradlew classes`
@@ -169,6 +144,7 @@ jdk_version: Output JDK version which will be used.  Useful if you have more tha
 # --- Removing temporary files ---
 clean_run: Reset all Minecraft runtime-configuration which were set during RUN_CLIENT, RUN_SERVER
 clean: Remove all temporay/cache files which were generated during work
+clean_gradlecache: Clear the Gradle UserRepo cache.  Useful if it is broken and needs to re-accesstransformed.  If so, you get Missing-Symbol-Errors in injected files
 
 # --- Documentation stuff ---
 javadoc: Generate a Javadoc documentation for the Mod-API and open it in browser
@@ -206,6 +182,31 @@ clean_bootstrap: Delete all files which were generated via BOOTSTRAP
 clean_forge: Delete all files which were generated via FORGE
 mf_deinit: Deinit the Forge Git submodule `forge` which was generated via FORGE
 website_mod: Same as PUBLISH, but a copy of the Mod-Jar must be already available in maven repository
+
+# ****** Additional MAKE arguments ******
+
+all classes run_client% run_server build:
+
+      (optional) ARGS=<gradlew arguments>
+
+  example $> make <target> ARGS=--stacktrace
+  runs `./gradlew --stacktrace <target>`
+
+website_mf_addtag website_mf_rmtag website_addtag% website_rmtag%:
+
+      TAG=<the tag>
+
+  example $> make <target> TAG=unstable
+
+mf_install_server install_server run_productive_server%:
+
+      PREFIX=<install dir>
+
+  example1 $> make <target> PREFIX=1
+  Installs to a default directory inside the project directory
+
+  example2 $> make <target> PREFIX="/c/Progam Files/installdir"
+  Installs to a `/c/Progam Files/installdir`
 ```
 
 II. Recommended toolchain
