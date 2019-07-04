@@ -36,18 +36,18 @@ import java.util.function.Function;
  * it and add an event handler on receiving the message.
  *
  * <p><b>The HashCode of the ClassName is used as NetworkID for your
- * message!</b> For this reason, do not rename <code>? extends
- * NetMessage</code> classes to hold the network protocol
+ * message!</b> For this reason, do not rename <code>&lt;? extends
+ * NetMessage&gt;</code> classes to hold the network protocol
  * compatible.</p>
  *
  * <p>Make sure that your <code>NetMessage</code> class implements the
  * following <code>static</code> method:</p>
  *
  * <pre><code>
- * @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+ *{@literal @}Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
  * public class MyNetMessage extends NetMessage<MyNetMessage>
  * {
- *   @SubscribeEvent
+ *  {@literal @}SubscribeEvent
  *   public static void
  *   onRegister(final RegistryEvent.Register<NetMessageBase> event)
  *   {
