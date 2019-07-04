@@ -24,10 +24,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// Events
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.world.BlockEvent;
-
 
 /**
  * The beginning of all =D

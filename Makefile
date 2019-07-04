@@ -379,11 +379,11 @@ clean_bootstrap:
 
 .PHONY: clean_javadoc
 clean_javadoc:
-	rm -rf $(JAVADOC_DIR)
+	-rm -rf $(JAVADOC_DIR)
 
 .PHONY: mf_clean_javadoc
 mf_clean_javadoc:
-	rm -rf $(MF_JAVADOC_DIR)
+	-rm -rf $(MF_JAVADOC_DIR)
 
 .PHONY: clean_gradlecache
 clean_gradlecache: _clean_build

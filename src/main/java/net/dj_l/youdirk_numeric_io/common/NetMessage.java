@@ -32,26 +32,35 @@ import java.util.function.Function;
 
 
 /**
- * Every NetMessage must implement these methods to serialize it and
- * add an event handler on receiving the message.
+ * Every NetMessage must implement these abstract methods to serialize
+ * it and add an event handler on receiving the message.
  *
- * <p><b>Additionally you need to manually add the message to the
- * <code>NetMessageRegistry.CLASSES[]</code></b></p>
+ * <p><b>The HashCode of the ClassName is used as NetworkID for your
+ * message!</b> For this reason, do not rename <code>? extends
+ * NetMessage</code> classes to hold the network protocol
+ * compatible.</p>
+ *
+ * <p>Make sure that your <code>NetMessage</code> class implements the
+ * following <code>static</code> method:</p>
  *
  * <pre><code>
- * NetMessageRegistry.java:
- *
- * private final RegItem[] CLASSES =
+ * @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+ * public class MyNetMessage extends NetMessage<MyNetMessage>
  * {
- *   new RegItem(1, MyMsg1NetMessage.class),
- *   new RegItem(2, AnotherHereNetMessage.class),
- *   new RegItem(4, AndSoOnNetMessage.class),
- *   ...
- * };
+ *   @SubscribeEvent
+ *   public static void
+ *   onRegister(final RegistryEvent.Register<NetMessageBase> event)
+ *   {
+ *     event.getRegistry().register(new MyNetMessage());
+ *   }
+ *
+ *   . . .
+ *
+ * }
  * </code></pre>
  */
 public abstract class NetMessage<T extends NetMessage<T>>
-  implements Runnable
+  extends NetMessageBase implements Runnable
 {
   /**
    * <code>@Nullable</code> if we receive it on client.  Otherwise it
@@ -68,9 +77,13 @@ public abstract class NetMessage<T extends NetMessage<T>>
 
   /**
    * A default constructor must be implemented to instanciate dummy
-   * objects.  It can be empty.
+   * objects.  It can be empty, but <code>super()</code> must be
+   * called.
    */
-  public NetMessage() {}
+  public NetMessage()
+  {
+    super();
+  }
 
   /**
    * Encode <code>this</code> to <code>buf</code>
@@ -96,7 +109,9 @@ public abstract class NetMessage<T extends NetMessage<T>>
    */
   protected abstract void onReceive();
 
-  /* *************************************************************  */
+  /* *****************************************************************
+   * Final stuff
+   */
 
   @Override
   public final void run()

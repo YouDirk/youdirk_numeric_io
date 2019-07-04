@@ -55,20 +55,13 @@ public abstract class Net
 
   @SuppressWarnings("unchecked")
   public static
-  void registerMessage(int netIndex, Class<? extends NetMessage> msgClass)
+  void registerMessage(NetMessage dummyInstance)
   {
-    NetMessage inst;
+    Class<? extends NetMessage> msgClass = dummyInstance.getClass();
 
-    try {
-      inst = msgClass.newInstance();
-    } catch (Exception e) {
-      throw new YoudirkNumericIOException(
-        "Could not instanciate a Dummy NetMessage for registering"
-        + " purposes!", e);
-    }
-
-    Net.CHANNEL.registerMessage(netIndex, msgClass, inst.getEncoder(),
-                                inst.getDecoder(), inst.getReceiver());
+    Net.CHANNEL.registerMessage(
+      dummyInstance.getNetId(), msgClass, dummyInstance.getEncoder(),
+      dummyInstance.getDecoder(), dummyInstance.getReceiver());
   }
 
   public static <T extends NetMessage<T>>

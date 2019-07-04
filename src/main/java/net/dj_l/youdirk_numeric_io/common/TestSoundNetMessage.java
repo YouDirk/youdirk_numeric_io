@@ -19,8 +19,17 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
+
 // Network
 import net.minecraft.network.PacketBuffer;
+
+// Event Bus
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+// Events
+import net.minecraftforge.event.RegistryEvent;
 
 // Gameplay
 import net.minecraft.world.IWorld;
@@ -34,8 +43,16 @@ import net.minecraft.util.SoundCategory;
  * TODO: Just a TestMessage for networking.  Remove this class it if
  * tests are finished!
  */
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
 {
+  @SubscribeEvent
+  public static void
+  onRegister(final RegistryEvent.Register<NetMessageBase> event)
+  {
+    event.getRegistry().register(new TestSoundNetMessage());
+  }
+
   public final BlockPos pos;
 
   // May not exist on dedicated server
@@ -51,6 +68,8 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
    */
   public TestSoundNetMessage()
   {
+    super();
+
     this.pos = null;
     this.sound = null;
     this.category = null;
@@ -61,6 +80,8 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   public TestSoundNetMessage(BlockPos pos, ResourceLocation sound,
     SoundCategory category, float volume, float pitch)
   {
+    super();
+
     this.pos = pos;
     this.sound = sound;
     this.category = category;

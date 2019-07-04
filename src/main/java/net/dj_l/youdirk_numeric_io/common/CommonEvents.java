@@ -16,8 +16,7 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.client;
-import net.dj_l.youdirk_numeric_io.common.*;
+package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
@@ -26,27 +25,20 @@ import net.minecraftforge.fml.common.Mod;
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-// Gameplay
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.util.SoundEvent;
+// Events
+import net.minecraftforge.event.RegistryEvent;
 
 
 /**
- * Implementation of all non-specific client-side event handlers fired
- * on <code>MOD</code> bus.
+ * Implementation of all non-specific side-independent event handlers
+ * fired on <code>MOD</code> bus.
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
-  // TODO: Just a Test event, on destroying a Block
   @SubscribeEvent
-  public static void onTestSound(final TestSoundEvent event)
+  public static void newRegistries(final RegistryEvent.NewRegistry event)
   {
-    WorldClient world = event.getClientWorldOrThrow();
-
-    TestSoundNetMessage msg = event.getTestSoundMsg();
-
-    world.playSound(msg.pos, new SoundEvent(msg.sound), msg.category,
-                    msg.volume, msg.pitch, true);
+    new NetMessageRegistry();
   }
 }

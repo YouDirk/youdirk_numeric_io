@@ -50,7 +50,8 @@ public class Setup
 
   private void _init(FMLCommonSetupEvent event)
   {
-    NetMessageRegistry.get().registerAllMessages();
+    // some preinit code
+    Log.ger.debug("Common Setup::_init()");
   }
 
   /* *************************************************************  */

@@ -19,58 +19,51 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Registries/Events
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.registries.IForgeRegistryInternal;
+import net.minecraftforge.registries.RegistryManager;
+
+// Gameplay
+import net.minecraft.util.ResourceLocation;
+
 
 /**
  * A place where all sub-classes of <code>NetMessage</code> are
  * collected for registering these during <code>Setup</code>.
- * Currently there is no way to collect them automatically, so add
- * them manually here if you implement a <code>NetMessage</code>.
- *
- * <p>Do not change the <code>netIndex</code> for existing items, it
- * will break the network protocol.</p>
- *
- * <pre><code>
- * private final RegItem[] CLASSES =
- * {
- *   new RegItem(1, MyMsg1NetMessage.class),
- *   new RegItem(2, AnotherHereNetMessage.class),
- *   new RegItem(4, AndSoOnNetMessage.class),
- *   ...
- * };
- * </code></pre>
  */
 public class NetMessageRegistry
+  implements IForgeRegistry.BakeCallback<NetMessageBase>
 {
-  private final RegItem[] CLASSES =
-  {
-   new RegItem(1, TestSoundNetMessage.class),
-  };
+  private final ResourceLocation
+  REGISTRY_NAME = new ResourceLocation(Props.MODID,
+                                       "registries/net_message");
 
-  /* *************************************************************  */
+  private IForgeRegistry<NetMessageBase> fRegistry;
+  private boolean alreadyRegistered = false;
 
-  public static NetMessageRegistry get()
+  public NetMessageRegistry()
   {
-    return NetMessageRegistry.INSTANCE;
+    this.fRegistry = new RegistryBuilder<NetMessageBase>()
+      .setType(NetMessageBase.class)
+      .setName(REGISTRY_NAME)
+      .add(this)
+      .create();
   }
 
-  public void registerAllMessages()
+  @Override
+  public void onBake(IForgeRegistryInternal<NetMessageBase> owner,
+                     RegistryManager stage)
   {
-    for (RegItem m: this.CLASSES)
-      Net.registerMessage(m.netIndex, m.msgClass);
+    /* Called 2 times:
+     *   1. on game setup, 2. on joining game
+     */
+    if (this.alreadyRegistered) return;
+
+    for (NetMessageBase msg: owner)
+      Net.registerMessage((NetMessage) msg);
+
+    this.alreadyRegistered = true;
   }
-
-  /* *************************************************************  */
-
-  private class RegItem {
-    int netIndex;
-    Class<? extends NetMessage> msgClass;
-
-    RegItem(int netIndex, Class<? extends NetMessage> msgClass) {
-      this.netIndex = netIndex;
-      this.msgClass = msgClass;
-    }
-  }
-
-  private static final NetMessageRegistry INSTANCE
-    = new NetMessageRegistry();
 }
