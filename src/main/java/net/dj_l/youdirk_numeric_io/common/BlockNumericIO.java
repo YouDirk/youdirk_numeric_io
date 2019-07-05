@@ -19,35 +19,18 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
-// Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-// Events
-import net.minecraftforge.event.RegistryEvent;
-
 // Gameplay
 import net.minecraft.block.Block;
 
 
 /**
- * Implementation of all non-specific side-independent event handlers
- * fired on <code>MOD</code> bus.
+ * An abstract class which implements the non number-system specific,
+ * <b>common</b> mechanics.
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public abstract class BlockNumericIO extends Block
 {
-  @SubscribeEvent
-  public static void newRegistries(final RegistryEvent.NewRegistry event)
+  public BlockNumericIO(Block.Properties properties)
   {
-    new NetMessageRegistry();
-  }
-
-  @SubscribeEvent
-  public static void onRegisterBlocks(RegistryEvent.Register<Block> event)
-  {
-    event.getRegistry().registerAll(new BlockUnsignedDecimalInput());
+    super(properties);
   }
 }

@@ -19,35 +19,24 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
-// Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-// Events
-import net.minecraftforge.event.RegistryEvent;
-
 // Gameplay
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
 
 /**
- * Implementation of all non-specific side-independent event handlers
- * fired on <code>MOD</code> bus.
+ * A specific <code>NumericInput</code> block, which implements the
+ * number-system specific <b>unsigned decimal</b> input mechanics.
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public class BlockUnsignedDecimalInput extends BlockNumericInput
 {
-  @SubscribeEvent
-  public static void newRegistries(final RegistryEvent.NewRegistry event)
+  public BlockUnsignedDecimalInput()
   {
-    new NetMessageRegistry();
+    super(Block.Properties.create(Material.ROCK));
   }
 
-  @SubscribeEvent
-  public static void onRegisterBlocks(RegistryEvent.Register<Block> event)
+  public BlockUnsignedDecimalInput(Block.Properties properties)
   {
-    event.getRegistry().registerAll(new BlockUnsignedDecimalInput());
+    super(properties);
   }
 }
