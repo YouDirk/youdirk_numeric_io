@@ -49,6 +49,7 @@ public class NetMessageRegistry
       .setType(NetMessageBase.class)
       .setName(REGISTRY_NAME)
       .add(this)
+      .disableSaving()
       .create();
   }
 

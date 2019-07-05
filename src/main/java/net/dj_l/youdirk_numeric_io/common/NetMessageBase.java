@@ -22,6 +22,9 @@ import net.dj_l.youdirk_numeric_io.*;
 // Registries/Events
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+// Gameplay
+import net.minecraft.util.ResourceLocation;
+
 
 /**
  * This class is a work-around for the poor Java Generics type
@@ -40,8 +43,8 @@ public abstract class NetMessageBase
     /* Namespace must be "minecraft", otherwise we get a runtime
      * warning O.O
      */
-    this.setRegistryName("minecraft",
-                         "net/messages/" + this._toClassNameLower());
+    this.setRegistryName(new ResourceLocation("minecraft",
+      "net/messages/" + this._toClassNameLower()));
   }
 
   public int getNetId()
