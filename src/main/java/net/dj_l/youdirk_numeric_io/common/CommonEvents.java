@@ -21,10 +21,10 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ObjectHolder;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ObjectHolder;
 
 // Events
 import net.minecraftforge.event.RegistryEvent;

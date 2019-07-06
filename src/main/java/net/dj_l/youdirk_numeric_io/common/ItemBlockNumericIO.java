@@ -24,6 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.EnumRarity;
 
 
 /**
@@ -32,8 +33,11 @@ import net.minecraft.item.ItemGroup;
  */
 public abstract class ItemBlockNumericIO extends ItemBlock
 {
-  private static final Item.Properties _BUILDER
-    = new Item.Properties().group(ItemGroup.REDSTONE);
+  private static final Item.Properties _BUILDER = new Item.Properties()
+    .group(ItemGroup.REDSTONE)
+    .defaultMaxDamage(0)
+    .maxStackSize(8)
+    .rarity(EnumRarity.UNCOMMON);
 
   protected
   ItemBlockNumericIO(BlockNumericIO block, String registryPath)
