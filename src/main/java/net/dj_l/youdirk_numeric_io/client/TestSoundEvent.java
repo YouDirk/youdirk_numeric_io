@@ -36,17 +36,17 @@ import net.minecraft.world.IWorld;
  */
 public class TestSoundEvent extends YoudirkNumericIOEvent
 {
-  private final TestSoundNetMessage testSoundMsg;
+  private final TestSoundNetMessage _TEST_SOUND_MSG;
 
   public TestSoundEvent(IWorld world, TestSoundNetMessage testSoundMsg)
   {
     super(world);
 
-    this.testSoundMsg = testSoundMsg;
+    this._TEST_SOUND_MSG = testSoundMsg;
   }
 
   public TestSoundNetMessage getTestSoundMsg()
   {
-    return testSoundMsg;
+    return this._TEST_SOUND_MSG;
   }
 }

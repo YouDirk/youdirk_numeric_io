@@ -66,14 +66,14 @@ public abstract class CommonEventsForge
       = new ResourceLocation("minecraft", "entity.witch.death");
 
     final double RADIUS_FACTOR = 7.0;
-    BlockPos pos = event.getPos();
-    TestSoundNetMessage msg = new TestSoundNetMessage(pos, sound,
+    final BlockPos pos = event.getPos();
+    final TestSoundNetMessage msg = new TestSoundNetMessage(pos, sound,
       SoundCategory.BLOCKS, 1.0f, 1.0f);
 
     Supplier<PacketDistributor.TargetPoint> netPos = () ->
       {
        return new PacketDistributor.TargetPoint(
-         pos.getX(), pos.getY(), pos.getZ(), RADIUS_FACTOR*msg.volume,
+         pos.getX(), pos.getY(), pos.getZ(), RADIUS_FACTOR*msg.VOLUME,
          world.getDimension().getType());
       };
 

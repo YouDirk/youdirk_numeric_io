@@ -19,9 +19,6 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Gameplay
-import net.minecraft.block.Block;
-
 
 /**
  * An abstract class which implements the non number-system specific,
@@ -29,8 +26,8 @@ import net.minecraft.block.Block;
  */
 public abstract class BlockNumericInput extends BlockNumericIO
 {
-  public BlockNumericInput(Block.Properties properties)
+  protected BlockNumericInput(String registryPath)
   {
-    super(properties);
+    super(registryPath);
   }
 }

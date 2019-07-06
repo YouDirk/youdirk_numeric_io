@@ -19,25 +19,17 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Gameplay
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-
 
 /**
- * An abstract <code>Block</code> which implements the non
- * number-system specific, <b>common</b> mechanics.
+ * A specific <code>NumericIO</code> ItemBlock, which implements the
+ * number-system specific <b>unsigned decimal</b> input mechanics.
  */
-public abstract class BlockNumericIO extends Block
+public class ItemUnsignedDecimalInput extends ItemBlockNumericIO
 {
-  private static final Block.Properties _BUILDER
-    = Block.Properties.create(Material.GRASS);
+  private static final String _REGISTRY_PATH = "unsigned_decimal_input";
 
-  protected BlockNumericIO(String registryPath)
+  public ItemUnsignedDecimalInput(BlockUnsignedDecimalInput block)
   {
-    super(BlockNumericIO._BUILDER);
-
-    this.setRegistryName(new ResourceLocation(Props.MODID, registryPath));
+    super(block, ItemUnsignedDecimalInput._REGISTRY_PATH);
   }
 }

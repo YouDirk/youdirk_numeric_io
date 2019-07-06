@@ -30,7 +30,7 @@ import java.util.regex.Matcher;
  */
 public class NetVersion implements Comparable<NetVersion>
 {
-  private final Pattern VERSION_REGEX = Pattern.compile(
+  private final Pattern _VERSION_REGEX = Pattern.compile(
     "^([0-9]{1,4})\\.([0-9]{1,4})\\.([0-9]{1,4})$");
 
   public final int MAJOR, API, MINOR;
@@ -51,19 +51,19 @@ public class NetVersion implements Comparable<NetVersion>
 
   public NetVersion(String versionString) throws YoudirkNumericIOException
   {
-    final String errStr
+    final String ERR_STR
       = "'" + versionString + "' is not a network protocol version!";
 
-    Matcher m = VERSION_REGEX.matcher(versionString);
+    Matcher m = _VERSION_REGEX.matcher(versionString);
 
-    if (!m.matches()) throw new YoudirkNumericIOException(errStr);
+    if (!m.matches()) throw new YoudirkNumericIOException(ERR_STR);
 
     try {
       this.MAJOR = Math.abs(Integer.parseInt(m.group(1)));
       this.API = Math.abs(Integer.parseInt(m.group(2)));
       this.MINOR = Math.abs(Integer.parseInt(m.group(3)));
     } catch (Exception e) {
-      throw new YoudirkNumericIOException(errStr, e);
+      throw new YoudirkNumericIOException(ERR_STR, e);
     }
   }
 

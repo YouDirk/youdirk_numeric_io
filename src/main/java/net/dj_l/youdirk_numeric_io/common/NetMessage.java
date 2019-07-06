@@ -80,7 +80,7 @@ public abstract class NetMessage<T extends NetMessage<T>>
    * objects.  It can be empty, but <code>super()</code> must be
    * called.
    */
-  public NetMessage()
+  protected NetMessage()
   {
     super();
   }

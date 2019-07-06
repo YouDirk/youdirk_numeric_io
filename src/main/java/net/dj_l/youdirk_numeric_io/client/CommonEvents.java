@@ -46,7 +46,7 @@ public abstract class CommonEvents
 
     TestSoundNetMessage msg = event.getTestSoundMsg();
 
-    world.playSound(msg.pos, new SoundEvent(msg.sound), msg.category,
-                    msg.volume, msg.pitch, true);
+    world.playSound(msg.POS, new SoundEvent(msg.SOUND), msg.CATEGORY,
+                    msg.VOLUME, msg.PITCH, true);
   }
 }

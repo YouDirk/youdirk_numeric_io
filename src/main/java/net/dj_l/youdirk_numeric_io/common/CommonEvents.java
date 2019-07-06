@@ -21,6 +21,7 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,12 +31,14 @@ import net.minecraftforge.event.RegistryEvent;
 
 // Gameplay
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 
 
 /**
  * Implementation of all non-specific side-independent event handlers
  * fired on <code>MOD</code> bus.
  */
+@ObjectHolder(Props.MODID)
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
@@ -45,9 +48,35 @@ public abstract class CommonEvents
     new NetMessageRegistry();
   }
 
+  /* *****************************************************************
+   * Blocks
+   */
+
+  @ObjectHolder("unsigned_decimal_input")
+  public static final
+  BlockUnsignedDecimalInput BLOCK_UNSIGNED_DECIMAL_INPUT = null;
+
   @SubscribeEvent
-  public static void onRegisterBlocks(RegistryEvent.Register<Block> event)
+  public static void
+  onRegisterBlocks(RegistryEvent.Register<Block> event)
   {
-    event.getRegistry().registerAll(new BlockUnsignedDecimalInput());
+    event.getRegistry().registerAll(
+      new BlockUnsignedDecimalInput());
+  }
+
+  /* *****************************************************************
+   * Items / ItemBlocks
+   */
+
+  @ObjectHolder("unsigned_decimal_input")
+  public static final
+  ItemUnsignedDecimalInput ITEM_UNSIGNED_DECIMAL_INPUT = null;
+
+  @SubscribeEvent
+  public static void
+  onRegisterItemBlocks(RegistryEvent.Register<Item> event)
+  {
+    event.getRegistry().registerAll(
+     new ItemUnsignedDecimalInput(BLOCK_UNSIGNED_DECIMAL_INPUT));
   }
 }

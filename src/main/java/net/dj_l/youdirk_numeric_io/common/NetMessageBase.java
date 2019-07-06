@@ -38,7 +38,7 @@ public abstract class NetMessageBase
    * objects.  It can be empty, but <code>super()</code> must be
    * called.
    */
-  public NetMessageBase()
+  protected NetMessageBase()
   {
     /* Namespace must be "minecraft", otherwise we get a runtime
      * warning O.O

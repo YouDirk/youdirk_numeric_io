@@ -19,10 +19,6 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Gameplay
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-
 
 /**
  * A specific <code>NumericInput</code> block, which implements the
@@ -30,13 +26,10 @@ import net.minecraft.block.material.Material;
  */
 public class BlockUnsignedDecimalInput extends BlockNumericInput
 {
+  private static final String _REGISTRY_PATH = "unsigned_decimal_input";
+
   public BlockUnsignedDecimalInput()
   {
-    super(Block.Properties.create(Material.ROCK));
-  }
-
-  public BlockUnsignedDecimalInput(Block.Properties properties)
-  {
-    super(properties);
+    super(BlockUnsignedDecimalInput._REGISTRY_PATH);
   }
 }

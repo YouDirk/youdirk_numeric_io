@@ -21,22 +21,24 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Gameplay
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 
 
 /**
- * An abstract <code>Block</code> which implements the non
+ * An abstract <code>ItemBlock</code> which implements the non
  * number-system specific, <b>common</b> mechanics.
  */
-public abstract class BlockNumericIO extends Block
+public abstract class ItemBlockNumericIO extends ItemBlock
 {
-  private static final Block.Properties _BUILDER
-    = Block.Properties.create(Material.GRASS);
+  private static final Item.Properties _BUILDER
+    = new Item.Properties().group(ItemGroup.REDSTONE);
 
-  protected BlockNumericIO(String registryPath)
+  protected
+  ItemBlockNumericIO(BlockNumericIO block, String registryPath)
   {
-    super(BlockNumericIO._BUILDER);
+    super(block, ItemBlockNumericIO._BUILDER);
 
     this.setRegistryName(new ResourceLocation(Props.MODID, registryPath));
   }

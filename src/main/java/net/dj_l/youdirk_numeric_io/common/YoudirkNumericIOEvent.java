@@ -49,18 +49,18 @@ public class YoudirkNumericIOEvent extends Event
 
   /* *************************************************************  */
 
-  private final IWorld world;
+  private final IWorld _WORLD;
 
   public YoudirkNumericIOEvent(IWorld world)
   {
     super();
 
-    this.world = world;
+    this._WORLD = world;
   }
 
   public IWorld getWorld()
   {
-    return this.world;
+    return this._WORLD;
   }
 
   /**
@@ -71,7 +71,7 @@ public class YoudirkNumericIOEvent extends Event
   getClientWorldOrThrow()
     throws net.dj_l.youdirk_numeric_io.client.NotClientException
   {
-    World world = this.world.getWorld();
+    World world = this._WORLD.getWorld();
 
     if (!world.isRemote())
       throw new net.dj_l.youdirk_numeric_io.client.NotClientException();
@@ -87,7 +87,7 @@ public class YoudirkNumericIOEvent extends Event
   getServerWorldOrThrow()
     throws net.dj_l.youdirk_numeric_io.server.NotServerException
   {
-    World world = this.world.getWorld();
+    World world = this._WORLD.getWorld();
 
     if (world.isRemote())
       throw new net.dj_l.youdirk_numeric_io.server.NotServerException();

@@ -53,14 +53,14 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
     event.getRegistry().register(new TestSoundNetMessage());
   }
 
-  public final BlockPos pos;
+  public final BlockPos POS;
 
   // May not exist on dedicated server
-  public final ResourceLocation sound;
+  public final ResourceLocation SOUND;
 
-  public final SoundCategory category;
-  public final float volume;
-  public final float pitch;
+  public final SoundCategory CATEGORY;
+  public final float VOLUME;
+  public final float PITCH;
 
   /**
    * A default constructor must be implemented to instanciate dummy
@@ -70,11 +70,11 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   {
     super();
 
-    this.pos = null;
-    this.sound = null;
-    this.category = null;
-    this.volume = 0.0f;
-    this.pitch = 0.0f;
+    this.POS = null;
+    this.SOUND = null;
+    this.CATEGORY = null;
+    this.VOLUME = 0.0f;
+    this.PITCH = 0.0f;
   }
 
   public TestSoundNetMessage(BlockPos pos, ResourceLocation sound,
@@ -82,22 +82,22 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   {
     super();
 
-    this.pos = pos;
-    this.sound = sound;
-    this.category = category;
-    this.volume = volume;
-    this.pitch = pitch;
+    this.POS = pos;
+    this.SOUND = sound;
+    this.CATEGORY = category;
+    this.VOLUME = volume;
+    this.PITCH = pitch;
   }
 
 
   @Override
   protected void encode(PacketBuffer buf)
   {
-    buf.writeBlockPos(this.pos)
-      .writeResourceLocation(this.sound)
-      .writeString(this.category.toString())
-      .writeFloat(this.volume)
-      .writeFloat(this.pitch);
+    buf.writeBlockPos(this.POS)
+      .writeResourceLocation(this.SOUND)
+      .writeString(this.CATEGORY.toString())
+      .writeFloat(this.VOLUME)
+      .writeFloat(this.PITCH);
   }
 
   @Override
@@ -121,30 +121,30 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
      */
     IWorld world = net.minecraft.client.Minecraft.getInstance().world;
 
-    if (this.pos == null || !world.isBlockLoaded(this.pos))
+    if (this.POS == null || !world.isBlockLoaded(this.POS))
       throw new NetPacketErrorException("Not a valid Block Position: "
-                                        + this.pos);
+                                        + this.POS);
 
     /* Would be better to really open the resource to test if it
      * exist, but too much CPU overhead.  In practise we should use
      * something like a Lookup Table and only transfer the Key over
      * the network.
      */
-    if (this.sound == null || new SoundEvent(this.sound) == null)
+    if (this.SOUND == null || new SoundEvent(this.SOUND) == null)
       throw new NetPacketErrorException("Not a valid Sound Location: "
-                                        + this.sound);
+                                        + this.SOUND);
 
-    if (this.category == null || this.category == SoundCategory.MASTER)
+    if (this.CATEGORY == null || this.CATEGORY == SoundCategory.MASTER)
       throw new NetPacketErrorException("Not a valid Sound Category: "
-                                        + this.category);
+                                        + this.CATEGORY);
 
-    if (this.volume < 0.0f || this.volume > 1.0f)
+    if (this.VOLUME < 0.0f || this.VOLUME > 1.0f)
       throw new NetPacketErrorException("Not a valid Sound Volume: "
-                                        + this.volume);
+                                        + this.VOLUME);
 
-    if (this.pitch <= 0.0f || this.pitch > 50.0f)
+    if (this.PITCH <= 0.0f || this.PITCH > 50.0f)
       throw new NetPacketErrorException("Not a valid Sound Pitch: "
-                                        + this.pitch);
+                                        + this.PITCH);
   }
 
   @Override
@@ -168,8 +168,8 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
       senderName = sender.getDisplayName().getString();
     }
 
-    return "TestSound: " +this.pos+ ", '" + this.sound+ "', "
-      +this.category+ ", volume=" +this.volume+ ", pitch=" +this.pitch
+    return "TestSound: " +this.POS+ ", '" + this.SOUND+ "', "
+      +this.CATEGORY+ ", volume=" +this.VOLUME+ ", pitch=" +this.PITCH
       + (senderName == null? "": "(sender: " +senderName+ ")");
   }
 }

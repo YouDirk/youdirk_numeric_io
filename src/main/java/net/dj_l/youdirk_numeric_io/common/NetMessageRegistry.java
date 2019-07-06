@@ -37,17 +37,16 @@ public class NetMessageRegistry
   implements IForgeRegistry.BakeCallback<NetMessageBase>
 {
   private final ResourceLocation
-  REGISTRY_NAME = new ResourceLocation(Props.MODID,
-                                       "registries/net_message");
+  _REGISTRY_NAME = new ResourceLocation(Props.MODID, "net_messages");
 
-  private IForgeRegistry<NetMessageBase> fRegistry;
-  private boolean alreadyRegistered = false;
+  private IForgeRegistry<NetMessageBase> _fRegistry;
+  private boolean _alreadyRegistered = false;
 
   public NetMessageRegistry()
   {
-    this.fRegistry = new RegistryBuilder<NetMessageBase>()
+    this._fRegistry = new RegistryBuilder<NetMessageBase>()
       .setType(NetMessageBase.class)
-      .setName(REGISTRY_NAME)
+      .setName(_REGISTRY_NAME)
       .add(this)
       .disableSaving()
       .create();
@@ -60,11 +59,11 @@ public class NetMessageRegistry
     /* Called 2 times:
      *   1. on game setup, 2. on joining game
      */
-    if (this.alreadyRegistered) return;
+    if (this._alreadyRegistered) return;
 
     for (NetMessageBase msg: owner)
       Net.registerMessage((NetMessage) msg);
 
-    this.alreadyRegistered = true;
+    this._alreadyRegistered = true;
   }
 }

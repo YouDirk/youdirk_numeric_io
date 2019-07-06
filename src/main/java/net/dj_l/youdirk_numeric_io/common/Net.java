@@ -36,21 +36,21 @@ public abstract class Net
   /** Use this for SNPRINTF like stuff on network socket  */
   public static final int STRLEN = 256;
 
-  private static final NetVersion localVersion = new NetVersion();
+  private static final NetVersion _LOCAL_VERSION = new NetVersion();
 
-  private static final ResourceLocation CHANNEL_NAME
+  private static final ResourceLocation _CHANNEL_NAME
     = new ResourceLocation(Props.MODID, "main");
 
-  private static final SimpleChannel CHANNEL
-    = NetworkRegistry.newSimpleChannel(Net.CHANNEL_NAME,
-      Net::getVersionString, Net::isClientAcceptVersion,
-      Net::isServerAcceptVersion);
+  private static final SimpleChannel _CHANNEL
+    = NetworkRegistry.newSimpleChannel(Net._CHANNEL_NAME,
+      Net::getVersionString, Net::_isClientAcceptVersion,
+      Net::_isServerAcceptVersion);
 
   /* *************************************************************  */
 
   public static String getVersionString()
   {
-    return Net.localVersion.toString();
+    return Net._LOCAL_VERSION.toString();
   }
 
   @SuppressWarnings("unchecked")
@@ -59,7 +59,7 @@ public abstract class Net
   {
     Class<? extends NetMessage> msgClass = dummyInstance.getClass();
 
-    Net.CHANNEL.registerMessage(
+    Net._CHANNEL.registerMessage(
       dummyInstance.getNetId(), msgClass, dummyInstance.getEncoder(),
       dummyInstance.getDecoder(), dummyInstance.getReceiver());
   }
@@ -67,7 +67,7 @@ public abstract class Net
   public static <T extends NetMessage<T>>
   void send(PacketDistributor.PacketTarget target, T msg)
   {
-    Net.CHANNEL.send(target, msg);
+    Net._CHANNEL.send(target, msg);
   }
 
   /* *************************************************************  */
@@ -100,7 +100,7 @@ public abstract class Net
    * </code></pre>
    */
 
-  private static boolean isClientAcceptVersion(String serverVersionString)
+  private static boolean _isClientAcceptVersion(String serverVersionString)
   {
     NetVersion serverVersion;
 
@@ -111,21 +111,21 @@ public abstract class Net
     }
 
     // If (Remote.Version >= Local.Version): ACCEPT
-    if (serverVersion.compareTo(Net.localVersion) >= 0)
+    if (serverVersion.compareTo(Net._LOCAL_VERSION) >= 0)
       return true;
 
     // If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API): DENY
-    if (serverVersion.isBreaking(Net.localVersion))
+    if (serverVersion.isBreaking(Net._LOCAL_VERSION))
       return false;
 
     //If (Client.MINOR >= Server.MINOR): ACCEPT
-    if (Net.localVersion.MINOR >= serverVersion.MINOR)
+    if (Net._LOCAL_VERSION.MINOR >= serverVersion.MINOR)
       return true;
 
     return false;
   }
 
-  private static boolean isServerAcceptVersion(String clientVersionString)
+  private static boolean _isServerAcceptVersion(String clientVersionString)
   {
     NetVersion clientVersion;
 
@@ -136,15 +136,15 @@ public abstract class Net
     }
 
     // If (Remote.Version >= Local.Version): ACCEPT
-    if (clientVersion.compareTo(Net.localVersion) >= 0)
+    if (clientVersion.compareTo(Net._LOCAL_VERSION) >= 0)
       return true;
 
     // If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API): DENY
-    if (clientVersion.isBreaking(Net.localVersion))
+    if (clientVersion.isBreaking(Net._LOCAL_VERSION))
       return false;
 
     //If (Client.MINOR >= Server.MINOR): ACCEPT
-    if (clientVersion.MINOR >= Net.localVersion.MINOR)
+    if (clientVersion.MINOR >= Net._LOCAL_VERSION.MINOR)
       return true;
 
     return false;
