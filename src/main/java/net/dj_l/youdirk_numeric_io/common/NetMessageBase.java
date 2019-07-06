@@ -33,27 +33,23 @@ import net.minecraft.util.ResourceLocation;
 public abstract class NetMessageBase
   extends ForgeRegistryEntry<NetMessageBase>
 {
+  private final String _REGISTRY_PATH;
+
   /**
-   * A default constructor must be implemented to instanciate dummy
-   * objects.  It can be empty, but <code>super()</code> must be
-   * called.
+   * <b>The HashCode of the <code>registryPath</code> is used as
+   * NetworkID for your message!</b> For this reason, do not rename it
+   * to hold the network protocol compatible.
    */
-  protected NetMessageBase()
+  protected NetMessageBase(String registryPath)
   {
-    /* Namespace must be "minecraft", otherwise we get a runtime
-     * warning O.O
-     */
-    this.setRegistryName(new ResourceLocation("minecraft",
-      "net/messages/" + this._toClassNameLower()));
+    this._REGISTRY_PATH = registryPath;
+
+    // Namespace must be set, otherwise we get a runtime warning O.O
+    this.setRegistryName(this._REGISTRY_PATH);
   }
 
   public int getNetId()
   {
-    return this._toClassNameLower().hashCode();
-  }
-
-  private String _toClassNameLower()
-  {
-    return this.getClass().getSimpleName().toLowerCase();
+    return this._REGISTRY_PATH.hashCode();
   }
 }

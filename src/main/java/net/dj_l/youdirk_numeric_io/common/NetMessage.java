@@ -35,11 +35,6 @@ import java.util.function.Function;
  * Every NetMessage must implement these abstract methods to serialize
  * it and add an event handler on receiving the message.
  *
- * <p><b>The HashCode of the ClassName is used as NetworkID for your
- * message!</b> For this reason, do not rename <code>&lt;? extends
- * NetMessage&gt;</code> classes to hold the network protocol
- * compatible.</p>
- *
  * <p>Make sure that your <code>NetMessage</code> class implements the
  * following <code>static</code> method:</p>
  *
@@ -76,13 +71,17 @@ public abstract class NetMessage<T extends NetMessage<T>>
   protected @Nullable NetworkEvent.Context ctx = null;
 
   /**
-   * A default constructor must be implemented to instanciate dummy
-   * objects.  It can be empty, but <code>super()</code> must be
-   * called.
+   * A default constructor without any parameter must be implemented
+   * to instanciate dummy objects.  It can be empty, but
+   * <code>super(String registryPath)</code> must be called.
+   *
+   * <p><b>The HashCode of the <code>registryPath</code> is used as
+   * NetworkID for your message!</b> For this reason, do not rename it
+   * to hold the network protocol compatible.</p>
    */
-  protected NetMessage()
+  protected NetMessage(String registryPath)
   {
-    super();
+    super(registryPath);
   }
 
   /**

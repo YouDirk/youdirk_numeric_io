@@ -52,6 +52,7 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   {
     event.getRegistry().register(new TestSoundNetMessage());
   }
+  private final static String _REGISTRY_PATH = "test_sound_message";
 
   public final BlockPos POS;
 
@@ -63,12 +64,13 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   public final float PITCH;
 
   /**
-   * A default constructor must be implemented to instanciate dummy
-   * objects.  It can be empty.
+   * A default constructor without any parameter must be implemented
+   * to instanciate dummy objects.  It can be empty, but
+   * <code>super(String registryPath)</code> must be called.
    */
   public TestSoundNetMessage()
   {
-    super();
+    super(TestSoundNetMessage._REGISTRY_PATH);
 
     this.POS = null;
     this.SOUND = null;
@@ -80,7 +82,7 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   public TestSoundNetMessage(BlockPos pos, ResourceLocation sound,
     SoundCategory category, float volume, float pitch)
   {
-    super();
+    super(TestSoundNetMessage._REGISTRY_PATH);
 
     this.POS = pos;
     this.SOUND = sound;
