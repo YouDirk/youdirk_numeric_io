@@ -24,12 +24,12 @@ import net.dj_l.youdirk_numeric_io.*;
  * A specific <code>NumericInput</code> block, which implements the
  * number-system specific <b>unsigned decimal</b> input mechanics.
  */
-public class BlockUnsignedDecimalInput extends BlockNumericInput
+public class UnsignedDecimalInputBlock extends BlockNumericInput
 {
   private static final String _REGISTRY_PATH = "unsigned_decimal_input";
 
-  public BlockUnsignedDecimalInput()
+  public UnsignedDecimalInputBlock()
   {
-    super(BlockUnsignedDecimalInput._REGISTRY_PATH);
+    super(UnsignedDecimalInputBlock._REGISTRY_PATH);
   }
 }

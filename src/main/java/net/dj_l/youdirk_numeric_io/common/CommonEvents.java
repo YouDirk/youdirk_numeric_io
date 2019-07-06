@@ -54,14 +54,14 @@ public abstract class CommonEvents
 
   @ObjectHolder("unsigned_decimal_input")
   public static final
-  BlockUnsignedDecimalInput BLOCK_UNSIGNED_DECIMAL_INPUT = null;
+  UnsignedDecimalInputBlock UNSIGNED_DECIMAL_INPUT_BLOCK = null;
 
   @SubscribeEvent
   public static void
   onRegisterBlocks(RegistryEvent.Register<Block> event)
   {
     event.getRegistry().registerAll(
-      new BlockUnsignedDecimalInput());
+      new UnsignedDecimalInputBlock());
   }
 
   /* *****************************************************************
@@ -70,13 +70,13 @@ public abstract class CommonEvents
 
   @ObjectHolder("unsigned_decimal_input")
   public static final
-  ItemUnsignedDecimalInput ITEM_UNSIGNED_DECIMAL_INPUT = null;
+  UnsignedDecimalInputItem UNSIGNED_DECIMAL_INPUT_ITEM = null;
 
   @SubscribeEvent
   public static void
   onRegisterItemBlocks(RegistryEvent.Register<Item> event)
   {
     event.getRegistry().registerAll(
-     new ItemUnsignedDecimalInput(BLOCK_UNSIGNED_DECIMAL_INPUT));
+     new UnsignedDecimalInputItem(UNSIGNED_DECIMAL_INPUT_BLOCK));
   }
 }

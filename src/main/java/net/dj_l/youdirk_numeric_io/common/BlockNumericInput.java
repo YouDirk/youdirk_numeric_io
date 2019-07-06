@@ -21,8 +21,8 @@ import net.dj_l.youdirk_numeric_io.*;
 
 
 /**
- * An abstract class which implements the non number-system specific,
- * <b>common input</b> mechanics.
+ * An abstract <code>BlockNumericIO</code> which implements the non
+ * number-system specific, <b>common input</b> mechanics.
  */
 public abstract class BlockNumericInput extends BlockNumericIO
 {
