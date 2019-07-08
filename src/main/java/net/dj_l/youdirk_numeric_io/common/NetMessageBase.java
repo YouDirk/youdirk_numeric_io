@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 public abstract class NetMessageBase
   implements IForgeRegistryEntry<NetMessageBase>
 {
-  protected ResourceLocation _REGISTRY_NAME = null;
+  private @Nullable ResourceLocation _REGISTRY_NAME = null;
 
   /**
    * <b>The HashCode of the <code>registryPath</code> is used as
