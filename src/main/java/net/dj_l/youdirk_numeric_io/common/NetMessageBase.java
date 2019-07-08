@@ -21,9 +21,13 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Registries/Events
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 // Gameplay
 import net.minecraft.util.ResourceLocation;
+
+// Non Minecraft/Forge
+import javax.annotation.Nullable;
 
 
 /**
@@ -31,9 +35,9 @@ import net.minecraft.util.ResourceLocation;
  * checking.  Use this type for <code>NetMessageRegistry</code> stuff.
  */
 public abstract class NetMessageBase
-  extends ForgeRegistryEntry<NetMessageBase>
+  implements IForgeRegistryEntry<NetMessageBase>
 {
-  private final String _REGISTRY_PATH;
+  protected ResourceLocation _REGISTRY_NAME = null;
 
   /**
    * <b>The HashCode of the <code>registryPath</code> is used as
@@ -42,14 +46,52 @@ public abstract class NetMessageBase
    */
   protected NetMessageBase(String registryPath)
   {
-    this._REGISTRY_PATH = registryPath;
-
     // Namespace must be set, otherwise we get a runtime warning O.O
-    this.setRegistryName(this._REGISTRY_PATH);
+    this.setRegistryName(registryPath);
   }
 
   public int getNetId()
   {
-    return this._REGISTRY_PATH.hashCode();
+    return this._REGISTRY_NAME.getPath().hashCode();
   }
+
+  /* *****************************************************************
+   * Implementing interface IForgeRegistryEntry
+   */
+
+  private NetMessageBase setRegistryName(String path)
+  {
+    return this.setRegistryName(new ResourceLocation(Props.MODID, path));
+  }
+  public NetMessageBase setRegistryName(ResourceLocation name)
+  {
+    if (this._REGISTRY_NAME != null) {
+      throw new IllegalStateException("A NetMessage with the name '"
+        +name.toString()+ "' does already exist!  setRegistryName()"
+        + " called twice?");
+    }
+
+    String namespace = name.getNamespace();
+    if (!namespace.equals(Props.MODID)) {
+      Log.ger.warn(
+        "Namespace of NetMessage '{}' is '{}' and does not equals MODID"
+        + " '{}'!", name.toString(), namespace, Props.MODID);
+    }
+
+    this._REGISTRY_NAME = name;
+
+    return this;
+  }
+
+  public @Nullable ResourceLocation getRegistryName()
+  {
+    return this._REGISTRY_NAME;
+  }
+
+  public Class<NetMessageBase> getRegistryType()
+  {
+    return NetMessageBase.class;
+  }
+
+  /* *************************************************************  */
 }
