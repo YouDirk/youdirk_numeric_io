@@ -39,11 +39,15 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     .maxStackSize(8)
     .rarity(EnumRarity.UNCOMMON);
 
+  protected final ResourceLocation _REGISTRY_NAME;
+
   protected
-  ItemBlockNumericIO(BlockNumericIO block, String registryPath)
+  ItemBlockNumericIO(BlockNumericIO block)
   {
     super(block, ItemBlockNumericIO._BUILDER);
 
-    this.setRegistryName(new ResourceLocation(Props.MODID, registryPath));
+    this._REGISTRY_NAME = block.getRegistryName();
+
+    this.setRegistryName(_REGISTRY_NAME);
   }
 }

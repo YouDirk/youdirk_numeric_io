@@ -52,31 +52,30 @@ public abstract class CommonEvents
    * Blocks
    */
 
-  @ObjectHolder("unsigned_decimal_input")
+  @ObjectHolder("decimal_input")
   public static final
-  UnsignedDecimalInputBlock UNSIGNED_DECIMAL_INPUT_BLOCK = null;
+  DecimalInputBlock DECIMAL_INPUT_BLOCK = null;
 
   @SubscribeEvent
   public static void
   onRegisterBlocks(RegistryEvent.Register<Block> event)
   {
-    event.getRegistry().registerAll(
-      new UnsignedDecimalInputBlock());
+    event.getRegistry().registerAll(new DecimalInputBlock());
   }
 
   /* *****************************************************************
    * Items / ItemBlocks
    */
 
-  @ObjectHolder("unsigned_decimal_input")
+  @ObjectHolder("decimal_input")
   public static final
-  UnsignedDecimalInputItem UNSIGNED_DECIMAL_INPUT_ITEM = null;
+  DecimalInputItem DECIMAL_INPUT_ITEM = null;
 
   @SubscribeEvent
   public static void
   onRegisterItemBlocks(RegistryEvent.Register<Item> event)
   {
     event.getRegistry().registerAll(
-     new UnsignedDecimalInputItem(UNSIGNED_DECIMAL_INPUT_BLOCK));
+     new DecimalInputItem(DECIMAL_INPUT_BLOCK));
   }
 }
