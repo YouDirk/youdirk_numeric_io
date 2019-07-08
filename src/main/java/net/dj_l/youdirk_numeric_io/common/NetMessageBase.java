@@ -63,7 +63,9 @@ public abstract class NetMessageBase
   {
     return this.setRegistryName(new ResourceLocation(Props.MODID, path));
   }
+  @Override
   public NetMessageBase setRegistryName(ResourceLocation name)
+    throws IllegalStateException
   {
     if (this._REGISTRY_NAME != null) {
       throw new IllegalStateException("A NetMessage with the name '"
@@ -83,11 +85,13 @@ public abstract class NetMessageBase
     return this;
   }
 
+  @Override
   public @Nullable ResourceLocation getRegistryName()
   {
     return this._REGISTRY_NAME;
   }
 
+  @Override
   public Class<NetMessageBase> getRegistryType()
   {
     return NetMessageBase.class;
