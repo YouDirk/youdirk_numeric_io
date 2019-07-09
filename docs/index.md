@@ -75,7 +75,7 @@ You can contribute some tutorials or instructions how to use the
 
 ### Translation / Assets / Hacking
 
-If you want to *translate*, contribute some **code** or **assets**
+If you want to **translate**, contribute some **code** or **assets**
 such like *models*, *textures* or *sounds* then take a look to the
 GitHub repository and read the
 
