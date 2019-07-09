@@ -28,19 +28,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 // Network
 import net.minecraftforge.fml.network.PacketDistributor;
 
 // Gameplay
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.Entity;
 
 // Non Minecraft/Forge
 import java.util.function.Supplier;
@@ -57,51 +53,6 @@ public abstract class CommonEventsForge
   {
     return !world.isRemote();
   }
-
-  /* *****************************************************************
-   *
-   * Putting YoudirkNumericIO blocks automatically into the players
-   * inventory if it joins the world or respawns.  Compile it into
-   * development versions only.
-   */
-
-  @SubscribeEvent
-  public static void
-  onPlayerClone(final PlayerEvent.Clone event)
-  {
-    World world = event.getOriginal().world;
-    if (!_isLogicalServer(world)) throw new NotServerException();
-
-    // death or teleport?
-    if (!event.isWasDeath()) return;
-
-    EntityPlayer player = event.getOriginal();
-    String playerName = player.getDisplayName().getString();
-
-    // TODO
-    Log.ger.debug(
-      "********************** '{}' DEEEEEAAAAD !!!", playerName);
-  }
-
-  @SubscribeEvent
-  public static void
-  onPlayerJoin(final EntityJoinWorldEvent event)
-  {
-    World world = event.getWorld().getWorld();
-    if (!_isLogicalServer(world)) return; // Also fired on client side
-
-    Entity entity = event.getEntity();
-    if (!(entity instanceof EntityPlayer)) return;
-
-    EntityPlayer player = (EntityPlayer) entity;
-    String playerName = player.getDisplayName().getString();
-
-    // TODO
-    Log.ger.debug(
-      "******************* '{}' JOOOIINNED !!!", playerName);
-  }
-
-  /* *************************************************************  */
 
   /**
    * TODO: Just a Test event, on destroying a Block

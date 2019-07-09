@@ -16,36 +16,28 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.debug;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
+
+// Event Bus
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
 // Gameplay
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.world.World;
 
 
 /**
- * An abstract <code>ItemBlock</code> which implements the non
- * number-system specific, <b>common</b> mechanics.
+ * Implementation of all non-specific debug event handlers fired on
+ * <code>MOD</code> bus.
+ *
+ * <b>This class will not be compiled into productive builds.</b>
  */
-public abstract class ItemBlockNumericIO extends ItemBlock
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+public abstract class CommonEvents
 {
-  private static final int _MAX_STACKSIZE = 8;
 
-  private static final Item.Properties _BUILDER = new Item.Properties()
-    .group(ItemGroup.REDSTONE)
-    .defaultMaxDamage(0)
-    .maxStackSize(_MAX_STACKSIZE)
-    .rarity(EnumRarity.UNCOMMON);
-
-  protected
-  ItemBlockNumericIO(BlockNumericIO block)
-  {
-    super(block, ItemBlockNumericIO._BUILDER);
-
-    this.setRegistryName(block.getRegistryName());
-  }
 }
