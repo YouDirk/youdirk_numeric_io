@@ -36,10 +36,10 @@ public class TextComponentDebug extends TextComponentTranslation
   {
     super(translationKey, args);
 
-    this.setStyle();
+    this._setStyle();
   }
 
-  private void setStyle()
+  private void _setStyle()
   {
     Style style = new Style();
 

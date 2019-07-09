@@ -1,4 +1,32 @@
 {
+  "_l": " This file is part of the `youdirk_numeric_io` Minecraft mod",
+  "_l": " Copyright (C) 2019  Dirk \"YouDirk\" Lehmann",
+  "_l": " ",
+  "_l": " This program is free software: you can redistribute it and/or modify",
+  "_l": " it under the terms of the GNU General Public License as published by",
+  "_l": " the Free Software Foundation, either version 3 of the License, or",
+  "_l": " (at your option) any later version.",
+  "_l": " ",
+  "_l": " This program is distributed in the hope that it will be useful,",
+  "_l": " but WITHOUT ANY WARRANTY; without even the implied warranty of",
+  "_l": " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+  "_l": " GNU General Public License for more details.",
+  "_l": " ",
+  "_l": " You should have received a copy of the GNU General Public License",
+  "_l": " along with this program.  If not, see <https://www.gnu.org/licenses/>.",
+
+
+  "_c": " The translation of the localization files                  ",
+  "_c": "                                                            ",
+  "_c": "   * 'en_us.json' and 'de_de.json'                          ",
+  "_c": "                                                            ",
+  "_c": " should always be up-to-date.  To translate the Youdirk     ",
+  "_c": " Numeric IO mod into your language you need copy one of     ",
+  "_c": " these files and rename it to your language code.  To merge ",
+  "_c": " your translation into the official development branch, you ",
+  "_c": " should consult the file CONTRIBUTING.md.                   ",
+
+
   "block.youdirk_numeric_io.decimal_input": "Decimal Input",
 
   "Hello %1$s, you are in Debug-Mode! Making a gift to your inventory :)"
