@@ -67,11 +67,11 @@ You can contribute some tutorials or instructions how to use the
 * [**Wiki** (github.com)
   ](https://github.com/YouDirk/youdirk_numeric_io/wiki)
 
-### Assets / Hacking
+### Translation / Assets / Hacking
 
-If you want to contribute some **code** or **assets** such like
-*models*, *textures* or *sounds* then take a look to the GitHub
-repository and read the
+If you want to *translate*, contribute some **code** or **assets**
+such like *models*, *textures* or *sounds* then take a look to the
+GitHub repository and read the
 
 * [**Contribution Guidelines** (github.com)](CONTRIBUTING.md)
 

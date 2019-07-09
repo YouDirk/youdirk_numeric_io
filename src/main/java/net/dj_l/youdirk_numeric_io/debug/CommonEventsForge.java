@@ -86,6 +86,12 @@ public abstract class CommonEventsForge
 
     EntityPlayer player = (EntityPlayer) entity;
 
+    if (player.allowLogging()) {
+      player.sendMessage(new TextComponentDebug(
+        "Hello %1$s, you are in Debug-Mode! Making a gift to your"
+        + " inventory :)", player.getDisplayName().getString()));
+    }
+
     _setItemToSlot(0,
       net.dj_l.youdirk_numeric_io.common.CommonEvents.DECIMAL_INPUT_ITEM,
       player.inventory);

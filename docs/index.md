@@ -73,11 +73,11 @@ You can contribute some tutorials or instructions how to use the
 * [**Wiki** (github.com)
   ]({{site.numeric_io.github_url}}/{{ site.numeric_io.wiki_rel_url }})
 
-### Assets / Hacking
+### Translation / Assets / Hacking
 
-If you want to contribute some **code** or **assets** such like
-*models*, *textures* or *sounds* then take a look to the GitHub
-repository and read the
+If you want to *translate*, contribute some **code** or **assets**
+such like *models*, *textures* or *sounds* then take a look to the
+GitHub repository and read the
 
 * [**Contribution Guidelines** (github.com)
   ]({{site.numeric_io.github_url}}/{{
