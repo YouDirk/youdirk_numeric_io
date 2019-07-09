@@ -34,7 +34,7 @@ import net.minecraft.world.World;
  * Implementation of all non-specific debug event handlers fired on
  * <code>MOD</code> bus.
  *
- * <b>This class will not be compiled into productive builds.</b>
+ * <p><b>This class won´t be compiled into productive builds.</b></p>
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents

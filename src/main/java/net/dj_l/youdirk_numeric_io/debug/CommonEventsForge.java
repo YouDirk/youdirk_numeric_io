@@ -45,7 +45,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  * Implementation of all non-specific debug event handlers fired on
  * <code>FORGE</code> bus.
  *
- * <b>This class will not be compiled into productive builds.</b>
+ * <p><b>This class won´t be compiled into productive builds.</b></p>
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
 public abstract class CommonEventsForge

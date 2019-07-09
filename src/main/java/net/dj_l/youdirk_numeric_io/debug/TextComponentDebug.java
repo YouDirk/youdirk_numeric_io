@@ -29,6 +29,8 @@ import net.minecraft.util.text.TextFormatting;
 /**
  * Style/Format of (translateable) debug messages via
  * <code>ICommandSource</code> interface.
+ *
+ * <p><b>This class won´t be compiled into productive builds.</b></p>
  */
 public class TextComponentDebug extends TextComponentTranslation
 {
