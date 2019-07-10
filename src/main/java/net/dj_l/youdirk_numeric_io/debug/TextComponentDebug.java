@@ -30,13 +30,13 @@ import net.minecraft.util.text.TextFormatting;
  * Style/Format of (translateable) debug messages via
  * <code>ICommandSource</code> interface.
  *
- * <p><b>This class won´t be compiled into productive builds.</b></p>
+ * <p><b>This class will only be compiled into debug builds.</b></p>
  */
 public class TextComponentDebug extends TextComponentTranslation
 {
   public TextComponentDebug(String translationKey, Object... args)
   {
-    super(translationKey, args);
+    super("Debug: " + translationKey, args);
 
     this._setStyle();
   }

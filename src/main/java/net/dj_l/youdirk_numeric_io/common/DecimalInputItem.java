@@ -28,6 +28,6 @@ public class DecimalInputItem extends ItemBlockNumericIO
 {
   public DecimalInputItem(DecimalInputBlock block)
   {
-    super(block);
+    super(block, "Decimal Input");
   }
 }

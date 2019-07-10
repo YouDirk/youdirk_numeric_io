@@ -23,8 +23,11 @@ import net.dj_l.youdirk_numeric_io.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.ITextComponent;
 
 
 /**
@@ -41,11 +44,21 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     .maxStackSize(_MAX_STACKSIZE)
     .rarity(EnumRarity.UNCOMMON);
 
+  private final TextComponentTranslation _DISPLAY_NAME;
+
   protected
-  ItemBlockNumericIO(BlockNumericIO block)
+  ItemBlockNumericIO(BlockNumericIO block, String displayName)
   {
     super(block, ItemBlockNumericIO._BUILDER);
 
     this.setRegistryName(block.getRegistryName());
+
+    this._DISPLAY_NAME = new TextComponentTranslation(displayName);
+  }
+
+  @Override
+  public ITextComponent getDisplayName(ItemStack stack)
+  {
+    return this._DISPLAY_NAME;
   }
 }

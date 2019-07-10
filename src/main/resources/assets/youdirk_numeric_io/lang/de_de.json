@@ -27,8 +27,8 @@
   "_c": " should consult the file CONTRIBUTING.md.                   ",
 
 
-  "block.youdirk_numeric_io.decimal_input": "Dezimaleingabe",
+  "Decimal Input": "Dezimaleingabe",
 
-  "Hello %1$s, you are in Debug-Mode! Making a gift to your inventory :)"
-  :"Hey %1$s, du bist im Debug-Mode! Hier, ein Geschenk im Inventar :)"
+  "Hey %1$s! Making a gift into your inventory :)"
+  :"Hey %1$s! Hier, ein Geschenk im Inventar :)"
 }

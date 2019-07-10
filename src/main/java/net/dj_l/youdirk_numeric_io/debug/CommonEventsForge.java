@@ -29,9 +29,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 // Events
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
-// Network
-import net.minecraftforge.fml.network.PacketDistributor;
-
 // Gameplay
 import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
@@ -45,7 +42,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  * Implementation of all non-specific debug event handlers fired on
  * <code>FORGE</code> bus.
  *
- * <p><b>This class won´t be compiled into productive builds.</b></p>
+ * <p><b>This class will only be compiled into debug builds.</b></p>
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
 public abstract class CommonEventsForge
@@ -88,8 +85,8 @@ public abstract class CommonEventsForge
 
     if (player.allowLogging()) {
       player.sendMessage(new TextComponentDebug(
-        "Hello %1$s, you are in Debug-Mode! Making a gift to your"
-        + " inventory :)", player.getDisplayName().getString()));
+        "Hey %1$s! Making a gift into your inventory :)",
+        player.getDisplayName().getString()));
     }
 
     _setItemToSlot(0,
