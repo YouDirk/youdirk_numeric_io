@@ -259,12 +259,16 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	  )'    sourceSets {\n'$(\
 	  )'      debug {\n'$(\
 	  )'        java.srcDirs += sourceSets.main.java.srcDirs\n'$(\
-	  )'        resources.srcDirs += sourceSets.main.resources.srcDirs\n'$(\
-	  )'        compileClasspath = sourceSets.main.compileClasspath\n'$(\
-	  )'        runtimeClasspath = sourceSets.main.runtimeClasspath\n'$(\
+	  )'        resources.srcDirs += sourceSets.main.resources'$(\
+	                                    )'.srcDirs\n'$(\
+	  )'        compileClasspath = sourceSets.main'$(\
+	                                    )'.compileClasspath\n'$(\
+	  )'        runtimeClasspath = sourceSets.main'$(\
+	                                    )'.runtimeClasspath\n'$(\
 	  )'      }\n'$(\
 	  )'    }\n\n'$(\
-	  )"    defaultTasks 'compileDebugJava', 'processResources'\n"$(\
+	  )"    defaultTasks 'compileDebugJava',"$(\
+	                                    )" 'processResources'\n"$(\
 	  )'~g;'$(\
 	  )'s~\(source sourceSets.\)main~\1debug~g;'$(\
 	)'s~examplemod~$(MODID)~g;' \
