@@ -35,7 +35,7 @@ include makeinc/makefile.run.mk
 
 .PHONY: classes
 classes: | config_all
-	./gradlew $(ARGS) classes
+	./gradlew $(ARGS)
 
 .PHONY: run_client
 run_client: | config_all _run_client_deps
@@ -255,8 +255,18 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	  )'    tasks.withType(JavaCompile) {\n'$(\
 	  )'      options.compilerArgs << "-Xlint:unchecked"'$(\
 	                            )' << "-Xlint:deprecation"\n'$(\
-	  )'    }\n'$(\
+	  )'    }\n\n'$(\
+	  )'    sourceSets {\n'$(\
+	  )'      debug {\n'$(\
+	  )'        java.srcDirs += sourceSets.main.java.srcDirs\n'$(\
+	  )'        resources.srcDirs += sourceSets.main.resources.srcDirs\n'$(\
+	  )'        compileClasspath = sourceSets.main.compileClasspath\n'$(\
+	  )'        runtimeClasspath = sourceSets.main.runtimeClasspath\n'$(\
+	  )'      }\n'$(\
+	  )'    }\n\n'$(\
+	  )"    defaultTasks 'compileDebugJava', 'processResources'\n"$(\
 	  )'~g;'$(\
+	  )'s~\(source sourceSets.\)main~\1debug~g;'$(\
 	)'s~examplemod~$(MODID)~g;' \
 	$@
 

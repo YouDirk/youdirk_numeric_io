@@ -20,24 +20,34 @@ package net.dj_l.youdirk_numeric_io.debug;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
-// Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
 // Gameplay
-import net.minecraft.world.World;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 
 
 /**
- * Implementation of all non-specific debug event handlers fired on
- * <code>MOD</code> bus.
+ * Style/Format of (translateable) debug messages via
+ * <code>ICommandSource</code> interface.
  *
- * <p><b>This class will only be compiled into debug builds.</b></p>
+ * <p><b>This class will only be compiled into DebugMode builds.</b></p>
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public class TextComponentDebug extends TextComponentTranslation
 {
+  public TextComponentDebug(String translationKey, Object... args)
+  {
+    super("Debug: " + translationKey, args);
 
+    this._setStyle();
+  }
+
+  private void _setStyle()
+  {
+    Style style = new Style();
+
+    style.setColor(TextFormatting.RED);
+    style.setItalic(true);
+
+    this.setStyle(style);
+  }
 }

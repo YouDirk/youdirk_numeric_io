@@ -29,6 +29,6 @@
 
   "Decimal Input": "Decimal Input",
 
-  "Hey %1$s! Making a gift into your inventory :)"
-  :"Hey %1$s! Making a gift into your inventory :)"
+  "Debug: Hey %1$s! Making a gift into your inventory :)"
+  :"Debug: Hey %1$s! Making a gift into your inventory :)"
 }

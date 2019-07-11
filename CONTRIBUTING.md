@@ -124,13 +124,13 @@ make <target>`
 
 ```make
 # --- Necessary targets ---
-all <default>: Runs Java compiler and build all Mod classes (same as CLASSES)
-classes: Same as official Forge command `$> ./gradlew classes`
-run_client: Runs a client.  Same as official Forge command `$> ./gradlew runClient`
-run_client_player2: Runs another client instance for multiplayer tests
-run_client_player3: Runs a third client instance for multiplayer tests
-run_client_player4: Runs a fourth client instance for multiplayer tests
-run_server: Runs a dedicated server.  Same as official Forge command `$> ./gradlew runServer`
+all <default>: Runs CLASSES
+classes: Compiles all Mod classes including Debug classes, nearly same as official Forge command `$> ./gradlew classes`
+run_client: Runs a client in DebugMode.  Same as official Forge command `$> ./gradlew runClient`
+run_client_player2: Runs another client in DebugMode instance for multiplayer tests
+run_client_player3: Runs a third client in DebugMode instance for multiplayer tests
+run_client_player4: Runs a fourth client in DebugMode instance for multiplayer tests
+run_server: Runs a dedicated server in DebugMode.  Same as official Forge command `$> ./gradlew runServer`
 run_server_nogui: Same as RUN_SERVER, but run in terminal/console mode instead of open a GUI
 
 build: Same as official Forge command `$> ./gradlew build`

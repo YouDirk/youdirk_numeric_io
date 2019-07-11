@@ -29,6 +29,17 @@ minecraft {
       options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 
+    sourceSets {
+      debug {
+        java.srcDirs += sourceSets.main.java.srcDirs
+        resources.srcDirs += sourceSets.main.resources.srcDirs
+        compileClasspath = sourceSets.main.compileClasspath
+        runtimeClasspath = sourceSets.main.runtimeClasspath
+      }
+    }
+
+    defaultTasks 'compileDebugJava', 'processResources'
+
     // The mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   Snapshot are built nightly.
     // stable_#            Stables are built at the discretion of the MCP team.
@@ -53,7 +64,7 @@ minecraft {
 
             mods {
                 youdirk_numeric_io {
-                    source sourceSets.main
+                    source sourceSets.debug
                 }
             }
         }
@@ -69,7 +80,7 @@ minecraft {
 
             mods {
                 youdirk_numeric_io {
-                    source sourceSets.main
+                    source sourceSets.debug
                 }
             }
         }
