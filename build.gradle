@@ -38,7 +38,7 @@ minecraft {
       }
     }
 
-    defaultTasks 'compileDebugJava', 'processResources'
+    defaultTasks 'compileDebugJava', 'processDebugResources'
 
     // The mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   Snapshot are built nightly.

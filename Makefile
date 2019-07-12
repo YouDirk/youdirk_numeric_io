@@ -268,7 +268,7 @@ build.gradle: $(MF_MDK_DIR)/build.gradle $(MK_FILES) gradle.properties
 	  )'      }\n'$(\
 	  )'    }\n\n'$(\
 	  )"    defaultTasks 'compileDebugJava',"$(\
-	                                    )" 'processResources'\n"$(\
+	                             )" 'processDebugResources'\n"$(\
 	  )'~g;'$(\
 	  )'s~\(source sourceSets.\)main~\1debug~g;'$(\
 	)'s~examplemod~$(MODID)~g;' \

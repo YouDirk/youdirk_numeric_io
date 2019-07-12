@@ -51,20 +51,4 @@ public class YoudirkNumericIO
       = new net.dj_l.youdirk_numeric_io.client.Setup(
             YoudirkNumericIOEvent.MOD_BUS);
   }
-
-  // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-  // Event bus for receiving Registry Events)
-
-  /*
-  @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-  public static class RegistryEvents
-  {
-    @SubscribeEvent
-    public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
-    {
-      // register a new block here
-      Log.ger.debug("HELLO from Register Block");
-    }
-  }
-  */
 }
