@@ -91,9 +91,13 @@ _REGEX_WEBCONFIG_RET = 's~^ *$(1) *: *\(.*\)~\1~p;'
 _REGEX_WEBCONFIG_REPL = 's~^\( *$(1) *: *\).*~\1$(2)~g;'
 
 
-# sed_cmd _REGEX_LANG_GEN()
+# sed_cmd _REGEX_LANG_GEN(file_name)
 _REGEX_LANG_GEN = 's~^{$$~{\n\n"_c": "This file was generated from'$(\
   )' $(1)",\n~g;'
+
+# sed_cmd _REGEX_LANG_FILES2COMMALIST()
+_REGEX_LANG_FILES2COMMALIST = 's~[^ ]\+/\([a-zA-Z_]\+\)\.json~"\1", ~g;'
+
 
 # End of Regex Callables
 # ********************************************************************

@@ -201,6 +201,19 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	    )$(call _REGEX_WEBCONFIG_REPL,tar_url,$(GITHUB_RAW_URL)$(\
 	    )/$(MAVEN_FORGE_CURINSTALLER)) $(DOCS_DIR)/_config.yml;
 
+.PHONY: $(DOCS_DATA_DIR)/localization.json
+$(DOCS_DATA_DIR)/localization.json: $(MK_FILES)
+	@__codes="`ls $(ASSETS_LANG_DIR)/*.json \
+	         | $(SED_CMD) $(_REGEX_LANG_FILES2COMMALIST)`"; \
+	codes="`echo $$__codes \
+	         | $(SED_CMD) $(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
+	echo "Updating '$@' to $$codes"; \
+	$(SED_CMD) -i $(\
+	)$(call _REGEX_FBUILDSJSONLIST_REPL,lang_codes,'"$$codes"')$(\
+	) $@
+
+# ********************************************************************
+# Tagging stuff
 
 .PHONY: website_mf_addtag
 website_mf_addtag: $(DOCS_FORGEBUILDS_VERSION_DIR)/$(MF_VERSION_FULL).json
@@ -269,12 +282,15 @@ website_rmtag_nodep: | config_all
 	           _REGEX_FBUILDSJSONLIST_REPL,tags,'"$$tags"') \
 	           $(DOCS_BUILDS_VERSION_DIR)/$(VERSION_FULL).json;
 
+# End of Tagging stuff
+# ********************************************************************
 
 .PHONY: website_forge
 website_forge: | config_all $(DOCS_FORGEBUILDS_JSONS)
 
 .PHONY: website_mod
-website_mod: | config_all $(DOCS_BUILDS_JSONS)
+website_mod: | config_all $(DOCS_DATA_DIR)/localization.json \
+               $(DOCS_BUILDS_JSONS)
 
 # End of Website stuff
 # ********************************************************************
