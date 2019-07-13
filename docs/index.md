@@ -34,7 +34,7 @@ mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Multiplayer** - but also compatible with Minecraft vanilla servers
 
-* **Languages** {% include localization.md %}
+* **Languages** {% include localization.html %}
 
 For a detailed in-game usage take a look to our [**Wiki** at
 github.com]({{site.numeric_io.github_url}}/{{
