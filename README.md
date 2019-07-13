@@ -30,7 +30,8 @@ This are the source of the **YouDirk Numeric I/O Minecraft mod**
 
 * **Negative values** (*Two´s Complement encoding*) are supported
 
-* **Multiplayer** - but also compatible with Minecraft vanilla servers
+* **Multiplayer support** - but also compatible with Minecraft vanilla
+  servers
 
 * **Languages** are listed on the [official Website
   (youdirk.github.io/youdirk_numeric_io)
