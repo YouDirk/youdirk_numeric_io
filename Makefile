@@ -297,7 +297,8 @@ config_all:
 else
 config_all: build.gradle $(DOCS_DIR)/_config.yml \
   $(METAINF_DIR)/mods.toml $(JAVA_MOD_DIR)/common/Props.java \
-  $(RESOURCES_DIR)/pack.mcmeta $(DOCS_DATA_DIR)/forge_promos.json
+  $(RESOURCES_DIR)/pack.mcmeta $(DOCS_DATA_DIR)/forge_promos.json \
+  $(LANG_FILES_GEN_EN) $(LANG_FILES_GEN_DE)
 endif
 
 .PHONY: _cache
@@ -359,6 +360,14 @@ $(MAVEN_MOD_DIR)/maven-metadata.xml: \
 	fi
 	@$(SHA1SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.sha1
 	@$(MD5SUM_CMD) $@ | $(SED_CMD) 's~ .*~~' > $@.md5
+
+$(LANG_FILES_GEN_EN): $(ASSETS_LANG_DIR)/en.json $(MK_FILES)
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(call _REGEX_LANG_GEN,$<) $< > $@
+
+$(LANG_FILES_GEN_DE): $(ASSETS_LANG_DIR)/de.json $(MK_FILES)
+	@echo "Generating '$@'"
+	@$(SED_CMD) $(call _REGEX_LANG_GEN,$<) $< > $@
 
 # ********************************************************************
 # Clean targets

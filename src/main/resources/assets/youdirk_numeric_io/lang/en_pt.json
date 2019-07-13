@@ -1,7 +1,4 @@
 {
-
-"_c": "This file was generated from src/main/resources/assets/youdirk_numeric_io/lang/de.json",
-
   "_l": " This file is part of the `youdirk_numeric_io` Minecraft mod",
   "_l": " Copyright (C) 2019  Dirk \"YouDirk\" Lehmann",
   "_l": " ",
@@ -30,8 +27,10 @@
   "_c": " should consult the file CONTRIBUTING.md.                   ",
 
 
-  "Decimal Input": "Dezimaleingabe",
+  "_c": " *** Pirate Speak - Harrrr harrrr *** ",
+
+  "Decimal Input": "Tenner Button",
 
   "Debug: Hey %1$s! Making a gift into your inventory :)"
-  :"Debug: Hey %1$s! Hier, ein Geschenk im Inventar :)"
+  :"Debug: Arrr captain %1$s! Plundered booty is in your bag"
 }

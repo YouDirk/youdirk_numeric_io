@@ -90,6 +90,11 @@ _REGEX_WEBCONFIG_RET = 's~^ *$(1) *: *\(.*\)~\1~p;'
 # sed_cmd _REGEX_WEBCONFIG_REPL(name, value)
 _REGEX_WEBCONFIG_REPL = 's~^\( *$(1) *: *\).*~\1$(2)~g;'
 
+
+# sed_cmd _REGEX_LANG_GEN()
+_REGEX_LANG_GEN = 's~^{$$~{\n\n"_c": "This file was generated from'$(\
+  )' $(1)",\n~g;'
+
 # End of Regex Callables
 # ********************************************************************
 # Virtual shell commands

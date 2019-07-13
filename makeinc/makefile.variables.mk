@@ -47,6 +47,9 @@ MODDESC = This mod adds:\n\
 # Credits of the mod
 MODTHANKS = MCP, Minecraft Forge
 
+LANG_CODES_GEN_EN = en_au en_ca en_gb en_nz en_ud en_us
+LANG_CODES_GEN_DE = de_at de_ch de_de bar
+
 # Conventions here
 #   <http://maven.apache.org/guides/mini/guide-naming-conventions.html>
 MODID = youdirk_numeric_io
@@ -63,6 +66,8 @@ JAVA_DIR = $(SRC_DIR)/main/java
 JAVA_MOD_DIR = $(JAVA_DIR)/$(MOD_RELDIR)
 METAINF_DIR = $(RESOURCES_DIR)/META-INF
 JAVADOC_DIR = $(BUILD_DIR)/docs/javadoc
+ASSETS_MOD_DIR = $(RESOURCES_DIR)/assets/$(MODID)
+ASSETS_LANG_DIR = $(ASSETS_MOD_DIR)/lang
 
 RUN_DIR = run
 RUN_TEMPL_DIR = run.templ
@@ -73,6 +78,11 @@ RUN_SERVER_JARNAME = $(MF_NAME)-$(MF_VERSION_FULL)
 SRC_FILES := $(shell $(FIND_CMD) $(SRC_DIR) \
         -type f -a ! -name 'pack.mcmeta' -a ! -name 'mods.toml' \
         2> /dev/null || echo $(SRC_DIR))
+
+LANG_FILES_GEN_EN \
+  = $(patsubst %,$(ASSETS_LANG_DIR)/%.json,$(LANG_CODES_GEN_EN))
+LANG_FILES_GEN_DE \
+  = $(patsubst %,$(ASSETS_LANG_DIR)/%.json,$(LANG_CODES_GEN_DE))
 
 MF_VERSION_FULL = $(MC_VERSION)-$(MF_VERSION)
 MF_GROUP = net.minecraftforge
