@@ -23,7 +23,7 @@
 
 assign lang_codes = site.data.localization.lang_codes %}{%
 for code in lang_codes
-  %}`{{ code }}`{%
+  %}{{ code }}{%
   unless forloop.last
     %}, {%
   endunless %}{%
