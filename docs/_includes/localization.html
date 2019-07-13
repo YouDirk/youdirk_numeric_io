@@ -18,13 +18,13 @@
 #
 # Include variables:
 #
-{% endcomment %}
+{% endcomment %}{%
 
 
-{% assign lang_codes = site.data.localization.lang_codes %}
-{% for code in lang_codes
-     %}<i>{{ code }}</i>{%
-     if forloop.last != true
-       %}, {%
-     endif %}
-{% endfor %}
+assign lang_codes = site.data.localization.lang_codes %}{%
+for code in lang_codes
+  %}<i>{{ code }}</i>{%
+  unless forloop.last
+    %}, {%
+  endunless %}{%
+endfor %}
