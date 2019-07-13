@@ -131,7 +131,7 @@ $(DOCS_BUILDS_VERSION_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	  tags="`$(SED_CMD) -n \
 	         $(call _REGEX_FBUILDSJSONLIST_RET,tags) $@`"; \
 	  patch_notes="`$(SED_CMD) -n \
-	              $(call _REGEX_FBUILDSJSONLIST_RET,patch_notes) $@`"; \
+	         $(call _REGEX_FBUILDSJSONLIST_RET,patch_notes) $@`"; \
 	else \
 	  echo "Generating '$@'"; \
 	  date_time="`$(DATE_CMD) -Iseconds`"; \
@@ -155,6 +155,8 @@ $(DOCS_BUILDS_VERSION_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	    )$*) $(DOCS_DATA_DIR)/promos.json; \
 	  if [ "$$patch_notes" != '""' ]; then \
 	    echo "Updating 'stable' to '$*'"; \
+	    old_stable="`$(SED_CMD) -n $(call _REGEX_PROMO_RET,stable) \
+                        $(DOCS_DATA_DIR)/promos.json`"; \
 	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,stable,$(\
 	      )$*) $(DOCS_DATA_DIR)/promos.json; \
 	    $(SED_CMD) -i $(\
@@ -164,10 +166,18 @@ $(DOCS_BUILDS_VERSION_DIR)/%.json: $(DOCS_DATA_DIR)/builds.templ.json \
 	      )$(call _REGEX_WEBCONFIG_REPL,zip_url,$(GITHUB_RAW_URL)$(\
 	      )/$(MAVEN_DIR)/$(MAVEN_MOD_RELDIR)/$*/$(MODID)-$*.jar)$(\
 	      ) $(DOCS_DIR)/_config.yml; \
+	    echo "Updating 'old-stable' to '$$old_stable'"; \
+	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,old-stable,$(\
+	      )'$$old_stable') $(DOCS_DATA_DIR)/promos.json; \
 	  else \
 	    patch_notes='"<Not a stable version>"'; \
 	    echo "warning: PATCH_NOTES not given!  Release will NOT"$(\
 	        )" be promoted as stable." >&2; \
+	  fi; \
+	  if [ "$(VER_SUFFIX)" = "-final" ]; then \
+	    echo "Updating 'final' to '$*'"; \
+	    $(SED_CMD) -i $(call _REGEX_PROMO_REPL,final,$(\
+	      )$*) $(DOCS_DATA_DIR)/promos.json; \
 	  fi; \
 	fi; \
 	cp -f $< $@; \

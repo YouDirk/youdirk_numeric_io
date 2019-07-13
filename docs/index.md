@@ -32,8 +32,9 @@ mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Negative values** (*Two´s Complement encoding*) are supported
 
-* **Multiplayer support** - but also compatible with Minecraft vanilla
-  servers
+* **Multiplayer** - but also compatible with Minecraft vanilla servers
+
+* **Languages** {% include localization.md %}
 
 For a detailed in-game usage take a look to our [**Wiki** at
 github.com]({{site.numeric_io.github_url}}/{{

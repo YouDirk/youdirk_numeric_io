@@ -21,14 +21,18 @@
 #
 {% endcomment %}
 
+
 {% assign promo = nil %}
 {% for promo_vec in site.data.promos reversed %}
-{% comment %}
-  Logical parentheses are from right to left
-  version == promo_vec[0] || (name == "old-stable" && old_stable)
-{% endcomment %}
-{%   if build.version == promo_vec[0]
-        or promo_vec[1].name == "old-stable" and include.old_stable %}
+{%   if build.version == promo_vec[0] %}
+{%     assign promo = promo_vec[1] %}
+{%     break %}
+{%   endif %}
+{%   if promo_vec[1].name == "old-stable" and include.old_stable %}
+{%     assign promo = promo_vec[1] %}
+{%     break %}
+{%   endif %}
+{%   if promo_vec[1].name == "final" and include.old_stable %}
 {%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}

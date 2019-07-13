@@ -17,11 +17,5 @@
     "along with this program.  If not, see <https://www.gnu.org/licenses/>."
   ],
 
-  "_comment": "lower overriding",
-
-  "1.13-0.0.0.1-dummy": {"color": "#cee3ce", "name": "final"},
-
-  "1.13-0.0.0.1-dummy": {"color": "#dadaf8", "name": "latest"},
-  "1.13-0.0.0.1-dummy": {"color": "#e3ffe3", "name": "old-stable"}
-  "1.13-0.0.0.1-dummy": {"color": "#d7ffd7", "name": "stable"}
+  "lang_codes": ["de_de", "en_us"]
 }
