@@ -363,11 +363,13 @@ $(MAVEN_MOD_DIR)/maven-metadata.xml: \
 
 $(LANG_FILES_GEN_EN): $(ASSETS_LANG_DIR)/en.json $(MK_FILES)
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(call _REGEX_LANG_GEN,$<) $< > $@
+	@filename="`echo $< | $(SED_CMD) $(_REGEX_FILENAME_RET)`"; \
+	$(SED_CMD) $(call _REGEX_LANG_GEN,'"$$filename"') $< > $@
 
 $(LANG_FILES_GEN_DE): $(ASSETS_LANG_DIR)/de.json $(MK_FILES)
 	@echo "Generating '$@'"
-	@$(SED_CMD) $(call _REGEX_LANG_GEN,$<) $< > $@
+	@filename="`echo $< | $(SED_CMD) $(_REGEX_FILENAME_RET)`"; \
+	$(SED_CMD) $(call _REGEX_LANG_GEN,'"$$filename"') $< > $@
 
 # ********************************************************************
 # Clean targets
