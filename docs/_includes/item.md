@@ -32,7 +32,8 @@
 {%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}
-{%   if promo_vec[1].name == "final" and include.old_stable %}
+{%   if promo_vec[1].name == "final" and include.old_stable
+        and include.build.version contains "final" %}
 {%     assign promo = promo_vec[1] %}
 {%     break %}
 {%   endif %}

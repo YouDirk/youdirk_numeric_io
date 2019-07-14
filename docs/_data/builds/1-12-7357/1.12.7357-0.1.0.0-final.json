@@ -17,12 +17,18 @@
     "along with this program.  If not, see <https://www.gnu.org/licenses/>."
   ],
 
-  "_comment": "lower overriding",
-
-  "_dummy_version": {"color": "#cee3ce", "name": "old-stable"},
-  "_dummy_version": {"color": "#c9f7f8", "name": "final"},
-
-  "1.13.2-25.0.219": {"color": "#ffe8e8", "name": "latest-build"},
-  "1.13.2-25.0.219": {"color": "#e8e8f8", "name": "used-for-develop"},
-  "1.13.2-25.0.214": {"color": "#e8ffe8", "name": "seems-to-work"}
+  "time": "2019-07-14T03:11:20+02:00",
+  "version": "1.13.2-0.1.0.0-final",
+  "mc_version": "1.12.7357",
+  "mf_version": "1.12.7357-25.0.219",
+  "mcp_mapping_channel": "snapshot",
+  "mcp_mapping_version": "20180921-1.12",
+  "tags": ["release"],
+  "patch_notes": ["<Not a stable version>"],
+  "jar": {
+    "name": "youdirk_numeric_io-1.13.2-0.1.0.0-test.jar",
+    "maven-url": "net/dj_l/youdirk_numeric_io/1.13.2-0.1.0.0-test/youdirk_numeric_io-1.13.2-0.1.0.0-test.jar",
+    "maven-sha1": "net/dj_l/youdirk_numeric_io/1.13.2-0.1.0.0-test/youdirk_numeric_io-1.13.2-0.1.0.0-test.jar.sha1",
+    "maven-md5": "net/dj_l/youdirk_numeric_io/1.13.2-0.1.0.0-test/youdirk_numeric_io-1.13.2-0.1.0.0-test.jar.md5"
+  }
 }
