@@ -31,7 +31,7 @@ You can download the current *YouDirk Numeric I/O Minecraft mod*
 {% if include.show_nopromo %}
 {%   assign loop_count = 999999 %}
 {% else %}
-{%   assign loop_count = 3 %}
+{%   assign loop_count = 2 %}
 {% endif %}
 {% for cur_mcversion in mcversions_sorted reversed limit:loop_count %}
 #### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
