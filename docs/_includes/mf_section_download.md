@@ -32,7 +32,12 @@ the latest stable from the official Minecraft Forge website
 <span class="more">[< back to Home >](.)</span>
 {% endif %}
 {% assign mcversions_sorted = site.data.forge_builds | sort %}
-{% for cur_mcversion in mcversions_sorted reversed %}
+{% if include.show_nopromo %}
+{%   assign loop_count = 999999 %}
+{% else %}
+{%   assign loop_count = 3 %}
+{% endif %}
+{% for cur_mcversion in mcversions_sorted reversed limit:loop_count %}
 #### for Minecraft {{ cur_mcversion[0] | replace: "-", "." }}
 {%   assign fb_nokey = "" | split: "," %}
 {%   for cur in cur_mcversion[1] %}
@@ -43,9 +48,6 @@ the latest stable from the official Minecraft Forge website
 {%     include mf_item.md build=build show_nopromo=include.show_nopromo
                           old_stable=forloop.first %}
 {%   endfor %}
-{%   unless include.show_nopromo %}
-{%     break %}
-{%   endunless %}
 {% endfor %}
 {% if include.show_nopromo %}
 <span class="more">[< back to Home >](.)</span>

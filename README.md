@@ -33,7 +33,7 @@ This are the source of the **YouDirk Numeric I/O Minecraft mod**
 * **Multiplayer support** - but also compatible with Minecraft vanilla
   servers
 
-* **Languages** are listed at the [**official Website**
+* **Languages** are listed on our [**official Website**
   (youdirk.github.io/youdirk_numeric_io)
   ](https://youdirk.github.io/youdirk_numeric_io/)
 
