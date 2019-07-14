@@ -19,8 +19,8 @@
 
   "_comment": "lower overriding",
 
-  "_dummy_version": {"color": "#cee3ce", "name": "old-stable"},
-  "_dummy_version": {"color": "#c9f7f8", "name": "final"},
+  "_dummy_version1": {"color": "#cee3ce", "name": "old-stable"},
+  "_dummy_version2": {"color": "#c9f7f8", "name": "final"},
 
   "1.13.2-25.0.219": {"color": "#ffe8e8", "name": "latest-build"},
   "1.13.2-25.0.219": {"color": "#e8e8f8", "name": "used-for-develop"},
