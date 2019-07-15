@@ -18,13 +18,23 @@
 #
 # Include variables:
 #
-{% endcomment %}{%
+{% endcomment %}
 
 
-assign lang_codes = site.data.localization.lang_codes %}{%
-for code in lang_codes
-  %}{{ code }}{%
-  unless forloop.last
-    %}, {%
-  endunless %}{%
-endfor %}
+{%- for lang in site.data.localization -%}
+{%-   assign key = lang[0] -%}
+{%-   assign val = lang[1] -%}
+{%-   if key contains "__" -%}
+{%-     continue -%}
+{%-   endif -%}
+{%-   if val.generated -%}
+        <span class="lang_generated" title="Generated from {{ val.name
+         }}">{{ key }}</span>
+{%-   else -%}
+        <span class="lang_notgenerated" title="Transleted by human">{{
+         val.name }}</span>
+{%-   endif -%}
+{%-   unless forloop.last
+        -%}, {%
+      endunless %}
+{%- endfor -%}

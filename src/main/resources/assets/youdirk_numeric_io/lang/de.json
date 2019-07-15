@@ -27,6 +27,10 @@
   "_c": " should consult the file CONTRIBUTING.md.                   ",
 
 
+  "_c": "Name of the language for website",
+  "__LANG_NAME": "Deutsch",
+
+
   "Decimal Input": "Dezimaleingabe",
 
   "Debug: Hey %1$s! Making a gift into your inventory :)"

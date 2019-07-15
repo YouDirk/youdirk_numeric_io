@@ -192,15 +192,27 @@ $(DOCS_DATA_DIR)/forge_promos.json: $(MK_FILES)
 	    )/$(MAVEN_FORGE_CURINSTALLER)) $(DOCS_DIR)/_config.yml;
 
 .PHONY: $(DOCS_DATA_DIR)/localization.json
-$(DOCS_DATA_DIR)/localization.json: $(MK_FILES)
-	@__codes="`ls $(ASSETS_LANG_DIR)/*.json \
-	         | $(SED_CMD) $(_REGEX_LANG_FILES2COMMALIST)`"; \
-	codes="`echo $$__codes \
-	         | $(SED_CMD) $(_REGEX_FBUILDSJSONLIST_RMCOMMA)`"; \
-	echo "Updating '$@' to $$codes"; \
-	$(SED_CMD) -i $(\
-	)$(call _REGEX_FBUILDSJSONLIST_REPL,lang_codes,'"$$codes"')$(\
-	) $@
+$(DOCS_DATA_DIR)/localization.json: \
+  $(DOCS_DATA_DIR)/localization.templ.json $(MK_FILES)
+	@echo "Generating '$@'"
+	@cp -f $< $@; \
+	files="`ls $(ASSETS_LANG_DIR)/*.json`"; \
+	for file in $$files; do \
+	  code="`echo $$file \
+	         | $(SED_CMD) $(_REGEX_LANG_CODE_FROM_FILENAME)`"; \
+	  name="`$(SED_CMD) -n \
+	         $(call _REGEX_FBUILDSJSON_RET,__LANG_NAME) $$file`"; \
+	  if [ -n "`echo $(LANG_FILES_GEN_ALL) \
+	            | $(SED_CMD) -n '\~'$$file'~p'`" ]; then \
+	    generated="true"; \
+	  else \
+	    generated="false"; \
+	  fi; \
+	  $(SED_CMD) -i $(\
+	  )$(call _REGEX_LANG_JSONDUMMY_REPL$(\
+	          ),'"$$code"','"$$generated"','"$$name"')$(\
+	  ) $@; \
+	done
 
 # ********************************************************************
 # Tagging stuff

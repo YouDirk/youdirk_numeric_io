@@ -298,7 +298,7 @@ else
 config_all: build.gradle $(DOCS_DIR)/_config.yml \
   $(METAINF_DIR)/mods.toml $(JAVA_MOD_DIR)/common/Props.java \
   $(RESOURCES_DIR)/pack.mcmeta $(DOCS_DATA_DIR)/forge_promos.json \
-  $(LANG_FILES_GEN_EN) $(LANG_FILES_GEN_DE)
+  $(LANG_FILES_GEN_ALL)
 endif
 
 .PHONY: _cache
