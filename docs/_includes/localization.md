@@ -27,6 +27,9 @@
 {%-   if key contains "__" -%}
 {%-     continue -%}
 {%-   endif -%}
+{%-   unless forloop.first
+        -%}, {%
+      endunless %}
 {%-   if val.generated -%}
         <span class="lang_generated" title="Generated from {{ val.name
          }}">{{ key }}</span>
@@ -34,7 +37,4 @@
         <span class="lang_notgenerated" title="Translated by human">{{
          val.name }}</span>
 {%-   endif -%}
-{%-   unless forloop.last
-        -%}, {%
-      endunless %}
 {%- endfor -%}
