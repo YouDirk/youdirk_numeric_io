@@ -32,8 +32,10 @@ mod** `youdirk_numeric_io`.  It adds to the game
 
 * **Negative values** (*Two´s Complement encoding*) are supported
 
-* **Multiplayer support** - but also compatible with Minecraft vanilla
-  servers
+* **Multiplayer support** - Also compatible with Minecraft vanilla
+  servers.  
+  _**For admins:** But vanilla clients cannot connect to modded
+  YouDirk Numeric I/O Minecraft servers_
 
 * **Languages** {% include localization.md %}
 

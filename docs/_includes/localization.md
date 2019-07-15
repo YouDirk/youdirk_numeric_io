@@ -31,7 +31,7 @@
         <span class="lang_generated" title="Generated from {{ val.name
          }}">{{ key }}</span>
 {%-   else -%}
-        <span class="lang_notgenerated" title="Transleted by human">{{
+        <span class="lang_notgenerated" title="Translated by human">{{
          val.name }}</span>
 {%-   endif -%}
 {%-   unless forloop.last
