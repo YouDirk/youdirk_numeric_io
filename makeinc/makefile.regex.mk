@@ -101,10 +101,10 @@ _REGEX_LANG_CODE_FROM_FILENAME = 's~^.*/\([a-zA-Z_]\+\)\.json$$~\1~;'
 # sed_cmd _REGEX_LANG_JSONDUMMY_REPL(str code,bool generated,str name)
 _REGEX_LANG_JSONDUMMY_REPL \
   = 's~^\( *"__REPLACE" *: *"[^"]*",\? *\)$$~$(\
-    )  "$(1)": {\n$(\
-    )    "generated": $(2),\n$(\
-    )    "name": "$(3)"\n$(\
-    )  },\n\1~;'
+    )    "$(1)": {\n$(\
+    )      "generated": $(2),\n$(\
+    )      "name": "$(3)"\n$(\
+    )    },\n\1~;'
 
 
 # End of Regex Callables

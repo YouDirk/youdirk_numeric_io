@@ -21,7 +21,7 @@
 {% endcomment %}
 
 
-{%- for lang in site.data.localization -%}
+{%- for lang in site.data.localization.langs -%}
 {%-   assign key = lang[0] -%}
 {%-   assign val = lang[1] -%}
 {%-   if key contains "__" -%}

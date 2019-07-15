@@ -17,57 +17,59 @@
     "along with this program.  If not, see <https://www.gnu.org/licenses/>."
   ],
 
-  "bar": {
-    "generated": true,
-    "name": "Deutsch"
-  },
-  "de": {
-    "generated": false,
-    "name": "Deutsch"
-  },
-  "de_at": {
-    "generated": true,
-    "name": "Deutsch"
-  },
-  "de_ch": {
-    "generated": true,
-    "name": "Deutsch"
-  },
-  "de_de": {
-    "generated": true,
-    "name": "Deutsch"
-  },
-  "en": {
-    "generated": false,
-    "name": "English"
-  },
-  "en_au": {
-    "generated": true,
-    "name": "English"
-  },
-  "en_ca": {
-    "generated": true,
-    "name": "English"
-  },
-  "en_gb": {
-    "generated": true,
-    "name": "English"
-  },
-  "en_nz": {
-    "generated": true,
-    "name": "English"
-  },
-  "en_pt": {
-    "generated": false,
-    "name": "Pirate Speak (The Seven Seas)"
-  },
-  "en_ud": {
-    "generated": true,
-    "name": "English"
-  },
-  "en_us": {
-    "generated": true,
-    "name": "English"
-  },
-  "__REPLACE": "<DUMMY>"
+  "langs": {
+    "bar": {
+      "generated": true,
+      "name": "Deutsch"
+    },
+    "de": {
+      "generated": false,
+      "name": "Deutsch"
+    },
+    "de_at": {
+      "generated": true,
+      "name": "Deutsch"
+    },
+    "de_ch": {
+      "generated": true,
+      "name": "Deutsch"
+    },
+    "de_de": {
+      "generated": true,
+      "name": "Deutsch"
+    },
+    "en": {
+      "generated": false,
+      "name": "English"
+    },
+    "en_au": {
+      "generated": true,
+      "name": "English"
+    },
+    "en_ca": {
+      "generated": true,
+      "name": "English"
+    },
+    "en_gb": {
+      "generated": true,
+      "name": "English"
+    },
+    "en_nz": {
+      "generated": true,
+      "name": "English"
+    },
+    "en_pt": {
+      "generated": false,
+      "name": "Pirate Speak (The Seven Seas)"
+    },
+    "en_ud": {
+      "generated": true,
+      "name": "English"
+    },
+    "en_us": {
+      "generated": true,
+      "name": "English"
+    },
+    "__REPLACE": "<DUMMY>"
+  }
 }
