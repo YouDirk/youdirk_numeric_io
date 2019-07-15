@@ -1,4 +1,4 @@
-> This file is part of the `youdirk_numeric_io` Minecraft mod  
+> This file is part of the `youdirk_numeric_io` Minecraft mod
 > Copyright (C) 2019  Dirk "YouDirk" Lehmann
 >
 > This program is free software: you can redistribute it and/or modify
@@ -30,9 +30,9 @@ This are the source of the **YouDirk Numeric I/O Minecraft mod**
 
 * **Negative values** (*Two´s Complement encoding*) are supported
 
-* **Multiplayer support** - Also compatible with Minecraft vanilla
-  servers.
-    - _For admins: But vanilla clients cannot connect to modded
+* **Multiplayer support** - also compatible with Minecraft vanilla
+  servers
+    - For admins - _but vanilla clients cannot connect to modded
       YouDirk Numeric I/O Minecraft servers_
 
 * **Languages** are listed on our [**official Website**
