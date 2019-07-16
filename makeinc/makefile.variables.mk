@@ -72,7 +72,8 @@ ASSETS_LANG_DIR = $(ASSETS_MOD_DIR)/lang
 RUN_DIR = run
 RUN_TEMPL_DIR = run.templ
 RUN_SERVERPROD_DIR = $(RUN_DIR)/server_productive
-RUN_SERVER_JARNAME = $(MF_NAME)-$(MF_VERSION_FULL)
+RUN_SERVERPROD_JARNAME = $(MF_NAME)-$(MF_VERSION_FULL)
+RUN_SERVERVANILLA_JARNAME = minecraft_server.$(MC_VERSION)
 
 # FIND_CMD not available at first call without _CACHE_FILE
 SRC_FILES := $(shell $(FIND_CMD) $(SRC_DIR) \

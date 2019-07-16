@@ -135,8 +135,10 @@ run_server_nogui: Same as RUN_SERVER, but run in terminal/console mode instead o
 
 build: Same as official Forge command `$> ./gradlew build`
 run_productive_client: (only Windows) Run MF_INSTALL_CLIENT, INSTALL_CLIENT and runs the official Minecraft Launcher, downloadable from https://www.minecraft.net/download/
-run_productive_server: (also Linux) Run MF_INSTALL_SERVER, INSTALL_SERVER and runs the productive Dedicated Server installed in `PREFIX=/c/installdir`
+run_productive_server: (also Linux) Run MF_INSTALL_SERVER, INSTALL_SERVER and runs the productive Dedicated modded Forge Server installed in `PREFIX=/c/installdir`
 run_productive_server_nogui: (also Linux) Same as RUN_PRODUCTIVE_SERVER, but run in terminal/console mode instead of open a GUI
+run_productive_server_vanilla: (also Linux) Run MF_INSTALL_SERVER, INSTALL_SERVER and runs the productive Dedicated Vanilla Server installed in `PREFIX=/c/installdir`
+run_productive_server_vanilla_nogui: (also Linux) Same as RUN_PRODUCTIVE_SERVER_VANILLA, but run in terminal/console mode instead of open a GUI
 
 publish: Runs BUILD, copy Mod-Jar to maven repository and add Version-Data to website
 jdk_version: Output JDK version which will be used.  Useful if you have more than one installed on your system

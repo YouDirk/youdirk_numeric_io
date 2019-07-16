@@ -71,6 +71,13 @@ run_productive_server: | config_all _run_productive_server
 run_productive_server_nogui: _SERVER_NOGUI = nogui
 run_productive_server_nogui: run_productive_server
 
+.PHONY: run_productive_server_vanilla
+run_productive_server_vanilla: | config_all _run_productive_server_vanilla
+
+.PHONY: run_productive_server_vanilla_nogui
+run_productive_server_vanilla_nogui: _SERVER_NOGUI = nogui
+run_productive_server_vanilla_nogui: run_productive_server_vanilla
+
 # New MAKE instance, to update DOCS_BUILDS_JSONS
 .PHONY: publish
 publish: | config_all build $(MAVEN_MOD_DIR)/maven-metadata.xml
@@ -503,7 +510,7 @@ mf_install_server: \
 install_server: | config_all \
   _productive_server_dir $(BUILDLIBS_DIR)/$(BUILD_JARNAME).jar
 	@if [ ! -f \
-             "$(INSTALL_SERVERDIR)/$(RUN_SERVER_JARNAME).jar" ]; then \
+           "$(INSTALL_SERVERDIR)/$(RUN_SERVERPROD_JARNAME).jar" ]; then \
 	  $(MAKE) mf_install_server PREFIX="$(INSTALL_SERVERDIR)"; \
 	else \
 	  echo 'skipped: Minecraft Forge Server $(MF_VERSION_FULL)$(\
@@ -518,7 +525,14 @@ _run_productive_server: | config_all \
   _productive_server_dir install_server _run_productive_server_deps
 	@echo "Running productive dedicated Minecraft Forge server"
 	@cd "$(INSTALL_SERVERDIR)" \
-	  && java -jar $(RUN_SERVER_JARNAME).jar $(_SERVER_NOGUI)
+	  && java -jar $(RUN_SERVERPROD_JARNAME).jar $(_SERVER_NOGUI)
+
+.PHONY: _run_productive_server_vanilla
+_run_productive_server_vanilla: | config_all \
+  _productive_server_dir install_server _run_productive_server_deps
+	@echo "Running productive dedicated Minecraft Vanilla server"
+	@cd "$(INSTALL_SERVERDIR)" \
+	  && java -jar $(RUN_SERVERVANILLA_JARNAME).jar $(_SERVER_NOGUI)
 
 # End productive Launcher stuff
 # ********************************************************************

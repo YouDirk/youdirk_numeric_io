@@ -27,6 +27,9 @@ import net.minecraftforge.fml.network.PacketDistributor;
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 
+// Non Minecraft/Forge
+import java.util.regex.Pattern;
+
 
 /**
  * Provides a network channel for task depended messages
@@ -79,19 +82,25 @@ public abstract class Net
    * remote version.</p>
    *
    * <pre><code>
-   * 1. If (Remote.Version >= Local.Version):
+   * 1. If (Local.isClient && Remote.isVanilla): ACCEPT
+   *    If (Local.isServer && Remote.isVanilla): DENY
+   *
+   *    Clients can connect to vanilla servers, but servers are not
+   *    allowing vanilla clients
+   *
+   * 2. If (Remote.Version >= Local.Version):
    *      ACCEPT and let decide the remote host
    *
    *    So we make sure that the newer implementation decides if
    *    protocol is compatible.
    *
-   * 2. If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API):
+   * 3. If (Remote.MAJOR != Local.MAJOR || Remote.API != Local.API):
    *      DENY, cause of breaking changes
    *
    *    In opposite, if you make breaking changes in the protocol then
    *    increment the API Version
    *
-   * 3. If (Client.MINOR >= Server.MINOR):
+   * 4. If (Client.MINOR >= Server.MINOR):
    *      ACCEPT, cause there are only new features on the client
    *    else:
    *      DENY, cause server has new features which are not supported
@@ -99,14 +108,27 @@ public abstract class Net
    *
    * </code></pre>
    */
+  private static final
+  Pattern _VANILLASTRING_REGEX = Pattern.compile("^ALLOWVANILLA.*$");
+  private static final
+  Pattern _ABSENT_REGEX = Pattern.compile("^ABSENT.*$");
 
   private static boolean _isClientAcceptVersion(String serverVersionString)
   {
+    // Forge self-test
+    if (_ABSENT_REGEX.matcher(serverVersionString).matches())
+      return false;
+
+    // If (Local.isClient && Remote.isVanilla): ACCEPT
+    if (_VANILLASTRING_REGEX.matcher(serverVersionString).matches())
+      return true;
+
     NetVersion serverVersion;
 
     try {
       serverVersion = new NetVersion(serverVersionString);
     } catch (YoudirkNumericIOException e) {
+      Log.ger.warn("Server version is junk: '{}'!", serverVersionString);
       return false;
     }
 
@@ -118,7 +140,7 @@ public abstract class Net
     if (serverVersion.isBreaking(Net._LOCAL_VERSION))
       return false;
 
-    //If (Client.MINOR >= Server.MINOR): ACCEPT
+    // If (Client.MINOR >= Server.MINOR): ACCEPT
     if (Net._LOCAL_VERSION.MINOR >= serverVersion.MINOR)
       return true;
 
@@ -127,11 +149,20 @@ public abstract class Net
 
   private static boolean _isServerAcceptVersion(String clientVersionString)
   {
+    // Forge self-test
+    if (_ABSENT_REGEX.matcher(clientVersionString).matches())
+      return false;
+
+    // If (Local.isServer && Remote.isVanilla): DENY
+    if (_VANILLASTRING_REGEX.matcher(clientVersionString).matches())
+      return false;
+
     NetVersion clientVersion;
 
     try {
       clientVersion = new NetVersion(clientVersionString);
     } catch (YoudirkNumericIOException e) {
+      Log.ger.warn("Client version is junk: '{}'!", clientVersionString);
       return false;
     }
 
@@ -143,7 +174,7 @@ public abstract class Net
     if (clientVersion.isBreaking(Net._LOCAL_VERSION))
       return false;
 
-    //If (Client.MINOR >= Server.MINOR): ACCEPT
+    // If (Client.MINOR >= Server.MINOR): ACCEPT
     if (clientVersion.MINOR >= Net._LOCAL_VERSION.MINOR)
       return true;
 
