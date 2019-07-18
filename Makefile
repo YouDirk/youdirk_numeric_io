@@ -131,7 +131,7 @@ mf_publish: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 bootstrap: | forge config_all
 
 .PHONY: clean_all
-clean_all: | clean_bootstrap clean_forge clean
+clean_all: | clean_bootstrap clean_forge _clean_lang_gen clean
 
 # End of Necessary Target definitions
 # ********************************************************************
@@ -394,6 +394,10 @@ _clean_bak:
 .PHONY: _clean_build
 _clean_build:
 	-rm -rf $(BUILD_DIR)
+
+.PHONY: _clean_lang_gen
+_clean_lang_gen:
+	-rm -rf $(LANG_FILES_GEN_ALL)
 
 .PHONY: clean_forge
 clean_forge:
