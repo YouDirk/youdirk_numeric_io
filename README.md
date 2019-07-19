@@ -16,6 +16,9 @@
 
 
 YouDirk Numeric I/O Minecraft mod
+[![Patreon](
+https://img.shields.io/badge/become_a-Patron-red.svg?style=popout&logo=Patreon&labelColor=red&logoColor=black
+)](https://www.patreon.com/YouDirk)
 =================================
 
 This are the source of the **YouDirk Numeric I/O Minecraft mod**
@@ -81,5 +84,19 @@ such like *models*, *textures* or *sounds* then take a look to the
 GitHub repository and read the
 
 * [**Contribution Guidelines** (github.com)](CONTRIBUTING.md)
+
+### Donate and become a Patron
+
+Make our society more funny with relaxed free time activities and
+support small video game productions.  The whole YouDirk Numeric I/O
+Minecraft mod is Open Source/Free Software.  So it supports liberty
+for software developers and make it possible to everyone to understand
+it's software.  With your pledge you are not only supporting this
+Minecraft project, you are not only supporting video games - you are
+also supporting a free thinking and a free acting society :)
+
+* [![Patreon](
+https://img.shields.io/badge/become_a-Patron-red.svg?style=popout&logo=Patreon&labelColor=red&logoColor=black
+) at patreon.com/YouDirk](https://www.patreon.com/YouDirk)
 
 Well, so have fun with it :)

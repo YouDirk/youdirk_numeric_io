@@ -397,7 +397,7 @@ _clean_build:
 
 .PHONY: _clean_lang_gen
 _clean_lang_gen:
-	-rm -rf $(LANG_FILES_GEN_ALL)
+	-rm -f $(LANG_FILES_GEN_ALL)
 
 .PHONY: clean_forge
 clean_forge:
