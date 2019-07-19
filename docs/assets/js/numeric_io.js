@@ -39,13 +39,15 @@ function init()
   patreon_link
     .setAttribute("target", "_blank");
   patreon_link
+    .setAttribute("class", "button");
+  patreon_link
     .setAttribute("data-patreon-widget-type", "become-patron-button");
   patreon_link.innerHTML = "Become a Patron!";
   insertAfter(patreon_link, a_targz2);
 
   var patreon_script = document.createElement("script");
   patreon_script
-    .setAttribute("async", null);
+    .setAttribute("async", "");
   patreon_script.setAttribute("src",
     "https://c6.patreon.com/becomePatronButton.bundle.js");
   insertAfter(patreon_script, patreon_link);

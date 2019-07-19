@@ -96,7 +96,7 @@ Minecraft project, you are not only supporting video games - you are
 also supporting a free thinking and a free acting society :)
 
 * [![Patreon](
-  https://img.shields.io/badge/become_a-Patron-red.svg?style=flat&logo=Patreon&labelColor=red&logoColor=black
+  https://img.shields.io/badge/become_a-Patron-red.svg?style=plastic&logo=Patreon&labelColor=red&logoColor=black
   )](https://www.patreon.com/YouDirk) at [patreon.com/YouDirk
   ](https://www.patreon.com/YouDirk)
 
