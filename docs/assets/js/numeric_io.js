@@ -33,24 +33,21 @@ function init()
   a_targz2.innerHTML
     = a_targz2.innerHTML.replace(/(>)[^>]*$/, "$1MC Forge");
 
+  var patreon_img = document.createElement("img");
+  patreon_link
+    .setAttribute("alt", "Become a Patron!");
+  patreon_link
+    .setAttribute("src", "assets/svg/patreon-popout.svg");
+
   var patreon_link = document.createElement("a");
   patreon_link
-    .setAttribute("href", "https://www.patreon.com/bePatron?u=2714198");
+    .setAttribute("href", "https://www.patreon.com/YouDirk");
   patreon_link
     .setAttribute("target", "_blank");
   patreon_link
     .setAttribute("class", "patreon");
-  patreon_link
-    .setAttribute("data-patreon-widget-type", "become-patron-button");
-  patreon_link.innerHTML = "Become a Patron!";
+  patreon_link.appendChild(patreon_img);
   insertAfter(patreon_link, a_targz2);
-
-  var patreon_script = document.createElement("script");
-  patreon_script
-    .setAttribute("async", "");
-  patreon_script.setAttribute("src",
-    "https://c6.patreon.com/becomePatronButton.bundle.js");
-  insertAfter(patreon_script, patreon_link);
 }
 
 window.addEventListener('load', init, false);
