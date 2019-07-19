@@ -100,7 +100,7 @@ only supporting this Minecraft project, you are not only supporting
 video games - you are also supporting a free thinking and a free
 acting society :)
 
-* [![Patreon](assets/svg/patreon-plastic.svg
+* [![Patreon](assets/svg/patreon-plastic.png
   )](https://www.patreon.com/YouDirk) at [patreon.com/YouDirk
   ](https://www.patreon.com/YouDirk)
 

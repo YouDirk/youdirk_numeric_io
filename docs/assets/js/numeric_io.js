@@ -37,7 +37,7 @@ function init()
   patreon_img
     .setAttribute("alt", "Become a Patron!");
   patreon_img
-    .setAttribute("src", "assets/svg/patreon-popout.svg");
+    .setAttribute("src", "assets/svg/patreon-popout.200x56.png");
 
   var patreon_link = document.createElement("a");
   patreon_link
