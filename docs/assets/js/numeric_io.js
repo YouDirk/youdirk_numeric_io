@@ -39,6 +39,8 @@ function init()
   patreon_link
     .setAttribute("target", "_blank");
   patreon_link
+    .setAttribute("class", "patreon");
+  patreon_link
     .setAttribute("data-patreon-widget-type", "become-patron-button");
   patreon_link.innerHTML = "Become a Patron!";
   insertAfter(patreon_link, a_targz2);
