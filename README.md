@@ -88,11 +88,13 @@ GitHub repository and read the
 
 Make our society more funny with relaxed free time activities and
 support small video game productions.  The whole YouDirk Numeric I/O
-Minecraft mod is Open Source/Free Software.  So it supports liberty
-for software developers and make it possible to everyone to understand
-it's software.  With your pledge you are not only supporting this
-Minecraft project, you are not only supporting video games - you are
-also supporting a free thinking and a free acting society :)
+Minecraft mod is [Open Source/Free
+Software](https://en.wikipedia.org/wiki/Free_software).  So it
+supports liberty for software developers and make it possible to
+everyone to understand it's software.  With your pledge you are not
+only supporting this Minecraft project, you are not only supporting
+video games - you are also supporting a free thinking and a free
+acting society :)
 
 * [![Patreon](docs/assets/svg/patreon-plastic.svg
   )](https://www.patreon.com/YouDirk) at [patreon.com/YouDirk

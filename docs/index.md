@@ -88,6 +88,22 @@ GitHub repository and read the
   ]({{site.numeric_io.github_url}}/{{
       site.numeric_io.contribdoc_rel_url }})
 
+### Donate and become a Patron
+
+Make our society more funny with relaxed free time activities and
+support small video game productions.  The whole YouDirk Numeric I/O
+Minecraft mod is [Open Source/Free
+Software](https://en.wikipedia.org/wiki/Free_software).  So it
+supports liberty for software developers and make it possible to
+everyone to understand it's software.  With your pledge you are not
+only supporting this Minecraft project, you are not only supporting
+video games - you are also supporting a free thinking and a free
+acting society :)
+
+* [![Patreon](assets/svg/patreon-plastic.svg
+  )](https://www.patreon.com/YouDirk) at [patreon.com/YouDirk
+  ](https://www.patreon.com/YouDirk)
+
 Initial idea
 ------------
 

@@ -34,9 +34,9 @@ function init()
     = a_targz2.innerHTML.replace(/(>)[^>]*$/, "$1MC Forge");
 
   var patreon_img = document.createElement("img");
-  patreon_link
+  patreon_img
     .setAttribute("alt", "Become a Patron!");
-  patreon_link
+  patreon_img
     .setAttribute("src", "assets/svg/patreon-popout.svg");
 
   var patreon_link = document.createElement("a");
