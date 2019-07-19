@@ -16,9 +16,9 @@
 
 
 YouDirk Numeric I/O Minecraft mod
- &nbsp; [![Patreon](
-https://img.shields.io/badge/become_a-Patron-red.svg?style=flat&logo=Patreon&labelColor=red&logoColor=black
-)](https://www.patreon.com/YouDirk)
+  &nbsp; [![Patreon](
+  https://img.shields.io/badge/become_a-Patron-red.svg?style=flat&logo=Patreon&labelColor=red&logoColor=black
+  )](https://www.patreon.com/YouDirk)
 =================================
 
 This are the source of the **YouDirk Numeric I/O Minecraft mod**
@@ -96,7 +96,8 @@ Minecraft project, you are not only supporting video games - you are
 also supporting a free thinking and a free acting society :)
 
 * [![Patreon](
-https://img.shields.io/badge/become_a-Patron-red.svg?style=flat&logo=Patreon&labelColor=red&logoColor=black
-) at patreon.com/YouDirk](https://www.patreon.com/YouDirk)
+  https://img.shields.io/badge/become_a-Patron-red.svg?style=flat&logo=Patreon&labelColor=red&logoColor=black
+  )](https://www.patreon.com/YouDirk) at [patreon.com/YouDirk
+  ](https://www.patreon.com/YouDirk)
 
 Well, so have fun with it :)

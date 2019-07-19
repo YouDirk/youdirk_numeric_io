@@ -35,7 +35,7 @@ function init()
 
   var patreon_link = document.createElement("a");
   patreon_link
-    .setAttribute("href", "https://www.patreon.com/YouDirk");
+    .setAttribute("href", "https://www.patreon.com/bePatron?u=2714198");
   patreon_link
     .setAttribute("target", "_blank");
   patreon_link
@@ -45,7 +45,7 @@ function init()
 
   var patreon_script = document.createElement("script");
   patreon_script
-    .setAttribute("async", "");
+    .setAttribute("async", null);
   patreon_script.setAttribute("src",
     "https://c6.patreon.com/becomePatronButton.bundle.js");
   insertAfter(patreon_script, patreon_link);
