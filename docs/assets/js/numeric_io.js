@@ -15,6 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
+function insertAfter(newNode, refNode)
+{
+  refNode.parentNode.insertBefore(newNode, refNode.nextSibling);
+}
+
 function init()
 {
   var links = document.getElementById("sidebar")
@@ -26,6 +32,23 @@ function init()
     = a_zip1.innerHTML.replace(/(>)[^>]*$/, "$1Mod Stable");
   a_targz2.innerHTML
     = a_targz2.innerHTML.replace(/(>)[^>]*$/, "$1MC Forge");
+
+  var patreon_link = document.createElement("a");
+  patreon_link
+    .setAttribute("href", "https://www.patreon.com/YouDirk");
+  patreon_link
+    .setAttribute("target", "_blank");
+  patreon_link
+    .setAttribute("data-patreon-widget-type", "become-patron-button");
+  patreon_link.innerHTML = "Become a Patron!";
+  insertAfter(patreon_link, a_targz2);
+
+  var patreon_script = document.createElement("script");
+  patreon_script
+    .setAttribute("async", "");
+  patreon_script.setAttribute("src",
+    "https://c6.patreon.com/becomePatronButton.bundle.js");
+  insertAfter(patreon_script, patreon_link);
 }
 
 window.addEventListener('load', init, false);
