@@ -10,6 +10,8 @@ loaderVersion="[25,)" #mandatory (24 is current forge version)
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/YouDirk/youdirk_numeric_io/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
+# A file name (in the root of the mod JAR) containing a logo for display
+logoFile="youdirk_numeric_io.png" #optional
 [[mods]] #mandatory
 # The modid of the mod
 modId="youdirk_numeric_io" #mandatory
@@ -21,8 +23,6 @@ displayName="YouDirk Numeric I/O" #mandatory
 updateJSONURL="https://youdirk.github.io/youdirk_numeric_io/update.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://youdirk.github.io/youdirk_numeric_io" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
-logoFile="youdirk_numeric_io.png" #optional
 # A text field displayed in the mod UI
 credits="MCP, Minecraft Forge" #optional
 # A text field displayed in the mod UI
@@ -34,7 +34,8 @@ This mod adds:
  * Blocks which are outputing (hexa-)decimal numbers
  * Blocks which you can input a number
  * Negative values (Two´s Complements) are supported
- * Multiplayer support
+ * Multiplayer support - also compatible with Minecraft
+   vanilla servers
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.youdirk_numeric_io]] #optional
