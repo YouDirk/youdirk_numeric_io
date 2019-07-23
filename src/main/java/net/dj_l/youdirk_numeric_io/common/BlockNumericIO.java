@@ -36,8 +36,12 @@ import net.minecraft.state.EnumProperty;
  */
 public abstract class BlockNumericIO extends Block
 {
+  /**
+   * Property details of the Materials you can find here:
+   * https://minecraft.gamepedia.com/Materials
+   */
   private static final Block.Properties _BUILDER
-    = Block.Properties.create(Material.WOOD)
+    = Block.Properties.create(Material.PISTON)
     // Hardness: dirt:0.5, stone:1.5
     // (explosion) Resistance: 5 x Hardness
     .hardnessAndResistance(0.5f)

@@ -16,40 +16,26 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.client;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Gameplay
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.block.state.IBlockState;
 
 
 /**
- * This <code>enum</code> represents the <b>unsigned decimal</b>
- * number of a <code>Decimal{*}Block</code>
+ * An abstract <code>BlockNumericIO</code> which implements the non
+ * number-system specific, <b>client side input</b> mechanics.
  */
-public enum DecimalStateEnum implements IStringSerializable
+public abstract class BlockNumericInput
 {
-  ZERO(0), ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7),
-  EIGHT(8), NINE(9);
-
-  private final int value;
-  private final String name;
-
-  private DecimalStateEnum(int value)
+  /**
+   * Only called on logical client side.
+   */
+  public static void onActivate(WorldClient world, IBlockState state)
   {
-    this.value = value;
-    this.name = Integer.toString(value, 10);
-  }
-
-  @Override
-  public String getName()
-  {
-    return this.name;
-  }
-
-  @Override
-  public String toString()
-  {
-    return this.name;
+    // Do nothing ...
   }
 }

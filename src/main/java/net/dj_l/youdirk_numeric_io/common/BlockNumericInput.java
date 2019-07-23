@@ -19,6 +19,10 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Gameplay
+import net.minecraft.world.World;
+import net.minecraft.block.state.IBlockState;
+
 
 /**
  * An abstract <code>BlockNumericIO</code> which implements the non
@@ -29,5 +33,29 @@ public abstract class BlockNumericInput extends BlockNumericIO
   protected BlockNumericInput(String registryPath)
   {
     super(registryPath);
+  }
+
+  /**
+   * Only called on logical client side.
+   */
+  public void onActivateClient(World world, IBlockState state)
+  {
+    net.dj_l.youdirk_numeric_io.client.BlockNumericInput
+      .onActivate(
+        (net.minecraft.client.multiplayer.WorldClient) world,
+        state
+      );
+  }
+
+  /**
+   * Only called on logical server side.
+   */
+  public void onActivateServer(World world, IBlockState state)
+  {
+    net.dj_l.youdirk_numeric_io.server.BlockNumericInput
+      .onActivate(
+        (net.minecraft.world.WorldServer) world,
+        state
+      );
   }
 }

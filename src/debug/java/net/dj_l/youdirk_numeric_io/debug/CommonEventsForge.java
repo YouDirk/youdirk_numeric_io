@@ -93,6 +93,9 @@ public abstract class CommonEventsForge
       net.dj_l.youdirk_numeric_io.common.CommonEvents.DECIMAL_INPUT_ITEM,
       player.inventory);
 
+    _setItemToSlot(4,
+      net.minecraft.init.Items.POTION,
+      player.inventory);
     _setItemToSlot(5,
       net.minecraft.init.Blocks.REDSTONE_WIRE.asItem(),
       player.inventory);

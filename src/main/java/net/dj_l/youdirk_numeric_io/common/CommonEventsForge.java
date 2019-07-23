@@ -21,9 +21,21 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.LogicalSide;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
+
+// Events
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+
+// Gameplay
+import net.minecraft.world.World;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
+import net.minecraft.util.EnumActionResult;
 
 
 /**
@@ -33,5 +45,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
 public abstract class CommonEventsForge
 {
+  @SubscribeEvent
+  public static void
+  onBlockRightClick(final PlayerInteractEvent.RightClickBlock event)
+  {
+    World world = event.getWorld().getWorld();
+    BlockPos pos = event.getPos();
 
+    IBlockState state = world.getBlockState(pos);
+    Block block = state.getBlock();
+
+    if (!(block instanceof BlockNumericInput)) return;
+
+    BlockNumericInput inputBlock = (BlockNumericInput) block;
+
+    if (event.getSide() == LogicalSide.CLIENT)
+      inputBlock.onActivateClient(world, state);
+    else
+      inputBlock.onActivateServer(world, state);
+
+    // Prevent to USE_ITEM or PLACE_BLOCK, etc ...
+    event.setCancellationResult(EnumActionResult.SUCCESS);
+    event.setCanceled(true);
+  }
 }
