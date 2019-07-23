@@ -31,8 +31,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public abstract class BlockNumericInput extends BlockNumericIO
 {
-  protected
-  BlockNumericInput(String registryPath)
+  protected BlockNumericInput(String registryPath)
   {
     super(registryPath);
   }

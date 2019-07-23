@@ -36,6 +36,6 @@ public class BlockNumericIOProperty
 {
   public BlockNumericIOProperty(Class<E> numericEnumClass)
   {
-    super("number", numericEnumClass,  EnumSet.allOf(numericEnumClass));
+    super("number", numericEnumClass, EnumSet.allOf(numericEnumClass));
   }
 }

@@ -35,7 +35,7 @@ public interface INumericIOStateEnum
    * one.  The <code>Result.CARRY == true</code> if the incrementation
    * overflows.
    */
-  public Result<E> increment();
+  public INumericIOStateEnum.Result<E> increment();
 
   /* *************************************************************  */
 

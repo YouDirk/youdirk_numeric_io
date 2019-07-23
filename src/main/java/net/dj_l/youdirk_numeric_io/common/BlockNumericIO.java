@@ -58,8 +58,7 @@ public abstract class BlockNumericIO extends Block
 
   /* *************************************************************  */
 
-  protected
-  BlockNumericIO(String registryPath)
+  protected BlockNumericIO(String registryPath)
   {
     super(BlockNumericIO._BUILDER);
 
