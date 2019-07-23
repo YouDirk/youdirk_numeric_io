@@ -16,50 +16,36 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.server;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Gameplay
-import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 
 
 /**
  * An abstract <code>BlockNumericIO</code> which implements the non
- * number-system specific, <b>common input</b> mechanics.
+ * number-system specific, <b>server side input</b> mechanics.
  */
-public abstract class BlockNumericInput extends BlockNumericIO
+public abstract class BlockNumericInputServer
 {
-  protected
-  BlockNumericInput(String registryPath)
-  {
-    super(registryPath);
-  }
-
-  /**
-   * Only called on logical client side.
-   */
-  public void onActivateClient(World world, IBlockState state,
-                               BlockPos pos)
-  {
-    net.dj_l.youdirk_numeric_io.client.BlockNumericInputClient
-      .onActivate(
-        (net.minecraft.client.multiplayer.WorldClient) world,
-        state, this, pos
-      );
-  }
-
   /**
    * Only called on logical server side.
    */
-  public void onActivateServer(World world, IBlockState state,
-                               BlockPos pos)
+  @SuppressWarnings("unchecked")
+  public static void onActivate(WorldServer world, IBlockState state,
+                                BlockNumericInput block, BlockPos pos)
   {
-    net.dj_l.youdirk_numeric_io.server.BlockNumericInputServer
-      .onActivate(
-        (net.minecraft.world.WorldServer) world,
-        state, this, pos
-      );
+    BlockNumericIOProperty prop = block.getStateNumber();
+
+    INumericIOStateEnum number
+      = (INumericIOStateEnum) state.<Enum>get(prop);
+    INumericIOStateEnum incr
+      = (INumericIOStateEnum) number.increment().VALUE;
+
+    world.setBlockState(pos, state.with(prop, (Enum) incr));
   }
 }

@@ -16,27 +16,26 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.server;
-import net.dj_l.youdirk_numeric_io.common.*;
+package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Gameplay
-import net.minecraft.world.WorldServer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.util.IStringSerializable;
+
+// Non Minecraft/Forge
+import java.util.EnumSet;
 
 
 /**
- * An abstract <code>BlockNumericIO</code> which implements the non
- * number-system specific, <b>server side input</b> mechanics.
+ * This class holds our <code>INumericIOStateEnum</code> enums and
+ * represents the state of the <code>BlockState</code>.
  */
-public abstract class BlockNumericInput
+public class BlockNumericIOProperty
+  <E extends Enum<E> & INumericIOStateEnum> extends EnumProperty<E>
 {
-  /**
-   * Only called on logical server side.
-   */
-  public static void onActivate(WorldServer world, IBlockState state)
+  public BlockNumericIOProperty(Class<E> numericEnumClass)
   {
-    // TODO
-    Log.ger.debug("****** called Server 2 ...");
+    super("number", numericEnumClass,  EnumSet.allOf(numericEnumClass));
   }
 }

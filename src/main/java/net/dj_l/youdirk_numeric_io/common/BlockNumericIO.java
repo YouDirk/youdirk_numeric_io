@@ -54,22 +54,44 @@ public abstract class BlockNumericIO extends Block
   STATE_POWER = EnumProperty.create("power",
                                     BlockNumericIOPowerEnum.class);
 
-  protected BlockNumericIO(String registryPath)
+  protected BlockNumericIOProperty STATE_NUMBER = null;
+
+  /* *************************************************************  */
+
+  protected
+  BlockNumericIO(String registryPath)
   {
     super(BlockNumericIO._BUILDER);
 
     this.setRegistryName(new ResourceLocation(Props.MODID, registryPath));
-
-    this.setDefaultState(this.getDefaultState()
-      .with(BlockNumericIO.STATE_POWER, BlockNumericIOPowerEnum.OFF));
+    this.STATE_NUMBER = this.newStateNumber();
   }
+
+  /**
+   * Since <code>fillStateContainer()</code> is called during
+   * constructor <code>BlockNumericIO::super()</code>, we cannot set
+   * the <code>this.STATE_NUMBER</code> during construction.  For this
+   * reason this method is a work-around.
+   */
+  protected abstract BlockNumericIOProperty newStateNumber();
 
   @Override
   protected void
   fillStateContainer(StateContainer.Builder<Block,IBlockState> builder)
   {
-    builder.add(BlockNumericIO.STATE_POWER);
+    this.STATE_NUMBER = this.newStateNumber();
+
+    builder
+      .add(BlockNumericIO.STATE_POWER)
+      .add(this.STATE_NUMBER);
 
     super.fillStateContainer(builder);
   }
+
+  public BlockNumericIOProperty getStateNumber()
+  {
+    return this.STATE_NUMBER;
+  }
+
+  /* *************************************************************  */
 }

@@ -19,13 +19,6 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Gameplay
-import net.minecraft.block.Block;
-
-import net.minecraft.state.StateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.state.EnumProperty;
-
 
 /**
  * A specific <code>NumericInput</code> block, which implements the
@@ -35,23 +28,15 @@ public class DecimalInputBlock extends BlockNumericInput
 {
   private static final String _REGISTRY_PATH = "decimal_input";
 
-  protected static final EnumProperty<DecimalStateEnum>
-  STATE_NUMBER = EnumProperty.create("number", DecimalStateEnum.class);
-
   public DecimalInputBlock()
   {
     super(DecimalInputBlock._REGISTRY_PATH);
-
-    this.setDefaultState(this.getDefaultState()
-      .with(DecimalInputBlock.STATE_NUMBER, DecimalStateEnum.ZERO));
   }
 
   @Override
-  protected void
-  fillStateContainer(StateContainer.Builder<Block,IBlockState> builder)
+  protected BlockNumericIOProperty newStateNumber()
   {
-    builder.add(DecimalInputBlock.STATE_NUMBER);
-
-    super.fillStateContainer(builder);
+    return new BlockNumericIOProperty<DecimalStateEnum>(
+      DecimalStateEnum.class);
   }
 }

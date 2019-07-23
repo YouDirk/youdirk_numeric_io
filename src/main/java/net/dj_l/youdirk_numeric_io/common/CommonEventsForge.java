@@ -60,9 +60,9 @@ public abstract class CommonEventsForge
     BlockNumericInput inputBlock = (BlockNumericInput) block;
 
     if (event.getSide() == LogicalSide.CLIENT)
-      inputBlock.onActivateClient(world, state);
+      inputBlock.onActivateClient(world, state, pos);
     else
-      inputBlock.onActivateServer(world, state);
+      inputBlock.onActivateServer(world, state, pos);
 
     // Prevent to USE_ITEM or PLACE_BLOCK, etc ...
     event.setCancellationResult(EnumActionResult.SUCCESS);

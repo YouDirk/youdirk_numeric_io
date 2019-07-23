@@ -27,29 +27,45 @@ import net.minecraft.util.IStringSerializable;
  * This <code>enum</code> represents the <b>unsigned decimal</b>
  * number of a <code>Decimal{*}Block</code>
  */
-public enum DecimalStateEnum implements IStringSerializable
+public enum DecimalStateEnum
+  implements INumericIOStateEnum<DecimalStateEnum>
 {
+  // First item is used as DEFAULT_STATE
   ZERO(0), ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7),
   EIGHT(8), NINE(9);
 
-  private final int value;
-  private final String name;
+  private final int VALUE;
+  private final String NAME;
+  private final int RADIX = 10;
 
   private DecimalStateEnum(int value)
   {
-    this.value = value;
-    this.name = Integer.toString(value, 10);
+    this.VALUE = value;
+    this.NAME = Integer.toString(value, this.RADIX);
+  }
+
+  @Override
+  public INumericIOStateEnum.Result<DecimalStateEnum> increment()
+  {
+    boolean lastLoop = false;
+    for (DecimalStateEnum num: DecimalStateEnum.values()) {
+      if (lastLoop) return new Result<DecimalStateEnum>(false, num);
+
+      if (this.equals(num)) lastLoop = true;
+    }
+
+    return new Result<DecimalStateEnum>(true, ZERO);
   }
 
   @Override
   public String getName()
   {
-    return this.name;
+    return this.NAME;
   }
 
   @Override
   public String toString()
   {
-    return this.name;
+    return this.NAME;
   }
 }

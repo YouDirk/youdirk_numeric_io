@@ -23,18 +23,20 @@ import net.dj_l.youdirk_numeric_io.*;
 // Gameplay
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 
 
 /**
  * An abstract <code>BlockNumericIO</code> which implements the non
  * number-system specific, <b>client side input</b> mechanics.
  */
-public abstract class BlockNumericInput
+public abstract class BlockNumericInputClient
 {
   /**
    * Only called on logical client side.
    */
-  public static void onActivate(WorldClient world, IBlockState state)
+  public static void onActivate(WorldClient world, IBlockState state,
+                                BlockNumericInput block, BlockPos pos)
   {
     // Do nothing ...
   }

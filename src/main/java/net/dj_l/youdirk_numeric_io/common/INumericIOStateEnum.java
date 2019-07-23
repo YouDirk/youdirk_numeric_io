@@ -24,32 +24,33 @@ import net.minecraft.util.IStringSerializable;
 
 
 /**
- * This <code>enum</code> represents the <b>power state</b> of every
- * <code>BlockNumericIO</code> block
+ * This <code>interface</code> declares methods which are possible to
+ * call for every number-system, such like <code>increment()</code>.
  */
-public enum BlockNumericIOPowerEnum implements IStringSerializable
+public interface INumericIOStateEnum
+  <E extends Enum<E> & INumericIOStateEnum> extends IStringSerializable
 {
-  // First item is used as DEFAULT_STATE
-  OFF(false, "off"), ON(true, "on");
+  /**
+   * Returns a new <code>T</code> which increment <code>this</code> by
+   * one.  The <code>Result.CARRY == true</code> if the incrementation
+   * overflows.
+   */
+  public Result<E> increment();
 
-  private final boolean is_powered;
-  private final String name;
+  /* *************************************************************  */
 
-  private BlockNumericIOPowerEnum(boolean is_powered, String name)
-  {
-    this.is_powered = is_powered;
-    this.name = name;
+  /**
+   * Represents the result of an linear arithmetic operation.
+   */
+  public class Result<V> {
+    public final boolean CARRY;
+    public final V VALUE;
+
+    public Result(boolean carry, V value) {
+      this.CARRY = carry;
+      this.VALUE = value;
+    }
   }
 
-  @Override
-  public String getName()
-  {
-    return this.name;
-  }
-
-  @Override
-  public String toString()
-  {
-    return this.name;
-  }
+  /* *************************************************************  */
 }
