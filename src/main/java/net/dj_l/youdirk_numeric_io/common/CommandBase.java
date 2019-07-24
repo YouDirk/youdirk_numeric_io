@@ -22,25 +22,15 @@ import net.dj_l.youdirk_numeric_io.*;
 
 /**
  * This class is a work-around for the poor Java Generics type
- * checking.  Use this type for <code>NetMessageRegistry</code> stuff.
+ * checking.  Use this type for <code>CommandRegistry</code> stuff.
  */
-public abstract class NetMessageBase
-  extends YoudirkNumericIORegistryEntry<NetMessageBase>
+public abstract class CommandBase
+  extends YoudirkNumericIORegistryEntry<CommandBase>
 {
-  /**
-   * <b>The HashCode of the <code>registryPath</code> is used as
-   * NetworkID for your message!</b> For this reason, do not rename it
-   * to hold the network protocol compatible.
-   */
-  protected NetMessageBase(String registryPath)
+  protected CommandBase(String registryPath)
   {
-    super(NetMessageBase.class);
+    super(CommandBase.class);
 
     this.setRegistryName(registryPath);
-  }
-
-  public int getNetId()
-  {
-    return this.getRegistryName().getPath().hashCode();
   }
 }

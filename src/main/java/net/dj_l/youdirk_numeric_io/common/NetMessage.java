@@ -32,8 +32,8 @@ import java.util.function.Function;
 
 
 /**
- * Every NetMessage must implement these abstract methods to serialize
- * it and add an event handler on receiving the message.
+ * Every <code>NetMessage</code> must implement these abstract methods
+ * to serialize it and add an event handler on receiving the message.
  *
  * <p>Make sure that your <code>NetMessage</code> class implements the
  * following <code>static</code> method:</p>

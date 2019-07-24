@@ -43,7 +43,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 // Events
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 // Commands
-import net.minecraft.server.MinecraftServer;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
