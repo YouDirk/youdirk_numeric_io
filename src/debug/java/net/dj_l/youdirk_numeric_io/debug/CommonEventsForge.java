@@ -38,6 +38,20 @@ import net.minecraft.item.Item;
 import net.minecraft.entity.player.InventoryPlayer;
 
 
+// Gameplay
+import net.minecraft.util.text.TextComponentTranslation;
+// Events
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+// Commands
+import net.minecraft.server.MinecraftServer;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.LiteralMessage;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 /**
  * Implementation of all non-specific debug event handlers fired on
  * <code>FORGE</code> bus.
@@ -111,5 +125,44 @@ public abstract class CommonEventsForge
     _setItemToSlot(9,
       net.minecraft.init.Blocks.CRAFTING_TABLE.asItem(),
       player.inventory);
+  }
+
+  @SubscribeEvent
+  public static void
+  onServerStarting(final FMLServerStartingEvent event)
+  {
+    RequiredArgumentBuilder<CommandSource,Integer> args
+      = Commands.argument("seconds", IntegerArgumentType.integer(1, 60));
+
+    LiteralArgumentBuilder<CommandSource> literal
+      = Commands.literal("debug-lag")
+      .then(args.executes((CommandContext<CommandSource> c) -> {
+          Integer seconds = c.getArgument("seconds", Integer.class);
+          c.getSource().sendFeedback(new TextComponentTranslation(
+            "Debug Lag: Freezing server for %1$s seconds",
+            seconds.toString()), false);
+
+          try {
+            Thread.sleep(seconds*1000);
+          } catch(Exception e) {}
+
+          c.getSource().sendFeedback(new TextComponentTranslation(
+            "Debug Lag: Server is back", seconds.toString())
+            , false);
+
+          return 1;
+      })
+      ).executes((CommandContext<CommandSource> c) -> {
+          c.getSource().sendErrorMessage(new TextComponentTranslation(
+            "A translatable error message ..."));
+          if (true) {
+            throw new SimpleCommandExceptionType(
+              new LiteralMessage("Error: Integer arg required :("))
+              .create();
+          }
+          return 1;
+        });
+
+    event.getCommandDispatcher().register(literal);
   }
 }
