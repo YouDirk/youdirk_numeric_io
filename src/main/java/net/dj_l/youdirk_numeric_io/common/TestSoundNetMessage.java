@@ -52,7 +52,7 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   {
     event.getRegistry().register(new TestSoundNetMessage());
   }
-  private final static String _REGISTRY_PATH = "test_sound_message";
+  private static final String _REGISTRY_PATH = "test_sound_message";
 
   public final BlockPos POS;
 

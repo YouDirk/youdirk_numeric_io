@@ -16,8 +16,13 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.server;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
+
+// Non Minecraft/Forge
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 
 /**
@@ -27,10 +32,20 @@ import net.dj_l.youdirk_numeric_io.*;
 public abstract class CommandBase
   extends YoudirkNumericIORegistryEntry<CommandBase>
 {
-  protected CommandBase(String registryPath)
+  private final Pattern _2UNDERLINE_REGEX = Pattern.compile("[-_]");
+
+  private final String _REGISTRY_PATH;
+  protected final String COMMAND_NAME;
+
+  protected CommandBase(String commandName)
   {
     super(CommandBase.class);
 
-    this.setRegistryName(registryPath);
+    this.COMMAND_NAME = commandName;
+
+    Matcher m = _2UNDERLINE_REGEX.matcher(commandName);
+    this._REGISTRY_PATH = m.replaceAll("_");
+
+    this.setRegistryName(this._REGISTRY_PATH);
   }
 }

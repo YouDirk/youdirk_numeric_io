@@ -39,7 +39,6 @@ public class Setup
 
   private void _init(FMLServerStartingEvent event)
   {
-    // some preinit code
-    Log.ger.debug("Server Setup::_init()");
+    Log.ger.debug("server.Setup::_init()");
   }
 }

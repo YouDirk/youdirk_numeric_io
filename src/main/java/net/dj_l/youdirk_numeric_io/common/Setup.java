@@ -50,8 +50,7 @@ public class Setup
 
   private void _init(FMLCommonSetupEvent event)
   {
-    // some preinit code
-    Log.ger.debug("Common Setup::_init()");
+    Log.ger.debug("common.Setup::_init()");
   }
 
   /* *************************************************************  */

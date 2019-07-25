@@ -20,6 +20,9 @@ package net.dj_l.youdirk_numeric_io.debug;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Server
+import net.dj_l.youdirk_numeric_io.server.CommandBase;
+
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
 
@@ -27,24 +30,33 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-
-// Gameplay
-import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent;
 
 
 /**
- * Implementation of all non-specific debug event handlers fired on
- * <code>MOD</code> bus.
- *
- * <p><b>This class will only be compiled into DebugMode builds.</b></p>
+ * This ingame command freezes the server thread or dedicated server
+ * for the given time of seconds to simulate a high ping in the
+ * network.  Useful to test the behavior of asynchronism and
+ * re-synchronization.
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public class DebugLagCommand extends CommandDebug<DebugLagCommand>
 {
   @SubscribeEvent
-  public static void onCommonSetup(final FMLCommonSetupEvent event)
+  public static void
+  onRegister(final RegistryEvent.Register<CommandBase> event)
   {
-    Log.ger.info("Running in DebugMode ...");
+    event.getRegistry().register(new DebugLagCommand());
+  }
+  private static final String _DEBUG_COMMAND_NAME = "lag";
+
+  /**
+   * A default constructor without any parameter must be implemented
+   * to instanciate dummy objects.  It can be empty, but
+   * <code>super(String debugCommandName)</code> must be called.
+   */
+  public DebugLagCommand()
+  {
+    super(DebugLagCommand._DEBUG_COMMAND_NAME);
   }
 }

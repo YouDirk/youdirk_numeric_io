@@ -20,31 +20,26 @@ package net.dj_l.youdirk_numeric_io.debug;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
-// Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-// Events
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-
-// Gameplay
-import net.minecraft.world.World;
+// Server
+import net.dj_l.youdirk_numeric_io.server.Command;
 
 
 /**
- * Implementation of all non-specific debug event handlers fired on
- * <code>MOD</code> bus.
- *
- * <p><b>This class will only be compiled into DebugMode builds.</b></p>
+ * This class is used as super class for ingame <code>/debug-* arg1
+ * arg2...</code> commands to make it possible to filter them out.
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public abstract class CommandDebug<T extends CommandDebug<T>>
+  extends Command<T>
 {
-  @SubscribeEvent
-  public static void onCommonSetup(final FMLCommonSetupEvent event)
+  private final static String _REGISTRY_PATH_PREEFIX = "debug-";
+
+  /**
+   * A default constructor without any parameter must be implemented
+   * to instanciate dummy objects.  It can be empty, but
+   * <code>super(String commandName)</code> must be called.
+   */
+  protected CommandDebug(String debugCommandName)
   {
-    Log.ger.info("Running in DebugMode ...");
+    super(_REGISTRY_PATH_PREEFIX + debugCommandName);
   }
 }

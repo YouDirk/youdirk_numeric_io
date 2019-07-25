@@ -16,7 +16,8 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.server;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
 
@@ -50,17 +51,17 @@ public abstract class Command<T extends Command<T>>
   /**
    * A default constructor without any parameter must be implemented
    * to instanciate dummy objects.  It can be empty, but
-   * <code>super(String registryPath)</code> must be called.
+   * <code>super(String commandName)</code> must be called.
    */
-  protected Command(String registryPath)
+  protected Command(String commandName)
   {
-    super(registryPath);
+    super(commandName);
   }
 
   /**
    * TODO: Encode <code>this</code> to <code>buf</code>
    */
-  protected abstract void encode();
+  //protected abstract void encode();
 
   /* *****************************************************************
    * Final stuff

@@ -39,8 +39,7 @@ public class Setup
 
   private void _init(FMLClientSetupEvent event)
   {
-    // some preinit code
-    Log.ger.debug("Client Setup::_init(), game settings: {}",
+    Log.ger.debug("client.Setup::_init(), game settings: {}",
                   event.getMinecraftSupplier().get().gameSettings);
   }
 }

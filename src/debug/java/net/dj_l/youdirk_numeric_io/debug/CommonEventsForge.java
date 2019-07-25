@@ -130,6 +130,8 @@ public abstract class CommonEventsForge
   public static void
   onServerStarting(final FMLServerStartingEvent event)
   {
+    DebugLagCommand cmd = new DebugLagCommand();
+
     RequiredArgumentBuilder<CommandSource,Integer> args
       = Commands.argument("seconds", IntegerArgumentType.integer(1, 60));
 

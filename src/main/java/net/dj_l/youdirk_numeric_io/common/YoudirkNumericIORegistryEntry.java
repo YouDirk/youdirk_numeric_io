@@ -55,7 +55,8 @@ public abstract class YoudirkNumericIORegistryEntry
     throws IllegalStateException
   {
     if (this._REGISTRY_NAME != null) {
-      throw new IllegalStateException("A NetMessage with the name '"
+      throw new IllegalStateException(
+        "A " +this._REGISTRY_TYPE.getSimpleName()+ " with the name '"
         +name.toString()+ "' does already exist!  setRegistryName()"
         + " called twice?");
     }
@@ -63,8 +64,9 @@ public abstract class YoudirkNumericIORegistryEntry
     String namespace = name.getNamespace();
     if (!namespace.equals(Props.MODID)) {
       Log.ger.warn(
-        "Namespace of NetMessage '{}' is '{}' and does not equals MODID"
-        + " '{}'!", name.toString(), namespace, Props.MODID);
+        "Namespace of {} '{}' is '{}' and does not equals MODID '{}'!",
+        this._REGISTRY_TYPE.getSimpleName(), name.toString(), namespace,
+        Props.MODID);
     }
 
     this._REGISTRY_NAME = name;
