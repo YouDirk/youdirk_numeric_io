@@ -36,6 +36,7 @@ import net.minecraftforge.event.RegistryEvent;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.Command;
 import net.minecraft.command.Commands;
 import net.minecraft.command.CommandSource;
 
@@ -94,7 +95,7 @@ public class DebugLagCommand extends CommandDebug<DebugLagCommand>
     cs.sendFeedback(new TextComponentDebug(
       "[%1$s] server is back", this._DEBUG_COMMAND_NAME), true);
 
-    return SINGLE_SUCCESS;
+    return Command.SINGLE_SUCCESS;
   }
 
   @Override
@@ -109,6 +110,6 @@ public class DebugLagCommand extends CommandDebug<DebugLagCommand>
   {
     CommandSource cs = context.getSource();
 
-    return SINGLE_SUCCESS;
+    return Command.SINGLE_SUCCESS;
   }
 }
