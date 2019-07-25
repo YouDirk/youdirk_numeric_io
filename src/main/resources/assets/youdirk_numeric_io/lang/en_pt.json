@@ -33,6 +33,12 @@
 
   "Decimal Input": "Tenner Button",
 
-  "Debug: Hey %1$s! Making a gift into your inventory :)"
+  "Debug: [%1$s] freezing server for %2$s seconds"
+  :"Debug: [%1$s] Stalling the waves of the seven seas for %2$s seconds",
+
+  "Debug: [%1$s] server is back"
+  :"Debug: [%1$s] Flood is entering",
+
+  "Debug: Hey %1$s! Here, some gifts in your inventory :)"
   :"Debug: Arrr captain %1$s! Plundered booty is in your bag"
 }

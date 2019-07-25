@@ -40,11 +40,11 @@ import java.util.function.Function;
  *
  * <pre><code>
  *{@literal @}Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
- * public class MyNetMessage extends NetMessage<MyNetMessage>
+ * public class MyNetMessage extends NetMessage&lt;MyNetMessage&gt;
  * {
  *  {@literal @}SubscribeEvent
  *   public static void
- *   onRegister(final RegistryEvent.Register<NetMessageBase> event)
+ *   onRegister(final RegistryEvent.Register&lt;NetMessageBase&gt; event)
  *   {
  *     event.getRegistry().register(new MyNetMessage());
  *   }

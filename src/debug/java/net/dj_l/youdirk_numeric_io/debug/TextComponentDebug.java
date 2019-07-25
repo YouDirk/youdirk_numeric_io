@@ -45,7 +45,7 @@ public class TextComponentDebug extends TextComponentTranslation
   {
     Style style = new Style();
 
-    style.setColor(TextFormatting.RED);
+    style.setColor(TextFormatting.GREEN);
     style.setItalic(true);
 
     this.setStyle(style);

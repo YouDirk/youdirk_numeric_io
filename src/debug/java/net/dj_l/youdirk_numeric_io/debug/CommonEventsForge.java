@@ -98,7 +98,7 @@ public abstract class CommonEventsForge
 
     if (player.allowLogging()) {
       player.sendMessage(new TextComponentDebug(
-        "Hey %1$s! Making a gift into your inventory :)",
+        "Hey %1$s! Here, some gifts in your inventory :)",
         player.getDisplayName().getString()));
     }
 
@@ -130,40 +130,8 @@ public abstract class CommonEventsForge
   public static void
   onServerStarting(final FMLServerStartingEvent event)
   {
+    // TODO
     DebugLagCommand cmd = new DebugLagCommand();
-
-    RequiredArgumentBuilder<CommandSource,Integer> args
-      = Commands.argument("seconds", IntegerArgumentType.integer(1, 60));
-
-    LiteralArgumentBuilder<CommandSource> literal
-      = Commands.literal("debug-lag")
-      .then(args.executes((CommandContext<CommandSource> c) -> {
-          Integer seconds = c.getArgument("seconds", Integer.class);
-          c.getSource().sendFeedback(new TextComponentTranslation(
-            "Debug Lag: Freezing server for %1$s seconds",
-            seconds.toString()), false);
-
-          try {
-            Thread.sleep(seconds*1000);
-          } catch(Exception e) {}
-
-          c.getSource().sendFeedback(new TextComponentTranslation(
-            "Debug Lag: Server is back", seconds.toString())
-            , false);
-
-          return 1;
-      })
-      ).executes((CommandContext<CommandSource> c) -> {
-          c.getSource().sendErrorMessage(new TextComponentTranslation(
-            "A translatable error message ..."));
-          if (true) {
-            throw new SimpleCommandExceptionType(
-              new LiteralMessage("Error: Integer arg required :("))
-              .create();
-          }
-          return 1;
-        });
-
-    event.getCommandDispatcher().register(literal);
+    event.getCommandDispatcher().register(cmd.getLiteralForRegister());
   }
 }

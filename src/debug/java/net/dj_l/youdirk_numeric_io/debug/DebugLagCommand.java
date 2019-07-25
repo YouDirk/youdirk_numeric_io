@@ -32,6 +32,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 // Events
 import net.minecraftforge.event.RegistryEvent;
 
+// Commands
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import net.minecraft.command.Commands;
+import net.minecraft.command.CommandSource;
+
+// Non Minecraft/Forge
+import javax.annotation.Nullable;
+
 
 /**
  * This ingame command freezes the server thread or dedicated server
@@ -58,5 +68,47 @@ public class DebugLagCommand extends CommandDebug<DebugLagCommand>
   public DebugLagCommand()
   {
     super(DebugLagCommand._DEBUG_COMMAND_NAME);
+  }
+
+  @Override
+  protected @Nullable ArgumentBuilder<CommandSource,?>
+  requiredArguments()
+  {
+    return this.newArgument("seconds",
+                            IntegerArgumentType.integer(1, 60));
+  }
+
+  @Override
+  protected int onExec(CommandContext<CommandSource> context)
+  {
+    CommandSource cs = context.getSource();
+    Integer seconds = context.getArgument("seconds", Integer.class);
+
+    cs.sendFeedback(new TextComponentDebug(
+      "[%1$s] freezing server for %2$s seconds", this._DEBUG_COMMAND_NAME,
+      seconds), true);
+
+    try { Thread.sleep(1000*seconds); }
+    catch(Exception e) {}
+
+    cs.sendFeedback(new TextComponentDebug(
+      "[%1$s] server is back", this._DEBUG_COMMAND_NAME), true);
+
+    return SINGLE_SUCCESS;
+  }
+
+  @Override
+  protected @Nullable ArgumentBuilder<CommandSource,?>
+  otherArguments()
+  {
+    return null;
+  }
+
+  @Override
+  protected int onOtherExec(CommandContext<CommandSource> context)
+  {
+    CommandSource cs = context.getSource();
+
+    return SINGLE_SUCCESS;
   }
 }
