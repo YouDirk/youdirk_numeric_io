@@ -31,7 +31,7 @@ import net.dj_l.youdirk_numeric_io.server.Command;
 public abstract class CommandDebug<T extends CommandDebug<T>>
   extends Command<T>
 {
-  private final static String _REGISTRY_PATH_PREEFIX = "debug-";
+  private final static String _COMMAND_NAME_PREEFIX = "debug-";
 
   /**
    * A default constructor without any parameter must be implemented
@@ -40,6 +40,6 @@ public abstract class CommandDebug<T extends CommandDebug<T>>
    */
   protected CommandDebug(String debugCommandName)
   {
-    super(_REGISTRY_PATH_PREEFIX + debugCommandName);
+    super(_COMMAND_NAME_PREEFIX + debugCommandName);
   }
 }
