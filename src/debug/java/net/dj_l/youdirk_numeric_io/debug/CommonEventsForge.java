@@ -38,8 +38,6 @@ import net.minecraft.item.Item;
 import net.minecraft.entity.player.InventoryPlayer;
 
 
-// Events
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 /**
  * Implementation of all non-specific debug event handlers fired on
  * <code>FORGE</code> bus.
@@ -113,14 +111,5 @@ public abstract class CommonEventsForge
     _setItemToSlot(9,
       net.minecraft.init.Blocks.CRAFTING_TABLE.asItem(),
       player.inventory);
-  }
-
-  @SubscribeEvent
-  public static void
-  onServerStarting(final FMLServerStartingEvent event)
-  {
-    // TODO
-    DebugLagCommand cmd = new DebugLagCommand();
-    event.getCommandDispatcher().register(cmd.getLiteralForRegister());
   }
 }

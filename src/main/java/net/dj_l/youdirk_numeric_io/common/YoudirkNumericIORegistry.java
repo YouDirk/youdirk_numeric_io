@@ -16,29 +16,27 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.server;
-import net.dj_l.youdirk_numeric_io.common.*;
+package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
-// Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-// Events
-import net.minecraftforge.event.RegistryEvent;
+// Registries/Events
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 
 /**
- * Implementation of all non-specific server-side event handlers fired
- * on <code>MOD</code> bus.
+ * This class is the base for all own registries.  <code>T</code> must
+ * be the base class of the registry entry.
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public abstract class YoudirkNumericIORegistry
+  <T extends YoudirkNumericIORegistryEntry<T>>
 {
-  @SubscribeEvent
-  public static void newRegistries(final RegistryEvent.NewRegistry event)
+  protected IForgeRegistry<T> fRegistry = null;
+
+  protected YoudirkNumericIORegistry() {}
+
+  protected void buildRegistry(RegistryBuilder<T> builder)
   {
-    new CommandRegistry();
+    this.fRegistry = builder.create();
   }
 }

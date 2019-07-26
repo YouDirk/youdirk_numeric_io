@@ -28,28 +28,39 @@ import net.minecraftforge.registries.RegistryManager;
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 
+// Non Minecraft/Forge
+import javax.annotation.Nullable;
+
 
 /**
  * A place where all sub-classes of <code>NetMessage</code> are
  * collected for registering these during <code>Setup</code>.
  */
 public class NetMessageRegistry
+  extends YoudirkNumericIORegistry<NetMessageBase>
   implements IForgeRegistry.BakeCallback<NetMessageBase>
 {
   private final ResourceLocation
   _REGISTRY_NAME = new ResourceLocation(Props.MODID, "net_messages");
 
-  private IForgeRegistry<NetMessageBase> _fRegistry;
   private boolean _alreadyRegistered = false;
 
   public NetMessageRegistry()
   {
-    this._fRegistry = new RegistryBuilder<NetMessageBase>()
-      .setType(NetMessageBase.class)
-      .setName(_REGISTRY_NAME)
-      .add(this)
-      .disableSaving()
-      .create();
+    super();
+    NetMessageRegistry._INSTANCE = this;
+
+    this.buildRegistry(new RegistryBuilder<NetMessageBase>()
+                       .setType(NetMessageBase.class)
+                       .setName(_REGISTRY_NAME)
+                       .add(this)
+                       .disableSaving());
+  }
+
+  private static @Nullable NetMessageRegistry _INSTANCE = null;
+  public static @Nullable NetMessageRegistry get()
+  {
+    return NetMessageRegistry._INSTANCE;
   }
 
   @Override

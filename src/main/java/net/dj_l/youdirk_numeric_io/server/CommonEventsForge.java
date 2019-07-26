@@ -28,6 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 
 // Network
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -80,5 +81,14 @@ public abstract class CommonEventsForge
       };
 
     Net.send(PacketDistributor.NEAR.with(netPos), msg);
+  }
+
+  @SubscribeEvent
+  public static void
+  onServerStarting(final FMLServerStartingEvent event)
+  {
+    // TODO
+    //DebugLagCommand cmd = new DebugLagCommand();
+    //event.getCommandDispatcher().register(cmd.getLiteralForRegister());
   }
 }
