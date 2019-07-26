@@ -32,6 +32,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 // Events
 import net.minecraftforge.event.RegistryEvent;
 
+// Gameplay
+import net.minecraft.server.management.PlayerList;
+
 // Commands
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -85,14 +88,16 @@ public class DebugLagCommand extends CommandDebug<DebugLagCommand>
     CommandSource cs = context.getSource();
     Integer seconds = context.getArgument("seconds", Integer.class);
 
-    cs.sendFeedback(new TextComponentDebug(
+    PlayerList allPlayers = cs.getServer().getPlayerList();
+
+    allPlayers.sendMessage(new TextComponentDebug(
       "[%1$s] freezing server for %2$s seconds", this._DEBUG_COMMAND_NAME,
       seconds), true);
 
     try { Thread.sleep(1000*seconds); }
-    catch(Exception e) {}
+    catch (Exception e) {}
 
-    cs.sendFeedback(new TextComponentDebug(
+    allPlayers.sendMessage(new TextComponentDebug(
       "[%1$s] server is back", this._DEBUG_COMMAND_NAME), true);
 
     return Command.SINGLE_SUCCESS;

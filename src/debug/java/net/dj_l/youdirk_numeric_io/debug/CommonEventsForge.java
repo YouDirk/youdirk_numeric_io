@@ -38,19 +38,8 @@ import net.minecraft.item.Item;
 import net.minecraft.entity.player.InventoryPlayer;
 
 
-// Gameplay
-import net.minecraft.util.text.TextComponentTranslation;
 // Events
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-// Commands
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.LiteralMessage;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 /**
  * Implementation of all non-specific debug event handlers fired on
  * <code>FORGE</code> bus.
