@@ -73,7 +73,7 @@ public class NetMessageRegistry
     if (this._alreadyRegistered) return;
 
     for (NetMessageBase msg: owner)
-      Net.registerMessage((NetMessage) msg);
+      Net.registerMessage((NetMessage<?>) msg);
 
     this._alreadyRegistered = true;
   }

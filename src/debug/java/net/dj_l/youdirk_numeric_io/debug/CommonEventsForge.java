@@ -20,6 +20,10 @@ package net.dj_l.youdirk_numeric_io.debug;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Server
+import net.dj_l.youdirk_numeric_io.server.CommandRegistry;
+import net.dj_l.youdirk_numeric_io.server.CommandBase;
+
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
 
@@ -71,6 +75,20 @@ public abstract class CommonEventsForge
       inventory.addItemStackToInventory(replacedStack);
   }
 
+  private static String _getDebugCommands()
+  {
+    String result = "";
+
+    for (CommandBase cmdBase: CommandRegistry.get()) {
+      if (!(cmdBase instanceof CommandDebug)) continue;
+
+      if (!result.equals("")) result += ", ";
+      result += cmdBase.toString();
+    }
+
+    return result;
+  }
+
   @SubscribeEvent
   public static void
   onPlayerJoin(final EntityJoinWorldEvent event)
@@ -84,6 +102,7 @@ public abstract class CommonEventsForge
     EntityPlayer player = (EntityPlayer) entity;
 
     if (player.allowLogging()) {
+      player.sendMessage(new TextComponentDebug(_getDebugCommands()));
       player.sendMessage(new TextComponentDebug(
         "Hey %1$s! Here, some gifts in your inventory :)",
         player.getDisplayName().getString()));

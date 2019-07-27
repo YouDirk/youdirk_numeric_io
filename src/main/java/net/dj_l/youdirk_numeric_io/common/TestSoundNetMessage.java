@@ -161,17 +161,4 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
     YoudirkNumericIOEvent.post(
       new net.dj_l.youdirk_numeric_io.client.TestSoundEvent(world, this));
   }
-
-  @Override
-  public String toString()
-  {
-    String senderName = null;
-    if (sender != null) {
-      senderName = sender.getDisplayName().getString();
-    }
-
-    return "TestSound: " +this.POS+ ", '" + this.SOUND+ "', "
-      +this.CATEGORY+ ", volume=" +this.VOLUME+ ", pitch=" +this.PITCH
-      + (senderName == null? "": "(sender: " +senderName+ ")");
-  }
 }

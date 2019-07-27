@@ -109,6 +109,16 @@ public abstract class NetMessage<T extends NetMessage<T>>
   protected abstract void onReceive();
 
   /* *****************************************************************
+   * Optional overridings
+   */
+
+  @Override
+  public String toString()
+  {
+    return "'NetId #" +this.getNetId()+ "'";
+  }
+
+  /* *****************************************************************
    * Final stuff
    */
 

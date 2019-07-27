@@ -112,6 +112,16 @@ public abstract class Command<T extends Command<T>> extends CommandBase
   onOtherExec(CommandContext<CommandSource> context);
 
   /* *****************************************************************
+   * Optional overridings
+   */
+
+  @Override
+  public String toString()
+  {
+    return "/" +this.COMMAND_NAME;
+  }
+
+  /* *****************************************************************
    * Final stuff
    */
 

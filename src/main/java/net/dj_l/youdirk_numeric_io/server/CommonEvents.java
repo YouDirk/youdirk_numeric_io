@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
 // Events
 import net.minecraftforge.event.RegistryEvent;
 

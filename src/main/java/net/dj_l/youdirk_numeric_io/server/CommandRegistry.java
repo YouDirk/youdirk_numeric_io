@@ -24,6 +24,10 @@ import net.dj_l.youdirk_numeric_io.*;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 
+// Commands
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.command.CommandSource;
+
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 
@@ -56,5 +60,13 @@ public class CommandRegistry
   public static @Nullable CommandRegistry get()
   {
     return CommandRegistry._INSTANCE;
+  }
+
+  public void registerAll(CommandDispatcher<CommandSource> dispatcher)
+  {
+    for (CommandBase cmdBase: this.fRegistry) {
+      Command<?> cmd = (Command<?>) cmdBase;
+      dispatcher.register(cmd.getLiteralForRegister());
+    }
   }
 }

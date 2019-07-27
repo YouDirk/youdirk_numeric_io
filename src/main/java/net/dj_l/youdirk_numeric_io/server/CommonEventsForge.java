@@ -87,8 +87,6 @@ public abstract class CommonEventsForge
   public static void
   onServerStarting(final FMLServerStartingEvent event)
   {
-    // TODO
-    //DebugLagCommand cmd = new DebugLagCommand();
-    //event.getCommandDispatcher().register(cmd.getLiteralForRegister());
+    CommandRegistry.get().registerAll(event.getCommandDispatcher());
   }
 }

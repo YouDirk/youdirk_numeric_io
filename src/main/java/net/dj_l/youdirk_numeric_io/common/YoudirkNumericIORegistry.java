@@ -20,8 +20,11 @@ package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Registries/Events
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
+
+// Non Minecraft/Forge
+import java.util.Iterator;
 
 
 /**
@@ -30,13 +33,26 @@ import net.minecraftforge.registries.RegistryBuilder;
  */
 public abstract class YoudirkNumericIORegistry
   <T extends YoudirkNumericIORegistryEntry<T>>
+  implements Iterable<T>
 {
-  protected IForgeRegistry<T> fRegistry = null;
+  protected ForgeRegistry<T> fRegistry = null;
 
   protected YoudirkNumericIORegistry() {}
 
-  protected void buildRegistry(RegistryBuilder<T> builder)
+  protected final void buildRegistry(RegistryBuilder<T> builder)
   {
-    this.fRegistry = builder.create();
+    this.fRegistry = (ForgeRegistry<T>) builder.create();
   }
+
+  /* *****************************************************************
+   * Implementing interface Iterable
+   */
+
+  @Override
+  public final Iterator<T> iterator()
+  {
+    return fRegistry.iterator();
+  }
+
+  /* *************************************************************  */
 }
