@@ -40,5 +40,7 @@ public class Setup
   private void _init(FMLServerStartingEvent event)
   {
     Log.ger.debug("server.Setup::_init()");
+
+    CommandRegistry.get().registerAll(event.getCommandDispatcher());
   }
 }

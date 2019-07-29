@@ -52,7 +52,7 @@ public abstract class CommonEvents
    * Blocks
    */
 
-  @ObjectHolder("decimal_input")
+  @ObjectHolder(DecimalInputBlock.REGISTRY_PATH)
   public static final
   DecimalInputBlock DECIMAL_INPUT_BLOCK = null;
 
@@ -67,7 +67,7 @@ public abstract class CommonEvents
    * Items / ItemBlocks
    */
 
-  @ObjectHolder("decimal_input")
+  @ObjectHolder(DecimalInputBlock.REGISTRY_PATH)
   public static final
   DecimalInputItem DECIMAL_INPUT_ITEM = null;
 

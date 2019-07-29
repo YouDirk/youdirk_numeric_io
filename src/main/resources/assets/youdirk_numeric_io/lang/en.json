@@ -33,12 +33,12 @@
 
   "Decimal Input": "Decimal Input",
 
-  "Debug: [%1$s] freezing server for %2$s seconds"
-  :"Debug: [%1$s] freezing server for %2$s seconds",
+  "debug: [%1$s] freezing server for %2$s seconds"
+  :"debug: [%1$s] freezing server for %2$s seconds",
 
-  "Debug: [%1$s] server is back"
-  :"Debug: [%1$s] server is back",
+  "debug: [%1$s] server is back"
+  :"debug: [%1$s] server is back",
 
-  "Debug: Hey %1$s! Here, some gifts in your inventory :)"
-  :"Debug: Hey %1$s! Here, some gifts in your inventory :)"
+  "debug: Hey %1$s! Here, some gifts in your inventory :)"
+  :"debug: Hey %1$s! Here, some gifts in your inventory :)"
 }
