@@ -20,26 +20,26 @@ package net.dj_l.youdirk_numeric_io.client;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Event Bus
-import net.minecraftforge.eventbus.api.IEventBus;
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
 
-// Events
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+// Event Bus
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+// Gameplay
+import net.minecraft.world.World;
 
 
 /**
- * Setup stuff for logical Client
+ * Implementation of all non-specific client-side event handlers fired
+ * on <code>FORGE</code> bus.
  */
-public class Setup
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
+public abstract class CommonEventsForgeClient
 {
-  public Setup(IEventBus eventBus)
+  private static boolean _isLogicalClient(World world)
   {
-    eventBus.addListener(this::_init);
+    return world.isRemote();
   }
 
-  private void _init(FMLClientSetupEvent event)
-  {
-    Log.ger.debug("client.Setup::_init(), game settings: {}",
-                  event.getMinecraftSupplier().get().gameSettings);
-  }
 }

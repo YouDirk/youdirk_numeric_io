@@ -16,7 +16,7 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.client;
+package net.dj_l.youdirk_numeric_io.debug;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
@@ -26,20 +26,25 @@ import net.minecraftforge.fml.common.Mod;
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+// Events
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+
 // Gameplay
 import net.minecraft.world.World;
 
 
 /**
- * Implementation of all non-specific client-side event handlers fired
- * on <code>FORGE</code> bus.
+ * Implementation of all non-specific debug event handlers fired on
+ * <code>MOD</code> bus.
+ *
+ * <p><b>This class will only be compiled into DebugMode builds.</b></p>
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
-public abstract class CommonEventsForge
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+public abstract class CommonEventsDebug
 {
-  private static boolean _isLogicalClient(World world)
+  @SubscribeEvent
+  public static void onCommonSetup(final FMLCommonSetupEvent event)
   {
-    return world.isRemote();
+    Log.ger.info("Running in DebugMode ...");
   }
-
 }

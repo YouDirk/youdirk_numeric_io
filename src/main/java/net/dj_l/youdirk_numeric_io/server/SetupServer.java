@@ -25,23 +25,31 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 // Events
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.event.RegistryEvent;
 
 
 /**
  * Setup stuff for logical Server
  */
-public class Setup
+public class SetupServer
 {
-  public Setup(IEventBus eventBus)
+  public SetupServer(IEventBus forgeBus, IEventBus modBus)
   {
-    eventBus.addListener(this::_init);
+    forgeBus.addListener(this::_init);
+
+    modBus.addListener(this::_newRegistries);
   }
 
   private void _init(FMLServerStartingEvent event)
   {
-    Log.ger.debug("server.Setup::_init()");
+    Log.ger.debug("server.SetupServer::_init()");
 
     CommandRegistry
       .get().registerOpposite(event.getCommandDispatcher());
+  }
+
+  private void _newRegistries(final RegistryEvent.NewRegistry event)
+  {
+    new CommandRegistry();
   }
 }

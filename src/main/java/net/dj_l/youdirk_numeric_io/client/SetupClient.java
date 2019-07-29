@@ -16,35 +16,30 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.debug;
+package net.dj_l.youdirk_numeric_io.client;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Forge Mod Loader
-import net.minecraftforge.fml.common.Mod;
-
 // Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 
 // Events
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-
-// Gameplay
-import net.minecraft.world.World;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 
 /**
- * Implementation of all non-specific debug event handlers fired on
- * <code>MOD</code> bus.
- *
- * <p><b>This class will only be compiled into DebugMode builds.</b></p>
+ * Setup stuff for logical Client
  */
-@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public abstract class CommonEvents
+public class SetupClient
 {
-  @SubscribeEvent
-  public static void onCommonSetup(final FMLCommonSetupEvent event)
+  public SetupClient(IEventBus forgeBus, IEventBus modBus)
   {
-    Log.ger.info("Running in DebugMode ...");
+    modBus.addListener(this::_init);
+  }
+
+  private void _init(FMLClientSetupEvent event)
+  {
+    Log.ger.debug("client.SetupClient::_init(), game settings: {}",
+                  event.getMinecraftSupplier().get().gameSettings);
   }
 }

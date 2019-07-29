@@ -26,6 +26,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.event.RegistryEvent;
 
 // IMC
 import net.minecraftforge.fml.InterModComms;
@@ -39,11 +40,13 @@ import java.util.Random;
  */
 public class Setup
 {
-  public Setup(IEventBus eventBus)
+  public Setup(IEventBus forgeBus, IEventBus modBus)
   {
-    eventBus.addListener(this::_init);
-    eventBus.addListener(this::_enqueueInitialIMC);
-    eventBus.addListener(this::_processInitialIMC);
+    modBus.addListener(this::_init);
+    modBus.addListener(this::_enqueueInitialIMC);
+    modBus.addListener(this::_processInitialIMC);
+
+    modBus.addListener(this::_newRegistries);
   }
 
   /* *************************************************************  */
@@ -51,6 +54,11 @@ public class Setup
   private void _init(FMLCommonSetupEvent event)
   {
     Log.ger.debug("common.Setup::_init()");
+  }
+
+  private void _newRegistries(final RegistryEvent.NewRegistry event)
+  {
+    new NetMessageRegistry().registerOpposite();
   }
 
   /* *************************************************************  */

@@ -49,7 +49,7 @@ import net.minecraft.entity.player.InventoryPlayer;
  * <p><b>This class will only be compiled into DebugMode builds.</b></p>
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
-public abstract class CommonEventsForge
+public abstract class CommonEventsForgeDebug
 {
   private static boolean _isLogicalServer(World world)
   {

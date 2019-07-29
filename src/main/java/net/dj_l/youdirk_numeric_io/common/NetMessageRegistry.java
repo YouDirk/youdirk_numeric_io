@@ -19,12 +19,6 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Registries/Events
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
-import net.minecraftforge.registries.IForgeRegistryInternal;
-import net.minecraftforge.registries.RegistryManager;
-
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 

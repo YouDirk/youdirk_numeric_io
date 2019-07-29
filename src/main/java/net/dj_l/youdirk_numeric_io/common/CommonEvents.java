@@ -42,12 +42,6 @@ import net.minecraft.item.Item;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
-  @SubscribeEvent
-  public static void newRegistries(final RegistryEvent.NewRegistry event)
-  {
-    new NetMessageRegistry().registerOpposite();
-  }
-
   /* *****************************************************************
    * Blocks
    */

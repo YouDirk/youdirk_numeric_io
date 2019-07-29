@@ -19,6 +19,9 @@
 package net.dj_l.youdirk_numeric_io;
 import net.dj_l.youdirk_numeric_io.common.*;
 
+import net.dj_l.youdirk_numeric_io.client.SetupClient;
+import net.dj_l.youdirk_numeric_io.server.SetupServer;
+
 // Forge Mod Loader
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -31,9 +34,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(Props.MODID)
 public class YoudirkNumericIO
 {
-  private final net.dj_l.youdirk_numeric_io.common.Setup _SETUP_COMMON;
-  private final net.dj_l.youdirk_numeric_io.server.Setup _SETUP_SERVER;
-  private final net.dj_l.youdirk_numeric_io.client.Setup _SETUP_CLIENT;
+  private final Setup       _SETUP_COMMON;
+  private final SetupServer _SETUP_SERVER;
+  private final SetupClient _SETUP_CLIENT;
 
   public YoudirkNumericIO()
   {
@@ -42,13 +45,13 @@ public class YoudirkNumericIO
       FMLJavaModLoadingContext.get().getModEventBus());
 
     this._SETUP_COMMON
-      = new net.dj_l.youdirk_numeric_io.common.Setup(
-            YoudirkNumericIOEvent.MOD_BUS);
+      = new Setup(YoudirkNumericIOEvent.FORGE_BUS,
+                  YoudirkNumericIOEvent.MOD_BUS);
     this._SETUP_SERVER
-      = new net.dj_l.youdirk_numeric_io.server.Setup(
-            YoudirkNumericIOEvent.FORGE_BUS);
+      = new SetupServer(YoudirkNumericIOEvent.FORGE_BUS,
+                        YoudirkNumericIOEvent.MOD_BUS);
     this._SETUP_CLIENT
-      = new net.dj_l.youdirk_numeric_io.client.Setup(
-            YoudirkNumericIOEvent.MOD_BUS);
+      = new SetupClient(YoudirkNumericIOEvent.FORGE_BUS,
+                        YoudirkNumericIOEvent.MOD_BUS);
   }
 }

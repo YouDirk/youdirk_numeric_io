@@ -20,10 +20,6 @@ package net.dj_l.youdirk_numeric_io.server;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
-// Registries/Events
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
-
 // Commands
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandSource;

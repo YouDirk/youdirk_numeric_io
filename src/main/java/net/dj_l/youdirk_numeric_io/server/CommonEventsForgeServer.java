@@ -48,7 +48,7 @@ import java.util.function.Supplier;
  * on <code>FORGE</code> bus.
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
-public abstract class CommonEventsForge
+public abstract class CommonEventsForgeServer
 {
   private static boolean _isLogicalServer(World world)
   {
