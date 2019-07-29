@@ -87,6 +87,7 @@ public abstract class CommonEventsForge
   public static void
   onServerStarting(final FMLServerStartingEvent event)
   {
-    CommandRegistry.get().registerAll(event.getCommandDispatcher());
+    CommandRegistry
+      .get().registerOpposite(event.getCommandDispatcher());
   }
 }

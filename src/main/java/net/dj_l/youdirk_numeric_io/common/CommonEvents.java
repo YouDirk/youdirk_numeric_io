@@ -45,7 +45,7 @@ public abstract class CommonEvents
   @SubscribeEvent
   public static void newRegistries(final RegistryEvent.NewRegistry event)
   {
-    new NetMessageRegistry();
+    new NetMessageRegistry().registerOpposite();
   }
 
   /* *****************************************************************

@@ -38,23 +38,16 @@ import javax.annotation.Nullable;
  */
 public class NetMessageRegistry
   extends YoudirkNumericIORegistry<NetMessageBase>
-  implements IForgeRegistry.BakeCallback<NetMessageBase>
 {
-  private final ResourceLocation
+  private static final ResourceLocation
   _REGISTRY_NAME = new ResourceLocation(Props.MODID, "net_messages");
-
-  private boolean _alreadyRegistered = false;
 
   public NetMessageRegistry()
   {
-    super();
+    // We don't list NetMessages, so performance has priority
+    super(NetMessageBase.class, NetMessageRegistry._REGISTRY_NAME,
+          IterationOrderEnum.NO_ORDER);
     NetMessageRegistry._INSTANCE = this;
-
-    this.buildRegistry(new RegistryBuilder<NetMessageBase>()
-                       .setType(NetMessageBase.class)
-                       .setName(_REGISTRY_NAME)
-                       .add(this)
-                       .disableSaving());
   }
 
   private static @Nullable NetMessageRegistry _INSTANCE = null;
@@ -63,18 +56,11 @@ public class NetMessageRegistry
     return NetMessageRegistry._INSTANCE;
   }
 
-  @Override
-  public void onBake(IForgeRegistryInternal<NetMessageBase> owner,
-                     RegistryManager stage)
+  public void registerOpposite()
   {
-    /* Called 2 times:
-     *   1. on game setup, 2. on joining game
-     */
-    if (this._alreadyRegistered) return;
-
-    for (NetMessageBase msg: owner)
-      Net.registerMessage((NetMessage<?>) msg);
-
-    this._alreadyRegistered = true;
+    for (NetMessageBase msgBase: this) {
+      NetMessage<?> msg = (NetMessage<?>) msgBase;
+      Net.registerMessage(msg);
+    }
   }
 }

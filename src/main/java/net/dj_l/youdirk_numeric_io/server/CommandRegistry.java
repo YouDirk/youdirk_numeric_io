@@ -42,18 +42,15 @@ import javax.annotation.Nullable;
 public class CommandRegistry
   extends YoudirkNumericIORegistry<CommandBase>
 {
-  private final ResourceLocation
+  private static final ResourceLocation
   _REGISTRY_NAME = new ResourceLocation(Props.MODID, "commands");
 
   public CommandRegistry()
   {
-    super();
+    // If we list the commands, they should be alphabetic ordered
+    super(CommandBase.class, CommandRegistry._REGISTRY_NAME,
+          IterationOrderEnum.KEY_ORDER);
     CommandRegistry._INSTANCE = this;
-
-    this.buildRegistry(new RegistryBuilder<CommandBase>()
-                       .setType(CommandBase.class)
-                       .setName(_REGISTRY_NAME)
-                       .disableSaving());
   }
 
   private static @Nullable CommandRegistry _INSTANCE = null;
@@ -62,9 +59,10 @@ public class CommandRegistry
     return CommandRegistry._INSTANCE;
   }
 
-  public void registerAll(CommandDispatcher<CommandSource> dispatcher)
+  public void
+  registerOpposite(CommandDispatcher<CommandSource> dispatcher)
   {
-    for (CommandBase cmdBase: this.fRegistry) {
+    for (CommandBase cmdBase: this) {
       Command<?> cmd = (Command<?>) cmdBase;
       dispatcher.register(cmd.getLiteralForRegister());
     }
