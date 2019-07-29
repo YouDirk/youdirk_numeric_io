@@ -59,6 +59,9 @@ public abstract class YoudirkNumericIORegistry
   private final ResourceLocation _REGISTRY_NAME;
   private final Map<ResourceLocation,T> _map;
 
+  private static final int _HASHMAP_INITCAPACITY = 16;
+  private static final float _HASHMAP_LOADFACTOR = 0.75f;
+
   protected YoudirkNumericIORegistry(Class<T> registryType,
     ResourceLocation registryName, IterationOrderEnum order)
   {
@@ -66,17 +69,19 @@ public abstract class YoudirkNumericIORegistry
     this._REGISTRY_NAME = registryName;
 
     switch (order) {
-    case NO_ORDER:
-      this._map = new HashMap<ResourceLocation,T>();
-      break;
     case INSERTION_ORDER:
-      this._map = new LinkedHashMap<ResourceLocation,T>();
+      this._map = new LinkedHashMap<ResourceLocation,T>
+        (YoudirkNumericIORegistry._HASHMAP_INITCAPACITY,
+         YoudirkNumericIORegistry._HASHMAP_LOADFACTOR);
       break;
     case KEY_ORDER:
       this._map = new TreeMap<ResourceLocation,T>();
       break;
+    case NO_ORDER:
     default:
-      this._map = new HashMap<ResourceLocation,T>();
+      this._map = new HashMap<ResourceLocation,T>
+        (YoudirkNumericIORegistry._HASHMAP_INITCAPACITY,
+         YoudirkNumericIORegistry._HASHMAP_LOADFACTOR);
       break;
     }
 
@@ -85,6 +90,8 @@ public abstract class YoudirkNumericIORegistry
       throw new YoudirkNumericIORegistryException(this,
         "RegistryEvent.Register event was CANCELLED!");
     }
+
+    Log.ger.debug(this.toString());
   }
 
   /* *****************************************************************
@@ -201,4 +208,19 @@ public abstract class YoudirkNumericIORegistry
   }
 
   /* *************************************************************  */
+
+  @Override
+  public String toString()
+  {
+    String result = "Registry Name: " +this._REGISTRY_NAME+ "\n";
+
+    int i = 0;
+    for (T val: this) {
+      ResourceLocation key = val.getRegistryName();
+      result += String.format("\tEntry: %d, %s, %s\n", i++, key.toString(),
+                              val.toString());
+    }
+
+    return result;
+  }
 }
