@@ -36,7 +36,7 @@ public class TextComponentDebug extends TextComponentTranslation
 {
   public TextComponentDebug(String translationKey, Object... args)
   {
-    super("Debug: " + translationKey, args);
+    super("debug: " + translationKey, args);
 
     this._setStyle();
   }

@@ -26,8 +26,10 @@ import net.dj_l.youdirk_numeric_io.*;
  */
 public class DecimalInputItem extends ItemBlockNumericIO
 {
+  private static final String _UNTRANSLATED_NAME = "Decimal Input";
+
   public DecimalInputItem(DecimalInputBlock block)
   {
-    super(block, "Decimal Input");
+    super(block, DecimalInputItem._UNTRANSLATED_NAME);
   }
 }

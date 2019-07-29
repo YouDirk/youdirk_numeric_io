@@ -26,11 +26,11 @@ import net.dj_l.youdirk_numeric_io.*;
  */
 public class DecimalInputBlock extends BlockNumericInput
 {
-  private static final String _REGISTRY_PATH = "decimal_input";
+  public static final String REGISTRY_PATH = "decimal_input";
 
   public DecimalInputBlock()
   {
-    super(DecimalInputBlock._REGISTRY_PATH);
+    super(DecimalInputBlock.REGISTRY_PATH);
   }
 
   @Override

@@ -82,12 +82,4 @@ public abstract class CommonEventsForge
 
     Net.send(PacketDistributor.NEAR.with(netPos), msg);
   }
-
-  @SubscribeEvent
-  public static void
-  onServerStarting(final FMLServerStartingEvent event)
-  {
-    CommandRegistry
-      .get().registerOpposite(event.getCommandDispatcher());
-  }
 }
