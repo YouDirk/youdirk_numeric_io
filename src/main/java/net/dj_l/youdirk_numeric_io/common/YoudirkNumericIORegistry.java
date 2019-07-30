@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
@@ -170,7 +169,7 @@ public abstract class YoudirkNumericIORegistry
   @Override
   public @Nullable ResourceLocation getDefaultKey()
   {
-    return null;
+    return null;  // No DefaultKey
   }
 
   @Override
@@ -186,15 +185,15 @@ public abstract class YoudirkNumericIORegistry
   }
 
   @Override
-  public Set<Entry<ResourceLocation, T>> getEntries()
+  public Set<Map.Entry<ResourceLocation,T>> getEntries()
   {
-    return null;
+    return this._map.entrySet();
   }
 
   @Override
   public <T> T getSlaveMap(ResourceLocation slaveMapName, Class<T> type)
   {
-    return null;
+    return null;  // No SlaveMap
   }
 
   /* *****************************************************************
@@ -204,7 +203,7 @@ public abstract class YoudirkNumericIORegistry
   @Override
   public Iterator<T> iterator()
   {
-    return _map.values().iterator();
+    return this._map.values().iterator();
   }
 
   /* *************************************************************  */
