@@ -22,6 +22,8 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,7 +40,10 @@ import net.minecraft.util.SoundEvent;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEventsClient
 {
-  // TODO: Just a Test event, on destroying a Block
+  /**
+   * TODO: Just a Test event, on destroying a Block
+   */
+  @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void onTestSound(final TestSoundEvent event)
   {
