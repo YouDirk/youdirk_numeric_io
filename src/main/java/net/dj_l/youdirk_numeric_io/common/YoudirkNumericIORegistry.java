@@ -68,6 +68,11 @@ public abstract class YoudirkNumericIORegistry
     this._REGISTRY_NAME = registryName;
 
     switch (order) {
+    case NO_ORDER:
+      this._map = new HashMap<ResourceLocation,T>
+        (YoudirkNumericIORegistry._HASHMAP_INITCAPACITY,
+         YoudirkNumericIORegistry._HASHMAP_LOADFACTOR);
+      break;
     case INSERTION_ORDER:
       this._map = new LinkedHashMap<ResourceLocation,T>
         (YoudirkNumericIORegistry._HASHMAP_INITCAPACITY,
@@ -76,12 +81,10 @@ public abstract class YoudirkNumericIORegistry
     case KEY_ORDER:
       this._map = new TreeMap<ResourceLocation,T>();
       break;
-    case NO_ORDER:
     default:
-      this._map = new HashMap<ResourceLocation,T>
-        (YoudirkNumericIORegistry._HASHMAP_INITCAPACITY,
-         YoudirkNumericIORegistry._HASHMAP_LOADFACTOR);
-      break;
+      throw new YoudirkNumericIORegistryException(this,
+        "Constructor called with ITERATION_ORDER='" +order.toString()
+        + "', but there is no implementation!");
     }
 
     if (YoudirkNumericIOEvent.MOD_BUS.post(

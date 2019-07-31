@@ -60,6 +60,8 @@ import javax.annotation.Nullable;
 public abstract class Command<T extends Command<T>> extends CommandBase
   implements com.mojang.brigadier.Command<CommandSource>
 {
+  protected final LiteralArgumentBuilder<CommandSource> LITERAL_FULL;
+
   /**
    * A default constructor without any parameter must be implemented
    * to instanciate dummy objects.  It can be empty, but
@@ -68,6 +70,8 @@ public abstract class Command<T extends Command<T>> extends CommandBase
   protected Command(String commandName)
   {
     super(commandName);
+
+    this.LITERAL_FULL = this._getLiteralForRegister();
   }
 
   /**
@@ -147,12 +151,8 @@ public abstract class Command<T extends Command<T>> extends CommandBase
     return Commands.argument(name, type);
   }
 
-  /**
-   * This method produces the whole literal command which you can put
-   * into <code>CommandDispatcher::register()</code>.
-   */
-  public final LiteralArgumentBuilder<CommandSource>
-  getLiteralForRegister()
+  private final LiteralArgumentBuilder<CommandSource>
+  _getLiteralForRegister()
   {
     LiteralArgumentBuilder<CommandSource> result
       = this.newLiteral(this.COMMAND_NAME);
@@ -170,6 +170,16 @@ public abstract class Command<T extends Command<T>> extends CommandBase
     }
 
     return result;
+  }
+
+  /**
+   * This method produces the whole literal command which you can put
+   * into <code>CommandDispatcher::register()</code>.
+   */
+  public final LiteralArgumentBuilder<CommandSource>
+  getLiteralForRegister()
+  {
+    return this.LITERAL_FULL;
   }
 
   @Override

@@ -70,6 +70,15 @@ then take a look to the
 Contributing
 ------------
 
+### Beta Tester
+
+If you want to proactive find bugs then we can give you list of weak
+spots in the code.  Take a look to the following file for more
+information
+
+* [**TEST_CASES.md** (github.com)
+  ]({{site.numeric_io.github_url}}/blob/master/TEST_CASES.md)
+
 ### Wiki
 
 You can contribute some tutorials or instructions how to use the

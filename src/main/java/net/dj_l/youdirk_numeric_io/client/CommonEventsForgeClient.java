@@ -98,7 +98,7 @@ public abstract class CommonEventsForgeClient
     Log.ger.debug("***************");
 
     for (ItemStack stack: container.itemList) {
-      if (!stack.getItem().equals(CommonEvents.DECIMAL_INPUT_ITEM))
+      if (stack.getItem() != CommonEvents.DECIMAL_INPUT_ITEM)
         continue;
 
       Log.ger.debug("*************** FOUND!");

@@ -65,8 +65,25 @@ I/O Minecraft mod* from the
 * [**official Website** (youdirk.github.io/youdirk_numeric_io)
   ](https://youdirk.github.io/youdirk_numeric_io/)
 
+Issues & Bug reports
+--------------------
+
+If you found a *bug* or if you like to provide a *feature-request*
+then take a look to the
+
+* [**Bug Tracking System** (github.com)
+  ](https://github.com/YouDirk/youdirk_numeric_io/issues)
+
 Contributing
 ------------
+
+### Beta Tester
+
+If you want to proactive find bugs then we can give you list of weak
+spots in the code.  Take a look to the following file for more
+information
+
+* [TEST_CASES.md](TEST_CASES.md)
 
 ### Wiki
 
