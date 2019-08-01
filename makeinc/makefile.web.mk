@@ -37,6 +37,8 @@ $(DOCS_DIR)/_config.yml: $(DOCS_DIR)/_config.templ.yml $(MK_FILES)
 	          )$(WEBSITE_ISSUES_REL))$(\
 	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_CONTRIB_DOC_REL,$(\
 	          )$(WEBSITE_CONTRIB_DOC_REL))$(\
+	  )$(call _REGEX_GRADLEVAR_REPL,WEBSITE_TESTCASES_DOC_REL,$(\
+	          )$(WEBSITE_TESTCASES_DOC_REL))$(\
 	  )$(call _REGEX_GRADLEVAR_REPL,GITHUB_MAVEN_URL,$(\
                   )$(GITHUB_RAW_URL)/$(MAVEN_DIR))$(\
 	  )$(call _REGEX_WEBCONFIG_REPL,version_stable,$(\

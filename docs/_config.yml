@@ -33,6 +33,7 @@ numeric_io:
   wiki_rel_url: wiki
   issues_rel_url: issues
   contribdoc_rel_url: blob/master/CONTRIBUTING.md
+  testcases_rel_url: blob/master/TEST_CASES.md
   github_maven_url: https://github.com/YouDirk/youdirk_numeric_io/raw/master/docs/maven
 
 # Some advantages ...

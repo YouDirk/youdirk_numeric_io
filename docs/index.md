@@ -72,12 +72,13 @@ Contributing
 
 ### Beta Tester
 
-If you want to proactive find bugs then we can give you list of weak
-spots in the code.  Take a look to the following file for more
+If you like to search bugs proactive then we can provide a list of
+code weak spots.  Take a look to the following file for more
 information
 
-* [**TEST_CASES.md** (github.com)
-  ]({{site.numeric_io.github_url}}/blob/master/TEST_CASES.md)
+* [**TEST_CASES.md in project root directory** (github.com)
+  ]({{site.numeric_io.github_url}}/{{
+      site.numeric_io.testcases_rel_url }})
 
 ### Wiki
 
