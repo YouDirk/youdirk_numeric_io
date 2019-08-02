@@ -58,8 +58,7 @@ github.com]({{site.numeric_io.github_url}}/{{
 
 To install you need *[...] TODO*
 
-Issues & Bug reports
---------------------
+### Issues & Bug reports
 
 If you found a *bug* or if you like to provide a *feature-request*
 then take a look to the
@@ -67,8 +66,8 @@ then take a look to the
 * [**Bug Tracking System** (github.com)
   ]({{site.numeric_io.github_url}}/{{ site.numeric_io.issues_rel_url }})
 
-Contributing
-------------
+## Contributing
+---------------
 
 ### Beta Tester
 
@@ -114,8 +113,8 @@ acting society :)
   )](https://www.patreon.com/YouDirk) at [patreon.com/YouDirk
   ](https://www.patreon.com/YouDirk)
 
-Initial idea
-------------
+## Initial idea
+---------------
 
 I want to build a [calculator in vanilla Minecraft
 (twitch.tv/you_dirk)](https://www.twitch.tv/collections/jN0fzROVchV32A)

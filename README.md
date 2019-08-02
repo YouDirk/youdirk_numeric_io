@@ -65,8 +65,7 @@ I/O Minecraft mod* from the
 * [**official Website** (youdirk.github.io/youdirk_numeric_io)
   ](https://youdirk.github.io/youdirk_numeric_io/)
 
-Issues & Bug reports
---------------------
+### Issues & Bug reports
 
 If you found a *bug* or if you like to provide a *feature-request*
 then take a look to the
