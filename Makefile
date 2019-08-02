@@ -131,7 +131,7 @@ mf_publish: $(MAVEN_FORGE_DIR)/maven-metadata.xml
 bootstrap: | forge config_all
 
 .PHONY: clean_all
-clean_all: | clean_bootstrap clean_forge _clean_lang_gen clean
+clean_all: | clean_bootstrap clean_forge clean_resources clean
 
 # End of Necessary Target definitions
 # ********************************************************************
@@ -403,6 +403,11 @@ _clean_build:
 _clean_lang_gen:
 	-rm -f $(LANG_FILES_GEN_ALL)
 
+.PHONY: clean_resources
+clean_resources: _clean_lang_gen
+	-rm -f $(RESOURCES_DIR)/LICENSE $(RESOURCES_DIR)/pack.mcmeta \
+	       $(METAINF_DIR)/mods.toml
+
 .PHONY: clean_forge
 clean_forge:
 	$(MAKE) TEST_GIT=1 _clean_forge
@@ -415,7 +420,6 @@ _clean_forge:
 clean_bootstrap:
 	-rm -f build.gradle gradle.properties
 	-rm -rf gradle gradlew{,.bat}
-	-rm -f $(RESOURCES_DIR)/pack.mcmeta $(METAINF_DIR)/mods.toml
 
 .PHONY: clean_javadoc
 clean_javadoc:

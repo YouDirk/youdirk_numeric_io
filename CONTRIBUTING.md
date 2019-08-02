@@ -182,6 +182,7 @@ forge: clone/checkout Git submodule `forge`, the latest official Minecraft Forge
 website_forge: Same as MF_PUBLISH, but a copy of the Forge Jars must be already available in maven repository
 clean_bootstrap: Delete all files which were generated via BOOTSTRAP
 clean_forge: Delete all files which were generated via FORGE
+clean_resources: Delete all files in `src/*/resources` which were generated
 mf_deinit: Deinit the Forge Git submodule `forge` which was generated via FORGE
 website_mod: Same as PUBLISH, but a copy of the Mod-Jar must be already available in maven repository
 
