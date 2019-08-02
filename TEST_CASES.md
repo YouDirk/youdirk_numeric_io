@@ -49,20 +49,19 @@ Cases
 3. **Net Version compatibility**  
    Try out to connect different Client Versions to different Server
    Versions.  A specification of which versions are compatible you can
-   find in the comments of
-   [Net.java](src/main/java/net/dj_l/youdirk_numeric_io/common/Net.java)
+   find in the comments of source file [`Net.java`](
+   src/main/java/net/dj_l/youdirk_numeric_io/common/Net.java)
    and in the implementation of `Net::_isClientAcceptVersion()` and
    `Net::_isServerAcceptVersion()`.  
    **Expected Behavior:** Clients should only connect to servers of
-   versions as described in
-   [Net.java](src/main/java/net/dj_l/youdirk_numeric_io/common/Net.java).
+   versions as described in source file [`Net.java`](
+   src/main/java/net/dj_l/youdirk_numeric_io/common/Net.java).
 
 4. **Faked NetMessages**  
    If you are a little bit a Hacker then you can try to
    fake/compromise the Net Packets of the YouDirk Numeric I/O mod
    specific NetChannel `youdirk_numeric_io:main`.  Take a look to
-   classes which are inheriting from class
-   [`NetMessage`](
+   classes which are inheriting from [`class NetMessage`](
    src/main/java/net/dj_l/youdirk_numeric_io/common/NetMessage.java).  
    **Expected Behavior:** It should be thrown a
    `NetPacketErrorException` and you get a warning in the log output,

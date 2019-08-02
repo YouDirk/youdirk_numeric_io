@@ -305,7 +305,7 @@ else
 config_all: build.gradle $(DOCS_DIR)/_config.yml \
   $(METAINF_DIR)/mods.toml $(JAVA_MOD_DIR)/common/Props.java \
   $(RESOURCES_DIR)/pack.mcmeta $(DOCS_DATA_DIR)/forge_promos.json \
-  $(LANG_FILES_GEN_ALL)
+  $(RESOURCES_DIR)/LICENSE $(LANG_FILES_GEN_ALL)
 endif
 
 .PHONY: _cache
@@ -377,6 +377,10 @@ $(LANG_FILES_GEN_DE): $(ASSETS_LANG_DIR)/de.json $(MK_FILES)
 	@echo "Generating '$@'"
 	@filename="`echo $< | $(SED_CMD) $(_REGEX_FILENAME_RET)`"; \
 	$(SED_CMD) $(call _REGEX_LANG_GEN,'"$$filename"') $< > $@
+
+$(RESOURCES_DIR)/LICENSE: LICENSE $(MK_FILES)
+	@echo "Generating '$@'"
+	@cp -f $< $@
 
 # ********************************************************************
 # Clean targets

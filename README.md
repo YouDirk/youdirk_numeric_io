@@ -79,11 +79,11 @@ Contributing
 
 ### Beta Tester
 
-If you like to search bugs proactive then we can provide a list of
-code weak spots.  Take a look to the following file for more
-information
+If you like to search proactive for bugs then we provide a list of
+code weak spots.  Take a look to the following list of Test Cases for
+a higher chance of success
 
-* [**TEST_CASES.md in project root directory** (github.com)
+* [**List of Test Cases** (github.com)
   ](TEST_CASES.md)
 
 ### Wiki
