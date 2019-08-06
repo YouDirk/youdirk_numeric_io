@@ -25,24 +25,32 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 // Gameplay
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+
+// Non Minecraft/Forge
+import java.util.List;
 
 
 /**
- * An abstract <code>BlockNumericIO</code> which implements the non
- * number-system specific, <b>client side input</b> mechanics.
+ * An abstract <code>ItemBlock</code> which implements the non
+ * number-system specific, <b>client side common</b> mechanics.
  */
-public abstract class BlockNumericInputClient
+public abstract class ItemBlockNumericIOClient
 {
   /**
    * Only called on logical client side.
    */
   @OnlyIn(Dist.CLIENT)
-  public static void onActivate(WorldClient world, IBlockState state,
-                                BlockNumericInput block, BlockPos pos)
+  public static void addInformation(ItemBlockNumericIO item,
+    ItemStack stack, World world, List<ITextComponent> tooltip,
+    ITooltipFlag flag)
   {
-    // Do nothing ...
+    // TODO
+    if (!item.isEnabled(true))
+      tooltip.add(new TextComponentTranslation("<disabled>"));
   }
 }

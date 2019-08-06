@@ -28,6 +28,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
+import net.minecraft.client.util.ITooltipFlag;
+
+// Non Minecraft/Forge
+import java.util.List;
 
 
 /**
@@ -46,6 +51,8 @@ public abstract class ItemBlockNumericIO extends ItemBlock
 
   private final TextComponentTranslation _DISPLAY_NAME;
 
+  protected boolean clientConnectedVanilla = false;
+
   protected
   ItemBlockNumericIO(BlockNumericIO block, String displayName)
   {
@@ -60,5 +67,27 @@ public abstract class ItemBlockNumericIO extends ItemBlock
   public ITextComponent getDisplayName(ItemStack stack)
   {
     return this._DISPLAY_NAME;
+  }
+
+  public void setClientConnectedVanilla(boolean value)
+  {
+    this.clientConnectedVanilla = value;
+  }
+  public boolean getClientConnectedVanilla(boolean localIsClient)
+  {
+    return localIsClient && this.clientConnectedVanilla;
+  }
+
+  public boolean isEnabled(boolean localIsClient)
+  {
+    return !this.getClientConnectedVanilla(localIsClient);
+  }
+
+  @Override
+  public void addInformation(ItemStack stack, World world,
+    List<ITextComponent> tooltip, ITooltipFlag flag)
+  {
+    net.dj_l.youdirk_numeric_io.client.ItemBlockNumericIOClient
+      .addInformation(this, stack, world, tooltip, flag);
   }
 }

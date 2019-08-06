@@ -20,6 +20,10 @@ package net.dj_l.youdirk_numeric_io.client;
 import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Client
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.client.ExtendedServerListData;
+
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,15 +31,21 @@ import net.minecraftforge.api.distmarker.Dist;
 
 // Event Bus
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
+
+// Events
+import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 
 // Gameplay
 import net.minecraft.world.World;
-
-
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+
+
 /**
  * Implementation of all non-specific client-side event handlers fired
  * on <code>FORGE</code> bus.
@@ -43,65 +53,64 @@ import net.minecraft.item.ItemStack;
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.FORGE)
 public abstract class CommonEventsForgeClient
 {
+  private static boolean _isLogicalClient(World world)
+  {
+    return world.isRemote();
+  }
+
+  /**
+   * Will be fired twice on respawn!
+   */
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void
-  onGuiCreativeInit(final GuiScreenEvent.InitGuiEvent.Post event)
+  onPlayerSetSpawn(final PlayerSetSpawnEvent event)
   {
-    _onGuiCreative(event);
+    EntityPlayer entityPlayer = event.getEntityPlayer();
+
+    World world = entityPlayer.getEntityWorld();
+    if (!_isLogicalClient(world)) throw new NotClientException();
+
+    if (!(entityPlayer instanceof EntityPlayerSP)) return;
+    EntityPlayerSP player = (EntityPlayerSP) entityPlayer;
+
+    Minecraft mc = Minecraft.getInstance();
+    if (mc.getIntegratedServer() != null) {
+      // TODO: Replace with an Item registry
+      CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(false);
+      return;
+    }
+
+    ExtendedServerListData serverInfo = mc.getCurrentServerData()
+      .forgeData;
+    if (serverInfo != null && serverInfo.type.equals("VANILLA")) {
+      // TODO: Replace with an Item registry
+      CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(true);
+      return;
+    }
+
+    CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(false);
   }
 
   @OnlyIn(Dist.CLIENT)
   @SubscribeEvent
   public static void
-  onGuiCreativeScroll(final GuiScreenEvent.MouseScrollEvent.Pre event)
+  onMouseClicked(final GuiScreenEvent.MouseClickedEvent.Pre event)
   {
-    _onGuiCreative(event);
-  }
-
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
-  public static void
-  onGuiCreativeDrag(final GuiScreenEvent.MouseDragEvent.Pre event)
-  {
-    _onGuiCreative(event);
-  }
-
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
-  public static void
-  onGuiCreativePressed(final GuiScreenEvent.KeyboardKeyPressedEvent.Pre event)
-  {
-    _onGuiCreative(event);
-  }
-
-  @OnlyIn(Dist.CLIENT)
-  @SubscribeEvent
-  public static void
-  onGuiCreativeClicked(final GuiScreenEvent.MouseReleasedEvent.Pre event)
-  {
-    _onGuiCreative(event);
-  }
-
-  @OnlyIn(Dist.CLIENT)
-  private static void _onGuiCreative(final GuiScreenEvent event)
-  {
-    // TODO
     GuiScreen guiScreen = event.getGui();
     if (!(guiScreen instanceof GuiContainerCreative)) return;
 
-    GuiContainerCreative guiContainer = (GuiContainerCreative) guiScreen;
+    GuiContainerCreative container = (GuiContainerCreative) guiScreen;
 
-    GuiContainerCreative.ContainerCreative container =
-      (GuiContainerCreative.ContainerCreative) guiContainer.inventorySlots;
+    Slot slot = container.getSlotUnderMouse();
+    if (slot == null) return;
 
-    Log.ger.debug("***************");
+    Item item = slot.getStack().getItem();
+    if (!(item instanceof ItemBlockNumericIO)) return;
 
-    for (ItemStack stack: container.itemList) {
-      if (stack.getItem() != CommonEvents.DECIMAL_INPUT_ITEM)
-        continue;
+    ItemBlockNumericIO itemIO = (ItemBlockNumericIO) item;
+    if (itemIO.isEnabled(true)) return;
 
-      Log.ger.debug("*************** FOUND!");
-    }
+    event.setCanceled(true);
   }
 }
