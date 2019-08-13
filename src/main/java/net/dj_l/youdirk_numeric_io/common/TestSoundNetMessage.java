@@ -160,13 +160,8 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   @Override
   protected void onReceiveClient() throws NetPacketErrorException
   {
-    /* We know that we are on client side, if we are receiving this
-     * TestSound message.  So these STATIC CLIENT calls should
-     * work.
-     */
-    IWorld world = net.minecraft.client.Minecraft.getInstance().world;
-
     YoudirkNumericIOEvent.post(
-      new net.dj_l.youdirk_numeric_io.client.TestSoundEvent(world, this));
+      new net.dj_l.youdirk_numeric_io.client.TestSoundEvent(this.world,
+                                                            this));
   }
 }

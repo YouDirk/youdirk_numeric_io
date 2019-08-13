@@ -48,10 +48,11 @@ Cases
 
 3. **Net Version compatibility**  
    Try out to connect different Client Versions to different Server
-   Versions.  A specification of which versions are compatible you can
-   find in the comments of source file [`Net.java`](
-   src/main/java/net/dj_l/youdirk_numeric_io/common/Net.java)
-   and in the implementation of `Net::_isClientAcceptVersion()` and
+   Versions, also mixed with Vanilla Server/Clients.  A specification
+   of which versions are compatible you can find in the comments of
+   source file [`Net.java`](
+   src/main/java/net/dj_l/youdirk_numeric_io/common/Net.java) and in
+   the implementation of `Net::_isClientAcceptVersion()` and
    `Net::_isServerAcceptVersion()`.  
    **Expected Behavior:** Clients should only connect to servers of
    versions as described in source file [`Net.java`](

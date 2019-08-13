@@ -22,7 +22,7 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Client
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.client.ExtendedServerListData;
+import net.minecraft.client.multiplayer.ServerData;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
@@ -81,9 +81,26 @@ public abstract class CommonEventsForgeClient
       return;
     }
 
-    ExtendedServerListData serverInfo = mc.getCurrentServerData()
-      .forgeData;
-    if (serverInfo != null && serverInfo.type.equals("VANILLA")) {
+    ServerData serverData = mc.getCurrentServerData();
+
+    /* Normally this case should not be happened.  Seems to be a bug
+     * in Forge, this is a work-around.  See #61 in bug tracking for
+     * more details.
+     */
+    if (serverData.forgeData == null) {
+      Log.ger.info(
+        "BUG: Could not receive advanced ForgeServerInfo from '"
+        + serverData.serverName+ "'!  Using work-around to check server"
+        + " compatibility.");
+
+      // TODO: Replace with an Item registry
+      CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(true);
+      Net.sendToServer(new VanillaCheckNetMessage());
+
+      return;
+    }
+
+    if (serverData.forgeData.type.equals("VANILLA")) {
       // TODO: Replace with an Item registry
       CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(true);
       return;
