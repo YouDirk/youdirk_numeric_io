@@ -24,6 +24,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
 
+// Gameplay
+import net.minecraft.world.IWorld;
+
 // Non Minecraft/Forge
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -58,17 +61,25 @@ public abstract class NetMessage<T extends NetMessage<T>>
   extends NetMessageBase implements Runnable
 {
   /**
-   * <code>@Nullable</code> if we receive it on client.  Otherwise it
-   * was set during <code>verifyDecoded()</code> and
-   * <code>onReceive()</code>
+   * <code>@Nullable</code>, is set during
+   * <code>validateDecoded()</code> and <code>onReceive*()</code>
+   */
+  protected @Nullable NetworkEvent.Context ctx = null;
+
+  /**
+   * <code>null</code> if we receive it on logical client side.
+   * Otherwise it is set during <code>validateDecoded()</code> and
+   * <code>onReceiveServer()</code>
    */
   protected @Nullable EntityPlayerMP sender = null;
 
   /**
-   * <code>@Nullable</code>, was set during
-   * <code>verifyDecoded()</code> and <code>onReceive()</code>
+   * <code>null</code> if we receive it on logical server side.
+   * Otherwise it is set during <code>validateDecoded()</code> and
+   * <code>onReceiveClient()</code>
    */
-  protected @Nullable NetworkEvent.Context ctx = null;
+  protected @Nullable IWorld world = null;
+
 
   /**
    * A default constructor without any parameter must be implemented
@@ -99,14 +110,33 @@ public abstract class NetMessage<T extends NetMessage<T>>
   /**
    * Verify if <code>this</code> has valid data.  Otherwise throws an
    * Exception.  All protected member variables are set.
+   *
+   * @throws NetPacketErrorException if validation failed
    */
-  protected abstract void verifyDecoded() throws NetPacketErrorException;
+  protected abstract void validateDecoded()
+    throws NetPacketErrorException;
 
   /**
-   * Called after succeeded <code>verifyDecoded()</code> and threaded
-   * for workful CPU time.  All protected member variables are set.
+   * Called on server-side after succeeded
+   * <code>verifyDecoded()</code> and threaded for workful CPU time.
+   * All protected member variables are set.
+   *
+   * @throws NetPacketErrorException if something is going wrong,
+   * i.e. if the server must not receive this message.
    */
-  protected abstract void onReceive();
+  protected abstract void onReceiveServer()
+    throws NetPacketErrorException;
+
+  /**
+   * Called on client-side after succeeded
+   * <code>verifyDecoded()</code> and threaded for workful CPU time.
+   * All protected member variables are set.
+   *
+   * @throws NetPacketErrorException if something is going wrong,
+   * i.e. if the client must not receive this message.
+   */
+  protected abstract void onReceiveClient()
+    throws NetPacketErrorException;
 
   /* *****************************************************************
    * Optional overridings
@@ -126,13 +156,19 @@ public abstract class NetMessage<T extends NetMessage<T>>
   public final void run()
   {
     try {
-      this.verifyDecoded();
+      this.validateDecoded();
     } catch (NetPacketErrorException e) {
       Log.ger.warn("IGNORING network packet!", e);
       return;
     }
 
-    this.onReceive();
+    try {
+      if (this.sender == null) this.onReceiveClient();
+      else this.onReceiveServer();
+    } catch (NetPacketErrorException e) {
+      Log.ger.warn("RECEIVING failed!", e);
+      return;
+    }
   }
 
   protected final void
@@ -141,6 +177,11 @@ public abstract class NetMessage<T extends NetMessage<T>>
     this.ctx = ctx.get();
 
     this.sender = this.ctx.getSender();
+
+    // this.sender == null -> we are on Logical Client
+    this.world = this.sender == null
+      ? net.minecraft.client.Minecraft.getInstance().world
+      : null;
 
     this.ctx.enqueueWork(this);
     this.ctx.setPacketHandled(true);

@@ -73,6 +73,11 @@ public abstract class Net
     Net._CHANNEL.send(target, msg);
   }
 
+  public static <T extends NetMessage<T>> void sendToServer(T msg)
+  {
+    Net._CHANNEL.sendToServer(msg);
+  }
+
   /* *************************************************************  */
 
   /**

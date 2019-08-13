@@ -116,14 +116,15 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   }
 
   @Override
-  protected void verifyDecoded() throws NetPacketErrorException
+  protected void validateDecoded() throws NetPacketErrorException
   {
-    /* We know that we are on client side, if we are receiving this
-     * TestSound message.  So this STATIC CLIENT call should work.
+    /* If we are not on client side then RETURN and let throw an
+     * exception in onReceiveServer().  You can also THROW here
+     * instead of RETURN.
      */
-    IWorld world = net.minecraft.client.Minecraft.getInstance().world;
+    if (this.world == null) return;
 
-    if (this.POS == null || !world.isBlockLoaded(this.POS))
+    if (this.POS == null || !this.world.isBlockLoaded(this.POS))
       throw new NetPacketErrorException("Not a valid Block Position: "
                                         + this.POS);
 
@@ -150,7 +151,14 @@ public class TestSoundNetMessage extends NetMessage<TestSoundNetMessage>
   }
 
   @Override
-  protected void onReceive()
+  protected void onReceiveServer() throws NetPacketErrorException
+  {
+    throw
+      new NetPacketErrorException("No implementation on server side.");
+  }
+
+  @Override
+  protected void onReceiveClient() throws NetPacketErrorException
   {
     /* We know that we are on client side, if we are receiving this
      * TestSound message.  So these STATIC CLIENT calls should
