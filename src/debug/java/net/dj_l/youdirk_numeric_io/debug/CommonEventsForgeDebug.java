@@ -108,6 +108,7 @@ public abstract class CommonEventsForgeDebug
         player.getDisplayName().getString()));
     }
 
+    // TODO: Replace with an Item registry
     _setItemToSlot(0,
       net.dj_l.youdirk_numeric_io.common.CommonEvents.DECIMAL_INPUT_ITEM,
       player.inventory);

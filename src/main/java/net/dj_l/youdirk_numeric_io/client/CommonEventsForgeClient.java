@@ -89,7 +89,7 @@ public abstract class CommonEventsForgeClient
      */
     if (serverData.forgeData == null) {
       Log.ger.info(
-        "BUG: Could not receive advanced ForgeServerInfo from '"
+        "FORGE BUG: Could not receive advanced ForgeServerInfo from '"
         + serverData.serverName+ "'!  Using work-around to check server"
         + " compatibility.");
 

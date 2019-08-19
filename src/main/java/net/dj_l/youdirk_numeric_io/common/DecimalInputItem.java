@@ -19,13 +19,32 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
+
+// Event Bus
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+// Events
+import net.minecraftforge.event.RegistryEvent;
+
 
 /**
  * A specific <code>NumericIO</code> ItemBlock, which implements the
  * number-system specific <b>unsigned decimal</b> input mechanics.
  */
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class DecimalInputItem extends ItemBlockNumericIO
 {
+  @SubscribeEvent
+  public static void
+  onRegister(final RegistryEvent
+             .Register<ItemBlockNumericIORegistry.Entry> event)
+  {
+    event.getRegistry()
+      .register(new ItemBlockNumericIORegistry.Entry(
+      new DecimalInputItem(new DecimalInputBlock())));
+  }
   private static final String _UNTRANSLATED_NAME = "Decimal Input";
 
   public DecimalInputItem(DecimalInputBlock block)

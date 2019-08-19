@@ -19,6 +19,10 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.item.ItemBlock;
@@ -29,7 +33,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.client.util.ITooltipFlag;
 
 // Non Minecraft/Forge
 import java.util.List;
@@ -38,6 +41,24 @@ import java.util.List;
 /**
  * An abstract <code>ItemBlock</code> which implements the non
  * number-system specific, <b>common</b> mechanics.
+ *
+ * <p>Make sure that your <code>ItemBlockNumericIO</code> class
+ * implements the following <code>static</code> method:</p>
+ *
+ * <pre><code>
+ *{@literal @}Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+ * public class MyItem extends ItemBlockNumericIO
+ * {
+ *  {@literal @}SubscribeEvent
+ *   public static void
+ *   onRegister(final RegistryEvent.Register&lt;ItemBlockNumericIO&gt; event)
+ *   {
+ *     event.getRegistry().register(new MyItem());
+ *   }
+ *
+ *   . . .
+ *
+ * }
  */
 public abstract class ItemBlockNumericIO extends ItemBlock
 {
@@ -84,8 +105,10 @@ public abstract class ItemBlockNumericIO extends ItemBlock
   }
 
   @Override
+  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World world,
-    List<ITextComponent> tooltip, ITooltipFlag flag)
+    List<ITextComponent> tooltip,
+    net.minecraft.client.util.ITooltipFlag flag)
   {
     net.dj_l.youdirk_numeric_io.client.ItemBlockNumericIOClient
       .addInformation(this, stack, world, tooltip, flag);

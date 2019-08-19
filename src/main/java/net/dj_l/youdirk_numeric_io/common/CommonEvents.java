@@ -23,15 +23,10 @@ import net.dj_l.youdirk_numeric_io.*;
 import net.minecraftforge.fml.common.Mod;
 
 // Event Bus
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 // Events
 import net.minecraftforge.event.RegistryEvent;
-
-// Gameplay
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 
 
 /**
@@ -46,30 +41,17 @@ public abstract class CommonEvents
    * Blocks
    */
 
+  // TODO: We don't need the the @ObjectHolder
   @ObjectHolder(DecimalInputBlock.REGISTRY_PATH)
   public static final
   DecimalInputBlock DECIMAL_INPUT_BLOCK = null;
-
-  @SubscribeEvent
-  public static void
-  onRegisterBlocks(RegistryEvent.Register<Block> event)
-  {
-    event.getRegistry().registerAll(new DecimalInputBlock());
-  }
 
   /* *****************************************************************
    * Items / ItemBlocks
    */
 
+  // TODO: We don't need the the @ObjectHolder
   @ObjectHolder(DecimalInputBlock.REGISTRY_PATH)
   public static final
   DecimalInputItem DECIMAL_INPUT_ITEM = null;
-
-  @SubscribeEvent
-  public static void
-  onRegisterItemBlocks(RegistryEvent.Register<Item> event)
-  {
-    event.getRegistry().registerAll(
-     new DecimalInputItem(DECIMAL_INPUT_BLOCK));
-  }
 }

@@ -19,8 +19,12 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.fml.common.Mod;
+
 // Event Bus
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 // Events
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -31,6 +35,10 @@ import net.minecraftforge.event.RegistryEvent;
 // IMC
 import net.minecraftforge.fml.InterModComms;
 
+// Gameplay
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+
 // Non Minecraft/Forge
 import java.util.Random;
 
@@ -38,6 +46,7 @@ import java.util.Random;
 /**
  * Setup stuff for BOTH: logical server AND logical client
  */
+@Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class Setup
 {
   public Setup(IEventBus forgeBus, IEventBus modBus)
@@ -58,7 +67,32 @@ public class Setup
 
   private void _newRegistries(final RegistryEvent.NewRegistry event)
   {
+    new ItemBlockNumericIORegistry();
     new NetMessageRegistry().registerOpposite();
+  }
+
+  /**
+   * Must be used with <code>{@literal @}SubscribeEvent</code>,
+   * otherwise the generic type is not overloadable.
+   */
+  @SubscribeEvent
+  public static void
+  onRegisterBlocks(RegistryEvent.Register<Block> event)
+  {
+    ItemBlockNumericIORegistry.get().registerOppositeBlocks(
+      event.getRegistry());
+  }
+
+  /**
+   * Must be used with <code>{@literal @}SubscribeEvent</code>,
+   * otherwise the generic type is not overloadable.
+   */
+  @SubscribeEvent
+  public static void
+  onRegisterItemBlocks(RegistryEvent.Register<Item> event)
+  {
+    ItemBlockNumericIORegistry.get().registerOppositeItems(
+      event.getRegistry());
   }
 
   /* *************************************************************  */
