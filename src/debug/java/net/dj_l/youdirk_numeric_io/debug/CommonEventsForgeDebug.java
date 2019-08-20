@@ -108,27 +108,31 @@ public abstract class CommonEventsForgeDebug
         player.getDisplayName().getString()));
     }
 
-    // TODO: Replace with an Item registry
-    _setItemToSlot(0,
-      net.dj_l.youdirk_numeric_io.common.CommonEvents.DECIMAL_INPUT_ITEM,
-      player.inventory);
+    ItemBlockNumericIORegistry registry = ItemBlockNumericIORegistry
+      .get();
+    int slotNo = 0;
+    for (ItemBlockNumericIORegistry.Entry itemEntry: registry) {
+      _setItemToSlot(slotNo++, itemEntry.ITEM, player.inventory);
+    }
 
-    _setItemToSlot(4,
+    slotNo = slotNo < 4? 4: slotNo;
+
+    _setItemToSlot(slotNo++,
       net.minecraft.init.Items.POTION,
       player.inventory);
-    _setItemToSlot(5,
+    _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.REDSTONE_WIRE.asItem(),
       player.inventory);
-    _setItemToSlot(6,
+    _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.REDSTONE_TORCH.asItem(),
       player.inventory);
-    _setItemToSlot(7,
+    _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.LEVER.asItem(),
       player.inventory);
-    _setItemToSlot(8,
+    _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.PISTON.asItem(),
       player.inventory);
-    _setItemToSlot(9,
+    _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.CRAFTING_TABLE.asItem(),
       player.inventory);
   }

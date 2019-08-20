@@ -51,14 +51,18 @@ import java.util.List;
  * {
  *  {@literal @}SubscribeEvent
  *   public static void
- *   onRegister(final RegistryEvent.Register&lt;ItemBlockNumericIO&gt; event)
+ *   onRegister(final RegistryEvent
+ *              .Register&lt;ItemBlockNumericIORegistry.Entry&gt; event)
  *   {
- *     event.getRegistry().register(new MyItem());
+ *     event.getRegistry()
+ *       .register(new ItemBlockNumericIORegistry.Entry(
+ *       new MyItem(new MyBlock())));
  *   }
  *
  *   . . .
  *
  * }
+ * </code></pre>
  */
 public abstract class ItemBlockNumericIO extends ItemBlock
 {

@@ -42,9 +42,9 @@ public class ItemBlockNumericIORegistry
 
   /* *************************************************************  */
 
-  protected static class Entry
+  public static class Entry
       extends YoudirkNumericIORegistryEntry<Entry> {
-    protected final ItemBlockNumericIO ITEM;
+    public final ItemBlockNumericIO ITEM;
     protected Entry(ItemBlockNumericIO item) {
       super(ItemBlockNumericIORegistry.Entry.class);
       this.setRegistryName(item.getRegistryName());
@@ -82,8 +82,13 @@ public class ItemBlockNumericIORegistry
   public void
   registerOppositeItems(IForgeRegistry<Item> oppositeRegistry)
   {
-    for (Entry itemEntry: this) {
+    for (Entry itemEntry: this)
       oppositeRegistry.register(itemEntry.ITEM);
-    }
+  }
+
+  public void setClientConnectedVanilla(boolean value)
+  {
+    for (Entry itemEntry: this)
+      itemEntry.ITEM.setClientConnectedVanilla(value);
   }
 }

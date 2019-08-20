@@ -90,7 +90,6 @@ public class VanillaCheckNetMessage
     /* If we are here then the modded server has sent to us this
      * NetMessage and we are sure that the it is not a vanilla server.
      */
-    // TODO: Replace with an Item registry
-    CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(false);
+    ItemBlockNumericIORegistry.get().setClientConnectedVanilla(false);
   }
 }

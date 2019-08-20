@@ -76,8 +76,7 @@ public abstract class CommonEventsForgeClient
 
     Minecraft mc = Minecraft.getInstance();
     if (mc.getIntegratedServer() != null) {
-      // TODO: Replace with an Item registry
-      CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(false);
+      ItemBlockNumericIORegistry.get().setClientConnectedVanilla(false);
       return;
     }
 
@@ -93,20 +92,18 @@ public abstract class CommonEventsForgeClient
         + serverData.serverName+ "'!  Using work-around to check server"
         + " compatibility.");
 
-      // TODO: Replace with an Item registry
-      CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(true);
+      ItemBlockNumericIORegistry.get().setClientConnectedVanilla(true);
       Net.sendToServer(new VanillaCheckNetMessage());
 
       return;
     }
 
     if (serverData.forgeData.type.equals("VANILLA")) {
-      // TODO: Replace with an Item registry
-      CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(true);
+      ItemBlockNumericIORegistry.get().setClientConnectedVanilla(true);
       return;
     }
 
-    CommonEvents.DECIMAL_INPUT_ITEM.setClientConnectedVanilla(false);
+    ItemBlockNumericIORegistry.get().setClientConnectedVanilla(false);
   }
 
   @OnlyIn(Dist.CLIENT)

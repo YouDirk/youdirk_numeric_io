@@ -22,36 +22,13 @@ import net.dj_l.youdirk_numeric_io.*;
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
 
-// Event Bus
-import net.minecraftforge.registries.ObjectHolder;
-
-// Events
-import net.minecraftforge.event.RegistryEvent;
-
 
 /**
  * Implementation of all non-specific side-independent event handlers
  * fired on <code>MOD</code> bus.
  */
-@ObjectHolder(Props.MODID)
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public abstract class CommonEvents
 {
-  /* *****************************************************************
-   * Blocks
-   */
 
-  // TODO: We don't need the the @ObjectHolder
-  @ObjectHolder(DecimalInputBlock.REGISTRY_PATH)
-  public static final
-  DecimalInputBlock DECIMAL_INPUT_BLOCK = null;
-
-  /* *****************************************************************
-   * Items / ItemBlocks
-   */
-
-  // TODO: We don't need the the @ObjectHolder
-  @ObjectHolder(DecimalInputBlock.REGISTRY_PATH)
-  public static final
-  DecimalInputItem DECIMAL_INPUT_ITEM = null;
 }
