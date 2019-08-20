@@ -85,7 +85,8 @@ public abstract class ItemBlockNumericIO extends ItemBlock
   {
     super(block, ItemBlockNumericIO._BUILDER);
 
-    this.setRegistryName(block.getRegistryName());
+    this.setRegistryName(new
+      ResourceLocation(Props.MODID, block.getRegistryName().getPath()));
     this._REGISTER_BLOCK_OPPOSITE = registerBlockOpposite;
 
     this._DISPLAY_NAME = new TextComponentTranslation(displayName);
