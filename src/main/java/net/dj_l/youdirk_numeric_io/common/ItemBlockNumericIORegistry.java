@@ -86,9 +86,9 @@ public class ItemBlockNumericIORegistry
       oppositeRegistry.register(itemEntry.ITEM);
   }
 
-  public void setClientConnectedVanilla(boolean value)
+  public void setClientConnectedModded(boolean value)
   {
     for (Entry itemEntry: this)
-      itemEntry.ITEM.setClientConnectedVanilla(value);
+      itemEntry.ITEM.setClientConnectedModded(value);
   }
 }

@@ -76,34 +76,12 @@ public abstract class CommonEventsForgeClient
 
     Minecraft mc = Minecraft.getInstance();
     if (mc.getIntegratedServer() != null) {
-      ItemBlockNumericIORegistry.get().setClientConnectedVanilla(false);
+      ItemBlockNumericIORegistry.get().setClientConnectedModded(true);
       return;
     }
 
-    ServerData serverData = mc.getCurrentServerData();
-
-    /* Normally this case should not be happened.  Seems to be a bug
-     * in Forge, this is a work-around.  See #61 in bug tracking for
-     * more details.
-     */
-    if (serverData.forgeData == null) {
-      Log.ger.info(
-        "FORGE BUG: Could not receive advanced ForgeServerInfo from '"
-        + serverData.serverName+ "'!  Using work-around to check server"
-        + " compatibility.");
-
-      ItemBlockNumericIORegistry.get().setClientConnectedVanilla(true);
-      Net.sendToServer(new VanillaCheckNetMessage());
-
-      return;
-    }
-
-    if (serverData.forgeData.type.equals("VANILLA")) {
-      ItemBlockNumericIORegistry.get().setClientConnectedVanilla(true);
-      return;
-    }
-
-    ItemBlockNumericIORegistry.get().setClientConnectedVanilla(false);
+    ItemBlockNumericIORegistry.get().setClientConnectedModded(false);
+    Net.sendToServer(new ModdedCheckNetMessage());
   }
 
   @OnlyIn(Dist.CLIENT)

@@ -34,29 +34,29 @@ import net.minecraftforge.event.RegistryEvent;
 
 
 /**
- * Fallback solution to check if the server connected to is a modded
- * or vanilla server.
+ * Check if the server connected to is a modded to enable all mod
+ * features.
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public class VanillaCheckNetMessage
-  extends NetMessage<VanillaCheckNetMessage>
+public class ModdedCheckNetMessage
+  extends NetMessage<ModdedCheckNetMessage>
 {
   @SubscribeEvent
   public static void
   onRegister(final RegistryEvent.Register<NetMessageBase> event)
   {
-    event.getRegistry().register(new VanillaCheckNetMessage());
+    event.getRegistry().register(new ModdedCheckNetMessage());
   }
-  private static final String _REGISTRY_PATH = "vanilla_check_message";
+  private static final String _REGISTRY_PATH = "modded_check_message";
 
   /**
    * If we are initial sending this message from client side, make
-   * sure that we assuming that we don´t get a response and the server
-   * is vanilla.
+   * sure that we are assuming that we do not get a reply and the
+   * server is unmodded.
    */
-  public VanillaCheckNetMessage()
+  public ModdedCheckNetMessage()
   {
-    super(VanillaCheckNetMessage._REGISTRY_PATH);
+    super(ModdedCheckNetMessage._REGISTRY_PATH);
   }
 
 
@@ -64,11 +64,11 @@ public class VanillaCheckNetMessage
   protected void encode(PacketBuffer buf) {}
 
   @Override
-  protected VanillaCheckNetMessage decode(PacketBuffer buf)
+  protected ModdedCheckNetMessage decode(PacketBuffer buf)
   {
     // THIS is a dummy instance!
 
-    return new VanillaCheckNetMessage();
+    return new ModdedCheckNetMessage();
   }
 
   @Override
@@ -81,15 +81,15 @@ public class VanillaCheckNetMessage
      * requesting client.
      */
     Net.send(PacketDistributor.PLAYER.with(() -> this.sender),
-             new VanillaCheckNetMessage());
+             new ModdedCheckNetMessage());
   }
 
   @Override
   protected void onReceiveClient() throws NetPacketErrorException
   {
     /* If we are here then the modded server has sent to us this
-     * NetMessage and we are sure that the it is not a vanilla server.
+     * NetMessage and we are sure that the server is modded.
      */
-    ItemBlockNumericIORegistry.get().setClientConnectedVanilla(false);
+    ItemBlockNumericIORegistry.get().setClientConnectedModded(true);
   }
 }

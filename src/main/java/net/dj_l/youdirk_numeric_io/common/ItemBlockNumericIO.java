@@ -76,7 +76,7 @@ public abstract class ItemBlockNumericIO extends ItemBlock
 
   private final TextComponentTranslation _DISPLAY_NAME;
 
-  protected boolean clientConnectedVanilla = false;
+  protected boolean clientConnectedModded = true;
 
   protected
   ItemBlockNumericIO(BlockNumericIO block, String displayName)
@@ -94,18 +94,18 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     return this._DISPLAY_NAME;
   }
 
-  public void setClientConnectedVanilla(boolean value)
+  public void setClientConnectedModded(boolean value)
   {
-    this.clientConnectedVanilla = value;
+    this.clientConnectedModded = value;
   }
-  public boolean getClientConnectedVanilla(boolean localIsClient)
+  public boolean getClientConnectedModded(boolean localIsClient)
   {
-    return localIsClient && this.clientConnectedVanilla;
+    return !localIsClient || this.clientConnectedModded;
   }
 
   public boolean isEnabled(boolean localIsClient)
   {
-    return !this.getClientConnectedVanilla(localIsClient);
+    return this.getClientConnectedModded(localIsClient);
   }
 
   @Override
