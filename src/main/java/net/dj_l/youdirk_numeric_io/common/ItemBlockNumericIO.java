@@ -33,6 +33,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.block.Block;
 
 // Non Minecraft/Forge
 import java.util.List;
@@ -56,7 +57,7 @@ import java.util.List;
  *   {
  *     event.getRegistry()
  *       .register(new ItemBlockNumericIORegistry.Entry(
- *       new MyItem(new MyBlock())));
+ *       new MyItem()));
  *   }
  *
  *   . . .
@@ -75,15 +76,17 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     .rarity(EnumRarity.UNCOMMON);
 
   private final TextComponentTranslation _DISPLAY_NAME;
+  private final boolean _REGISTER_BLOCK_OPPOSITE;
 
   protected boolean clientConnectedModded = true;
 
-  protected
-  ItemBlockNumericIO(BlockNumericIO block, String displayName)
+  protected ItemBlockNumericIO(Block block, String displayName,
+                               boolean registerBlockOpposite)
   {
     super(block, ItemBlockNumericIO._BUILDER);
 
     this.setRegistryName(block.getRegistryName());
+    this._REGISTER_BLOCK_OPPOSITE = registerBlockOpposite;
 
     this._DISPLAY_NAME = new TextComponentTranslation(displayName);
   }
@@ -106,6 +109,11 @@ public abstract class ItemBlockNumericIO extends ItemBlock
   public boolean isEnabled(boolean localIsClient)
   {
     return this.getClientConnectedModded(localIsClient);
+  }
+
+  public boolean getRegisterBlockOpposite()
+  {
+    return this._REGISTER_BLOCK_OPPOSITE;
   }
 
   @Override

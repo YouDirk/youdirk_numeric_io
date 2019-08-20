@@ -45,7 +45,7 @@ public class ItemBlockNumericIORegistry
   public static class Entry
       extends YoudirkNumericIORegistryEntry<Entry> {
     public final ItemBlockNumericIO ITEM;
-    protected Entry(ItemBlockNumericIO item) {
+    public Entry(ItemBlockNumericIO item) {
       super(ItemBlockNumericIORegistry.Entry.class);
       this.setRegistryName(item.getRegistryName());
 
@@ -75,7 +75,9 @@ public class ItemBlockNumericIORegistry
   {
     for (Entry itemEntry: this) {
       Block block = itemEntry.ITEM.getBlock();
-      oppositeRegistry.register(block);
+
+      if (itemEntry.ITEM.getRegisterBlockOpposite())
+        oppositeRegistry.register(block);
     }
   }
 

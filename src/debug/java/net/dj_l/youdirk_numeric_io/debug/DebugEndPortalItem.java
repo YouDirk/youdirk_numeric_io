@@ -16,7 +16,8 @@
  */
 
 
-package net.dj_l.youdirk_numeric_io.common;
+package net.dj_l.youdirk_numeric_io.debug;
+import net.dj_l.youdirk_numeric_io.common.*;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Forge Mod Loader
@@ -28,13 +29,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 // Events
 import net.minecraftforge.event.RegistryEvent;
 
+// Gameplay
+import net.minecraft.block.Block;
+
 
 /**
- * A specific <code>NumericIO</code> ItemBlock, which implements the
- * number-system specific <b>unsigned decimal</b> input mechanics.
+ * An debug item to spawn an End Portal.
  */
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-public class DecimalInputItem extends ItemBlockNumericIO
+public class DebugEndPortalItem extends ItemBlockNumericIO
 {
   @SubscribeEvent
   public static void
@@ -43,13 +46,13 @@ public class DecimalInputItem extends ItemBlockNumericIO
   {
     event.getRegistry()
       .register(new ItemBlockNumericIORegistry.Entry(
-      new DecimalInputItem()));
+      new DebugEndPortalItem()));
   }
-  private static final String _UNTRANSLATED_NAME = "Decimal Input";
+  private static final String _UNTRANSLATED_NAME = "Debug End Portal";
 
-  public DecimalInputItem()
+  public DebugEndPortalItem()
   {
-    super(new DecimalInputBlock(),
-          DecimalInputItem._UNTRANSLATED_NAME, true);
+    super(net.minecraft.init.Blocks.END_PORTAL,
+          DebugEndPortalItem._UNTRANSLATED_NAME, false);
   }
 }

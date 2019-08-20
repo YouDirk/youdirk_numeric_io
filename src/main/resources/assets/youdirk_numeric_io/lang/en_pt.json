@@ -33,6 +33,12 @@
 
   "Decimal Input": "Tenner Button",
 
+  "_c": "*********************************************************** ",
+  "_c": "* Debug stuff                                               ",
+
+  "Debug Nether Portal": "Debug Hell Gate",
+  "Debug End Portal": "Debug Elder Gate",
+
   "debug: [%1$s] freezing server for %2$s seconds"
   :"debug: [%1$s] Stalling the waves of the seven seas for %2$s seconds",
 

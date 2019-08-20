@@ -33,6 +33,12 @@
 
   "Decimal Input": "Dezimaleingabe",
 
+  "_c": "*********************************************************** ",
+  "_c": "* Debug stuff                                               ",
+
+  "Debug Nether Portal": "Debug Netherportal",
+  "Debug End Portal": "Debug Endportal",
+
   "debug: [%1$s] freezing server for %2$s seconds"
   :"debug: [%1$s] Freeze Server für %2$s Sekunden",
 

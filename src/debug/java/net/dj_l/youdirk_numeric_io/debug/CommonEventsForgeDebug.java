@@ -118,7 +118,7 @@ public abstract class CommonEventsForgeDebug
     slotNo = slotNo < 4? 4: slotNo;
 
     _setItemToSlot(slotNo++,
-      net.minecraft.init.Items.POTION,
+      net.minecraft.init.Items.DEBUG_STICK,
       player.inventory);
     _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.REDSTONE_WIRE.asItem(),
@@ -134,6 +134,9 @@ public abstract class CommonEventsForgeDebug
       player.inventory);
     _setItemToSlot(slotNo++,
       net.minecraft.init.Blocks.CRAFTING_TABLE.asItem(),
+      player.inventory);
+    _setItemToSlot(slotNo++,
+      net.minecraft.init.Items.POTION,
       player.inventory);
   }
 }
