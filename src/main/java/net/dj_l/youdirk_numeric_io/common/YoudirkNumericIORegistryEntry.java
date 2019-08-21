@@ -62,16 +62,12 @@ public abstract class YoudirkNumericIORegistryEntry
     }
 
     String namespace = name.getNamespace();
-    /* Some Debug stuff breaks this condition, but it's not necessary
-       for now.
-
     if (!namespace.equals(Props.MODID)) {
       Log.ger.warn(
         "Namespace of {} '{}' is '{}' and does not equals MODID '{}'!",
         this._REGISTRY_TYPE.getSimpleName(), name.toString(), namespace,
         Props.MODID);
     }
-    */
 
     this._REGISTRY_NAME = name;
 

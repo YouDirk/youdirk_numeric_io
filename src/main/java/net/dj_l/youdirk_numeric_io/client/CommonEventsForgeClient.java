@@ -22,7 +22,6 @@ import net.dj_l.youdirk_numeric_io.*;
 
 // Client
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ServerData;
 
 // Forge Mod Loader
 import net.minecraftforge.fml.common.Mod;
