@@ -23,6 +23,7 @@ import net.dj_l.youdirk_numeric_io.*;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.network.NetworkDirection;
 
 // Gameplay
 import net.minecraft.world.IWorld;
@@ -67,16 +68,16 @@ public abstract class NetMessage<T extends NetMessage<T>>
   protected @Nullable NetworkEvent.Context ctx = null;
 
   /**
-   * <code>null</code> if we receive it on logical client side.
-   * Otherwise it is set during <code>validateDecoded()</code> and
-   * <code>onReceiveServer()</code>
+   * <code>null</code> if we receive it on logical client side or
+   * handshake/login data.  Otherwise it is set during
+   * <code>validateDecoded()</code> and <code>onReceiveServer()</code>
    */
   protected @Nullable EntityPlayerMP sender = null;
 
   /**
-   * <code>null</code> if we receive it on logical server side.
-   * Otherwise it is set during <code>validateDecoded()</code> and
-   * <code>onReceiveClient()</code>
+   * <code>null</code> if we receive it on logical server side or
+   * handshake/login data.  Otherwise it is set during
+   * <code>validateDecoded()</code> and <code>onReceiveClient()</code>
    */
   protected @Nullable IWorld world = null;
 
@@ -163,8 +164,17 @@ public abstract class NetMessage<T extends NetMessage<T>>
     }
 
     try {
-      if (this.sender == null) this.onReceiveClient();
-      else this.onReceiveServer();
+      switch (this.ctx.getDirection()) {
+      case PLAY_TO_SERVER:
+      case LOGIN_TO_SERVER:
+        this.onReceiveServer();
+        break;
+      case PLAY_TO_CLIENT:
+      case LOGIN_TO_CLIENT:
+      default:
+        this.onReceiveClient();
+        break;
+      }
     } catch (NetPacketErrorException e) {
       Log.ger.warn("RECEIVING failed!", e);
       return;
@@ -176,14 +186,33 @@ public abstract class NetMessage<T extends NetMessage<T>>
   {
     this.ctx = ctx.get();
 
-    this.sender = this.ctx.getSender();
+    NetworkDirection netDirection = this.ctx.getDirection();
 
-    // this.sender == null -> we are on Logical Client
-    this.world = this.sender == null
-      ? net.minecraft.client.Minecraft.getInstance().world
-      : null;
+    switch (netDirection) {
+    case PLAY_TO_CLIENT:
+      this.sender = null;
+      this.world = net.minecraft.client.Minecraft.getInstance().world;
+      break;
+    case PLAY_TO_SERVER:
+      this.sender = this.ctx.getSender();
+      this.world = null;
+      break;
+    default:
+      this.sender = null;
+      this.world = null;
+      break;
+    }
 
-    this.ctx.enqueueWork(this);
+    switch (netDirection) {
+    case LOGIN_TO_SERVER:
+    case LOGIN_TO_CLIENT:
+      this.run();
+      break;
+    default:
+      this.ctx.enqueueWork(this);
+      break;
+    }
+
     this.ctx.setPacketHandled(true);
   }
 

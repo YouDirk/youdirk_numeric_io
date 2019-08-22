@@ -80,8 +80,7 @@ public class ModdedCheckNetMessage
     /* If we are here then the server is modded, so we answer back to
      * requesting client.
      */
-    Net.send(PacketDistributor.PLAYER.with(() -> this.sender),
-             new ModdedCheckNetMessage());
+    Net.replySelf(this);
   }
 
   @Override

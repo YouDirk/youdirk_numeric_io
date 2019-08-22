@@ -19,10 +19,15 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+
 // Network
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 // Gameplay
 import net.minecraft.util.ResourceLocation;
@@ -56,10 +61,29 @@ public abstract class Net
     return Net._LOCAL_VERSION.toString();
   }
 
+  private static
+  void _registerHandshake(NetHandshake dummyInstance)
+  {
+    Net._CHANNEL.messageBuilder(NetHandshake.class,
+                                dummyInstance.getNetId())
+      .encoder(dummyInstance.getEncoder())
+      .decoder(dummyInstance.getDecoder())
+      .consumer(dummyInstance.getReceiver())
+      .loginIndex(NetHandshake::getLoginIndex,
+                  NetHandshake::setLoginIndex)
+      .buildLoginPacketList(NetHandshake::buildLoginPacketList)
+      .add();
+  }
+
   @SuppressWarnings("unchecked")
   public static
   void registerMessage(NetMessage dummyInstance)
   {
+    if (dummyInstance instanceof NetHandshake) {
+      _registerHandshake((NetHandshake) dummyInstance);
+      return;
+    }
+
     Class<? extends NetMessage> msgClass = dummyInstance.getClass();
 
     Net._CHANNEL.registerMessage(
@@ -73,6 +97,24 @@ public abstract class Net
     Net._CHANNEL.send(target, msg);
   }
 
+  public static <T extends NetMessage<T>>
+  void reply(T msg, NetworkEvent.Context context)
+  {
+    Net._CHANNEL.reply(msg, context);
+  }
+
+  public static <T extends NetMessage<T>>
+  void replySelf(T msg)
+  {
+    if (msg.ctx == null) {
+      throw new YoudirkNumericIOException(
+        "NetMessage was not received, no NetworkEvent.Context!");
+    }
+
+    Net.reply(msg, msg.ctx);
+  }
+
+  @OnlyIn(Dist.CLIENT)
   public static <T extends NetMessage<T>> void sendToServer(T msg)
   {
     Net._CHANNEL.sendToServer(msg);
