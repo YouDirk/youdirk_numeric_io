@@ -91,9 +91,12 @@ public class NetHandshake extends NetMessage<NetHandshake>
   public static
   List<Pair<String,NetHandshake>> buildLoginPacketList(boolean isLocal)
   {
+    /*
     return Arrays.asList(
       Pair.of("NetHandshake(0)", new NetHandshake(0)),
       Pair.of("NetHandshake(1)", new NetHandshake(1)));
+    */
+    return Arrays.asList();
   }
 
   /* *****************************************************************
