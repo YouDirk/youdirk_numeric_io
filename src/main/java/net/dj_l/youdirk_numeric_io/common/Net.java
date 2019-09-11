@@ -61,29 +61,10 @@ public abstract class Net
     return Net._LOCAL_VERSION.toString();
   }
 
-  private static
-  void _registerHandshake(NetHandshake dummyInstance)
-  {
-    Net._CHANNEL.messageBuilder(NetHandshake.class,
-                                dummyInstance.getNetId())
-      .encoder(dummyInstance.getEncoder())
-      .decoder(dummyInstance.getDecoder())
-      .consumer(dummyInstance.getReceiver())
-      .loginIndex(NetHandshake::getLoginIndex,
-                  NetHandshake::setLoginIndex)
-      .buildLoginPacketList(NetHandshake::buildLoginPacketList)
-      .add();
-  }
-
   @SuppressWarnings("unchecked")
   public static
   void registerMessage(NetMessage dummyInstance)
   {
-    if (dummyInstance instanceof NetHandshake) {
-      _registerHandshake((NetHandshake) dummyInstance);
-      return;
-    }
-
     Class<? extends NetMessage> msgClass = dummyInstance.getClass();
 
     Net._CHANNEL.registerMessage(

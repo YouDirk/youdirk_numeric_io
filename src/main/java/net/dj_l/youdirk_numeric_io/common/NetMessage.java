@@ -68,16 +68,16 @@ public abstract class NetMessage<T extends NetMessage<T>>
   protected @Nullable NetworkEvent.Context ctx = null;
 
   /**
-   * <code>null</code> if we receive it on logical client side or
-   * handshake/login data.  Otherwise it is set during
-   * <code>validateDecoded()</code> and <code>onReceiveServer()</code>
+   * <code>null</code> if we receive it on logical client side.
+   * Otherwise it is set during <code>validateDecoded()</code> and
+   * <code>onReceiveServer()</code>
    */
   protected @Nullable EntityPlayerMP sender = null;
 
   /**
-   * <code>null</code> if we receive it on logical server side or
-   * handshake/login data.  Otherwise it is set during
-   * <code>validateDecoded()</code> and <code>onReceiveClient()</code>
+   * <code>null</code> if we receive it on logical server side.
+   * Otherwise it is set during <code>validateDecoded()</code> and
+   * <code>onReceiveClient()</code>
    */
   protected @Nullable IWorld world = null;
 
@@ -203,6 +203,9 @@ public abstract class NetMessage<T extends NetMessage<T>>
       break;
     }
 
+    // This should be 'overridable' by this.run()
+    this.ctx.setPacketHandled(true);
+
     switch (netDirection) {
     case LOGIN_TO_SERVER:
     case LOGIN_TO_CLIENT:
@@ -212,8 +215,6 @@ public abstract class NetMessage<T extends NetMessage<T>>
       this.ctx.enqueueWork(this);
       break;
     }
-
-    this.ctx.setPacketHandled(true);
   }
 
   public final BiConsumer<T,PacketBuffer> getEncoder()
