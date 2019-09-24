@@ -19,6 +19,10 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+
 // Gameplay
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Block;
@@ -88,6 +92,7 @@ public class ItemBlockNumericIORegistry
       oppositeRegistry.register(itemEntry.ITEM);
   }
 
+  @OnlyIn(Dist.CLIENT)
   public void setClientConnectedModded(boolean value)
   {
     for (Entry itemEntry: this)

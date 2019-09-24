@@ -50,7 +50,7 @@ public abstract class ItemBlockNumericIOClient
     ITooltipFlag flag)
   {
     // TODO
-    if (!item.isEnabled(true))
+    if (!item.isEnabled())
       tooltip.add(new TextComponentTranslation("<disabled>"));
   }
 }

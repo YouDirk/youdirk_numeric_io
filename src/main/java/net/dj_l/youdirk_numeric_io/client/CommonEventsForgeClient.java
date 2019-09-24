@@ -100,8 +100,9 @@ public abstract class CommonEventsForgeClient
     if (!(item instanceof ItemBlockNumericIO)) return;
 
     ItemBlockNumericIO itemIO = (ItemBlockNumericIO) item;
-    if (itemIO.isEnabled(true)) return;
-
-    event.setCanceled(true);
+    if (!itemIO.isEnabled()) {
+      event.setCanceled(true);
+      return;
+    }
   }
 }

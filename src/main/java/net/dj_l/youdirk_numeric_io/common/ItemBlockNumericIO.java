@@ -98,18 +98,21 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     return this._DISPLAY_NAME;
   }
 
+  @OnlyIn(Dist.CLIENT)
   public void setClientConnectedModded(boolean value)
   {
     this.clientConnectedModded = value;
   }
-  public boolean getClientConnectedModded(boolean localIsClient)
+  @OnlyIn(Dist.CLIENT)
+  public boolean getClientConnectedModded()
   {
-    return !localIsClient || this.clientConnectedModded;
+    return this.clientConnectedModded;
   }
 
-  public boolean isEnabled(boolean localIsClient)
+  @OnlyIn(Dist.CLIENT)
+  public boolean isEnabled()
   {
-    return this.getClientConnectedModded(localIsClient);
+    return this.getClientConnectedModded();
   }
 
   public boolean getRegisterBlockOpposite()
