@@ -32,6 +32,8 @@
 
 
   "Decimal Input": "Decimal Input",
+  "<disabled>": "<disabled>",
+  "Connected to vanilla server.": "Connected to vanilla server.",
 
   "_c": "*********************************************************** ",
   "_c": "* Debug stuff                                               ",

@@ -34,9 +34,12 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.block.Block;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 
 // Non Minecraft/Forge
 import java.util.List;
+import java.util.Arrays;
 
 
 /**
@@ -80,6 +83,8 @@ public abstract class ItemBlockNumericIO extends ItemBlock
 
   protected boolean clientConnectedModded = true;
 
+  private List<ITextComponent> disabledInfo;
+
   protected ItemBlockNumericIO(Block block, String displayName,
                                boolean registerBlockOpposite)
   {
@@ -90,6 +95,16 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     this._REGISTER_BLOCK_OPPOSITE = registerBlockOpposite;
 
     this._DISPLAY_NAME = new TextComponentTranslation(displayName);
+
+    TextComponentTranslation disabledText
+      = new TextComponentTranslation("<disabled>");
+    disabledText.setStyle(
+      new Style().setItalic(true).setColor(TextFormatting.DARK_RED));
+    TextComponentTranslation disabledDescr
+      = new TextComponentTranslation("Connected to vanilla server.");
+    disabledDescr.setStyle(
+      new Style().setItalic(true).setColor(TextFormatting.GRAY));
+    this.disabledInfo = Arrays.asList(disabledText, disabledDescr);
   }
 
   @Override
@@ -120,13 +135,16 @@ public abstract class ItemBlockNumericIO extends ItemBlock
     return this._REGISTER_BLOCK_OPPOSITE;
   }
 
+  /* *****************************************************************
+   * Client only ...
+   */
+
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World world,
     List<ITextComponent> tooltip,
     net.minecraft.client.util.ITooltipFlag flag)
   {
-    net.dj_l.youdirk_numeric_io.client.ItemBlockNumericIOClient
-      .addInformation(this, stack, world, tooltip, flag);
+    if (!this.isEnabled()) tooltip.addAll(disabledInfo);
   }
 }

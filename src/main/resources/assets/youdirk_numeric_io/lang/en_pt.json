@@ -32,6 +32,8 @@
 
 
   "Decimal Input": "Tenner Button",
+  "<disabled>": "<dry sea>",
+  "Connected to vanilla server.": "Sailing to Vanilla, running aground.",
 
   "_c": "*********************************************************** ",
   "_c": "* Debug stuff                                               ",
