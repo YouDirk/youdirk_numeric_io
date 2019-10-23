@@ -19,6 +19,10 @@
 package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
+// Forge Mod Loader
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+
 // Gameplay
 import net.minecraft.world.World;
 import net.minecraft.block.state.IBlockState;
@@ -39,6 +43,7 @@ public abstract class BlockNumericInput extends BlockNumericIO
   /**
    * Only called on logical client side.
    */
+  @OnlyIn(Dist.CLIENT)
   public void onActivateClient(World world, IBlockState state,
                                BlockPos pos)
   {

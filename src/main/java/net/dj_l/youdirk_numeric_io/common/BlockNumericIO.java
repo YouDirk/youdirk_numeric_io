@@ -54,7 +54,7 @@ public abstract class BlockNumericIO extends Block
   STATE_POWER = EnumProperty.create("power",
                                     BlockNumericIOPowerEnum.class);
 
-  protected BlockNumericIOProperty STATE_NUMBER = null;
+  protected BlockNumericIOProperty PROPERTY_NUMBER = null;
 
   /* *************************************************************  */
 
@@ -63,7 +63,7 @@ public abstract class BlockNumericIO extends Block
     super(BlockNumericIO._BUILDER);
 
     this.setRegistryName(new ResourceLocation(Props.MODID, registryPath));
-    this.STATE_NUMBER = this.newStateNumber();
+    this.PROPERTY_NUMBER = this.newPropertyNumber();
   }
 
   /**
@@ -72,24 +72,24 @@ public abstract class BlockNumericIO extends Block
    * the <code>this.STATE_NUMBER</code> during construction.  For this
    * reason this method is a work-around.
    */
-  protected abstract BlockNumericIOProperty newStateNumber();
+  protected abstract BlockNumericIOProperty newPropertyNumber();
 
   @Override
   protected void
   fillStateContainer(StateContainer.Builder<Block,IBlockState> builder)
   {
-    this.STATE_NUMBER = this.newStateNumber();
+    this.PROPERTY_NUMBER = this.newPropertyNumber();
 
     builder
       .add(BlockNumericIO.STATE_POWER)
-      .add(this.STATE_NUMBER);
+      .add(this.PROPERTY_NUMBER);
 
     super.fillStateContainer(builder);
   }
 
   public BlockNumericIOProperty getStateNumber()
   {
-    return this.STATE_NUMBER;
+    return this.PROPERTY_NUMBER;
   }
 
   /* *************************************************************  */

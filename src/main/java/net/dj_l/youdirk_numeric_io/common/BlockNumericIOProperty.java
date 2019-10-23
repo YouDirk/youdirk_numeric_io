@@ -20,22 +20,49 @@ package net.dj_l.youdirk_numeric_io.common;
 import net.dj_l.youdirk_numeric_io.*;
 
 // Gameplay
-import net.minecraft.state.EnumProperty;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.state.IntegerProperty;
 
 // Non Minecraft/Forge
 import java.util.EnumSet;
 
 
 /**
- * This class holds our <code>INumericIOStateEnum</code> enums and
- * represents the state of the <code>BlockState</code>.
+ * This class holds the borders and radix of the number-system and
+ * represents the <code>number</code> property of the
+ * <code>BlockState</code>.
  */
-public class BlockNumericIOProperty
-  <E extends Enum<E> & INumericIOStateEnum> extends EnumProperty<E>
+public class BlockNumericIOProperty extends IntegerProperty
 {
-  public BlockNumericIOProperty(Class<E> numericEnumClass)
+  private final int RADIX;
+
+  public BlockNumericIOProperty(int radix)
   {
-    super("number", numericEnumClass, EnumSet.allOf(numericEnumClass));
+    super("number", 0, radix-1);
+
+    this.RADIX = radix;
   }
+
+  public BlockNumericIOProperty.Result increment(int value)
+  {
+    int incr = value + 1;
+
+    return new Result(incr >= this.RADIX, incr % this.RADIX);
+  }
+
+  /* *************************************************************  */
+
+  /**
+   * Represents the result of an linear arithmetic operation.
+   */
+  public static class Result {
+    public final boolean CARRY;
+    public final int VALUE;
+
+    public Result(boolean carry, int value) {
+      this.CARRY = carry;
+      this.VALUE = value;
+    }
+  }
+
+  /* *************************************************************  */
 }

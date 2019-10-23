@@ -34,9 +34,8 @@ public class DecimalInputBlock extends BlockNumericInput
   }
 
   @Override
-  protected BlockNumericIOProperty newStateNumber()
+  protected BlockNumericIOProperty newPropertyNumber()
   {
-    return new BlockNumericIOProperty<DecimalStateEnum>(
-      DecimalStateEnum.class);
+    return new BlockNumericIOProperty(10);
   }
 }

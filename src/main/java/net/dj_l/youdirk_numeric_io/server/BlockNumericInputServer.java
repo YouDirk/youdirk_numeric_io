@@ -35,17 +35,14 @@ public abstract class BlockNumericInputServer
   /**
    * Only called on logical server side.
    */
-  @SuppressWarnings("unchecked")
   public static void onActivate(WorldServer world, IBlockState state,
                                 BlockNumericInput block, BlockPos pos)
   {
     BlockNumericIOProperty prop = block.getStateNumber();
 
-    INumericIOStateEnum number
-      = (INumericIOStateEnum) state.<Enum>get(prop);
-    INumericIOStateEnum incr
-      = (INumericIOStateEnum) number.increment().VALUE;
+    int number = state.get(prop);
+    BlockNumericIOProperty.Result incr = prop.increment(number);
 
-    world.setBlockState(pos, state.with(prop, (Enum) incr));
+    world.setBlockState(pos, state.with(prop, incr.VALUE));
   }
 }
