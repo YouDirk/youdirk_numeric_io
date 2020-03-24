@@ -311,7 +311,7 @@ endif
 .PHONY: _cache
 _cache:
 .makefile.cache.mk: $(MK_FILES)
-	-rm -f $@
+	echo '' > $@
 	$(MAKE) _CACHE_FILE=$@ _cache
 
 # ********************************************************************
